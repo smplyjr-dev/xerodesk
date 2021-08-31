@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Tickets",
+    "childs": [
+      { "name": "View Tickets", "slug": "view_tickets" },
+      { "name": "View Ticket", "slug": "view_ticket" },
+      { "name": "Reply to Ticket", "slug": "reply_to_ticket" },
+      { "name": "Transfer Ticket", "slug": "transfer_ticket" },
+      { "name": "Edit Ticket", "slug": "edit_ticket" }
+    ]
+  },
+  {
+    "name": "Clients",
+    "childs": [
+      { "name": "View Clients", "slug": "view_clients" },
+      { "name": "View Client", "slug": "view_client" }
+    ]
+  },
+  {
+    "name": "Settings - Company",
+    "childs": [
+      { "name": "Select Company Employee", "slug": "select_company_employees" },
+      { "name": "View Companies", "slug": "view_companies" },
+      { "name": "Add Companies", "slug": "create_company" },
+      { "name": "Edit Companies", "slug": "edit_company" },
+      { "name": "Delete Companies", "slug": "delete_company" }
+    ]
+  },
+  {
+    "name": "Settings - Groups",
+    "childs": [
+      { "name": "Select Group Users", "slug": "select_group_users" },
+      { "name": "View Groups", "slug": "view_groups" },
+      { "name": "Create Group", "slug": "create_group" },
+      { "name": "Edit Group", "slug": "edit_group" },
+      { "name": "Delete Group", "slug": "delete_group" }
+    ]
+  },
+  {
+    "name": "Settings - Role",
+    "childs": [
+      { "name": "View Roles", "slug": "view_roles" },
+      { "name": "Create Role", "slug": "create_role" },
+      { "name": "Edit Role", "slug": "edit_role" },
+      { "name": "Delete Role", "slug": "delete_role" }
+    ]
+  },
+  {
+    "name": "Settings - User",
+    "childs": [
+      { "name": "View Users", "slug": "view_users" },
+      { "name": "Create User", "slug": "create_user" },
+      { "name": "Edit User", "slug": "edit_user" },
+      { "name": "Delete User", "slug": "delete_user" }
+    ]
+  },
+  {
+    "name": "Settings - SLA",
+    "childs": [
+      { "name": "View SLA's", "slug": "view_slas" },
+      { "name": "Create SLA", "slug": "create_sla" },
+      { "name": "Edit SLA", "slug": "edit_sla" },
+      { "name": "Delete SLA", "slug": "delete_sla" }
+    ]
+  }
+]

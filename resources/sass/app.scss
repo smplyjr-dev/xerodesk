@@ -1,0 +1,87 @@
+/**
+ * FiliPay Live Chat Custom SCSS
+ * This will apply on everything. Good for global styles.
+ * 
+ * @developer Alfredo Flores
+ * @email alfredo@xerosoft.com
+ */
+
+@import "./bootstrap/bootstrap.scss";
+
+html,
+body,
+#filichat-portal {
+  background: #f9fbfd;
+  height: 100vh;
+}
+
+// remove dotted border when anchor link is in :active pseudo
+a {
+  outline: none;
+}
+
+@import "./tw-utilities/cursor";
+@import "./tw-utilities/font-size";
+@import "./tw-utilities/object-fit";
+
+@import "vue-components/datatable";
+@import "vue-components/form-alert";
+@import "vue-components/transition";
+
+.layout-neutral {
+  height: 100%;
+  width: 100%;
+
+  .page-wrapper {
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12.5%;
+
+    .page-form {
+      width: 100%;
+
+      .input-group {
+        border: 1px solid #686868;
+
+        input {
+          font-size: 0.95rem;
+          padding: 1.5rem 1rem;
+
+          &:focus {
+            border-color: transparent;
+            box-shadow: none;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  .page-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+// flex center
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-height: 600px) {
+  html,
+  body,
+  #filichat-portal {
+    height: 100%;
+  }
+}
+
+// @media (min-width: 576px) {}
+// @media (min-width: 768px) {}
+// @media (min-width: 992px) {}
+// @media (min-width: 1200px) {}

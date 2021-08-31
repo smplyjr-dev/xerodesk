@@ -1,0 +1,43 @@
+.cd {
+  position: relative;
+  width: 100%;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+
+.cdc {
+  position: absolute;
+  right: 0;
+  margin-top: 1rem;
+  width: 100%;
+  background: #fff;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  padding: 0.25rem 0;
+  transform-origin: top right;
+  z-index: 1;
+  min-width: 150px;
+}
+
+.cdc-enter-active,
+.cdc-leave-active {
+  transition: all 300ms;
+}
+.cdc-enter,
+.cdc-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.cdci {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  color: #000000;
+
+  &:hover {
+    background: #dddddd;
+  }
+}

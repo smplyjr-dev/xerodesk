@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@Components/*": ["resources/js/components/*"],
+      "@Public/*": ["public/*"],
+      "@Scripts/*": ["resources/js/*"],
+      "@Styles/*": ["resources/sass/*"],
+      "@SDT/*": ["/resources/js/components/datatable/server/index.js"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "typeAcquisition": {
+    "exclude": [
+      "dotenv"
+    ]
+  }
+}

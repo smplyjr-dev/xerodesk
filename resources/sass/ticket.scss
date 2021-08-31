@@ -1,0 +1,399 @@
+/**
+* FiliPay Ticket Custom SCSS
+* This will apply on everything. Good for global styles.
+* 
+* @developer Alfredo Flores
+* @email alfredo@xerosoft.com
+*/
+
+@import "./bootstrap/_variables.scss";
+
+.card-ticket {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-ticket .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-ticket .card-body {
+  position: relative;
+  display: flex;
+  padding: 0px;
+
+  .ticket-messages {
+    transition: all 300ms ease;
+    background: #ffffff;
+    width: 100%;
+    padding: 1.25rem 0 0;
+    overflow-y: auto;
+    margin-bottom: 70px;
+
+    .message-bubble {
+      display: flex;
+      margin: 10px 0px;
+      width: 100%;
+
+      .message-content {
+        border-radius: 4px;
+        font-size: 14px;
+        position: relative;
+        width: auto;
+        line-height: 18px;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+
+        .message-actions {
+          opacity: 0;
+
+          .action {
+            cursor: pointer;
+            padding: 5px;
+            background: #eee;
+            border-radius: 100%;
+            border: 0;
+          }
+        }
+        .message-group {
+          .message-rpy {
+            background: #f5f5f5;
+            padding: 8px 10px 8px 18px;
+            font-size: 12px;
+            position: relative;
+            width: max-content;
+
+            &::after {
+              content: "";
+              position: absolute;
+              left: 10px;
+              top: 8px;
+              width: 3px;
+              height: calc(100% - 16px);
+            }
+
+            p:first-child {
+              margin-top: 0px;
+            }
+
+            p:last-child {
+              margin-bottom: 0px;
+            }
+          }
+          .message-dts {
+            cursor: pointer;
+            padding: 10px 15px 10px 15px;
+            clear: both;
+
+            p:first-child {
+              margin-top: 0px;
+            }
+
+            p:last-child {
+              margin-bottom: 0px;
+            }
+          }
+          .message-att {
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+
+            &-item {
+              border-radius: 5px;
+              overflow: hidden;
+              position: relative;
+              display: flex;
+              align-items: center;
+              flex-grow: 0;
+              flex-shrink: 0;
+              flex-basis: 200px;
+              width: 200px;
+
+              &-image {
+                cursor: pointer;
+                padding: 0;
+
+                img {
+                  object-fit: cover;
+                  display: block;
+                  height: 100%;
+                  width: 100%;
+                }
+              }
+
+              &-file {
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                width: 100%;
+              }
+            }
+
+            &-item-icon {
+              cursor: pointer;
+              padding: 10px 7px 7px;
+              background: #ccc;
+              border-radius: 5px;
+              margin-right: 10px;
+            }
+
+            &-item-name {
+              cursor: pointer;
+              overflow: hidden;
+
+              span {
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                display: -webkit-box;
+                line-height: 16px;
+              }
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+
+            &-item-remove {
+              border-radius: 100%;
+              background: #ccc;
+              cursor: pointer;
+              padding: 3px;
+              height: 15px;
+              width: 15px;
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              position: absolute;
+              top: -5px;
+              right: -5px;
+            }
+          }
+          .message-date {
+            font-size: 0.75rem;
+            clear: both;
+          }
+        }
+      }
+
+      &.from-admin {
+        padding-left: 20%;
+        padding-right: 20px;
+        justify-content: flex-end;
+
+        .message-content {
+          color: #ffffff;
+          margin-left: auto;
+          flex-direction: row;
+
+          .message-actions {
+            margin-right: 10px;
+          }
+          .message-group {
+            .message-rpy {
+              background-color: rgba($color: $brand-2, $alpha: 0.75);
+              float: right;
+
+              &::after {
+                background: $brand-2;
+              }
+            }
+            .message-dts {
+              background-color: $brand-2;
+              float: right;
+            }
+            .message-att {
+              &-item {
+                background-color: $brand-2;
+              }
+            }
+            .message-date {
+              color: #646464;
+              text-align: right;
+            }
+          }
+        }
+      }
+      &.from-client {
+        padding-right: 20%;
+        padding-left: 20px;
+        justify-content: flex-start;
+
+        .message-content {
+          color: #646464;
+          margin-right: auto;
+          flex-direction: row-reverse;
+
+          .message-actions {
+            margin-left: 10px;
+          }
+          .message-group {
+            .message-rpy {
+              background-color: rgba($color: #ebebeb, $alpha: 0.75);
+              float: left;
+
+              &::after {
+                background: #ccc;
+              }
+            }
+            .message-dts {
+              background-color: #ebebeb;
+              float: left;
+            }
+            .message-att {
+              &-item {
+                background-color: #ebebeb;
+              }
+            }
+            .message-date {
+              color: #646464;
+              text-align: left;
+            }
+          }
+        }
+      }
+      &.from-session {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:hover {
+        .message-content {
+          .message-actions {
+            opacity: 1;
+          }
+        }
+      }
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
+    .message-reply {
+      transition: all 300ms ease;
+      background-color: #ffffff;
+      border-top: none;
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+
+      .reply-to-wrapper {
+        padding: 16px 16px 0px 16px;
+
+        .reply-to-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+
+          .replying-to {
+            margin: 0px;
+          }
+
+          .close {
+            cursor: pointer;
+            border-radius: 100%;
+            background: #ccc;
+            padding: 2px;
+          }
+        }
+
+        .reply-to-body {
+          display: flex;
+
+          .quote {
+            background: #ccc;
+            width: 3px;
+          }
+
+          .content {
+            background: #eee;
+            padding: 13px;
+            flex-grow: 1;
+
+            p:first-child {
+              margin-top: 0px;
+            }
+
+            p:last-child {
+              margin-bottom: 0px;
+            }
+          }
+        }
+      }
+
+      .session-input {
+        outline: none;
+        border: none;
+        padding: 0px;
+        font-size: 0.9rem;
+        margin-left: 10px;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .editor {
+        margin-left: 5px;
+        width: 100%;
+        word-break: break-all;
+        max-height: 108px;
+        overflow: auto;
+      }
+    }
+  }
+  .ticket-metas {
+    transition: all 300ms ease;
+    background: #ffffff;
+    width: 100%;
+
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    overflow-y: auto;
+    padding: 1.25rem;
+  }
+
+  &.isMetaOpen {
+    .ticket-messages {
+      width: 0%;
+    }
+    .ticket-metas {
+      left: 0%;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .card-ticket .card-body {
+    .ticket-messages {
+      width: 100%;
+    }
+    .ticket-metas {
+      border-left: 1px solid #ccc;
+      width: 300px;
+      left: calc(100% + 300px);
+    }
+
+    &.isMetaOpen {
+      .ticket-messages {
+        width: calc(100% - 300px);
+
+        .message-reply {
+          width: calc(100% - 300px);
+        }
+      }
+      .ticket-metas {
+        left: calc(100% - 300px);
+      }
+    }
+  }
+}

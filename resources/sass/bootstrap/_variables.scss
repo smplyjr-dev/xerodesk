@@ -1,0 +1,95 @@
+/**
+ * Custom Variables for Bootstrap
+ * 
+ * @developer Alfredo Flores
+ * @email alfredo@xerosoft.com
+ */
+
+// =================== Bootstrap Original Variables Path =================== //
+// @import "../../../node_modules/bootstrap/scss/variables";
+
+// =================== Font Weight =================== //
+$font-weight-lighter: lighter;
+$font-weight-light:   300;
+$font-weight-normal:  400;
+$font-weight-semi:    500;
+$font-weight-bold:    700;
+$font-weight-bolder:  bolder;
+
+$text-muted: #9eabc0; // default is: #6c757d
+
+// =================== Fonts Sizes =================== //
+$text-xs:   0.75rem;
+$text-sm:   0.875rem;
+$text-base: 1rem;
+$text-lg:   1.125rem;
+$text-xl:   1.25rem;
+$text-2xl:  1.5rem;
+$text-3xl:  1.875rem;
+$text-4xl:  2.25rem;
+$text-5xl:  3rem;
+$text-6xl:  4rem;
+
+// =================== Fonts Family =================== //
+$font-family-base: "Roboto", "Raleway", "sans-serif";
+
+// =================== Color Scheming =================== //
+$primary:   #4d83ff; // default is: #007bff
+$secondary: #686868; // default is: #1b75bc
+$success:   #71c016; // default is: #1abc9c
+$info:      #335cad; // default is: #335cad
+$warning:   #ffc100; // default is: #d4855e
+$danger:    #ff4747; // default is: #ff0000
+$light:     #f8f9fa; // default is: #f8f9fa
+$dark:      #282f3a; // default is: #343a40
+$brand-1:   #63cad8;
+$brand-2:   #f15e4a;
+
+$theme-colors: ();
+$theme-colors: map-merge(
+  (
+    "primary":   $primary,
+    "secondary": $secondary,
+    "success":   $success,
+    "info":      $info,
+    "warning":   $warning,
+    "danger":    $danger,
+    "light":     $light,
+    "dark":      $dark,
+    "brand-1":   $brand-1,
+    "brand-2":   $brand-2,
+  ),
+  $theme-colors
+);
+
+$white:    #ffffff;
+$gray-600: #6c757d;
+$black:    #464646;
+
+$custom-control-indicator-checked-color:        $white;
+$custom-control-indicator-checked-bg:           $secondary;
+$custom-control-indicator-checked-disabled-bg:  rgba($secondary, .5);
+$custom-control-indicator-checked-box-shadow:   none;
+$custom-control-indicator-checked-border-color: $custom-control-indicator-checked-bg;
+
+$nav-divider-margin-y: 0;
+
+$badge-font-weight: $font-weight-semi;
+$badge-padding-y:   0.35rem;
+$badge-padding-x:   0.35rem;
+
+$spacer: 1rem;
+$spacers: ();
+$spacers: map-merge(
+  (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3)
+  ),
+  $spacers
+);
+
+$input-btn-focus-box-shadow: none;
