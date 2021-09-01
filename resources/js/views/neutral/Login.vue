@@ -79,6 +79,7 @@ export default {
   data: () => ({
     isLoading: false,
     loginError: [],
+    email: "",
     username: "",
     password: "",
     remember: false
@@ -95,6 +96,7 @@ export default {
 
       try {
         let { data } = await axios.post("/login", {
+          email: this.email,
           username: this.username,
           password: this.password
         });
@@ -130,6 +132,11 @@ export default {
       }
 
       this.isLoading = false;
+    }
+  },
+  watch: {
+    username(newVal) {
+      this.email = newVal;
     }
   }
 };

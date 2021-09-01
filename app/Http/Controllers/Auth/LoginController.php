@@ -20,6 +20,7 @@ class LoginController extends Controller
 
     protected function username()
     {
+        if (filter_var(request()->username, FILTER_VALIDATE_EMAIL)) return 'email';
         return 'username';
     }
 

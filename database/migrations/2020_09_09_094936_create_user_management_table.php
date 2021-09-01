@@ -26,7 +26,7 @@ class CreateUserManagementTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('company_id');
-            $table->string('username')->unique();
+            $table->string('username')->nullable()->unique();
             $table->string('email')->unique();
             $table->string('profile_picture')->default('generic-profile.png');
             $table->timestamp('email_verified_at')->nullable();
@@ -43,6 +43,7 @@ class CreateUserManagementTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('first_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->date('dob')->nullable();
             $table->string('facebook')->nullable();
