@@ -30,10 +30,14 @@ class RolesPermissionsSeeder extends Seeder
                 $created_permission->assignRole($admin);
 
                 if (in_array($created_permission->slug, [
+                    // for tickets
                     'view_tickets',
                     'view_ticket',
                     'reply_to_ticket',
-                    'edit_ticket'
+                    'edit_ticket',
+
+                    // for clients
+                    'view_clients'
                 ])) {
                     $created_permission->assignRole($agent);
                 }
