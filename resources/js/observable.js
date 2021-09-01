@@ -1,32 +1,4 @@
-const modules = [
-  "Employees – Onboarding/Employee Adhoc",
-  "Employees - Verification Account",
-  "Employees - Entitlement",
-  "Organization Module",
-  "Timesheet - Holidays Module",
-  "Timesheet - Timesheet Policies Module",
-  "Timesheet - Work Schedules Module",
-  "Timesheet - FiliClock Module",
-  "Timesheet - Biometrics Module ",
-  "Timesheet - Timesheet Module",
-  "Timesheet - Change in Shift Module",
-  "Timesheet - Offset Module",
-  "Timesheet - Overtime Module",
-  "Timesheet - Official Business Travel Module",
-  "Timesheet - DTR Request Module",
-  "Leave - Leave Policies Module",
-  "Leave - Entitlement Module",
-  "Leave - Leave Request Module",
-  "FiliPayroll Module",
-  "Certificates Module",
-  "Reports Module",
-  "Operations – Employee Roles Module",
-  "Operations – Audit Trail Module",
-  "Global Settings Module",
-  "Documents Module",
-  "Team Insights Module",
-  "Others"
-];
+const modules = [];
 
 const tickets = {
   priority: [

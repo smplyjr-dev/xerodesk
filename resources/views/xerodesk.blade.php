@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/icon" />
 
-    <title>FiliChat</title>
+    <title>Xerodesk</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}" />
@@ -20,7 +20,7 @@
 
 <body>
 
-    <div id="filichat-portal"></div>
+    <div id="xerodesk-portal"></div>
 
     {{-- LaravelMix: For Development Only --}}
     @if (config('app.env') == 'local') <script src="http://localhost:35729/livereload.js"></script> @endif

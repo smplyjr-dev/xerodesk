@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>FiliChat | Chat Log</title>
+  <title>Xerodesk | Chat Log</title>
 
   <style type="text/css">
     /**
@@ -193,7 +193,7 @@
                       <tr>
                         <td align="center" style=" padding:20px 20px 40px 20px;">
                           @foreach ($messages as $message)
-                            @if ($message->message_from == 'admin')
+                            @if ($message->sender == 'admin')
                               <table style="margin-top: 15px;">
                                 <tbody>
                                   <tr>
@@ -223,7 +223,7 @@
                               </table>
                             @endif
 
-                            @if ($message->message_from == 'client')
+                            @if ($message->sender == 'client')
                               <table style="margin-top: 15px;">
                                 <tbody>
                                   <tr>

@@ -121,19 +121,13 @@
           <td>
             <div class="d-flex">
               <div class="ticket-color" :style="{ background: getSla(p) }"></div>
-              <div class="d-flex align-items-center">
-                <img class="object-cover mx-2" :src="p.client_picture" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="40px" />
-                <div class="d-flex flex-column" style="position: relative;">
-                  <span>{{ p.client }}</span>
-                  <span class="text-muted text-xs">{{ p.client_email }}</span>
-                  <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
-                </div>
+              <div class="d-flex flex-column mx-2 w-100" style="position: relative;">
+                <span>{{ p.client ? p.client : "No Name" }}</span>
+                <span class="text-muted text-xs">{{ p.client_email ? p.client_email : "No Email" }}</span>
+                <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
               </div>
             </div>
           </td>
-
-          <!-- Company -->
-          <td>{{ p.company }}</td>
 
           <!-- Title -->
           <td>
@@ -240,7 +234,6 @@ export default {
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "client", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "company", label: "Company" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "session", label: "Session" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "priority", label: "Priority" },
       { sortable: 1, hide: 0, type: types[1], width: "12.5%", name: "groups", label: "Groups" },
@@ -396,7 +389,7 @@ export default {
 
       axios.post(`/message`, {
         hash: nanoid(),
-        message_from: "session",
+        sender: "session",
         message: `<p>Thank you for waiting. <br /> You are now connected to agent ${agent.bio.first_name} ${agent.bio.last_name}.</p>`,
         client_id: s.id,
         session: s.session
@@ -463,7 +456,7 @@ export default {
     getUnreadCount(p) {
       let messages = p.messages;
 
-      return messages.filter(m => m.message_from == "client" && m.is_read == false).length;
+      return messages.filter(m => m.sender == "client" && m.is_read == false).length;
     }
   },
   created() {

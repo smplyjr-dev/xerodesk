@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Client\Session;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +15,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/user/{user}/company', function ($user) {
+    $model = User::with('company')->findOrFail($user);
+
+    return $model->company;
+});
+
+Route::put('/user/{user}/company', function ($user) {
+    $model = User::with('company')->findOrFail($user);
+    $model->company()->update(request()->only(['name', 'address', 'url']));
+
+    return $model->company;
+});
+
 Route::get('/session/{session}', function ($session) {
-    return Session::with(['taggables', 'client.company', 'messages'])
+    $model = Session::with(['taggables', 'client.company', 'messages.attachments'])
         ->where('session', $session)
         ->first();
+
+    return $model;
 });
 
 Route::put('/session/{session}/seen', function ($session) {
     $model = Session::with(['messages' => function ($query) {
         $query->where('is_read', false)
-            ->where('message_from', 'client');
+            ->whereIn('sender', ['client']);
     }]);
     $model = $model->where('session', $session);
     $model = $model->first();

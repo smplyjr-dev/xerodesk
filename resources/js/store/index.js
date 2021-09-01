@@ -1,9 +1,5 @@
 Vue.use(Vuex);
 
-import chatbots from "./modules/chatbot/chatbots";
-import suggestions from "./modules/chatbot/suggestions";
-import intents from "./modules/chatbot/intents";
-
 import clients from "./modules/client/clients.js";
 import messages from "./modules/client/messages.js";
 import sessions from "./modules/client/sessions.js";
@@ -19,10 +15,6 @@ import slas from "./modules/slas.js";
 
 export default new Vuex.Store({
   modules: {
-    chatbots,
-    suggestions,
-    intents,
-
     clients,
     messages,
     sessions,

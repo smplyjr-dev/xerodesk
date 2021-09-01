@@ -26,16 +26,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/iframe', function () {
     $path = config('app.env') == 'local'
-        ? 'http://filichat-widget.test/dist/'
+        ? 'http://xerodesk-widget.test/dist/'
         : 'widget/';
 
     return view('iframe', compact('path'));
 });
 
-Route::get('/implementation', function () {
-    return view('implementation');
-});
-
 Route::get('/{any}', function () {
-    return view('filichat');
+    return view('xerodesk');
 })->where('any', '.*');

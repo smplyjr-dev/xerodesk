@@ -2,7 +2,6 @@
 
 namespace App\Traits\Client;
 
-use App\Models\Client\Attachment;
 use App\Models\Client\Client;
 use App\Models\Client\Session;
 use Exception;

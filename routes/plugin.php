@@ -1,7 +1,11 @@
 <?php
 
+use App\Models\Client\Client;
 use App\Models\Client\Session;
+use App\Models\Company\Company;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +18,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/session/{session}/messages', function () {
+Route::get('/client/{token}', function ($token) {
+    $model = Client::where('token', $token)->firstOrFail();
+
+    return $model;
+});
+
+Route::post('/client', function () {
+    $model = Client::create([
+        'company_id' => 1,
+        'token'      => Str::random(25)
+    ]);
+
+    return $model->fresh();
+});
+
+Route::get('/client/{token}/sessions', function ($token) {
+    $model = Client::with('sessions.messages')->where('token', $token)->firstOrFail();
+
+    return $model->sessions;
+});
+
+Route::post('/session', function () {
+    $abbr  = Company::first()->abbr;
+    $count = Session::whereDate('created_at', Carbon::today()->toDateString())->count();
+    $model = Session::create([
+        'client_id' => request()->client_id,
+        'session'   => 'XD' . $abbr . date('ymd') . ($count + 1)
+    ]);
+
+    return $model->fresh();
+});
+
+Route::get('/session/{session}/messages', function ($session) {
     $model = Session::with('messages', 'messages.attachments');
-    $model = $model->where('session', request()->session);
+    $model = $model->where('session', $session);
     $model = $model->firstOrFail();
 
     return $model;
@@ -25,7 +61,7 @@ Route::get('/session/{session}/messages', function () {
 Route::put('/session/{session}/seen', function ($session) {
     $model = Session::with(['messages' => function ($query) {
         $query->where('is_read', false)
-            ->where('message_from', ['admin', 'session']);
+            ->whereIn('sender', ['admin', 'session']);
     }]);
     $model = $model->where('session', $session);
     $model = $model->first();

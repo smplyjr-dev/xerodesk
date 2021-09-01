@@ -26,12 +26,6 @@ Route::namespace('Auth')->group(function () {
     Route::post('email/resend',        'VerificationController@resend');
 });
 
-Route::namespace('Chatbot')->group(function () {
-    Route::get('/chatbot/{id}/intents',     'ChatbotController@intents');
-    Route::get('/chatbot/{id}/message',     'ChatbotController@message');
-    Route::get('/chatbot/{id}/suggestions', 'ChatbotController@suggestions');
-});
-
 Route::namespace('Client')->group(function () {
     Route::get('/client/datatable',        'ClientController@datatable');
     Route::get('/client/{token}/verify',   'ClientController@verify');
@@ -57,12 +51,6 @@ Route::namespace('Company')->group(function () {
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::namespace('Chatbot')->group(function () {
-        Route::resource('/chatbot',    'ChatbotController');
-        Route::resource('/intent',     'IntentController');
-        Route::resource('/suggestion', 'SuggestionController');
-    });
-
     Route::namespace('Client')->group(function () {
         Route::get('/ticket/datatable', 'TicketController@datatable');
     });

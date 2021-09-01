@@ -19,11 +19,8 @@
   {
     "name": "Settings - Company",
     "childs": [
-      { "name": "Select Company Employee", "slug": "select_company_employees" },
-      { "name": "View Companies", "slug": "view_companies" },
-      { "name": "Add Companies", "slug": "create_company" },
-      { "name": "Edit Companies", "slug": "edit_company" },
-      { "name": "Delete Companies", "slug": "delete_company" }
+      { "name": "View Company", "slug": "view_company" },
+      { "name": "Edit Company", "slug": "edit_company" }
     ]
   },
   {

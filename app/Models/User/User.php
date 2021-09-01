@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Mail\EmailVerification;
 use App\Mail\ResetPassword;
+use App\Models\Company\Company;
 use App\Models\User\UserBio;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -75,6 +76,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function role()
     {
         return $this->roles[0];
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
     public function bio()

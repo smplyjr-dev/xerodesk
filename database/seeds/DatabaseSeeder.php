@@ -12,13 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesPermissionsSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(CompanySeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(GroupSeeder::class);
         $this->call(SLASeeder::class);
 
         if (config('app.env') == 'local') {
-            // $this->call(ChatbotSeeder::class);
             // $this->call(LocalSeeder::class);
         }
     }

@@ -3,6 +3,8 @@
 namespace App\Models\Company;
 
 use App\BaseModel;
+use App\Models\Client\Client;
+use App\Models\User\User;
 
 class Company extends BaseModel
 {
@@ -17,5 +19,10 @@ class Company extends BaseModel
     public function clients()
     {
         return $this->hasMany(Client::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }

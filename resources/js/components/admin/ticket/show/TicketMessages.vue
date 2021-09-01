@@ -2,7 +2,7 @@
   <div class="ticket-messages">
     <div class="message-bubble" v-for="(message, $mIndex) in messages" :key="$mIndex" :class="messageFrom(message)">
       <div class="message-content">
-        <div class="message-actions" v-if="message.message_from != 'session'">
+        <div class="message-actions" v-if="message.sender != 'session'">
           <button type="button" class="action" @click="onReply(message)">
             <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
           </button>
@@ -30,8 +30,7 @@
           </div>
           <transition name="slide">
             <div class="message-date" v-show="toggleDates.includes(message.id)">
-              <span><!-- {{ $dayjs("format", message.created_at, "HH:mm A") }} ({{ $dayjs("fromNow", message.created_at) }}) --></span>
-              <span>{{ $dayjs("fromNow", message.created_at) }}</span>
+              <span>{{ $dayjs("format", message.created_at, "HH:mm A") }} ({{ $dayjs("fromNow", message.created_at) }})</span>
             </div>
           </transition>
           <Spinner v-if="$isEmpty(message.message) && $isEmpty(message.attachments)"></Spinner>
@@ -74,7 +73,7 @@ export default {
       raw_messages.forEach((m, $m) => {
         if ($m > 0) {
           // if coming from the same sender
-          if (m.message_from == raw_messages[$m].message_from) {
+          if (m.sender == raw_messages[$m].sender) {
             let date_prev = new Date(raw_messages[$m - 1].created_at);
             let date_curr = new Date(m.created_at);
             if (date_prev.getMinutes() == date_curr.getMinutes()) {
@@ -94,9 +93,9 @@ export default {
   methods: {
     messageFrom(message) {
       return {
-        "from-admin": message.message_from == "admin",
-        "from-client": message.message_from == "client",
-        "from-session": message.message_from == "session"
+        "from-admin": message.sender == "admin",
+        "from-client": message.sender == "client",
+        "from-session": message.sender == "session"
       };
     },
     getIcon(ext) {

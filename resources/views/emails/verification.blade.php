@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>FiliChat | Email Verification</title>
+  <title>Xerodesk | Email Verification</title>
 
   <style type="text/css">
     /**
@@ -182,7 +182,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">You created a new account at <span class="bold">FiliChat</span>. Please activate your account by clicking the <span class="bold">"Activate Your Account"</span> button down below.</p>
+              <p style="margin: 0;">You created a new account at <span class="bold">Xerodesk</span>. Please activate your account by clicking the <span class="bold">"Activate Your Account"</span> button down below.</p>
             </td>
           </tr>
 

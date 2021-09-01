@@ -116,7 +116,7 @@ export default {
 
       let message = await axios.post(`/message`, {
         hash: nanoid(),
-        message_from: "session",
+        sender: "session",
         message: `<p>Thank you for waiting. <br /> You are now connected to agent ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
         client_id: this.data.client.id,
         session: this.session.session
@@ -167,7 +167,7 @@ export default {
           let form = new FormData();
           let file = attachment.file;
           let headers = { "Content-Type": "multipart/form-data" };
-          let message = { hash: nanoid(), message_from: "admin", message: "" };
+          let message = { hash: nanoid(), sender: "admin", message: "" };
           if (this.$store.state.messages.reply_to) message.reply_to = this.$store.state.messages.reply_to;
 
           if (file.size < 20000000 && this.extensions.includes(attachment.ext)) {
@@ -235,7 +235,7 @@ export default {
         // if message is not empty
         if (this.$store.state.messages.message) {
           // message details
-          let message = { hash: nanoid(), message_from: "admin", message: this.$store.state.messages.message };
+          let message = { hash: nanoid(), sender: "admin", message: this.$store.state.messages.message };
           if (this.$store.state.messages.reply_to) message.reply_to = this.$store.state.messages.reply_to;
 
           // push the message to the chat box

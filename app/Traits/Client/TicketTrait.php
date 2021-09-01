@@ -21,7 +21,6 @@ trait TicketTrait
 
             $query = Session::with('messages')
                 ->join('clients AS c', 'client_sessions.client_id', '=', 'c.id')
-                ->join('companies AS cmp', 'c.company_id', '=', 'cmp.id')
                 ->leftJoin('users AS u', 'client_sessions.user_id', '=', 'u.id')
                 ->leftJoin('user_bio AS ub', 'u.id', '=', 'ub.user_id')
                 ->select(
@@ -30,7 +29,6 @@ trait TicketTrait
                     'c.name AS client',
                     'client_sessions.title AS title',
                     'client_sessions.session AS session',
-                    'cmp.name AS company',
                     'client_sessions.module AS module',
                     'client_sessions.priority AS priority',
                     'client_sessions.status AS status',
@@ -44,7 +42,6 @@ trait TicketTrait
 
                     // extra client details
                     'c.email AS client_email',
-                    DB::raw("CONCAT(cmp.url, '/', c.picture) AS client_picture"),
                     'client_sessions.created_at AS created_at',
                     'client_sessions.updated_at AS updated_at'
                 )

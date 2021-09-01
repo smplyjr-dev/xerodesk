@@ -36,8 +36,8 @@ class LocalSeeder extends Seeder
         $session_c->taggables()->attach($tag_c->id);
 
         // Client Sesssion Messages
-        Message::create(['session_id' => $session_a->id, 'message_from' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 1']);
-        Message::create(['session_id' => $session_b->id, 'message_from' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 2']);
-        Message::create(['session_id' => $session_c->id, 'message_from' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 3']);
+        Message::create(['session_id' => $session_a->id, 'sender' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 1']);
+        Message::create(['session_id' => $session_b->id, 'sender' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 2']);
+        Message::create(['session_id' => $session_c->id, 'sender' => 'client', 'message' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, odit. - 3']);
     }
 }

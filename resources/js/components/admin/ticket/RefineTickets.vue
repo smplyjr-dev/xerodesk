@@ -5,9 +5,10 @@
         <div class="row">
           <div class="col form-group">
             <label>Company</label>
-            <select class="custom-select" v-model="refine.company">
+            <select class="custom-select" v-model="refine.company" @focus="$store.dispatch('companies/fetchCompanies')">
               <option :value="null">-- Select Company --</option>
               <option v-for="c in companies" :key="c.id" :value="c.id">{{ c.name }}</option>
+              <option :value="null" disabled v-if="$isEmpty(companies)">No company found.</option>
             </select>
           </div>
           <div class="col form-group">
@@ -15,6 +16,7 @@
             <select class="custom-select" v-model="refine.module">
               <option :value="null">-- Select Module --</option>
               <option v-for="m in modules" :key="m">{{ m }}</option>
+              <option :value="null" disabled v-if="$isEmpty(modules)">No module found.</option>
             </select>
           </div>
           <div class="col form-group">
@@ -22,6 +24,7 @@
             <select class="custom-select" v-model="refine.priority">
               <option :value="null">-- Select Priority --</option>
               <option v-for="p in priority" :key="p.id" :value="p.id">{{ p.name }}</option>
+              <option :value="null" disabled v-if="$isEmpty(priority)">No priority found.</option>
             </select>
           </div>
           <div class="col form-group">
@@ -29,6 +32,7 @@
             <select class="custom-select" v-model.number="refine.agent">
               <option :value="null">-- Select Agent --</option>
               <option :value="u.id" v-for="u in users" :key="u.id">{{ `${u.bio.first_name} ${u.bio.last_name}` }}</option>
+              <option :value="null" disabled v-if="$isEmpty(users)">No users found.</option>
             </select>
           </div>
           <div class="col form-group">
@@ -36,6 +40,7 @@
             <select class="custom-select" v-model.number="refine.status">
               <option :value="null">-- Select Status --</option>
               <option :value="s.id" v-for="s in status" :key="s.id">{{ `${s.name}` }}</option>
+              <option :value="null" disabled v-if="$isEmpty(status)">No status found.</option>
             </select>
           </div>
           <div class="col form-group">
@@ -97,7 +102,6 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("companies/fetchCompanies");
     this.setRefineValues();
   },
   watch: {

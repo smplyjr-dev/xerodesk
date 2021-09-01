@@ -13,8 +13,19 @@ class CreateUserManagementTable extends Migration
      */
     public function up()
     {
+        Schema::create('companies', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('address');
+            $table->string('url');
+            $table->string('abbr', 5);
+            $table->mediumText('allowed_users');
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('company_id');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('profile_picture')->default('generic-profile.png');
@@ -23,8 +34,9 @@ class CreateUserManagementTable extends Migration
             $table->integer('status')->default('1')->comment('1 Active | 2 Inactive');
             $table->rememberToken();
             $table->timestamps();
-
             $table->softDeletes();
+
+            $table->foreign('company_id')->references('id')->on('companies');
         });
 
         Schema::create('user_bio', function (Blueprint $table) {
@@ -55,6 +67,7 @@ class CreateUserManagementTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('companies');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_resets');
     }

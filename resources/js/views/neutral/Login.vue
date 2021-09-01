@@ -53,8 +53,11 @@
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg btn-block text-uppercase text-sm rounded-0 py-2" :disabled="isLoading">
               <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status"></div>
-              <span v-else>Login</span>
+              <span v-else>Submit</span>
             </button>
+          </div>
+          <div class="form-group text-center">
+            <span>New to Xerodesk? <router-link to="/register">Sign up</router-link></span>
           </div>
         </form>
       </div>

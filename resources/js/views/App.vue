@@ -1,5 +1,5 @@
 <template>
-  <div id="filichat-portal">
+  <div id="xerodesk-portal">
     <loading ref="loading" :layout="layout" />
     <component :is="layout" v-if="layout" />
 
@@ -35,7 +35,7 @@ const layouts = context
   }, {});
 
 export default {
-  el: "#filichat-portal",
+  el: "#xerodesk-portal",
   data: () => ({
     layout: null,
     redirectToLoginUrl: ""
@@ -86,7 +86,7 @@ export default {
       return JSON.parse(jsonPayload);
     },
     verifyToken() {
-      let token = localStorage.getItem("encrypted");
+      let token = localStorage.getItem("payload");
 
       if (token) {
         try {

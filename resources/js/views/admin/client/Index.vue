@@ -26,10 +26,6 @@
                     <div class="content">{{ p.name }}</div>
                   </div>
                   <div class="dt-mobile-item">
-                    <div class="title">Company:</div>
-                    <div class="content">{{ p.company }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
                     <div class="title">Email Address:</div>
                     <div class="content">{{ p.email }}</div>
                   </div>
@@ -41,12 +37,11 @@
 
                 <td>
                   <div class="d-flex align-items-center">
-                    <img class="object-cover mr-2" :src="p.picture" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="30px" />
-                    <span>{{ p.name }}</span>
+                    <!-- <img class="object-cover mr-2" :src="p.picture" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="30px" /> -->
+                    <span>{{ p.name || "--" }}</span>
                   </div>
                 </td>
-                <td>{{ p.company }}</td>
-                <td>{{ p.email }}</td>
+                <td>{{ p.email || "- -" }}</td>
                 <td>{{ p.phone || "- -" }}</td>
               </tr>
 
@@ -136,10 +131,9 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "company", label: "Company" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "email", label: "Email Address" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" }
+      { sortable: 1, hide: 0, type: types[0], width: "33.33%", name: "name", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "33.33%", name: "email", label: "Email Address" },
+      { sortable: 0, hide: 0, type: types[0], width: "33.33%", name: "phone", label: "Phone" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

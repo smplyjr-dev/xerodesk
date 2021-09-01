@@ -65,8 +65,8 @@ export default {
             to: "/settings/slas"
           },
           {
-            name: "Companies",
-            to: "/settings/companies"
+            name: "Company",
+            to: "/settings/company"
           },
           {
             name: "Groups",

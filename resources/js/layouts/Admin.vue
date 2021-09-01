@@ -26,7 +26,7 @@
 
         <footer class="footer mt-auto pt-4 pb-3">
           <p class="text-muted text-sm mb-0">
-            Copyright &copy; 2020 FiliChat. All rights reserved.
+            Copyright &copy; 2020 Xerodesk. All rights reserved.
           </p>
         </footer>
       </section>
@@ -49,7 +49,7 @@ export default {
   }),
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
-    titleTemplate: `FiliChat - %s`
+    titleTemplate: `Xerodesk - %s`
   }),
   methods: {
     /* notify(variant) {
@@ -63,10 +63,10 @@ export default {
   },
   created() {
     // get all the companies
-    this.$store.dispatch("companies/fetchCompanies");
+    // this.$store.dispatch("companies/fetchCompanies");
 
     // get all the roles
-    this.$store.dispatch("roles/fetchRoles");
+    // this.$store.dispatch("roles/fetchRoles");
   }
 };
 </script>

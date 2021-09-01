@@ -23,13 +23,13 @@ const mutations = {
   PUSH_CLIENT: (state, client) => state.clients.push(client),
 
   PUSH_MESSAGE: (state, params) => {
-    let { message, message_from } = params;
+    let { message, sender } = params;
     let clients_id = state.clients.map(c => c.id);
     let client_key = clients_id.indexOf(params.client_id);
 
     state.clients[client_key].sessions[state.clients[client_key].sessions.length - 1].messages.push({
       message,
-      message_from
+      sender
     });
   }
 };
