@@ -3,7 +3,8 @@
     <div class="col-lg-6 page-wrapper">
       <div class="page-form">
         <div class="mb-4">
-          <img loading="lazy" :src="`${$APP_URL}/images/logo.png`" height="50px" alt="FiliPay Logo" />
+          <!-- <img loading="lazy" :src="`${$APP_URL}/images/logo.png`" height="50px" alt="FiliPay Logo" /> -->
+          <h3>Xerodesk</h3>
         </div>
 
         <h4>Welcome back!</h4>
