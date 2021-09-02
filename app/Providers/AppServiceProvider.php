@@ -32,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // observer
-        Attachment::observe(AttachmentObserver::class);
-        Message::observe(MessageObserver::class);
         Session::observe(SessionObserver::class);
+        Message::observe(MessageObserver::class);
+        // Attachment::observe(AttachmentObserver::class);
 
         // validations
         $this->image64Validation();

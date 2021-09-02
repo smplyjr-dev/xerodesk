@@ -2,6 +2,7 @@
 
 namespace App\Traits\Client;
 
+use App\Events\Message\MessageAttachment;
 use App\Models\Client\Client;
 use App\Models\Client\Message;
 use App\Models\Client\Session;
@@ -55,6 +56,11 @@ trait MessageTrait
                 // save to directory
                 $file->storeAs($path, $name . '.' . $extension);
             }
+
+            // send the event for realtime purposes after the attachment has been saved to the storage
+            $s = $message->first()->session()->first();
+            $c = $s->client()->first();
+            MessageAttachment::dispatch($message, $attachment, $s, $c);
 
             return response()->json($attachment, 200);
         } catch (\Exception $e) {
