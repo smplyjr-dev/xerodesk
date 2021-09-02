@@ -2,8 +2,9 @@
   <header>
     <aside>
       <router-link class="sb-brand" to="/tickets">
+        <!-- <img class="d-none d-lg-block object-contain" loading="lazy" :src="`${$APP_URL}/images/logo.png`" height="35px" alt="FiliPay Logo" /> -->
         <img class="d-block d-lg-none object-contain" loading="lazy" :src="`${$APP_URL}/images/icon.png`" height="35px" alt="FiliPay Logo" />
-        <img class="d-none d-lg-block object-contain" loading="lazy" :src="`${$APP_URL}/images/logo.png`" height="35px" alt="FiliPay Logo" />
+        <h3 class="d-none d-lg-block object-contain mb-0">Xerodesk</h3>
       </router-link>
 
       <div class="sb-toggler">
