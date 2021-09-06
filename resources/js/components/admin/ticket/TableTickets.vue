@@ -20,16 +20,11 @@
         <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
           <!-- Mobile View -->
           <td class="dt-mobile">
-            <div class="dt-mobile-item">
-              <div class="title">SLA:</div>
-              <div class="content">
-                <div style="height: 20px; width: 20px;" :style="{ background: getSla(p) }"></div>
-              </div>
-            </div>
+            <div class="sla-mobile" :style="{ background: getSla(p) }"></div>
             <div class="dt-mobile-item">
               <div class="title">Name:</div>
               <div class="content d-flex">
-                <span>{{ p.client }} </span>
+                <span>{{ p.client || "No Name" }} </span>
                 <span class="ticket-counter--mobile" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
               </div>
             </div>
@@ -121,10 +116,13 @@
           <td>
             <div class="d-flex">
               <div class="ticket-color" :style="{ background: getSla(p) }"></div>
-              <div class="d-flex flex-column mx-2 w-100" style="position: relative;">
-                <span>{{ p.client ? p.client : "No Name" }}</span>
-                <span class="text-muted text-xs">{{ p.client_email ? p.client_email : "No Email" }}</span>
-                <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
+              <div class="d-flex w-100" style="position: relative;">
+                <img class="object-cover mx-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="40px" />
+                <div class="d-flex flex-column">
+                  <span>{{ p.client || "No Name" }}</span>
+                  <span class="text-muted text-xs">{{ p.client_email || "No Email" }}</span>
+                  <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
+                </div>
               </div>
             </div>
           </td>

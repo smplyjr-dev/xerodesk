@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client\Client;
 use App\Models\Client\Session;
 use App\Models\User\User;
 use Illuminate\Support\Facades\Route;
@@ -15,17 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/user/{user}/company', function ($user) {
-    $model = User::with('company')->findOrFail($user);
+Route::get('/client/{token}', function ($token) {
+    $model = Client::where('token', $token)->firstOrFail();
 
-    return $model->company;
-});
-
-Route::put('/user/{user}/company', function ($user) {
-    $model = User::with('company')->findOrFail($user);
-    $model->company()->update(request()->only(['name', 'address', 'url']));
-
-    return $model->company;
+    return $model;
 });
 
 Route::get('/session/{session}', function ($session) {
@@ -51,4 +45,17 @@ Route::put('/session/{session}/seen', function ($session) {
     }
 
     return $model;
+});
+
+Route::get('/user/{user}/company', function ($user) {
+    $model = User::with('company')->findOrFail($user);
+
+    return $model->company;
+});
+
+Route::put('/user/{user}/company', function ($user) {
+    $model = User::with('company')->findOrFail($user);
+    $model->company()->update(request()->only(['name', 'address', 'url']));
+
+    return $model->company;
 });

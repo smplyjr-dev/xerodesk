@@ -10,30 +10,33 @@
             <InlineSvg name="template/mdi-download.svg" color="#000" size="1rem" />
           </button>
         </div>
-        <div class="message-group">
+        <div class="message-group" v-tooltip:top="`${messageDetails(message)}`">
           <TicketReplyingTo v-if="message.reply_to" :message="message" />
-          <div class="message-dts" v-if="!$isEmpty(message.message)" v-html="message.message" @click="toggleDate(message.id)"></div>
-          <div class="message-att" v-if="!$isEmpty(message.attachments)">
-            <div class="message-att-item" v-for="attachment in message.attachments" :key="attachment.id">
-              <div class="message-att-item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">
+          <div class="message-dtls" v-if="!$isEmpty(message.message)" v-html="message.message"></div>
+          <div class="message-attm" v-if="!$isEmpty(message.attachments)">
+            <div class="message-attm-item" v-for="attachment in message.attachments" :key="attachment.id">
+              <div class="message-attm-item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">
                 <img :src="`${$APP_URL}/storage/uploads/clients/${data.client.token}/${data.session.session}/${attachment.name}.${attachment.extension}`" />
               </div>
-              <div class="message-att-item-file" v-else>
-                <div class="message-att-item-icon" @click="downloadAtt(attachment)">
+              <div class="message-attm-item-file" v-else>
+                <div class="message-attm-item-icon" @click="downloadAtt(attachment)">
                   <InlineSvg :name="`heroicons/${getIcon(attachment.extension)}.svg`" color="#000" size="25px" />
                 </div>
-                <div class="message-att-item-name" @click="downloadAtt(attachment)">
+                <div class="message-attm-item-name" @click="downloadAtt(attachment)">
                   <span>{{ `${attachment.name}.${attachment.extension}` }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <transition name="slide">
-            <div class="message-date" v-show="toggleDates.includes(message.id)">
-              <span>{{ $dayjs("format", message.created_at, "HH:mm A") }} ({{ $dayjs("fromNow", message.created_at) }})</span>
-            </div>
-          </transition>
-          <Spinner v-if="$isEmpty(message.message) && $isEmpty(message.attachments)"></Spinner>
+          <div class="message-date">
+            <span>{{ $dayjs("format", message.created_at, "MM/DD/YYYY - hh:mm A") }}</span>
+            <span v-if="['admin', 'client'].includes(message.sender)">
+              <span>&#8226;</span>
+              <template v-if="message.sender == 'admin'">{{ getSender(message) }}</template>
+              <template v-else>{{ data.client.name }}</template>
+            </span>
+          </div>
+          <Spinner v-if="$isEmpty(message.message) && $isEmpty(message.attachments)" />
         </div>
       </div>
     </div>
@@ -59,11 +62,11 @@ export default {
   components: { TicketReplyingTo, TicketReply },
   props: ["data"],
   data: () => ({
-    toggleDates: [],
     enlargeToggle: false,
     enlargeUrl: null
   }),
   computed: {
+    ...mapState("auth", ["users"]),
     ...mapState("messages", ["messages"]),
 
     coupled() {
@@ -91,6 +94,13 @@ export default {
     }
   },
   methods: {
+    messageDetails(message) {
+      let date = this.$dayjs("format", message.created_at, "MM/DD/YYYY");
+      let time = this.$dayjs("format", message.created_at, "hh:mm A");
+      let sender = message.sender == "client" ? this.data.client.name : "Admin";
+
+      return `Sent Date: ${date} <br /> Sent Time: ${time} <br /> Sent By: ${sender}`;
+    },
     messageFrom(message) {
       return {
         "from-admin": message.sender == "admin",
@@ -111,6 +121,12 @@ export default {
       // compressed
       if (["rar", "zip", "7z"].includes(ext)) return "folder";
     },
+    getSender(message) {
+      let user = this.users.find(u => u.id == message.user_id);
+
+      if (user) return `${user.bio.first_name} ${user.bio.last_name}`;
+      return;
+    },
     downloadAtt(att) {
       let url = `${this.$APP_URL}/storage/uploads/clients/${this.data.client.token}/${this.data.session.session}/${att.name}.${att.extension}`;
       let link = document.createElement("a");
@@ -129,10 +145,6 @@ export default {
     },
     onDownload(message) {
       this.downloadAtt(message.attachments[0]);
-    },
-    toggleDate(id) {
-      if (!this.toggleDates.includes(id)) this.toggleDates.push(id);
-      else this.toggleDates = this.toggleDates.filter(td => td != id);
     },
     enlargeAtt(att) {
       this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.data.client.token}/${this.data.session.session}/${att.name}.${att.extension}`;

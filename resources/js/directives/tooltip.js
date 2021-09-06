@@ -1,14 +1,12 @@
 /**
  * Bootstrap Tooltip Directive
- * 
+ *
  * @developer Alfredo Flores
  * @email alfredo@xerosoft.com
  */
 
 const bsTooltip = (el, binding, state) => {
-  if (state === "update") {
-    $(el).tooltip("dispose");
-  }
+  if (state === "update") $(el).tooltip("dispose");
 
   const t = [];
 
@@ -21,7 +19,7 @@ const bsTooltip = (el, binding, state) => {
     title: binding.value,
     placement: binding.arg || "top",
     trigger: t.join(" "),
-    html: !!binding.modifiers.html
+    html: true // to allow html attribute, be careful
   });
 };
 

@@ -1,8 +1,8 @@
 {
     "/main.js": "/main.js",
-    "/main.css": "/main.css",
     "/main.js.map": "/main.js.map",
-    "/main.css.map": "/main.css.map",
     "/xerodesk.js": "/xerodesk.js",
-    "/xerodesk.js.map": "/xerodesk.js.map"
+    "/main.css": "/main.css",
+    "/xerodesk.js.map": "/xerodesk.js.map",
+    "/main.css.map": "/main.css.map"
 }

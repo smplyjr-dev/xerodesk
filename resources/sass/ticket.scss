@@ -86,10 +86,10 @@
               margin-bottom: 0px;
             }
           }
-          .message-dts {
-            cursor: pointer;
+          .message-dtls {
             padding: 10px 15px 10px 15px;
             clear: both;
+            word-break: break-all;
 
             p:first-child {
               margin-top: 0px;
@@ -99,7 +99,7 @@
               margin-bottom: 0px;
             }
           }
-          .message-att {
+          .message-attm {
             display: flex;
             align-items: center;
             overflow-x: auto;
@@ -205,11 +205,11 @@
                 background: $brand-2;
               }
             }
-            .message-dts {
+            .message-dtls {
               background-color: $brand-2;
               float: right;
             }
-            .message-att {
+            .message-attm {
               &-item {
                 background-color: $brand-2;
               }
@@ -243,11 +243,11 @@
                 background: #ccc;
               }
             }
-            .message-dts {
+            .message-dtls {
               background-color: #ebebeb;
               float: left;
             }
-            .message-att {
+            .message-attm {
               &-item {
                 background-color: #ebebeb;
               }
@@ -263,6 +263,14 @@
         text-align: center;
         align-items: center;
         justify-content: center;
+
+        .message-content {
+          .message-group {
+            .message-dtls {
+              padding-bottom: 0px;
+            }
+          }
+        }
       }
 
       &:hover {

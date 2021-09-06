@@ -33,6 +33,10 @@
                     <div class="title">Phone:</div>
                     <div class="content">{{ p.phone || "- -" }}</div>
                   </div>
+                  <div class="dt-mobile-item">
+                    <div class="title">Token:</div>
+                    <div class="content">{{ p.token }}</div>
+                  </div>
                 </td>
 
                 <td>
@@ -43,6 +47,7 @@
                 </td>
                 <td>{{ p.email || "- -" }}</td>
                 <td>{{ p.phone || "- -" }}</td>
+                <td>{{ p.token }}</td>
               </tr>
 
               <tr v-if="!isLoading && !paginated.length">
@@ -131,9 +136,10 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "33.33%", name: "name", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "33.33%", name: "email", label: "Email Address" },
-      { sortable: 0, hide: 0, type: types[0], width: "33.33%", name: "phone", label: "Phone" }
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "email", label: "Email Address" },
+      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
+      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

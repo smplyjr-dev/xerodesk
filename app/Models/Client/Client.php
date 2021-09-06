@@ -3,7 +3,9 @@
 namespace App\Models\Client;
 
 use App\BaseModel;
+use App\Mail\ClientWelcome;
 use App\Models\Company\Company;
+use Illuminate\Support\Facades\Mail;
 
 class Client extends BaseModel
 {
@@ -17,5 +19,10 @@ class Client extends BaseModel
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    public function sendWelcomeMessageNotification()
+    {
+        Mail::to($this->email)->send(new ClientWelcome($this));
     }
 }

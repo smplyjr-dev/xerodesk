@@ -35,11 +35,6 @@ export default {
           return "fa-info-circle";
           break;
       }
-    },
-    proccessedMessage() {
-      let messageType = typeof this.message;
-
-      return this.message.split("|");
     }
   }
 };

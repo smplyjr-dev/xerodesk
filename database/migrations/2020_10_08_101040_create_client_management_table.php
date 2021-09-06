@@ -49,6 +49,7 @@ class CreateClientManagementTable extends Migration
         Schema::create('client_session_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('session_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('hash', 50);
             $table->string('sender');
             $table->mediumText('message')->nullable();
@@ -56,7 +57,8 @@ class CreateClientManagementTable extends Migration
             $table->boolean('is_read')->default(false);
             $table->timestamps();
 
-            $table->foreign('session_id')->references('id')->on('client_sessions')->onDelete('cascade');
+            $table->foreign('session_id')->references('id')->on('client_sessions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
         });
 
         Schema::create('client_session_message_attachments', function (Blueprint $table) {
@@ -66,7 +68,7 @@ class CreateClientManagementTable extends Migration
             $table->string('extension', 10);
             $table->timestamps();
 
-            $table->foreign('message_id')->references('id')->on('client_session_messages')->onDelete('cascade');
+            $table->foreign('message_id')->references('id')->on('client_session_messages')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::create('client_session_taggable', function (Blueprint $table) {
@@ -76,7 +78,7 @@ class CreateClientManagementTable extends Migration
             $table->timestamps();
 
             $table->foreign('taggable_id')->references('id')->on('taggables');
-            $table->foreign('session_id')->references('id')->on('client_sessions')->onDelete('cascade');
+            $table->foreign('session_id')->references('id')->on('client_sessions')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

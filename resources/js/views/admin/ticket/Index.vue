@@ -104,7 +104,8 @@ export default {
   },
   async created() {
     // make the sidebar open for this page
-    this.$emit("toggle-sidebar", true);
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    if (vw > 768) this.$emit("toggle-sidebar", true);
 
     // setup pusher's listeners
     // this.setupListeners();

@@ -17,9 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call(DemoUserSeeder::class);
         $this->call(GroupSeeder::class);
         $this->call(SLASeeder::class);
-
-        if (config('app.env') == 'local') {
-            // $this->call(LocalSeeder::class);
-        }
     }
 }

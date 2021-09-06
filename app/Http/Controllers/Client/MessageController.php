@@ -31,8 +31,9 @@ class MessageController extends Controller
 
             $message = Message::create([
                 'session_id'   => $session->id,
+                'user_id'      => request()->user_id,
                 'hash'         => request()->hash,
-                'sender' => request()->sender,
+                'sender'       => request()->sender,
                 'message'      => request()->message,
                 'reply_to'     => request()->reply_to
             ]);

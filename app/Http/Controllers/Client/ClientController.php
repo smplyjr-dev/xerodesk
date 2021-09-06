@@ -41,7 +41,7 @@ class ClientController extends Controller
                 'email'      => $cookie['user_email']
             ], [
                 'company_id' => $company->id,
-                'token'      => Str::random(25),
+                'token'      => Str::random(10),
                 'email'      => $cookie['user_email'],
                 'name'       => $cookie['user_name'],
                 'phone'      => $cookie['user_phone'],

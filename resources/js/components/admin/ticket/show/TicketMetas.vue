@@ -4,7 +4,7 @@
       <img class="client-img" :src="`${company.url}/${client.picture}`" alt="Client Picture" loading="lazy" />
 
       <div class="client-name">
-        <h5 class="font-weight-bold mb-0">{{ client.name }}</h5>
+        <h5 class="font-weight-bold mb-0">{{ client.name || "No Name" }}</h5>
         <span class="font-weight-semi mb-0 text-sm">{{ company.name }}</span>
       </div>
     </div>
@@ -16,11 +16,11 @@
       </li>
       <li>
         <p class="cd-title">Client Email</p>
-        <p class="cd-info">{{ client.email }}</p>
+        <p class="cd-info">{{ client.email || "No Email" }}</p>
       </li>
       <li>
         <p class="cd-title">Client Phone</p>
-        <p class="cd-info">{{ client.phone || "N/A" }}</p>
+        <p class="cd-info">{{ client.phone || "No Phone" }}</p>
       </li>
     </ul>
 

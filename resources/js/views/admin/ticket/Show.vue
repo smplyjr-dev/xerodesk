@@ -19,6 +19,7 @@
 import TicketHeader from "@Components/admin/ticket/show/TicketHeader.vue";
 import TicketMessages from "@Components/admin/ticket/show/TicketMessages.vue";
 import TicketMetas from "@Components/admin/ticket/show/TicketMetas.vue";
+import { mapState } from "vuex";
 
 export default {
   components: { TicketHeader, TicketMessages, TicketMetas },
@@ -35,6 +36,9 @@ export default {
     isMetaOpen: false,
     isComponentReady: false
   }),
+  computed: {
+    ...mapState("auth", ["users"])
+  },
   methods: {
     toggleMeta() {
       this.isMetaOpen = !this.isMetaOpen;
@@ -87,11 +91,13 @@ export default {
   },
   async created() {
     // make the sidebar open for this page
-    this.$emit("toggle-sidebar", true);
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    if (vw > 768) this.$emit("toggle-sidebar", true);
 
     this.isComponentReady = false;
 
     await this.fetchSession();
+    if (this.$isEmpty(this.users)) this.$store.dispatch("auth/fetchUsers");
     this.setupListeners();
 
     // set the session to localStorage
