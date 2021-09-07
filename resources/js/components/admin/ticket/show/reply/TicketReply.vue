@@ -189,7 +189,8 @@ export default {
               .post(`/message`, {
                 ...message,
                 client_id: this.data.client.id,
-                session: localStorage.getItem("LCS_Session")
+                session: localStorage.getItem("LCS_Session"),
+                user_id: this.user.id
               })
               .then(response => {
                 this.$store.commit("messages/UPDATE_MESSAGE", response.data.data);
