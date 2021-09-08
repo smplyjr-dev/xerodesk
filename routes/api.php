@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client\Client;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/email', function () {
+    $client = Client::findOrFail(1);
+    $client->sendWelcomeMessageNotification();
+
+    return response()->json(['The email has been sent! Thanks.'], 200);
+});
 
 Route::namespace('Auth')->group(function () {
     Route::post('logout',   'LoginController@logout');

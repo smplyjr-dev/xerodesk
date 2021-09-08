@@ -48,6 +48,7 @@
                 <td>{{ p.email || "- -" }}</td>
                 <td>{{ p.phone || "- -" }}</td>
                 <td>{{ p.token }}</td>
+                <td>{{ $dayjs("format", p.created_at, "MM/DD/YYYY h:mm A") }}</td>
               </tr>
 
               <tr v-if="!isLoading && !paginated.length">
@@ -136,10 +137,11 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "email", label: "Email Address" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" }
+      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "name", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "email", label: "Email Address" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "phone", label: "Phone" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "token", label: "Token" },
+      { sortable: 1, hide: 0, type: types[2], width: "20%", name: "created_at", label: "Timestamp" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;
