@@ -220,7 +220,6 @@ export default {
 
       this.createImage(files[0]);
     },
-
     createImage(file) {
       let reader = new FileReader();
 
@@ -241,14 +240,12 @@ export default {
         this.uploadPicture();
       }, 200);
     },
-
     async fetchUser() {
       let id = this.$route.params.id;
       let { data } = await axios.get(`/users/${id}`);
 
       this.user = data;
     },
-
     async uploadPicture() {
       let params = {
         id: this.user.id,
@@ -260,8 +257,7 @@ export default {
       };
 
       try {
-        let { data } = await axios.post("/users/picture", params);
-
+        await axios.post("/users/picture", params);
         await this.fetchUser();
 
         this.$store.dispatch("notifications/addNotification", {
@@ -294,13 +290,12 @@ export default {
 
       this.isPictureLoading = false;
     },
-
     async updateProfile() {
       this.isProfileLoading = true;
       this.profileError = [];
 
       try {
-        let user = {
+        await axios.put(`/users/${this.user.id}`, {
           method: "profile",
           status: this.user.status,
           role: this.user.role,
@@ -312,9 +307,7 @@ export default {
           facebook: this.user.bio.facebook,
           twitter: this.user.bio.twitter,
           linkedin: this.user.bio.linkedin
-        };
-
-        let { data } = await axios.put(`/users/${this.user.id}`, user);
+        });
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
@@ -340,13 +333,12 @@ export default {
 
       this.isProfileLoading = false;
     },
-
     async updatePassword() {
       this.isPasswordLoading = true;
       this.passwordError = [];
 
       try {
-        let { data } = await axios.put(`/users/${this.user.id}`, {
+        await axios.put(`/users/${this.user.id}`, {
           method: "password",
           old_password: this.old_password,
           new_password: this.new_password,
@@ -379,6 +371,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("roles/fetchRoles");
     this.fetchUser();
   }
 };

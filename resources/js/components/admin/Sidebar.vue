@@ -35,11 +35,11 @@ export default {
   name: "Sidebar",
   data: () => ({
     navs: [
-      /* {
-        name: "Dashboard",
-        to: "/dashboard",
-        icon: "template/mdi-dashboard.svg"
-      }, */
+      // {
+      //   name: "Dashboard",
+      //   to: "/dashboard",
+      //   icon: "template/mdi-dashboard.svg"
+      // },
       {
         name: "Ticket",
         to: "/tickets",

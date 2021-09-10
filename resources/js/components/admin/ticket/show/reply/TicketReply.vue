@@ -12,24 +12,13 @@
 
     <!-- Transfer Session to different Agent -->
     <template v-else-if="session.user_id != user.id">
-      <template v-if="user.permissions.pluck('slug').includes('transfer_ticket')">
-        <form class="form-inline pull-right p-2" @submit.prevent="transferClient()">
-          <label class="my-1 mr-2" for="to-agent">Transfer to:</label>
+      <div class="p-3" v-if="user.permissions.pluck('slug').includes('transfer_ticket')">
+        <button class="btn btn-brand-2 btn-block text-white" data-toggle="modal" data-target="#xfr-modal">
+          Transfer
+        </button>
+      </div>
 
-          <select class="custom-select my-1 mr-sm-2" id="to-agent" v-model.number="agent" @focus="$store.dispatch('auth/fetchUsers')">
-            <option :value="null">-- Select Agent --</option>
-            <option :value="u.id" v-for="u in users" :key="u.id">
-              {{ `${u.bio.last_name}, ${u.bio.first_name}` }}
-            </option>
-          </select>
-
-          <button type="submit" class="btn btn-primary my-1" :disabled="!agent">Transfer</button>
-        </form>
-      </template>
-
-      <template v-else>
-        <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you.</div>
-      </template>
+      <div class="alert alert-warning m-0" v-else><strong>Notice!</strong> This client is not currently assigned to you.</div>
     </template>
 
     <!-- Reply Form -->
@@ -45,7 +34,6 @@
           </button>
 
           <input type="file" ref="file" class="d-none" @change="onFileChange" :accept="accept" multiple />
-          <!-- <input type="text" class="form-control session-input" placeholder="Type a message..." v-model="message" @keyup.enter="submitChat()" /> -->
           <TicketReplyEditor v-model="message" :emoji="emoji" @onEnter="submitChat()" />
 
           <button type="button" class="btn btn-default px-0" data-toggle="modal" data-target="#attm-modal">
@@ -60,6 +48,7 @@
     </template>
 
     <TicketReplyAttachmentModal :attachments="attachments" @emitAttachments="attachments = $event" />
+    <TicketTransferModal :session="session" />
   </div>
 </template>
 
@@ -69,12 +58,13 @@ import { nanoid } from "nanoid";
 import TicketReplyEmoji from "../reply/TicketReplyEmoji.vue";
 import TicketReplyAttachment from "../reply/TicketReplyAttachment.vue";
 import TicketReplyAttachmentModal from "../reply/TicketReplyAttachmentModal.vue";
-import TicketReplyTo from "../reply/TicketReplyTo.vue";
+import TicketReplyTo from "./TicketReplyTo.vue";
 import TicketReplyEditor from "./TicketReplyEditor.vue";
+import TicketTransferModal from "./TicketTransferModal.vue";
 
 export default {
   name: "TicketReply",
-  components: { TicketReplyEmoji, TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor },
+  components: { TicketReplyEmoji, TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor, TicketTransferModal },
   props: ["data"],
   data: () => ({
     isLocking: false,
@@ -89,7 +79,6 @@ export default {
   }),
   computed: {
     ...mapState("auth", ["users", "user"]),
-    ...mapState("clients", ["clients"]),
     ...mapState("messages", ["reply_to_shadow"]),
     ...mapGetters("auth", ["permissions"]),
 
@@ -117,39 +106,15 @@ export default {
       let message = await axios.post(`/message`, {
         hash: nanoid(),
         sender: "session",
-        message: `<p>Thank you for waiting. <br /> You are now connected to agent ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
+        message: `<p>The session has been assigned to ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
+        // message: `<p>Thank you for waiting. <br /> You are now connected to agent ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
         client_id: this.data.client.id,
-        session: this.session.session
+        session: this.session.session,
+        user_id: this.user.id
       });
       this.$store.commit("messages/PUSH_MESSAGE", message.data.data);
 
       this.isLocking = false;
-    },
-    async transferClient() {
-      let { data } = await axios.put(`/session/${this.session.session}/transfer`, {
-        old_user_id: this.session.user_id,
-        new_user_id: this.agent
-      });
-
-      if (data.status == "success") {
-        // display a notification
-        this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-success",
-          icon: "fa-check",
-          title: "Success!",
-          body: data.message
-        });
-      } else {
-        // display a notification
-        this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-danger",
-          icon: "fa-times",
-          title: "Invalid.",
-          body: data.message
-        });
-      }
-
-      await this.$store.dispatch("clients/fetchClientsFromSessions");
     },
     async onFileChange(e) {
       [...e.target.files].forEach(file => {

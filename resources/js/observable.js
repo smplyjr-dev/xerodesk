@@ -1,5 +1,3 @@
-const modules = [];
-
 const tickets = {
   priority: [
     { id: 1, name: "Low" },
@@ -17,4 +15,4 @@ const tickets = {
   ]
 };
 
-export { modules, tickets };
+export { tickets };

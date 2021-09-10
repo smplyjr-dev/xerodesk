@@ -1,6 +1,6 @@
 <template>
   <div class="card card-1 card-ticket">
-    <TicketHeader :data="{ isComponentReady, session, client, company }" @toggle="toggleMeta" />
+    <TicketHeader :data="{ isComponentReady, session, client, company }" @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">
       <div class="h-100 w-100 flex-center" v-if="!isComponentReady">
@@ -33,16 +33,13 @@ export default {
     session: {},
     client: {},
     company: {},
-    isMetaOpen: false,
+    isMetaOpen: true,
     isComponentReady: false
   }),
   computed: {
     ...mapState("auth", ["users"])
   },
   methods: {
-    toggleMeta() {
-      this.isMetaOpen = !this.isMetaOpen;
-    },
     async fetchSession() {
       this.session = {};
       this.client = {};
@@ -90,10 +87,6 @@ export default {
     }
   },
   async created() {
-    // make the sidebar open for this page
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    if (vw > 768) this.$emit("toggle-sidebar", true);
-
     this.isComponentReady = false;
 
     await this.fetchSession();

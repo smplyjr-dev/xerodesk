@@ -7,20 +7,6 @@
 
       <section class="d-flex flex-column h-100">
         <transition name="fade" mode="out-in">
-          <!-- <div class="container-fluid mb-4">
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-sm btn-primary" @click="notify('primary')">Primary</button>
-                <button class="btn btn-sm btn-secondary" @click="notify('secondary')">Secondary</button>
-                <button class="btn btn-sm btn-success" @click="notify('success')">Success</button>
-                <button class="btn btn-sm btn-danger" @click="notify('danger')">Danger</button>
-                <button class="btn btn-sm btn-warning" @click="notify('warning')">Warning</button>
-                <button class="btn btn-sm btn-info" @click="notify('info')">Info</button>
-                <button class="btn btn-sm btn-dark" @click="notify('dark')">Dark</button>
-              </div>
-            </div>
-          </div> -->
-
           <RouterView @toggle-sidebar="isOpen = $event" />
         </transition>
 
@@ -37,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Notification from "@Components/neutral/Notification.vue";
 import AdminHeader from "@Components/admin/Header.vue";
 import AdminSidebar from "@Components/admin/Sidebar.vue";
@@ -44,29 +31,54 @@ import AdminSidebar from "@Components/admin/Sidebar.vue";
 export default {
   name: "Admin",
   components: { Notification, AdminHeader, AdminSidebar },
-  data: () => ({
-    isOpen: false
-  }),
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
     titleTemplate: `Xerodesk - %s`
   }),
-  methods: {
-    /* notify(variant) {
-      this.$store.dispatch("notifications/addNotification", {
-        variant: `bg-${variant}`,
-        icon: "fa-check",
-        title: `${variant.toTitle()}!`,
-        body: `This is a <strong>${variant.toTitle()}</strong> notification.`
-      });
-    } */
+  data: () => ({
+    isOpen: false
+  }),
+  computed: {
+    ...mapState("auth", ["user"])
   },
-  created() {
-    // get all the companies
-    // this.$store.dispatch("companies/fetchCompanies");
+  methods: {
+    setupListeners() {
+      const self = this;
 
-    // get all the roles
-    // this.$store.dispatch("roles/fetchRoles");
+      // pusher init
+      const PUSHER = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+        encrypted: true
+      });
+
+      // channels listener
+      const CH_SESSION = PUSHER.subscribe("session");
+
+      CH_SESSION.bind(`session.transfered.from.${this.user.id}`, async data => {
+        await self.$store.dispatch("clients/fetchClientsFromSessions");
+
+        this.$store.dispatch("notifications/addNotification", {
+          variant: "bg-info",
+          icon: "fa-exclamation-circle",
+          title: "Notice!",
+          body: "One of your client has been transfered to different agent."
+        });
+      });
+
+      CH_SESSION.bind(`session.transfered.to.${this.user.id}`, async data => {
+        await self.$store.dispatch("clients/fetchClientsFromSessions");
+
+        this.$store.dispatch("notifications/addNotification", {
+          variant: "bg-info",
+          icon: "fa-exclamation-circle",
+          title: "Notice!",
+          body: "One of the client has been transfered to you."
+        });
+      });
+    }
+  },
+  mounted() {
+    this.setupListeners();
   }
 };
 </script>

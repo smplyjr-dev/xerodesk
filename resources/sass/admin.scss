@@ -642,9 +642,12 @@ body,
       display: block;
       margin: 0;
       font-weight: $font-weight-semi;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+
+      &.ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }

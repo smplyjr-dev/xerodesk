@@ -23,7 +23,7 @@ Route::get('/client/{token}', function ($token) {
 });
 
 Route::get('/session/{session}', function ($session) {
-    $model = Session::with(['taggables', 'client.company', 'messages.attachments'])
+    $model = Session::with(['taggables', 'client.company', 'messages.attachments', 'user.bio'])
         ->where('session', $session)
         ->first();
 

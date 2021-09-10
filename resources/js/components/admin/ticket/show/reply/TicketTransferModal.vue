@@ -1,0 +1,137 @@
+<template>
+  <div class="modal fade" id="xfr-modal" data-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Transfer</h5>
+        </div>
+        <form @submit.prevent="transferClient()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="xrf_from">Transfer from</label>
+              <input id="xrf_from" type="text" class="form-control" :placeholder="current" disabled />
+            </div>
+            <div class="flex-center">
+              <InlineSvg name="heroicons/switch-vertical.svg" size="1.5rem" color="#686868" />
+            </div>
+            <div class="form-group">
+              <label for="xrf_to">Transfer to</label>
+              <input id="xrf_to" type="text" class="form-control" autocomplete="off" v-model="agent" @focus="$store.dispatch('auth/fetchUsers')" @keyup="onKeyup" />
+            </div>
+            <ul class="datalist" v-if="list && filtered.length">
+              <li v-for="f in filtered" :key="f.id" @click="onSelect(f)">
+                {{ `${f.bio.first_name} ${f.bio.last_name}` }}
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Transfer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { nanoid } from "nanoid";
+import { mapState } from "vuex";
+
+export default {
+  props: ["session"],
+  data: () => ({
+    agent: null,
+    list: false,
+    selected: null,
+    transfering: false
+  }),
+  computed: {
+    ...mapState("auth", ["users"]),
+
+    filtered() {
+      if (!this.agent) return [];
+
+      return this.users.filter(user => {
+        let name = `${user.bio.first_name} ${user.bio.last_name}`;
+        return !name.toLowerCase().indexOf(this.agent.toLowerCase());
+      });
+    },
+    current() {
+      return `${this.session.user.bio.first_name} ${this.session.user.bio.last_name}`;
+    }
+  },
+  methods: {
+    onKeyup() {
+      this.list = true;
+    },
+    onSelect(user) {
+      this.agent = `${user.bio.first_name} ${user.bio.last_name}`;
+      this.selected = user;
+      this.list = false;
+    },
+    async transferClient() {
+      this.transfering = true;
+
+      try {
+        // update the session user_id
+        await axios.put(`/session/${this.session.session}/transfer`, {
+          old_user_id: this.session.user_id,
+          new_user_id: this.selected.id
+        });
+
+        let message = {
+          hash: nanoid(),
+          sender: "session",
+          message: `<p>The session has been re-assigned to ${this.selected.bio.first_name} ${this.selected.bio.last_name}.</p>`
+        };
+
+        // push the message immediately for real-time experience
+        this.$store.commit("messages/PUSH_MESSAGE", {
+          ...message,
+          created_at: this.$dayjs("format", new Date(), "YYYY-MM-DD HH:mm:ss"),
+          attachments: []
+        });
+
+        // save the message
+        await axios.post(`/message`, {
+          ...message,
+          client_id: this.session.client.id,
+          session: this.session.session,
+          user_id: this.selected.id
+        });
+
+        // hide the modal
+        $("#xfr-modal").modal("hide");
+
+        // update the old user
+        this.session.user = this.selected;
+        this.agent = null;
+        this.selected = null;
+
+        // display a notification
+        this.$store.dispatch("notifications/addNotification", {
+          variant: "bg-success",
+          icon: "fa-check",
+          title: "Success!",
+          body: "Success!!!"
+        });
+      } catch (error) {
+        console.log(error);
+
+        // display a notification
+        this.$store.dispatch("notifications/addNotification", {
+          variant: "bg-danger",
+          icon: "fa-times",
+          title: "Invalid.",
+          body: "Error!!!"
+        });
+      }
+
+      this.transfering = false;
+    }
+  },
+  mounted() {
+    console.log(this.session);
+  }
+};
+</script>

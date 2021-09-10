@@ -29,7 +29,6 @@ trait TicketTrait
                     'c.name AS client',
                     'client_sessions.title AS title',
                     'client_sessions.session AS session',
-                    'client_sessions.module AS module',
                     'client_sessions.priority AS priority',
                     'client_sessions.status AS status',
                     'client_sessions.group_id AS group_id',
@@ -55,7 +54,6 @@ trait TicketTrait
 
             // from the refine search
             if (request()->company)  $query->where('c.company_id', request()->company);
-            if (request()->module)   $query->where('client_sessions.module',     request()->module);
             if (request()->priority) $query->where('client_sessions.priority',   request()->priority);
             if (request()->agent)    $query->where('client_sessions.user_id',    request()->agent);
             if (request()->status)   $query->where('client_sessions.status',     request()->status);

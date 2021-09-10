@@ -3,7 +3,7 @@
     <div class="card card-1 mb-4">
       <div class="card-body">
         <div class="row">
-          <div class="col-md-4 form-group">
+          <div class="col-md form-group">
             <label>Company</label>
             <select class="custom-select" v-model="refine.company" @focus="$store.dispatch('companies/fetchCompanies')">
               <option :value="null">-- Select Company --</option>
@@ -11,15 +11,7 @@
               <option :value="null" disabled v-if="$isEmpty(companies)">No company found.</option>
             </select>
           </div>
-          <div class="col-md-4 form-group">
-            <label>Module</label>
-            <select class="custom-select" v-model="refine.module">
-              <option :value="null">-- Select Module --</option>
-              <option v-for="m in modules" :key="m">{{ m }}</option>
-              <option :value="null" disabled v-if="$isEmpty(modules)">No module found.</option>
-            </select>
-          </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md form-group">
             <label>Priority</label>
             <select class="custom-select" v-model="refine.priority">
               <option :value="null">-- Select Priority --</option>
@@ -27,7 +19,7 @@
               <option :value="null" disabled v-if="$isEmpty(priority)">No priority found.</option>
             </select>
           </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md form-group">
             <label>Assigned to</label>
             <select class="custom-select" v-model.number="refine.agent">
               <option :value="null">-- Select Agent --</option>
@@ -35,7 +27,7 @@
               <option :value="null" disabled v-if="$isEmpty(users)">No users found.</option>
             </select>
           </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md form-group">
             <label>Status</label>
             <select class="custom-select" v-model.number="refine.status">
               <option :value="null">-- Select Status --</option>
@@ -43,7 +35,7 @@
               <option :value="null" disabled v-if="$isEmpty(status)">No status found.</option>
             </select>
           </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md form-group">
             <label>Timestamp</label>
             <ADatePicker v-model="refine.created_at" />
           </div>
@@ -58,19 +50,17 @@
 
 <script>
 import { mapState } from "vuex";
-import { modules, tickets } from "@Scripts/observable";
+import { tickets } from "@Scripts/observable";
 import ADatePicker from "@Components/neutral/ADatePicker.vue";
 
 export default {
   components: { ADatePicker },
   data() {
     return {
-      modules: modules,
       priority: tickets.priority,
       status: tickets.status,
       refine: {
         company: null,
-        module: null,
         priority: null,
         agent: null,
         status: null,
@@ -93,7 +83,6 @@ export default {
     resetSearch() {
       this.refine = {
         company: null,
-        module: null,
         priority: null,
         agent: null,
         status: null,

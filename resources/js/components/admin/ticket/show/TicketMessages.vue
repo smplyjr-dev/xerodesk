@@ -12,7 +12,8 @@
         </div>
         <div class="message-group" v-tooltip:top="`${messageDetails(message)}`">
           <TicketReplyingTo v-if="message.reply_to" :message="message" />
-          <div class="message-dtls" v-if="!$isEmpty(message.message)" v-html="message.message"></div>
+          <div class="message-dtls" v-html="message.message"></div>
+          <div class="message-clear"></div>
           <div class="message-attm" v-if="!$isEmpty(message.attachments)">
             <div class="message-attm-item" v-for="attachment in message.attachments" :key="attachment.id">
               <div class="message-attm-item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">

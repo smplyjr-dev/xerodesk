@@ -47,7 +47,6 @@ class SessionController extends Controller
                 'group_id',
                 'user_id',
                 'title',
-                'module',
                 'priority',
                 'token',
                 'status',

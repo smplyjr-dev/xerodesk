@@ -13,9 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
+        $now   = now();
         $pword = bcrypt('V67rNEXY');
-
         $super = Role::findOrFail(1);
         $admin = Role::findOrFail(2);
         $agent = Role::findOrFail(3);

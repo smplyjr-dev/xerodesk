@@ -12,7 +12,6 @@ const reload = require("webpack-livereload-plugin");
 
 mix.sass("resources/sass/app.scss", "public/dist/css");
 mix.js("resources/js/app.js", "public/dist/js");
-
 mix.disableNotifications();
 
 if (mix.inProduction()) {
