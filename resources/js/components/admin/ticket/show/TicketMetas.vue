@@ -28,7 +28,8 @@
       </li>
       <li>
         <p class="cd-title">Ticket History</p>
-        <div class="cd-info">
+        <p class="cd-info ellipsis" v-if="!history.length">No history found</p>
+        <div class="cd-info" v-else>
           <ul class="timeline">
             <li v-for="h in history" :key="h.id">
               <div class="time">{{ $dayjs("format", h.created_at, "MM/DD/YYYY h:mm A") }}</div>
@@ -134,7 +135,7 @@ export default {
       return this.data.company;
     },
     history() {
-      return this.messages.filter(m => m.sender == "session");
+      return this.messages.filter(m => m.sender == "session").reverse();
     }
   },
   methods: {
