@@ -30,6 +30,24 @@ Route::get('/session/{session}', function ($session) {
     return $model;
 });
 
+Route::put('/session/{session}/status', function ($session) {
+    $model = Session::where('session', $session)->firstOrFail();
+
+    if ($model->status != request()->status) {
+        $model->update([
+            'status' => request()->status
+        ]);
+
+        $model->messages()->create([
+            'hash'    => request()->hash,
+            'sender'  => request()->sender,
+            'message' => request()->message
+        ]);
+    }
+
+    return $model;
+});
+
 Route::put('/session/{session}/seen', function ($session) {
     $model = Session::with(['messages' => function ($query) {
         $query->where('is_read', false)

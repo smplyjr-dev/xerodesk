@@ -29,7 +29,7 @@ class Session extends BaseModel
 
     public function sendSessionMessagesNotification()
     {
-        if (!is_null($this->client->email)) Mail::to()->send(new SendMessages($this->user, $this->client, $this->messages));
+        if ($this->client->email) Mail::to($this->client->email)->send(new SendMessages($this->user, $this->client, $this->messages));
     }
 
     public function taggables()

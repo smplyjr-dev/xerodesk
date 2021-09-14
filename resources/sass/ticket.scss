@@ -50,18 +50,10 @@
         display: flex;
         align-items: center;
 
-        .message-actions {
-          opacity: 0;
-
-          .action {
-            cursor: pointer;
-            padding: 5px;
-            background: #eee;
-            border-radius: 100%;
-            border: 0;
-          }
-        }
         .message-group {
+          display: flex;
+          flex-direction: column;
+
           .message-rpy {
             background: #f5f5f5;
             padding: 8px 10px 8px 18px;
@@ -87,16 +79,30 @@
             }
           }
           .message-dtls {
-            padding: 10px 15px 10px 15px;
-            clear: both;
-            word-break: break-all;
+            display: flex;
+            align-items: center;
 
-            p:first-child {
-              margin-top: 0px;
+            &--reply {
+              .action {
+                cursor: pointer;
+                padding: 5px;
+                background: #eee;
+                border-radius: 100%;
+                border: 0;
+              }
             }
+            &--content {
+              clear: both;
+              word-break: break-all;
+              padding: 10px 15px 10px 15px;
 
-            p:last-child {
-              margin-bottom: 0px;
+              p:first-child {
+                margin-top: 0px;
+              }
+
+              p:last-child {
+                margin-bottom: 0px;
+              }
             }
           }
           .message-clear {
@@ -107,7 +113,19 @@
             align-items: center;
             overflow-x: auto;
 
-            &-item {
+            &--reply {
+              display: flex;
+
+              .action {
+                cursor: pointer;
+                padding: 5px;
+                background: #eee;
+                border-radius: 100%;
+                border: 0;
+              }
+            }
+
+            &--item {
               border-radius: 5px;
               overflow: hidden;
               position: relative;
@@ -136,47 +154,47 @@
                 padding: 10px 15px;
                 width: 100%;
               }
-            }
 
-            &-item-icon {
-              cursor: pointer;
-              padding: 10px 7px 7px;
-              background: #ccc;
-              border-radius: 5px;
-              margin-right: 10px;
-            }
-
-            &-item-name {
-              cursor: pointer;
-              overflow: hidden;
-
-              span {
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
-                display: -webkit-box;
-                line-height: 16px;
+              &-icon {
+                cursor: pointer;
+                padding: 10px 7px 7px;
+                background: #ccc;
+                border-radius: 5px;
+                margin-right: 10px;
               }
 
-              &:hover {
-                text-decoration: underline;
+              &-name {
+                cursor: pointer;
+                overflow: hidden;
+
+                span {
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2;
+                  display: -webkit-box;
+                  line-height: 16px;
+                }
+
+                &:hover {
+                  text-decoration: underline;
+                }
               }
-            }
 
-            &-item-remove {
-              border-radius: 100%;
-              background: #ccc;
-              cursor: pointer;
-              padding: 3px;
-              height: 15px;
-              width: 15px;
+              &-remove {
+                border-radius: 100%;
+                background: #ccc;
+                cursor: pointer;
+                padding: 3px;
+                height: 15px;
+                width: 15px;
 
-              display: flex;
-              align-items: center;
-              justify-content: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-              position: absolute;
-              top: -5px;
-              right: -5px;
+                position: absolute;
+                top: -5px;
+                right: -5px;
+              }
             }
           }
           .message-date {
@@ -196,24 +214,37 @@
           margin-left: auto;
           flex-direction: row;
 
-          .message-actions {
-            margin-right: 10px;
-          }
           .message-group {
             .message-rpy {
               background-color: rgba($color: $brand-2, $alpha: 0.75);
-              float: right;
+              align-self: flex-end;
 
               &::after {
                 background: $brand-2;
               }
             }
             .message-dtls {
-              background-color: $brand-2;
-              float: right;
+              flex-direction: row;
+              justify-content: flex-end;
+
+              &--reply {
+                margin-right: 10px;
+              }
+              &--content {
+                background-color: $brand-2;
+                float: right;
+              }
             }
             .message-attm {
-              &-item {
+              flex-direction: row;
+
+              &--reply {
+                .action {
+                  margin-right: 10px;
+                }
+              }
+
+              &--item {
                 background-color: $brand-2;
               }
             }
@@ -234,24 +265,40 @@
           margin-right: auto;
           flex-direction: row-reverse;
 
-          .message-actions {
-            margin-left: 10px;
-          }
           .message-group {
             .message-rpy {
               background-color: rgba($color: #ebebeb, $alpha: 0.75);
-              float: left;
+              align-self: flex-start;
 
               &::after {
                 background: #ccc;
               }
             }
             .message-dtls {
-              background-color: #ebebeb;
-              float: left;
+              flex-direction: row-reverse;
+              justify-content: flex-end;
+
+              &--reply {
+                margin-left: 10px;
+              }
+              &--content {
+                background-color: #ebebeb;
+                float: left;
+              }
             }
             .message-attm {
-              &-item {
+              flex-direction: row-reverse;
+
+              &--reply {
+                display: flex;
+                flex-direction: row-reverse;
+
+                .action {
+                  margin-left: 10px;
+                }
+              }
+
+              &--item {
                 background-color: #ebebeb;
               }
             }
@@ -270,7 +317,11 @@
         .message-content {
           .message-group {
             .message-dtls {
-              padding-bottom: 0px;
+              padding-bottom: 0;
+
+              &--content {
+                padding: 0;
+              }
             }
             .message-date {
               margin-top: 2px;
@@ -279,13 +330,6 @@
         }
       }
 
-      &:hover {
-        .message-content {
-          .message-actions {
-            opacity: 1;
-          }
-        }
-      }
       &:last-child {
         margin-bottom: 0px;
       }

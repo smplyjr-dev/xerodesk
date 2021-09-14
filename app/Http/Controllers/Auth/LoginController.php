@@ -65,7 +65,7 @@ class LoginController extends Controller
         $expiration = $this->guard()->getPayload()->get('exp');
 
         return response()->json([
-            'token' => $token,
+            'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
         ]);

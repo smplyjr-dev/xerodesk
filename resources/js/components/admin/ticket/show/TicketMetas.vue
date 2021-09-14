@@ -100,8 +100,8 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#update-ticket">
-      Update Status
+    <button class="btn btn-primary btn-block mt-2" @click="checkSession">
+      Update Session
     </button>
   </div>
 </template>
@@ -167,9 +167,17 @@ export default {
 
       this.isUpdating = false;
     },
-    async deleteSession() {
-      let { data } = await axios.delete(`/session/${this.session.session}`);
-      console.log(data);
+    checkSession() {
+      if (this.session.user_id == this.user.id) {
+        $("#update-ticket").modal("show");
+      } else {
+        this.$store.dispatch("notifications/addNotification", {
+          variant: "bg-danger",
+          icon: "fa-times",
+          title: "Invalid!",
+          body: `This session is not currently assigned to you.`
+        });
+      }
     }
   }
 };

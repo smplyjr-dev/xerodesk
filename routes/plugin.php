@@ -18,6 +18,27 @@ use Illuminate\Support\Str;
 |
 */
 
+Route::get('/quickemailverification', function () {
+    $apikey = env('QEV_API_KEY');
+    $email  = request()->email;
+
+    $curl_init = curl_init();
+    curl_setopt($curl_init, CURLOPT_URL, "https://api.quickemailverification.com/v1/verify?email=$email&apikey=$apikey");
+    curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_init, CURLOPT_ENCODING, "");
+    curl_setopt($curl_init, CURLOPT_TIMEOUT, 30000);
+    curl_setopt($curl_init, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($curl_init, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_setopt($curl_init, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+    $err = curl_error($curl_init);
+    $res = json_decode(curl_exec($curl_init));
+    curl_close($curl_init);
+
+    if (!$err) return response()->json($res, 500);
+    return false;
+});
+
 Route::get('/client/{token}', function ($token) {
     $model = Client::where('token', $token)->firstOrFail();
 

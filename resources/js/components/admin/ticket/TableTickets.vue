@@ -47,7 +47,7 @@
                           <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_priorities" />
                         </div>
 
-                        <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p.session, 'priority', p.priority)">
+                        <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
                           {{ fp.name }}
                         </app-dropdown-item>
                       </app-dropdown-content>
@@ -65,7 +65,7 @@
                           <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_groups" />
                         </div>
 
-                        <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p.session, 'group_id', p.group_id)">
+                        <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
                           {{ `${fg.name}` }}
                         </app-dropdown-item>
                       </app-dropdown-content>
@@ -75,7 +75,7 @@
                 <div class="dt-mobile-item">
                   <div class="title">Agent:</div>
                   <div class="content">
-                    <app-dropdown @away="filter_agents = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || ifNotAllowed()">
+                    <app-dropdown @away="filter_agents = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || ifNotAllowed() || ifAssignedAlready(p)">
                       <template slot="value">{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
 
                       <app-dropdown-content>
@@ -83,7 +83,7 @@
                           <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
                         </div>
 
-                        <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateFields(p.session, 'user_id', p.agent_id)">
+                        <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
                           {{ `${u.bio.first_name} ${u.bio.last_name}` }}
                         </app-dropdown-item>
                       </app-dropdown-content>
@@ -101,7 +101,7 @@
                           <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
                         </div>
 
-                        <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p.session, 'status', p.status)">
+                        <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
                           {{ fs.name }}
                         </app-dropdown-item>
                       </app-dropdown-content>
@@ -144,7 +144,7 @@
                       <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_priorities" />
                     </div>
 
-                    <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p.session, 'priority', p.priority)">
+                    <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
                       {{ fp.name }}
                     </app-dropdown-item>
                   </app-dropdown-content>
@@ -161,7 +161,7 @@
                       <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_groups" />
                     </div>
 
-                    <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p.session, 'group_id', p.group_id)">
+                    <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
                       {{ `${fg.name}` }}
                     </app-dropdown-item>
                   </app-dropdown-content>
@@ -195,7 +195,7 @@
                       <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
                     </div>
 
-                    <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p.session, 'status', p.status)">
+                    <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
                       {{ fs.name }}
                     </app-dropdown-item>
                   </app-dropdown-content>
@@ -375,11 +375,22 @@ export default {
       let data = {};
 
       if (field == "priority") data = { priority: val };
-      if (field == "status") data = { status: val };
       if (field == "group_id") data = { group_id: val };
-      if (field == "user_id") data = { user_id: val, type: "connected" };
+      if (field == "user_id") data = { user_id: val };
 
-      axios.put(`/session/${session}`, data);
+      if (field == "status") {
+        let status = tickets.status.find(s => s.id == val);
+
+        // specific endpoint for status update
+        axios.put(`/portal/session/${session.session}/status`, {
+          status: val,
+          hash: nanoid(),
+          sender: "session",
+          message: `<p>The status of the ticket has been updated to <strong>${status.name}</strong>.</p>`
+        });
+      } else {
+        axios.put(`/session/${session.session}`, data);
+      }
     },
     updateAgent(s) {
       let agent = this.users.find(u => u.id == s.agent_id);
@@ -392,8 +403,8 @@ export default {
       axios.post(`/message`, {
         hash: nanoid(),
         sender: "session",
-        message: `<p>The session has been assigned to ${agent.bio.first_name} ${agent.bio.last_name}.</p>`,
-        // message: `<p>Thank you for waiting. <br /> You are now connected to agent ${agent.bio.first_name} ${agent.bio.last_name}.</p>`,
+        message: `<p>The session has been assigned to <strong>${agent.bio.first_name} ${agent.bio.last_name}</strong>.</p>`,
+        // message: `<p>Thank you for waiting. <br /> You are now connected to agent <strong>${agent.bio.first_name} ${agent.bio.last_name}</strong>.</p>`,
         client_id: s.id,
         session: s.session,
         user_id: this.user.id

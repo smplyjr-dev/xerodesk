@@ -106,8 +106,6 @@ export default {
           remember: this.remember
         });
 
-        await this.$store.dispatch("auth/fetchUser");
-
         this.resetForm();
 
         // Redirect to proper page

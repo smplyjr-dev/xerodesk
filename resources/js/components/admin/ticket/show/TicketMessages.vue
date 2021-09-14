@@ -2,28 +2,35 @@
   <div class="ticket-messages">
     <div class="message-bubble" v-for="(message, $mIndex) in messages" :key="$mIndex" :class="messageFrom(message)">
       <div class="message-content">
-        <div class="message-actions" v-if="message.sender != 'session'">
-          <button type="button" class="action" @click="onReply(message)">
-            <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
-          </button>
-          <button type="button" class="action" @click="onDownload(message)" v-show="!$isEmpty(message.attachments)">
-            <InlineSvg name="template/mdi-download.svg" color="#000" size="1rem" />
-          </button>
-        </div>
-        <div class="message-group" v-tooltip:top="`${messageDetails(message)}`">
+        <div class="message-group">
           <TicketReplyingTo v-if="message.reply_to" :message="message" />
-          <div class="message-dtls" v-html="message.message"></div>
+          <div class="message-dtls" v-if="message.message">
+            <div class="message-dtls--reply" v-if="message.sender != 'session'">
+              <button type="button" class="action" @click="onReply(message)">
+                <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
+              </button>
+            </div>
+            <div class="message-dtls--content" v-html="message.message"></div>
+          </div>
           <div class="message-clear"></div>
           <div class="message-attm" v-if="!$isEmpty(message.attachments)">
-            <div class="message-attm-item" v-for="attachment in message.attachments" :key="attachment.id">
-              <div class="message-attm-item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">
+            <div class="message-attm--reply" v-if="message.sender != 'session'">
+              <button type="button" class="action" @click="onReply(message)">
+                <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
+              </button>
+              <button type="button" class="action" @click="onDownload(message)" v-show="!$isEmpty(message.attachments)">
+                <InlineSvg name="template/mdi-download.svg" color="#000" size="1rem" />
+              </button>
+            </div>
+            <div class="message-attm--item" v-for="attachment in message.attachments" :key="attachment.id">
+              <div class="message-attm--item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">
                 <img :src="`${$APP_URL}/storage/uploads/clients/${data.client.token}/${data.session.session}/${attachment.name}.${attachment.extension}`" />
               </div>
-              <div class="message-attm-item-file" v-else>
-                <div class="message-attm-item-icon" @click="downloadAtt(attachment)">
+              <div class="message-attm--item-file" v-else>
+                <div class="message-attm--item-icon" @click="downloadAtt(attachment)">
                   <InlineSvg :name="`heroicons/${getIcon(attachment.extension)}.svg`" color="#000" size="25px" />
                 </div>
-                <div class="message-attm-item-name" @click="downloadAtt(attachment)">
+                <div class="message-attm--item-name" @click="downloadAtt(attachment)">
                   <span>{{ `${attachment.name}.${attachment.extension}` }}</span>
                 </div>
               </div>

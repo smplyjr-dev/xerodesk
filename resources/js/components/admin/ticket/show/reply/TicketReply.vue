@@ -106,8 +106,8 @@ export default {
       let message = await axios.post(`/message`, {
         hash: nanoid(),
         sender: "session",
-        message: `<p>The session has been assigned to ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
-        // message: `<p>Thank you for waiting. <br /> You are now connected to agent ${this.user.bio.first_name} ${this.user.bio.last_name}.</p>`,
+        message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
+        // message: `<p>Thank you for waiting. <br /> You are now connected to agent <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
         client_id: this.data.client.id,
         session: this.session.session,
         user_id: this.user.id

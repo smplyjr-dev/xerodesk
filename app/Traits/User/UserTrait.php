@@ -42,6 +42,7 @@ trait UserTrait
         $auth = request()->user();
         $user = [
             'id'              => $auth->id,
+            'company_id'      => $auth->company_id,
             'username'        => $auth->username,
             'email'           => $auth->email,
             'profile_picture' => $auth->profile_picture,

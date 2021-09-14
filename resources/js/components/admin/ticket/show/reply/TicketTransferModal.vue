@@ -57,7 +57,7 @@ export default {
       });
     },
     current() {
-      return `${this.session.user.bio.first_name} ${this.session.user.bio.last_name}`;
+      if (this.session.user) return `${this.session.user.bio.first_name} ${this.session.user.bio.last_name}`;
     }
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
         let message = {
           hash: nanoid(),
           sender: "session",
-          message: `<p>The session has been re-assigned to ${this.selected.bio.first_name} ${this.selected.bio.last_name}.</p>`
+          message: `<p>The session has been re-assigned to <strong>${this.selected.bio.first_name} ${this.selected.bio.last_name}</strong>.</p>`
         };
 
         // push the message immediately for real-time experience
@@ -113,25 +113,20 @@ export default {
           variant: "bg-success",
           icon: "fa-check",
           title: "Success!",
-          body: "Success!!!"
+          body: "The ticket has been successfully transferred."
         });
       } catch (error) {
-        console.log(error);
-
         // display a notification
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
           icon: "fa-times",
           title: "Invalid.",
-          body: "Error!!!"
+          body: "Something went wrong. Please contact your system administrator."
         });
       }
 
       this.transfering = false;
     }
-  },
-  mounted() {
-    console.log(this.session);
   }
 };
 </script>
