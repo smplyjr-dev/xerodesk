@@ -93,7 +93,8 @@
                 <div class="dt-mobile-item">
                   <div class="title">Status:</div>
                   <div class="content">
-                    <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                    <span class="badge badge-danger text-uppercase font-weight-bold" v-if="!p.agent_id">Unassigned</span>
+                    <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || isClosedAlready(p.status)" v-else>
                       <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
 
                       <app-dropdown-content>
@@ -187,7 +188,8 @@
 
               <!-- Status -->
               <td>
-                <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                <span class="badge badge-danger text-uppercase font-weight-bold" v-if="!p.agent_id">Unassigned</span>
+                <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || isClosedAlready(p.status)" v-else>
                   <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
 
                   <app-dropdown-content>
@@ -379,14 +381,12 @@ export default {
       if (field == "user_id") data = { user_id: val };
 
       if (field == "status") {
-        let status = tickets.status.find(s => s.id == val);
-
         // specific endpoint for status update
         axios.put(`/portal/session/${session.session}/status`, {
           status: val,
           hash: nanoid(),
           sender: "session",
-          message: `<p>The status of the ticket has been updated to <strong>${status.name}</strong>.</p>`
+          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == val).name}</strong>.</p>`
         });
       } else {
         axios.put(`/session/${session.session}`, data);
@@ -466,6 +466,10 @@ export default {
       }
 
       return true;
+    },
+    isClosedAlready(status) {
+      if (status == 4) return true;
+      return false;
     },
     ifNotAllowed() {
       return !this.user.permissions.pluck("slug").includes("transfer_ticket");

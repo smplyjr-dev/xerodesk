@@ -72,7 +72,7 @@
                 </li>
                 <li>
                   <p class="cd-title">Session Status <span class="text-danger">*</span></p>
-                  <select class="custom-select" v-model="session.status">
+                  <select class="custom-select" v-model="newStatus" :disabled="isDisable">
                     <option :value="null">-- Select Status --</option>
                     <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
                   </select>
@@ -119,7 +119,9 @@ export default {
     priority: tickets.priority,
     status: tickets.status,
     sessionError: [],
-    isUpdating: false
+    isUpdating: false,
+    isDisable: false,
+    newStatus: null
   }),
   computed: {
     ...mapState("auth", ["user"]),
@@ -152,9 +154,11 @@ export default {
           user_id: this.user.id,
           title: this.session.title,
           priority: this.session.priority,
-          status: this.session.status,
           token: nanoid()
         });
+
+        await this.processMessage();
+        this.session.status = this.newStatus;
 
         // show notification
         this.$store.dispatch("notifications/addNotification", {
@@ -166,6 +170,20 @@ export default {
       }
 
       this.isUpdating = false;
+    },
+    async processMessage() {
+      if (this.session.status != this.newStatus) {
+        let message = {
+          status: this.newStatus,
+          hash: nanoid(),
+          sender: "session",
+          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == this.newStatus).name}</strong>.</p>`
+        };
+
+        await axios.put(`/portal/session/${this.session.session}/status`, message);
+        this.$store.commit("messages/PUSH_MESSAGE", message);
+        if (this.newStatus == 4) this.isDisable = true;
+      }
     },
     checkSession() {
       if (this.session.user_id == this.user.id) {
@@ -179,6 +197,10 @@ export default {
         });
       }
     }
+  },
+  mounted() {
+    this.newStatus = this.session.status;
+    if (this.session.status == 4) this.isDisable = true;
   }
 };
 </script>

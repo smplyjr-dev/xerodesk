@@ -35,8 +35,7 @@ Route::get('/quickemailverification', function () {
     $res = json_decode(curl_exec($curl_init));
     curl_close($curl_init);
 
-    if (!$err) return response()->json($res, 500);
-    return false;
+    if (!$err) return response()->json($res, 200);
 });
 
 Route::get('/client/{token}', function ($token) {
