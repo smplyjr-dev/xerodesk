@@ -1,5 +1,5 @@
 <template>
-  <div class="message-reply border-top">
+  <div class="ticket-reply">
     <!-- Locking / Accepting -->
     <template v-if="$isNull(session.user_id)">
       <div class="p-3">
@@ -10,15 +10,9 @@
       </div>
     </template>
 
-    <!-- Transfer Session to different Agent -->
+    <!-- Show Notice -->
     <template v-else-if="session.user_id != user.id">
-      <div class="p-3" v-if="user.permissions.pluck('slug').includes('transfer_ticket')">
-        <button class="btn btn-brand-2 btn-block text-white" data-toggle="modal" data-target="#xfr-modal">
-          Transfer
-        </button>
-      </div>
-
-      <div class="alert alert-warning m-0" v-else><strong>Notice!</strong> This client is not currently assigned to you.</div>
+      <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you.</div>
     </template>
 
     <!-- Reply Form -->
@@ -48,7 +42,6 @@
     </template>
 
     <TicketReplyAttachmentModal :attachments="attachments" @emitAttachments="attachments = $event" />
-    <TicketTransferModal :session="session" />
   </div>
 </template>
 
@@ -60,11 +53,10 @@ import TicketReplyAttachment from "../reply/TicketReplyAttachment.vue";
 import TicketReplyAttachmentModal from "../reply/TicketReplyAttachmentModal.vue";
 import TicketReplyTo from "./TicketReplyTo.vue";
 import TicketReplyEditor from "./TicketReplyEditor.vue";
-import TicketTransferModal from "./TicketTransferModal.vue";
 
 export default {
   name: "TicketReply",
-  components: { TicketReplyEmoji, TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor, TicketTransferModal },
+  components: { TicketReplyEmoji, TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor },
   props: ["data"],
   data: () => ({
     isLocking: false,

@@ -12,7 +12,6 @@
             </div>
             <div class="message-dtls--content" v-html="message.message"></div>
           </div>
-          <div class="message-clear"></div>
           <div class="message-attm" v-if="!$isEmpty(message.attachments)">
             <div class="message-attm--reply" v-if="message.sender != 'session'">
               <button type="button" class="action" @click="onReply(message)">
@@ -36,10 +35,10 @@
               </div>
             </div>
           </div>
-          <div class="message-date">
+          <div class="message-date" v-if="shouldShow(message, $mIndex)">
             <span>{{ $dayjs("format", message.created_at, "MM/DD/YYYY - hh:mm A") }}</span>
             <span v-if="['admin', 'client'].includes(message.sender)">
-              <span>&#8226;</span>
+              &#8226;
               <template v-if="message.sender == 'admin'">{{ getSender(message) }}</template>
               <template v-else>{{ data.client.name }}</template>
             </span>
@@ -48,8 +47,6 @@
         </div>
       </div>
     </div>
-
-    <TicketReply :data="data" />
 
     <transition name="fade">
       <div class="large-attm" v-if="enlargeToggle" @click.self="enlargeToggle = false">
@@ -64,10 +61,9 @@
 <script>
 import { mapState } from "vuex";
 import TicketReplyingTo from "@Components/admin/ticket/show/TicketReplyingTo.vue";
-import TicketReply from "@Components/admin/ticket/show/reply/TicketReply.vue";
 
 export default {
-  components: { TicketReplyingTo, TicketReply },
+  components: { TicketReplyingTo },
   props: ["data"],
   data: () => ({
     enlargeToggle: false,
@@ -75,39 +71,26 @@ export default {
   }),
   computed: {
     ...mapState("auth", ["users"]),
-    ...mapState("messages", ["messages"]),
-
-    coupled() {
-      let raw_messages = this.messages;
-      let new_messages = [];
-
-      raw_messages.forEach((m, $m) => {
-        if ($m > 0) {
-          // if coming from the same sender
-          if (m.sender == raw_messages[$m].sender) {
-            let date_prev = new Date(raw_messages[$m - 1].created_at);
-            let date_curr = new Date(m.created_at);
-            if (date_prev.getMinutes() == date_curr.getMinutes()) {
-              new_messages[new_messages.length - 1].push(m);
-            } else {
-              new_messages.push([m]);
-            }
-          }
-        } else {
-          new_messages.push([m]);
-        }
-      });
-
-      return new_messages;
-    }
+    ...mapState("messages", ["messages"])
   },
   methods: {
-    messageDetails(message) {
-      let date = this.$dayjs("format", message.created_at, "MM/DD/YYYY");
-      let time = this.$dayjs("format", message.created_at, "hh:mm A");
-      let sender = message.sender == "client" ? this.data.client.name : "Admin";
+    shouldShow(message, index) {
+      let next = this.messages[index + 1];
 
-      return `Sent Date: ${date} <br /> Sent Time: ${time} <br /> Sent By: ${sender}`;
+      if (message.sender == "session") return true; // for session message
+      if (next == undefined) return true; // for last message
+
+      if (message.sender == next.sender) {
+        let curr_date = new Date(message.created_at);
+        let next_date = new Date(next.created_at);
+        let diff_date = next_date - curr_date;
+        let minutes = Math.floor(diff_date / 1000 / 60);
+
+        if (minutes < 1) return false;
+        else return true;
+      }
+
+      return true;
     },
     messageFrom(message) {
       return {

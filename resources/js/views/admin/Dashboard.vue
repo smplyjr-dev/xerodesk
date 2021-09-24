@@ -4,33 +4,35 @@
       <h4 class="mb-2">Dashboard</h4>
     </div>
 
-    <div class="row">
-      <div class="col-md mb-4">
-        <div class="card card-1 card-body">
+    <p>This module is still in progress. Please, come back later.</p>
+
+    <!-- <div class="row">
+      <div class="col-sm mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="text-secondary">Open Tickets</p>
           <h4 class="mb-0">{{ open.length }}</h4>
         </div>
       </div>
-      <div class="col-md mb-4">
-        <div class="card card-1 card-body">
+      <div class="col-sm mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="text-secondary">Pending Tickets</p>
           <h4 class="mb-0">{{ pending.length }}</h4>
         </div>
       </div>
-      <div class="col-md mb-4">
-        <div class="card card-1 card-body">
+      <div class="col-sm mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="text-secondary">Resolved Tickets</p>
           <h4 class="mb-0">{{ resolved.length }}</h4>
         </div>
       </div>
-      <div class="col-md mb-4">
-        <div class="card card-1 card-body">
+      <div class="col-sm mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="text-secondary">Closed Tickets</p>
           <h4 class="mb-0">{{ closed.length }}</h4>
         </div>
       </div>
-      <div class="col-md mb-4">
-        <div class="card card-1 card-body">
+      <div class="col-sm mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="text-secondary">Unassigned Tickets</p>
           <h4 class="mb-0">{{ unassigned.length }}</h4>
         </div>
@@ -38,13 +40,13 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8">
-        <div class="card card-1 card-body">
+      <div class="col-md-8 mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card card-1 card-body">
+      <div class="col-md-4 mb-4">
+        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
           <p class="font-weight-bold text-secondary">Recently Added Clients</p>
           <ul class="list-unstyled mb-0">
             <li>
@@ -59,7 +61,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -70,7 +72,7 @@ export default {
   metaInfo: () => ({
     title: "Dashboard"
   }),
-  middleware: "auth",
+  middleware: ["auth"],
   data: () => ({
     sessions: []
   }),

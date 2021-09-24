@@ -111,7 +111,10 @@
                 </div>
                 <div class="dt-mobile-item">
                   <div class="title">Timestamp:</div>
-                  <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY h:mm A") }}</div>
+                  <div class="content">
+                    {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+                    {{ $dayjs("format", p.created_at, "h:mm A") }}
+                  </div>
                 </div>
               </td>
 
@@ -205,7 +208,10 @@
               </td>
 
               <!-- Created At -->
-              <td>{{ $dayjs("format", p.created_at, "MM/DD/YYYY h:mm A") }}</td>
+              <td>
+                {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+                {{ $dayjs("format", p.created_at, "h:mm A") }}
+              </td>
             </tr>
 
             <tr v-if="!isLoading && !paginated.length && isReady">

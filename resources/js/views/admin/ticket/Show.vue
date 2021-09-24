@@ -8,7 +8,7 @@
       </div>
 
       <template v-else>
-        <TicketMessages :data="{ session, client, company }" />
+        <TicketContents :data="{ session, client, company }" />
         <TicketMetas :data="{ session, client, company }" />
       </template>
     </div>
@@ -17,12 +17,12 @@
 
 <script>
 import TicketHeader from "@Components/admin/ticket/show/TicketHeader.vue";
-import TicketMessages from "@Components/admin/ticket/show/TicketMessages.vue";
+import TicketContents from "@Components/admin/ticket/show/TicketContents.vue";
 import TicketMetas from "@Components/admin/ticket/show/TicketMetas.vue";
 import { mapState } from "vuex";
 
 export default {
-  components: { TicketHeader, TicketMessages, TicketMetas },
+  components: { TicketHeader, TicketContents, TicketMetas },
   layout: "Admin",
   name: "Ticket",
   metaInfo: () => ({

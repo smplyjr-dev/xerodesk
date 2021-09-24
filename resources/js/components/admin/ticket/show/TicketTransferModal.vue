@@ -1,9 +1,13 @@
 <template>
-  <div class="modal fade" id="xfr-modal" data-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+  <div id="transfer-ticket-modal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Transfer</h5>
+          <h5 class="modal-title">Transfer Session</h5>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <form @submit.prevent="transferClient()">
           <div class="modal-body">
@@ -46,7 +50,7 @@ export default {
     transfering: false
   }),
   computed: {
-    ...mapState("auth", ["users"]),
+    ...mapState("auth", ["users", "user"]),
 
     filtered() {
       if (!this.agent) return [];

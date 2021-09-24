@@ -668,6 +668,7 @@ body,
       margin: 0 0.5rem;
       text-decoration: none;
       color: $black;
+      white-space: nowrap;
 
       &.active {
         color: $primary;

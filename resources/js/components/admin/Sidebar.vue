@@ -35,11 +35,11 @@ export default {
   name: "Sidebar",
   data: () => ({
     navs: [
-      // {
-      //   name: "Dashboard",
-      //   to: "/dashboard",
-      //   icon: "template/mdi-dashboard.svg"
-      // },
+      {
+        name: "Dashboard",
+        to: "/dashboard",
+        icon: "template/mdi-dashboard.svg"
+      },
       {
         name: "Ticket",
         to: "/tickets",
@@ -50,11 +50,11 @@ export default {
         to: "/clients",
         icon: "template/mdi-account-group.svg"
       },
-      // {
-      //   name: "Report",
-      //   to: "/reports",
-      //   icon: "template/mdi-file-chart.svg"
-      // },
+      {
+        name: "Report",
+        to: "/reports",
+        icon: "template/mdi-file-chart.svg"
+      },
       {
         name: "Settings",
         to: "/settings",

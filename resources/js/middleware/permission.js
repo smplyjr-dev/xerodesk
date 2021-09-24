@@ -1,8 +1,7 @@
 import store from "@Scripts/store";
 
 export default (to, from, next, attrs) => {
-  let user = store.state.auth.user;
-  let permissions = user.permissions.map(p => p.slug);
+  let permissions = store.state.auth.user.permissions.map(p => p.slug);
 
   if (permissions.some(p => attrs.includes(p))) {
     next();
