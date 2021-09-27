@@ -105,20 +105,12 @@ export default {
         });
 
         // hide the modal
-        $("#xfr-modal").modal("hide");
+        $("#transfer-ticket-modal").modal("hide");
 
         // update the old user
         this.session.user = this.selected;
         this.agent = null;
         this.selected = null;
-
-        // display a notification
-        this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-success",
-          icon: "fa-check",
-          title: "Success!",
-          body: "The ticket has been successfully transferred."
-        });
       } catch (error) {
         // display a notification
         this.$store.dispatch("notifications/addNotification", {

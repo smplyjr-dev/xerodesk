@@ -15,15 +15,17 @@ class SessionTransferFrom implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $old_user_id;
+    public $session;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($old_user_id)
+    public function __construct($old_user_id, $session)
     {
         $this->old_user_id = $old_user_id;
+        $this->session = $session;
     }
 
     /**
@@ -33,7 +35,7 @@ class SessionTransferFrom implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'session.transfered.from.' . $this->old_user_id;
+        return 'session.transferred.from.' . $this->old_user_id;
     }
 
     /**

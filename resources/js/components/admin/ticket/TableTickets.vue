@@ -2,7 +2,10 @@
   <div class="card card-1">
     <div class="card-body">
       <div class="server-datatable">
-        <search @onSelect="handleOnSelect" @onSearch="searchDatatable($event)" />
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <length @onSelect="handleOnSelect" />
+          <search @onSearch="searchDatatable" />
+        </div>
 
         <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
           <tbody class="text-sm">
@@ -135,7 +138,12 @@
 
               <!-- Title -->
               <td>
-                <router-link :to="`/tickets/${p.session}`">{{ p.title || p.session }}</router-link>
+                <router-link :to="`/tickets/${p.session}`">{{ p.title || "--" }}</router-link>
+              </td>
+
+              <!-- Session -->
+              <td>
+                <router-link :to="`/tickets/${p.session}`">{{ p.session }}</router-link>
               </td>
 
               <!-- Priority -->
@@ -222,7 +230,10 @@
           </tbody>
         </datatable>
 
-        <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <entries :pagination="pagination" />
+          <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+        </div>
       </div>
     </div>
   </div>
@@ -232,18 +243,19 @@
 import { nanoid } from "nanoid";
 import { mapState } from "vuex";
 import { tickets } from "@Scripts/observable";
-import { Search, Datatable, Pagination, Mixin } from "@SDT";
+import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
 
 export default {
   props: ["isReady"],
   mixins: [Mixin],
-  components: { Search, Datatable, Pagination },
+  components: { Length, Search, Datatable, Entries, Pagination },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "client", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "title", label: "Title" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "session", label: "Session" },
       { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "priority", label: "Priority" },
       { sortable: 1, hide: 0, type: types[1], width: "12.5%", name: "groups", label: "Groups" },
@@ -466,7 +478,7 @@ export default {
     ifNotAssignedToSelf(assigned_id) {
       if (
         this.user.id == assigned_id || // if assigned to the user
-        ["Super", "Admin"].includes(this.user.role) // if you are an admin
+        ["Super"].includes(this.user.role) // if you are an super admin
       ) {
         return false;
       }

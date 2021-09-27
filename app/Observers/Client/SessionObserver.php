@@ -16,7 +16,6 @@ class SessionObserver
 
     public function updated(Session $session)
     {
-        if (request()->status == 3 || request()->status == 4) $session->sendSessionMessagesNotification();
         SessionUpdate::dispatch($session);
     }
 

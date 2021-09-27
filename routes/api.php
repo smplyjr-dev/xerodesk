@@ -44,14 +44,15 @@ Route::namespace('Client')->group(function () {
     Route::post('/message/{hash}/attachment', 'MessageController@attachment');
     Route::resource('/message',               'MessageController');
 
-    Route::get('/session/clients',            'SessionController@clients');
-    Route::get('/session/{session}/tag',      'SessionController@tags');
-    Route::post('/session/{session}/tag',     'SessionController@attach');
-    Route::delete('/session/{session}/tag',   'SessionController@detach');
-    Route::get('/session/{session}/verify',   'SessionController@verify');
-    Route::get('/session/{session}/messages', 'SessionController@messages');
-    Route::put('/session/{session}/transfer', 'SessionController@transfer');
-    Route::resource('/session',               'SessionController');
+    Route::get('/session/clients',              'SessionController@clients');
+    Route::get('/session/{session}/tag',        'SessionController@tags');
+    Route::post('/session/{session}/tag',       'SessionController@attach');
+    Route::delete('/session/{session}/tag',     'SessionController@detach');
+    Route::get('/session/{session}/verify',     'SessionController@verify');
+    Route::get('/session/{session}/messages',   'SessionController@messages');
+    Route::put('/session/{session}/transfer',   'SessionController@transfer');
+    Route::get('/session/{session}/transcript', 'SessionController@transcript');
+    Route::resource('/session',                 'SessionController');
 });
 
 Route::namespace('Company')->group(function () {

@@ -12,7 +12,9 @@
 
     <!-- Show Notice -->
     <template v-else-if="session.user_id != user.id">
-      <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you.</div>
+      <div class="p-3">
+        <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you.</div>
+      </div>
     </template>
 
     <!-- Reply Form -->

@@ -249,8 +249,8 @@
 
 <script>
 import { mapState } from "vuex";
-import Datatable from "@Components/datatable/server/Datatable.vue";
-import Pagination from "@Components/datatable/server/Pagination.vue";
+import Datatable from "@Components/datatable/client/Datatable.vue";
+import Pagination from "@Components/datatable/client/Pagination.vue";
 import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {

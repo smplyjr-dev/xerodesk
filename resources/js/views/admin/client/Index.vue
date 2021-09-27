@@ -8,7 +8,10 @@
     <div class="card card-1">
       <div class="card-body">
         <div class="server-datatable">
-          <search @onSelect="handleOnSelect" @onSearch="searchDatatable($event)" />
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <length @onSelect="handleOnSelect" />
+            <search @onSearch="searchDatatable" />
+          </div>
 
           <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
             <tbody class="text-sm">
@@ -59,7 +62,10 @@
             </tbody>
           </datatable>
 
-          <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <entries :pagination="pagination" />
+            <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+          </div>
         </div>
       </div>
     </div>
@@ -123,12 +129,12 @@
 </template>
 
 <script>
-import { Search, Datatable, Pagination, Mixin } from "@SDT";
+import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
 
 export default {
   layout: "Admin",
   mixins: [Mixin],
-  components: { Search, Datatable, Pagination },
+  components: { Length, Search, Datatable, Entries, Pagination },
   name: "Clients",
   metaInfo: () => ({ title: "Clients" }),
   middleware: ["auth", "permission:view_clients"],

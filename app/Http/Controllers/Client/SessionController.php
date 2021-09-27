@@ -47,7 +47,10 @@ class SessionController extends Controller
                 'group_id',
                 'user_id',
                 'title',
+                'category',
                 'priority',
+                'resolution_code',
+                'solution',
                 'token',
                 'status',
             ]));

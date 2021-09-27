@@ -9,7 +9,19 @@
       </div>
     </div>
 
-    <ul class="list-style-a">
+    <div class="ticket-actions">
+      <button class="btn btn-primary" @click="updateSession" data-toggle="popover" data-placement="top" data-content="Update Ticket" data-trigger="hover">
+        <InlineSvg name="template/mdi-sync.svg" size="1.25rem" />
+      </button>
+      <button class="btn btn-danger" @click="transferSession" data-toggle="popover" data-placement="top" data-content="Transfer Ticket" data-trigger="hover">
+        <InlineSvg name="template/mdi-swap-vertical.svg" size="1.25rem" />
+      </button>
+      <button class="btn btn-info" @click="transcriptSession" data-toggle="popover" data-placement="top" data-content="Send Transcript" data-trigger="hover" :disabled="isSending">
+        <InlineSvg name="template/mdi-email-fast-outline.svg" size="1.25rem" />
+      </button>
+    </div>
+
+    <ul class="list-style-a mb-0">
       <li>
         <p class="cd-title">Client ID</p>
         <p class="cd-info ellipsis">#{{ `${client.id}`.padStart(6, 0) }}</p>
@@ -40,9 +52,6 @@
       </li>
     </ul>
 
-    <button class="btn btn-primary btn-block" @click="updateSession">Update Ticket</button>
-    <button class="btn btn-danger btn-block" @click="transferSession">Transfer Ticket</button>
-
     <TicketUpdateModal :session="session" />
     <TicketTransferModal :session="session" />
   </div>
@@ -56,6 +65,9 @@ import TicketTransferModal from "./TicketTransferModal.vue";
 export default {
   props: ["data"],
   components: { TicketUpdateModal, TicketTransferModal },
+  data: () => ({
+    isSending: false
+  }),
   computed: {
     ...mapState("auth", ["user"]),
     ...mapState("messages", ["messages"]),
@@ -74,30 +86,49 @@ export default {
     }
   },
   methods: {
+    forbiddenNotif() {
+      this.$store.dispatch("notifications/addNotification", {
+        variant: "bg-danger",
+        icon: "fa-times",
+        title: "Forbidden!",
+        body: "This ticket is not currently assigned to you."
+      });
+    },
     updateSession() {
       if (this.session.user_id == this.user.id) {
         $("#update-ticket-modal").modal("show");
       } else {
-        this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-danger",
-          icon: "fa-times",
-          title: "Invalid!",
-          body: `This ticket is not currently assigned to you.`
-        });
+        this.forbiddenNotif();
       }
     },
     transferSession() {
       if (this.session.user_id == this.user.id) {
         $("#transfer-ticket-modal").modal("show");
       } else {
+        this.forbiddenNotif();
+      }
+    },
+    async transcriptSession() {
+      if (this.session.user_id == this.user.id) {
+        this.isSending = true;
+
+        let { data } = await axios.get(`/session/${this.session.session}/transcript`);
+
         this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-danger",
-          icon: "fa-times",
-          title: "Invalid!",
-          body: `This ticket is not currently assigned to you.`
+          variant: "bg-success",
+          icon: "fa-check",
+          title: "Success!",
+          body: data.message
         });
+
+        this.isSending = false;
+      } else {
+        this.forbiddenNotif();
       }
     }
+  },
+  mounted() {
+    $('[data-toggle="popover"]').popover();
   }
 };
 </script>

@@ -42,12 +42,6 @@ const actions = {
     commit("SET_CLIENTS", data);
 
     commit("SET_LOADING", false);
-  },
-
-  async fetchClientsFromSessions({ commit }) {
-    let { data } = await axios.get(`/session/clients`);
-
-    commit("SET_CLIENTS", data.pluck("client"));
   }
 };
 

@@ -43,8 +43,6 @@ export default {
   },
   methods: {
     setupListeners() {
-      const self = this;
-
       // pusher init
       const PUSHER = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
@@ -54,26 +52,30 @@ export default {
       // channels listener
       const CH_SESSION = PUSHER.subscribe("session");
 
-      CH_SESSION.bind(`session.transfered.from.${this.user.id}`, async data => {
-        await self.$store.dispatch("clients/fetchClientsFromSessions");
-
+      CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-info",
-          icon: "fa-exclamation-circle",
-          title: "Notice!",
-          body: "One of your client has been transfered to different agent."
+          variant: "bg-success",
+          icon: "fa-check",
+          title: "Success!",
+          body: "You have successfully transferred this ticket."
         });
+
+        // update the session from store
+        this.$store.state.sessions.session.user_id = this.new_user_id;
       });
 
-      CH_SESSION.bind(`session.transfered.to.${this.user.id}`, async data => {
-        await self.$store.dispatch("clients/fetchClientsFromSessions");
-
+      CH_SESSION.bind(`session.transferred.to.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-info",
           icon: "fa-exclamation-circle",
           title: "Notice!",
-          body: "One of the client has been transfered to you."
+          body: "A ticket has been transferred to you."
         });
+
+        // update the session from store
+        if (this.$store.state.sessions.session.session == data.session) {
+          this.$store.state.sessions.session.user_id = data.new_user_id;
+        }
       });
     }
   },

@@ -14,7 +14,10 @@
         </div>
 
         <div class="server-datatable">
-          <search @onSelect="handleOnSelect" @onSearch="searchDatatable($event)" />
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <length @onSelect="handleOnSelect" />
+            <search @onSearch="searchDatatable" />
+          </div>
 
           <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
             <tbody class="text-sm">
@@ -73,7 +76,10 @@
             </tbody>
           </datatable>
 
-          <pagination :pagination="pagination" @prev="getDatatable(true, pagination.prevPageUrl)" @next="getDatatable(true, pagination.nextPageUrl)" />
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <entries :pagination="pagination" />
+            <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+          </div>
         </div>
       </div>
     </div>
@@ -153,7 +159,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { Search, Datatable, Pagination, Mixin } from "@SDT";
+import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
 import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
@@ -164,7 +170,7 @@ export default {
     title: "Setting / SLA's"
   }),
   middleware: ["auth", "permission:view_slas"],
-  components: { Search, Datatable, Pagination, SettingMeta },
+  components: { Length, Search, Datatable, Entries, Pagination, SettingMeta },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];

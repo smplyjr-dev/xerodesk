@@ -25,30 +25,28 @@ export default {
   components: { TicketHeader, TicketContents, TicketMetas },
   layout: "Admin",
   name: "Ticket",
-  metaInfo: () => ({
-    title: "Ticket"
-  }),
+  metaInfo: () => ({ title: "Ticket" }),
   middleware: ["auth", "permission:view_ticket"],
   data: () => ({
-    session: {},
     client: {},
     company: {},
     isMetaOpen: true,
     isComponentReady: false
   }),
   computed: {
-    ...mapState("auth", ["users"])
+    ...mapState("auth", ["users"]),
+    ...mapState("sessions", ["session"])
   },
   methods: {
     async fetchSession() {
-      this.session = {};
+      this.$store.state.sessions.session = {};
       this.client = {};
       this.company = {};
       this.$store.commit("messages/SET_MESSAGES", []);
 
       let { data } = await axios.get(`/portal/session/${this.$route.params.session}`);
 
-      this.session = data;
+      this.$store.state.sessions.session = data;
       this.client = data.client;
       this.company = data.client.company;
       this.$store.commit("messages/SET_MESSAGES", data.messages);

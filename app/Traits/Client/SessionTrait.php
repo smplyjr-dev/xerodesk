@@ -33,8 +33,8 @@ trait SessionTrait
             $session = Session::whereSession($session)->first();
             $session->update(['user_id' => request()->new_user_id]);
 
-            SessionTransferFrom::dispatch(request()->old_user_id);
-            SessionTransferTo::dispatch(request()->new_user_id);
+            SessionTransferFrom::dispatch(request()->old_user_id, $session->session);
+            SessionTransferTo::dispatch(request()->new_user_id, $session->session);
 
             DB::commit();
 
@@ -64,5 +64,16 @@ trait SessionTrait
             ->first();
 
         return response()->json($session->messages, 200);
+    }
+
+    public function transcript($session)
+    {
+        $session = Session::where('session', $session)->firstOrFail();
+        $session->sendSessionMessagesNotification();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'The transcript has been sent succesfully to the client email.',
+        ], 200);
     }
 }
