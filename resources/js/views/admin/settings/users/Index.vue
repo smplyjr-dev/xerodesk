@@ -256,9 +256,7 @@ import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 export default {
   layout: "Admin",
   name: "SettingUsers",
-  metaInfo: () => ({
-    title: "Setting / Users"
-  }),
+  metaInfo: () => ({ title: "Setting / Users" }),
   middleware: ["auth", "permission:view_users"],
   components: { Datatable, Pagination, SettingMeta },
   computed: {

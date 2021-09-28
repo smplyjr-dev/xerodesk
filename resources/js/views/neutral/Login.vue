@@ -72,9 +72,7 @@
 export default {
   layout: "Neutral",
   name: "Login",
-  metaInfo: () => ({
-    title: "Login"
-  }),
+  metaInfo: () => ({ title: "Login" }),
   middleware: ["guest"],
   data: () => ({
     isLoading: false,

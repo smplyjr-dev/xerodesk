@@ -48,9 +48,7 @@ import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 export default {
   layout: "Admin",
   name: "SettingCompany",
-  metaInfo: () => ({
-    title: "Setting / Company"
-  }),
+  metaInfo: () => ({ title: "Setting / Company" }),
   middleware: ["auth", "permission:view_company"],
   components: { SettingMeta },
   data: () => ({

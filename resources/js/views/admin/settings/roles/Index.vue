@@ -162,9 +162,7 @@ import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 export default {
   layout: "Admin",
   name: "SettingRoles",
-  metaInfo: () => ({
-    title: "Setting / Roles"
-  }),
+  metaInfo: () => ({ title: "Setting / Roles" }),
   middleware: ["auth", "permission:view_roles"],
   components: { Datatable, Pagination, SettingMeta },
   data() {

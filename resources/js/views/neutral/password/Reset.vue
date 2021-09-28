@@ -69,9 +69,7 @@
 export default {
   layout: "Neutral",
   name: "Reset",
-  metaInfo: () => ({
-    title: "Reset Password"
-  }),
+  metaInfo: () => ({ title: "Reset Password" }),
   data: () => ({
     isLoading: false,
     passwordError: [],

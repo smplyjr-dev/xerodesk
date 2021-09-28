@@ -49,9 +49,7 @@
 export default {
   layout: "Neutral",
   name: "Request",
-  metaInfo: () => ({
-    title: "Forgot Password"
-  }),
+  metaInfo: () => ({ title: "Forgot Password" }),
   middleware: "guest",
   data: () => ({
     isLoading: false,

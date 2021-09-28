@@ -190,9 +190,7 @@ import TableGroupUsers from "@Components/admin/settings/TableGroupUsers.vue";
 export default {
   layout: "Admin",
   name: "SettingGroups",
-  metaInfo: () => ({
-    title: "Setting / Groups"
-  }),
+  metaInfo: () => ({ title: "Setting / Groups" }),
   middleware: ["auth", "permission:view_groups"],
   components: { Datatable, Pagination, SettingMeta, TableGroupUsers },
   data() {

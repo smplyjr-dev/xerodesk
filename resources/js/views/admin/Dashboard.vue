@@ -69,9 +69,7 @@
 export default {
   layout: "Admin",
   name: "Dashboard",
-  metaInfo: () => ({
-    title: "Dashboard"
-  }),
+  metaInfo: () => ({ title: "Dashboard" }),
   middleware: ["auth"],
   data: () => ({
     sessions: []

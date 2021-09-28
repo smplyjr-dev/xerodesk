@@ -12,9 +12,7 @@
 export default {
   layout: "Admin",
   name: "Dashboard",
-  metaInfo: () => ({
-    title: "Admin Dashboard"
-  }),
+  metaInfo: () => ({ title: "Admin Dashboard" }),
   middleware: "auth"
 };
 </script>

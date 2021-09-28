@@ -12,8 +12,6 @@
 export default {
   layout: "Neutral",
   name: "NotFound",
-  metaInfo: () => ({
-    title: "Page Not Found"
-  })
+  metaInfo: () => ({ title: "Page Not Found" })
 };
 </script>

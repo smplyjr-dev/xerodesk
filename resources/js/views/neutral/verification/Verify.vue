@@ -2,9 +2,7 @@
 export default {
   layout: "Neutral",
   name: "Verify",
-  metaInfo: () => ({
-    title: "Account Verification"
-  }),
+  metaInfo: () => ({ title: "Account Verification" }),
   async beforeRouteEnter(to, from, next) {
     let qs = params =>
       Object.keys(params)

@@ -159,9 +159,7 @@ import ADatePicker from "@Components/neutral/ADatePicker.vue";
 export default {
   layout: "Admin",
   name: "SettingEditUser",
-  metaInfo: () => ({
-    title: "Setting / Edit User"
-  }),
+  metaInfo: () => ({ title: "Setting / Edit User" }),
   middleware: ["auth"],
   components: { ADatePicker },
   computed: {

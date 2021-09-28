@@ -146,9 +146,7 @@ import ADatePicker from "@Components/neutral/ADatePicker.vue";
 export default {
   layout: "Admin",
   name: "Profile",
-  metaInfo: () => ({
-    title: "Profile"
-  }),
+  metaInfo: () => ({ title: "Profile" }),
   middleware: ["auth"],
   components: { ADatePicker },
   computed: {

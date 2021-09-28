@@ -48,9 +48,7 @@
 export default {
   layout: "Neutral",
   name: "Resend",
-  metaInfo: () => ({
-    title: "Dashboard"
-  }),
+  metaInfo: () => ({ title: "Dashboard" }),
   middleware: "guest",
   data: () => ({
     isLoading: false,

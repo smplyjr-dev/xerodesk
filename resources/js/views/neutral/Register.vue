@@ -105,9 +105,7 @@
 export default {
   layout: "Neutral",
   name: "Register",
-  metaInfo: () => ({
-    title: "Register"
-  }),
+  metaInfo: () => ({ title: "Register" }),
   middleware: "guest",
   data: () => ({
     isLoading: false,

@@ -26,9 +26,7 @@
 export default {
   layout: "Admin",
   name: "Web Notification",
-  metaInfo: () => ({
-    title: "Web Notification"
-  }),
+  metaInfo: () => ({ title: "Web Notification" }),
   middleware: ["auth"],
   components: {},
   data: () => ({
