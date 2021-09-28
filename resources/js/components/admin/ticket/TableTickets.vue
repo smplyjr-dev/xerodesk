@@ -4,7 +4,7 @@
       <div class="server-datatable">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
           <length @onSelect="handleOnSelect" />
-          <search @onSearch="searchDatatable" />
+          <!-- <search @onSearch="searchDatatable" /> -->
         </div>
 
         <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -432,8 +432,8 @@ export default {
       let date = new Date(p.created_at);
       let today = new Date();
       let days = today.getTime() - date.getTime();
-      let difference = days / (1000 * 3600 * 24);
-      let rounded = Math.round(difference);
+      let difference = days / (1000 * 3600);
+      let rounded = difference; // Math.round(difference);
       let choosen = null;
 
       // early return if the status is resolved or closed

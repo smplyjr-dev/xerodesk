@@ -95,21 +95,21 @@ export default {
       });
     },
     updateSession() {
-      if (this.session.user_id == this.user.id) {
+      if (this.session.user_id == this.user.id || this.user.role == "Super") {
         $("#update-ticket-modal").modal("show");
       } else {
         this.forbiddenNotif();
       }
     },
     transferSession() {
-      if (this.session.user_id == this.user.id) {
+      if (this.session.user_id == this.user.id || this.user.role == "Super") {
         $("#transfer-ticket-modal").modal("show");
       } else {
         this.forbiddenNotif();
       }
     },
     async transcriptSession() {
-      if (this.session.user_id == this.user.id) {
+      if (this.session.user_id == this.user.id || this.user.role == "Super") {
         this.isSending = true;
 
         let { data } = await axios.get(`/session/${this.session.session}/transcript`);

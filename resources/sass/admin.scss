@@ -9,11 +9,13 @@
 @import "./bootstrap/variables";
 @import "./bootstrap/custom/switches";
 @import "./vue-components/dropdown";
+@import "./vue-components/drawer";
 
 html,
 body,
 #xerodesk-portal {
   background: #f5f5f5;
+  scroll-behavior: smooth;
 }
 
 .layout-admin {

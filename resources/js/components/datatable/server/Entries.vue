@@ -1,5 +1,5 @@
 <template>
-  <span class="page-stats mt-4"> Showing {{ pagination.from }} - {{ pagination.to }} of {{ pagination.total }}</span>
+  <div class="dts-entries">Showing {{ pagination.from }} - {{ pagination.to }} of {{ pagination.total }}</div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="control d-flex align-items-center mb-4">
+  <div class="dts-length">
     Show
     <div class="select mx-2">
       <select class="custom-select custom-select-sm" v-model="length" @change="$emit('onSelect', length)">

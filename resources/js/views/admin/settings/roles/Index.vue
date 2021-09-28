@@ -15,7 +15,7 @@
 
         <div class="client-datatable">
           <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="control d-flex align-items-center mb-4">
+            <div class="control d-flex align-items-center">
               Show
               <div class="select mx-2">
                 <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
@@ -29,7 +29,7 @@
               entries
             </div>
 
-            <div class="search mb-4">
+            <div class="search">
               <div class="d-flex align-items-center">
                 <label class="mb-0 mr-2" for="search">Search:</label>
                 <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />

@@ -1,5 +1,5 @@
 <template>
-  <div v-on-clickaway="away" class="cd" :class="{ disabled: disabled }">
+  <div class="cd" :class="{ disabled: disabled }" v-on-clickaway="away">
     <div class="d-flex align-items-center" @click="toggle">
       <span class="mb-0">
         <slot name="value">--</slot>

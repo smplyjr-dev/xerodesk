@@ -10,64 +10,57 @@
           </button>
         </div>
         <div class="modal-body">
-          <template v-if="session.user_id == user.id">
-            <ul class="list-style-a my-0">
-              <li>
-                <p class="cd-title">Title <span class="text-danger">*</span></p>
-                <input type="text" class="form-control" v-model="session.title" />
-                <span class="text-danger text-xs" v-show="sessionError.includes('title')">The title field is required.</span>
-              </li>
-              <li>
-                <p class="cd-title">Priority <span class="text-danger">*</span></p>
-                <select class="custom-select" v-model="session.priority">
-                  <option :value="null">-- Select Priority --</option>
-                  <option v-for="p in priority" :key="p.id" :value="p.id">{{ p.name }}</option>
-                </select>
-                <span class="text-danger text-xs" v-show="sessionError.includes('priority')">The priority field is required.</span>
-              </li>
-              <li>
-                <p class="cd-title">Service Category <span class="text-danger">*</span></p>
-                <select class="custom-select" v-model="session.category">
-                  <option :value="null">-- Select Category --</option>
-                  <option v-for="c in category" :key="c.id">{{ c.name }}</option>
-                </select>
-                <span class="text-danger text-xs" v-show="sessionError.includes('category')">The category field is required.</span>
-              </li>
-              <li>
-                <p class="cd-title">Resolution Code <span class="text-danger">*</span></p>
-                <select class="custom-select" v-model="session.resolution_code">
-                  <option :value="null">-- Select Resolution Code --</option>
-                  <option v-for="r in resolution" :key="r.id">{{ r.name }}</option>
-                </select>
-                <span class="text-danger text-xs" v-show="sessionError.includes('resolution_code')">The resolution code field is required.</span>
-              </li>
-              <li>
-                <p class="cd-title">Solution <span class="text-danger">*</span></p>
-                <input type="text" class="form-control" v-model="session.solution" />
-                <span class="text-danger text-xs" v-show="sessionError.includes('solution')">The solution field is required.</span>
-              </li>
-              <li>
-                <p class="cd-title">Tags</p>
-                <TicketTag :session="session" />
-              </li>
-              <li>
-                <p class="cd-title">Status <span class="text-danger">*</span></p>
-                <select class="custom-select" v-model="newStatus" :disabled="isDisable">
-                  <option :value="null">-- Select Status --</option>
-                  <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
-                </select>
-                <span class="text-danger text-xs" v-show="sessionError.includes('status')">The status field is required.</span>
-              </li>
-            </ul>
-          </template>
-          <template v-else>
-            <form-alert variant="warning">
-              <p>This ticket is not assigned to you.</p>
-            </form-alert>
-          </template>
+          <ul class="list-style-a my-0">
+            <li>
+              <p class="cd-title">Title <span class="text-danger">*</span></p>
+              <input type="text" class="form-control" v-model="session.title" />
+              <span class="text-danger text-xs" v-show="sessionError.includes('title')">The title field is required.</span>
+            </li>
+            <li>
+              <p class="cd-title">Priority <span class="text-danger">*</span></p>
+              <select class="custom-select" v-model="session.priority">
+                <option :value="null">-- Select Priority --</option>
+                <option v-for="p in priority" :key="p.id" :value="p.id">{{ p.name }}</option>
+              </select>
+              <span class="text-danger text-xs" v-show="sessionError.includes('priority')">The priority field is required.</span>
+            </li>
+            <li>
+              <p class="cd-title">Service Category <span class="text-danger">*</span></p>
+              <select class="custom-select" v-model="session.category">
+                <option :value="null">-- Select Category --</option>
+                <option v-for="c in category" :key="c.id">{{ c.name }}</option>
+              </select>
+              <span class="text-danger text-xs" v-show="sessionError.includes('category')">The category field is required.</span>
+            </li>
+            <li>
+              <p class="cd-title">Resolution Code <span class="text-danger">*</span></p>
+              <select class="custom-select" v-model="session.resolution_code">
+                <option :value="null">-- Select Resolution Code --</option>
+                <option v-for="r in resolution" :key="r.id">{{ r.name }}</option>
+              </select>
+              <span class="text-danger text-xs" v-show="sessionError.includes('resolution_code')">The resolution code field is required.</span>
+            </li>
+            <li>
+              <p class="cd-title">Solution <span class="text-danger">*</span></p>
+              <input type="text" class="form-control" v-model="session.solution" />
+              <span class="text-danger text-xs" v-show="sessionError.includes('solution')">The solution field is required.</span>
+            </li>
+            <li>
+              <p class="cd-title">Tags</p>
+              <TicketTag :session="session" />
+            </li>
+            <li>
+              <p class="cd-title">Status <span class="text-danger">*</span></p>
+              <select class="custom-select" v-model="newStatus" :disabled="isDisable">
+                <option :value="null">-- Select Status --</option>
+                <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
+              </select>
+              <span class="text-danger text-xs" v-show="sessionError.includes('status')">The status field is required.</span>
+            </li>
+          </ul>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating || session.user_id != user.id">
+          <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating">
             <span v-if="isUpdating">
               Please wait...
               <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>

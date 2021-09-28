@@ -36,6 +36,9 @@ class CreateClientManagementTable extends Migration
             $table->string('title')->nullable();
             $table->tinyInteger('priority')->nullable(); // 1 = Low, 2 = Medium, 3 = High, 4 = Urgent
             $table->string('token')->nullable();
+            $table->string('category')->nullable();
+            $table->string('resolution_code')->nullable();
+            $table->string('solution')->nullable();
             $table->boolean('is_read')->default(false);
             $table->tinyInteger('status')->default(1); // 1 = Open, 2 = Pending, 3 = Resolved, 4 = Closed, 5 = Waiting for Agent, 6 = Waiting for Client
             $table->timestamps();

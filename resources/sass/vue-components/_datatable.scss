@@ -3,6 +3,7 @@
 .server-datatable {
   .table-responsive {
     overflow-x: visible;
+    margin: 1.5rem 0;
   }
 
   thead {
@@ -102,6 +103,14 @@
     }
   }
 }
+
+.dts-length,
+.dts-search {
+  display: flex;
+  align-items: center;
+}
+// .dts-entries {}
+// .dts-pagination {}
 
 @media (min-width: 768px) {
   .client-datatable,

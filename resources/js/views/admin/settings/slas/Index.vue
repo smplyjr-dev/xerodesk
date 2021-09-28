@@ -129,7 +129,7 @@
                   <!-- <input id="color" type="text" class="form-control" v-model="slaDetails.color" /> -->
                 </div>
                 <div class="form-group">
-                  <label for="range">Range in Days <span class="text-danger">*</span></label>
+                  <label for="range">Time to Resolve (hours) <span class="text-danger">*</span></label>
                   <input id="range" type="text" class="form-control" v-model.number="slaDetails.range" />
                 </div>
               </template>
@@ -174,10 +174,10 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "SLA Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "name", label: "Name" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "color", label: "Color" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "range", label: "Range" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Name" },
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "color", label: "Color" },
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve (hours)" },
+      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "action", label: "Action" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

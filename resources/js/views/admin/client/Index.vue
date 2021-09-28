@@ -71,10 +71,10 @@
     </div>
 
     <transition name="fade">
-      <div class="client-backdrop" v-show="isOpen" @click.self="isOpen = false">
+      <div class="drawer-backdrop" v-show="isOpen" @click.self="isOpen = false">
         <transition name="right">
-          <div class="client-container" v-show="isOpen" v-if="!$isEmpty(client)">
-            <div class="client-close" @click="isOpen = false">
+          <div class="drawer-container" v-show="isOpen" v-if="!$isEmpty(client)">
+            <div class="drawer-close" @click="isOpen = false">
               <InlineSvg name="template/mdi-close.svg" color="#c6c6c6" size="100%" />
             </div>
 
@@ -160,7 +160,6 @@ export default {
       // custom data
       isLoading: false,
       isOpen: false,
-      isOpening: false,
       client: {},
       sessions: [],
       enlargeUrl: null,
