@@ -3,7 +3,7 @@
     <div class="drawer-backdrop" v-show="isOpen" @click.self="$emit('toggleDrawer', false)">
       <transition name="right">
         <div class="drawer-container" v-show="isOpen">
-          <div class="drawer-close" @click="isOpen = false">
+          <div class="drawer-close" @click="$emit('toggleDrawer', false)">
             <InlineSvg name="template/mdi-close.svg" color="#c6c6c6" size="100%" />
           </div>
 
