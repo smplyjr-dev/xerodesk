@@ -5,7 +5,7 @@
 
       <button type="button" class="btn btn-primary mb-2" @click="isOpen = true">
         <div class="d-flex">
-          Refine Search <InlineSvg class="ml-1" name="template/mdi-update.svg" size="1.25rem" />
+          <span class="d-none d-md-block mr-1">Refine Search</span> <InlineSvg name="template/mdi-update.svg" size="1.25rem" />
         </div>
       </button>
     </div>

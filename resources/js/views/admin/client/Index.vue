@@ -33,25 +33,34 @@
                     <div class="content">{{ p.email }}</div>
                   </div>
                   <div class="dt-mobile-item">
-                    <div class="title">Phone:</div>
-                    <div class="content">{{ p.phone || "- -" }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
                     <div class="title">Token:</div>
                     <div class="content">{{ p.token }}</div>
+                  </div>
+                  <div class="dt-mobile-item">
+                    <div class="title">Phone:</div>
+                    <div class="content">{{ p.phone || "--" }}</div>
+                  </div>
+                  <div class="dt-mobile-item">
+                    <div class="title">Timestamp:</div>
+                    <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
                   </div>
                 </td>
 
                 <td>
-                  <div class="d-flex align-items-center">
-                    <!-- <img class="object-cover mr-2" :src="p.picture" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="30px" /> -->
-                    <span>{{ p.name || "--" }}</span>
+                  <div class="d-flex w-100" style="position: relative;">
+                    <img class="object-cover mr-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.name || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="40px" />
+                    <div class="d-flex flex-column">
+                      <span>{{ p.name || "No Name" }}</span>
+                      <span class="text-muted text-xs">{{ p.email || "No Email" }}</span>
+                    </div>
                   </div>
                 </td>
-                <td>{{ p.email || "- -" }}</td>
-                <td>{{ p.phone || "- -" }}</td>
                 <td>{{ p.token }}</td>
-                <td>{{ $dayjs("format", p.created_at, "MM/DD/YYYY h:mm A") }}</td>
+                <td>{{ p.phone || "--" }}</td>
+                <td>
+                  {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+                  {{ $dayjs("format", p.created_at, "hh:mm A") }}
+                </td>
               </tr>
 
               <tr v-if="!isLoading && !paginated.length">
@@ -95,7 +104,7 @@
                 <ul class="list-unstyled mb-0">
                   <li v-for="s in sessions" :key="s.id">
                     <router-link :to="`tickets/${s.session}`">
-                      {{ s.title || s.session }}
+                      {{ s.session }} <span v-show="s.title"> - {{ s.title }}</span>
                     </router-link>
                   </li>
                 </ul>
@@ -143,11 +152,10 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "name", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "email", label: "Email Address" },
-      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "phone", label: "Phone" },
-      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "token", label: "Token" },
-      { sortable: 1, hide: 0, type: types[2], width: "20%", name: "created_at", label: "Timestamp" }
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
+      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" },
+      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
+      { sortable: 1, hide: 0, type: types[2], width: "25%", name: "created_at", label: "Timestamp" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

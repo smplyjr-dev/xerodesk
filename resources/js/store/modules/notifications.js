@@ -48,7 +48,7 @@ const actions = {
     if (!("duration" in notification)) {
       notification = {
         ...notification,
-        duration: 3000
+        duration: "duration" in notification ? notification.duration : 3000
       };
     }
 

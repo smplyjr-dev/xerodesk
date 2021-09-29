@@ -12,7 +12,7 @@ trait ClientTrait
     public function datatable()
     {
         try {
-            $columns = ['name', 'company', 'email', 'phone'];
+            $columns = ['name', 'email', 'phone'];
 
             $length = request()->length;
             $column = request()->column; // index
@@ -20,23 +20,22 @@ trait ClientTrait
             $searchValue = request()->search;
 
             $query = DB::table('clients AS c')
-                ->join('companies AS cmp', 'c.company_id', '=', 'cmp.id')
                 ->select(
                     'c.id AS id',
-                    DB::raw("CONCAT(cmp.url, '/', c.picture) AS picture"),
                     'c.name AS name',
                     'c.token AS token',
-                    'cmp.name AS company',
                     'c.email AS email',
                     'c.phone AS phone'
                 )
                 ->orderBy($columns[$column], $dir);
 
-            // if ($searchValue) {
-            //     $query->where(function ($query) use ($searchValue) {
-            //         $query->where('t.title', 'like', '%' . $searchValue . '%');
-            //     });
-            // }
+            if ($searchValue) {
+                $query->where(function ($query) use ($searchValue) {
+                    $query->where('c.name', 'like', '%' . $searchValue . '%')
+                        ->orWhere('c.token', 'like', '%' . $searchValue . '%')
+                        ->orWhere('c.email', 'like', '%' . $searchValue . '%');
+                });
+            }
 
             $clients = $query->paginate($length);
 

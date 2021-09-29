@@ -109,21 +109,31 @@ export default {
       }
     },
     async transcriptSession() {
-      if (this.session.user_id == this.user.id || this.user.role == "Super") {
-        this.isSending = true;
-
-        let { data } = await axios.get(`/session/${this.session.session}/transcript`);
-
+      if (![3, 4].includes(this.session.status)) {
         this.$store.dispatch("notifications/addNotification", {
-          variant: "bg-success",
-          icon: "fa-check",
-          title: "Success!",
-          body: data.message
+          variant: "bg-danger",
+          icon: "fa-times",
+          title: "Invalid!",
+          body: "Please make sure the ticket is either resolved or closed before sending a copy of transcript to the client.",
+          duration: 5000
         });
-
-        this.isSending = false;
       } else {
-        this.forbiddenNotif();
+        if (this.session.user_id == this.user.id || this.user.role == "Super") {
+          this.isSending = true;
+
+          let { data } = await axios.get(`/session/${this.session.session}/transcript`);
+
+          this.$store.dispatch("notifications/addNotification", {
+            variant: "bg-success",
+            icon: "fa-check",
+            title: "Success!",
+            body: data.message
+          });
+
+          this.isSending = false;
+        } else {
+          this.forbiddenNotif();
+        }
       }
     }
   },
