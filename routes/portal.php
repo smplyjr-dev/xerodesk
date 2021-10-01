@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/client/recent', function () {
+    $model = Client::latest()->limit(5)->get();
+
+    return $model;
+});
+
 Route::get('/client/{token}', function ($token) {
     $model = Client::where('token', $token)->firstOrFail();
 

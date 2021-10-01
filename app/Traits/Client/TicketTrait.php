@@ -52,8 +52,8 @@ trait TicketTrait
             // }
 
             // from the refine search
-            if (request()->company)  $query->where('c.company_id',             request()->company);
             if (request()->session)  $query->where('client_sessions.session',  request()->session);
+            if (request()->company)  $query->where('c.company_id',             request()->company);
             if (request()->priority) $query->where('client_sessions.priority', request()->priority);
             if (request()->agent)    $query->where('client_sessions.user_id',  request()->agent);
             if (request()->status)   $query->where('client_sessions.status',   request()->status);

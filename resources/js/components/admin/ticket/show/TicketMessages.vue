@@ -22,12 +22,12 @@
               </button>
             </div>
             <div class="message-attm--item" v-for="attachment in message.attachments" :key="attachment.id">
-              <div class="message-attm--item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension)" @click="enlargeAtt(attachment)">
+              <div class="message-attm--item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension.toLowerCase())" @click="enlargeAtt(attachment)">
                 <img :src="`${$APP_URL}/storage/uploads/clients/${data.client.token}/${data.session.session}/${attachment.name}.${attachment.extension}`" />
               </div>
               <div class="message-attm--item-file" v-else>
                 <div class="message-attm--item-icon" @click="downloadAtt(attachment)">
-                  <InlineSvg :name="`heroicons/${getIcon(attachment.extension)}.svg`" color="#000" size="25px" />
+                  <InlineSvg :name="`heroicons/${getIcon(attachment.extension.toLowerCase())}.svg`" color="#000" size="25px" />
                 </div>
                 <div class="message-attm--item-name" @click="downloadAtt(attachment)">
                   <span>{{ `${attachment.name}.${attachment.extension}` }}</span>

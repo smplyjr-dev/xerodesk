@@ -4,39 +4,14 @@
       <h4 class="mb-2">Dashboard</h4>
     </div>
 
-    <p>This module is still in progress. Please, come back later.</p>
+    <!-- <p>This module is still in progress. Please, come back later.</p> -->
 
-    <!-- <div class="row">
-      <div class="col-sm mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary">Open Tickets</p>
-          <h4 class="mb-0">{{ open.length }}</h4>
-        </div>
-      </div>
-      <div class="col-sm mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary">Pending Tickets</p>
-          <h4 class="mb-0">{{ pending.length }}</h4>
-        </div>
-      </div>
-      <div class="col-sm mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary">Resolved Tickets</p>
-          <h4 class="mb-0">{{ resolved.length }}</h4>
-        </div>
-      </div>
-      <div class="col-sm mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary">Closed Tickets</p>
-          <h4 class="mb-0">{{ closed.length }}</h4>
-        </div>
-      </div>
-      <div class="col-sm mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary">Unassigned Tickets</p>
-          <h4 class="mb-0">{{ unassigned.length }}</h4>
-        </div>
-      </div>
+    <div class="row">
+      <TicketWidget title="Open Tickets" :length="open.length" />
+      <TicketWidget title="Pending Tickets" :length="pending.length" />
+      <TicketWidget title="Resolved Tickets" :length="resolved.length" />
+      <TicketWidget title="Closed Tickets" :length="closed.length" />
+      <TicketWidget title="Unassigned Tickets" :length="unassigned.length" />
     </div>
 
     <div class="row">
@@ -47,31 +22,31 @@
       </div>
       <div class="col-md-4 mb-4">
         <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="font-weight-bold text-secondary">Recently Added Clients</p>
+          <p class="text-secondary font-weight-bold">Recently Added Clients</p>
           <ul class="list-unstyled mb-0">
-            <li>
-              <router-link to="/">Alfredo Flores</router-link>
-            </li>
-            <li>
-              <router-link to="/">Jerome Dymsoco</router-link>
-            </li>
-            <li>
-              <router-link to="/">Dan Chris</router-link>
+            <li v-for="c in clients" :key="c.id">
+              <a href="javascript:void(0)">
+                {{ c.name }}
+              </a>
             </li>
           </ul>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script>
+import TicketWidget from "@Components/admin/dashboard/TicketWidget.vue";
+
 export default {
   layout: "Admin",
   name: "Dashboard",
   metaInfo: () => ({ title: "Dashboard" }),
+  components: { TicketWidget },
   middleware: ["auth"],
   data: () => ({
+    clients: [],
     sessions: []
   }),
   computed: {
@@ -96,10 +71,16 @@ export default {
       let { data } = await axios.get(`/session`);
 
       this.sessions = data;
+    },
+    async fetchRecentClients() {
+      let { data } = await axios.get(`/portal/client/recent`);
+
+      this.clients = data;
     }
   },
   created() {
     this.fetchTickets();
+    this.fetchRecentClients();
   }
 };
 </script>

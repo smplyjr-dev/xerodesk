@@ -21,7 +21,7 @@
                   <InlineSvg name="template/mdi-close-circle.svg" color="#000" size="10px" />
                 </div>
                 <div class="footer-att-item-icon">
-                  <InlineSvg :name="`heroicons/${getIcon(a.ext)}.svg`" color="#000" size="15px" />
+                  <InlineSvg :name="`heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
                 </div>
                 <div class="footer-att-item-name">
                   <template v-if="!$isEmpty(checkValidity(a))">
@@ -64,7 +64,7 @@ export default {
     },
     checkValidity(file) {
       let size = file.file.size;
-      let extension = file.ext;
+      let extension = file.ext.toLowerCase();
       let response = "";
 
       if (!this.extensions.includes(extension)) response = "type";

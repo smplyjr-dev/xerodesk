@@ -48,10 +48,10 @@
 
                 <td>
                   <div class="d-flex w-100" style="position: relative;">
-                    <img class="object-cover mr-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.name || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="40px" />
+                    <img class="object-cover mr-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.name || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="40px" width="40px" />
                     <div class="d-flex flex-column">
-                      <span>{{ p.name || "No Name" }}</span>
-                      <span class="text-muted text-xs">{{ p.email || "No Email" }}</span>
+                      <span>{{ p.name }}</span>
+                      <span class="text-muted text-xs">{{ p.email }}</span>
                     </div>
                   </div>
                 </td>
@@ -113,7 +113,7 @@
               <div class="tab-pane fade " id="attachments">
                 <div class="grid-container">
                   <div class="grid-item" v-for="m in filteredMessages" :key="m.id" @click="onAttmClick(m)">
-                    <div class="grid-item--image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(getAttachment(m).extension)">
+                    <div class="grid-item--image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(getAttachment(m).extension.toLowerCase())">
                       <img :src="`${$APP_URL}/storage/uploads/clients/${client.token}/${m.session}/${getAttachment(m).name}.${getAttachment(m).extension}`" />
                     </div>
                     <div class="grid-item--file" v-else>
@@ -131,7 +131,7 @@
 
     <transition name="fade">
       <div class="large-attm" style="color: white;" v-if="enlargeToggle" @click.self="enlargeToggle = false">
-        <img :src="enlargeUrl" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(enlargeExtension)" />
+        <img :src="enlargeUrl" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(enlargeExtension.toLowerCase())" />
       </div>
     </transition>
   </div>
@@ -208,22 +208,6 @@ export default {
         .catch(errors => {
           console.log(errors);
         });
-    },
-    getIcon(ext) {
-      // documents
-      if (["doc", "docx", "htm", "html", "pdf", "txt", "pptx"].includes(ext)) return "document-text";
-
-      // spread sheet
-      if (["csv", "xls", "xlsx"].includes(ext)) return "document-report";
-
-      // images
-      if (["gif", "ico", "jpeg", "jpg", "png"].includes(ext)) return "photograph";
-
-      // compressed
-      if (["rar", "zip", "7z"].includes(ext)) return "folder";
-
-      // video
-      if (["mp4", "mov", "avi", "flv", "mkv", "wmv", "webm"].includes(ext)) return "video-camera";
     },
     async showClient(client) {
       this.isOpen = true;

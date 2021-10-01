@@ -123,7 +123,7 @@
                 <div class="d-flex">
                   <div class="ticket-color" :style="{ background: getSla(p) }"></div>
                   <div class="d-flex w-100" style="position: relative;">
-                    <img class="object-cover mx-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="100%" width="40px" />
+                    <img class="object-cover mx-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" v-fallback="`/images/generic-profile.png`" alt="Profile Picture" height="40px" width="40px" />
                     <div class="d-flex flex-column">
                       <span>{{ p.client || "No Name" }}</span>
                       <span class="text-muted text-xs">{{ p.client_email || "No Email" }}</span>
