@@ -23,6 +23,21 @@
           <br />
 
           <form @submit.prevent="$emit('onSearch', refine)">
+            <h4>Search by Employee ID</h4>
+            <div class="form-group">
+              <label>Employee ID</label>
+              <input type="text" class="form-control" v-model="refine.employee_id" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
+              <button class="btn btn-primary pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+
+          <br />
+
+          <form @submit.prevent="$emit('onSearch', refine)">
             <h4>Refine Search</h4>
             <div class="form-group">
               <label>Company</label>
@@ -87,6 +102,7 @@ export default {
       refine: {
         company: null,
         session: null,
+        employee_id: null,
         priority: null,
         agent: null,
         status: null,
@@ -110,6 +126,7 @@ export default {
       this.refine = {
         company: null,
         session: null,
+        employee_id: null,
         priority: null,
         agent: null,
         status: null,

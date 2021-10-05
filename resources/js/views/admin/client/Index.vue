@@ -29,12 +29,16 @@
                     <div class="content">{{ p.name }}</div>
                   </div>
                   <div class="dt-mobile-item">
-                    <div class="title">Email Address:</div>
+                    <div class="title">Email:</div>
                     <div class="content">{{ p.email }}</div>
                   </div>
                   <div class="dt-mobile-item">
                     <div class="title">Token:</div>
                     <div class="content">{{ p.token }}</div>
+                  </div>
+                  <div class="dt-mobile-item">
+                    <div class="title">Employee ID:</div>
+                    <div class="content">{{ p.employee_id }}</div>
                   </div>
                   <div class="dt-mobile-item">
                     <div class="title">Phone:</div>
@@ -56,6 +60,7 @@
                   </div>
                 </td>
                 <td>{{ p.token }}</td>
+                <td>{{ p.employee_id }}</td>
                 <td>{{ p.phone || "--" }}</td>
                 <td>
                   {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
@@ -152,10 +157,11 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
-      { sortable: 1, hide: 0, type: types[2], width: "25%", name: "created_at", label: "Timestamp" }
+      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "name", label: "Client" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "token", label: "Token" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "employee_id", label: "Employee ID" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "phone", label: "Phone" },
+      { sortable: 1, hide: 0, type: types[2], width: "20%", name: "created_at", label: "Timestamp" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

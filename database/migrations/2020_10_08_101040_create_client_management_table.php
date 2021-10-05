@@ -18,8 +18,9 @@ class CreateClientManagementTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('company_id');
             $table->string('token')->unique();
-            $table->string('email')->nullable();
-            $table->string('name')->nullable();
+            $table->string('employee_id')->unique();
+            $table->string('email')->unique();
+            $table->string('name');
             $table->string('phone')->nullable();
             $table->string('picture', 255)->nullable();
             $table->timestamps();
