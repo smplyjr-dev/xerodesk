@@ -52,12 +52,11 @@ trait TicketTrait
             // }
 
             // from the refine search
-            if (request()->session)     $query->where('client_sessions.session',  request()->session);
-            if (request()->employee_id) $query->where('c.employee_id',            request()->employee_id);
-            if (request()->company)     $query->where('c.company_id',             request()->company);
-            if (request()->priority)    $query->where('client_sessions.priority', request()->priority);
-            if (request()->agent)       $query->where('client_sessions.user_id',  request()->agent);
-            if (request()->status)      $query->where('client_sessions.status',   request()->status);
+            if (request()->session)  $query->where('client_sessions.session',  request()->session);
+            if (request()->company)  $query->where('c.company_id',             request()->company);
+            if (request()->priority) $query->where('client_sessions.priority', request()->priority);
+            if (request()->agent)    $query->where('client_sessions.user_id',  request()->agent);
+            if (request()->status)   $query->where('client_sessions.status',   request()->status);
             if (request()->created_at) {
                 $time = strtotime(request()->created_at);
                 $date = date('Y-m-d', $time);

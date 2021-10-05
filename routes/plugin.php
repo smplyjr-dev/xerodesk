@@ -46,18 +46,16 @@ Route::get('/client/{token}', function ($token) {
 
 Route::post('/client', function () {
     request()->validate([
-        'employee_id' => 'required|alpha_num',
-        'name'        => 'required|alpha_space',
-        'email'       => 'required|email|unique:clients'
+        'name'  => 'required|alpha_space',
+        'email' => 'required|email|unique:clients'
     ]);
 
     $model = Client::create([
-        'company_id'  => 1,
-        'token'       => Str::random(10),
-        'employee_id' => request()->employee_id,
-        'name'        => request()->name,
-        'email'       => request()->email,
-        'phone'       => request()->phone
+        'company_id' => 1,
+        'token'      => Str::random(10),
+        'name'       => request()->name,
+        'email'      => request()->email,
+        'phone'      => request()->phone
     ]);
 
     $model->sendWelcomeMessageNotification();

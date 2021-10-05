@@ -12,7 +12,7 @@ trait ClientTrait
     public function datatable()
     {
         try {
-            $columns = ['name', 'email', 'token', 'employee_id', 'phone'];
+            $columns = ['name', 'email', 'phone'];
 
             $length = request()->length;
             $column = request()->column; // index
@@ -23,9 +23,8 @@ trait ClientTrait
                 ->select(
                     'c.id AS id',
                     'c.name AS name',
-                    'c.email AS email',
                     'c.token AS token',
-                    'c.employee_id AS employee_id',
+                    'c.email AS email',
                     'c.phone AS phone'
                 )
                 ->orderBy($columns[$column], $dir);
