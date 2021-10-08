@@ -33,7 +33,7 @@ export default {
   components: { Notification, AdminHeader, AdminSidebar },
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
-    titleTemplate: `Xerodesk - %s`
+    titleTemplate: `XMCIT - %s`
   }),
   data: () => ({
     isOpen: false

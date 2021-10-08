@@ -112,7 +112,7 @@
               </div>
               <div class="tab-pane fade " id="attachments">
                 <div class="grid-container">
-                  <div class="grid-item" v-for="m in filteredMessages" :key="m.id" @click="onAttmClick(m)">
+                  <div class="grid-item" v-for="m in filtered" :key="m.id" @click="onAttmClick(m)">
                     <div class="grid-item--image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(getAttachment(m).extension.toLowerCase())">
                       <img :src="`${$APP_URL}/storage/uploads/clients/${client.token}/${m.session}/${getAttachment(m).name}.${getAttachment(m).extension}`" />
                     </div>
@@ -121,7 +121,7 @@
                     </div>
                   </div>
                 </div>
-                <span v-if="$isEmpty(filteredMessages)">No attachment found.</span>
+                <span v-if="$isEmpty(filtered)">No attachment found.</span>
               </div>
             </div>
           </div>
@@ -168,7 +168,6 @@ export default {
       // custom data
       isLoading: false,
       isOpen: false,
-      client: {},
       sessions: [],
       enlargeUrl: null,
       enlargeExtension: null,
@@ -176,7 +175,15 @@ export default {
     };
   },
   computed: {
-    filteredMessages() {
+    client: {
+      get() {
+        return this.$store.state.clients.client;
+      },
+      set(newVal) {
+        this.$store.state.clients.client = newVal;
+      }
+    },
+    filtered() {
       let messages = [];
 
       this.sessions.forEach(session => {

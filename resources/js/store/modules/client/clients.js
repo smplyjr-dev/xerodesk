@@ -8,7 +8,8 @@ const namespaced = true;
 
 const state = {
   clientsAreLoading: false,
-  clients: []
+  clients: [],
+  client: {}
 };
 
 const getters = {};

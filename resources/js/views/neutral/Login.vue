@@ -57,9 +57,9 @@
               <span v-else>Submit</span>
             </button>
           </div>
-          <div class="form-group text-center">
+          <!-- <div class="form-group text-center">
             <span>New to Xerodesk? <router-link to="/register">Sign up</router-link></span>
-          </div>
+          </div> -->
         </form>
       </div>
     </div>
