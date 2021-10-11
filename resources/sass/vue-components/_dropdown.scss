@@ -1,6 +1,7 @@
 .cd {
+  cursor: pointer;
   position: relative;
-  width: 100%;
+  width: auto;
 
   &.disabled {
     cursor: not-allowed;

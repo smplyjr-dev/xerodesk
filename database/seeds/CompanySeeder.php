@@ -16,7 +16,7 @@ class CompanySeeder extends Seeder
             Company::create([
                 'name'    => 'FiliPay',
                 'address' => 'Unit 404, 4F Ortigas Technopoint Two, Doña Julia Vargas Ave, Ortigas Center, Pasig, Metro Manila',
-                'url'     => 'http://xerodesk-widget.test',
+                'url'     => 'http://xmcit-widget.test',
                 'abbr'    => 'FP',
             ]);
         } else {

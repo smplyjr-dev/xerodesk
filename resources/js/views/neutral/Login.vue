@@ -41,15 +41,16 @@
               <input id="pword" type="password" class="form-control" placeholder="Password" v-model="password" />
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <div class="d-flex">
               <div class="custom-control custom-checkbox mr-sm-2">
                 <input type="checkbox" class="custom-control-input" id="customControlAutosizing" />
                 <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
               </div>
-
-              <router-link class="ml-auto" to="/password/reset">Forgot <span class="d-none d-sm-inline">Your</span> Password?</router-link>
             </div>
+          </div> -->
+          <div class="form-group text-center">
+            <router-link to="/password/reset">Forgot <span class="d-none d-sm-inline">Your</span> Password?</router-link>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg btn-block text-uppercase text-sm rounded-0 py-2" :disabled="isLoading">
@@ -80,7 +81,7 @@ export default {
     email: "",
     username: "",
     password: "",
-    remember: false
+    remember: true
   }),
   methods: {
     resetForm() {

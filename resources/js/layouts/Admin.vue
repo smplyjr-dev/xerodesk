@@ -49,8 +49,9 @@ export default {
         encrypted: true
       });
 
-      // channels listener
+      // channel to subscribe
       const CH_SESSION = PUSHER.subscribe("session");
+      const CH_MESSAGE = PUSHER.subscribe("message");
 
       CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
@@ -76,6 +77,26 @@ export default {
         if (this.$store.state.sessions.session.session == data.session) {
           this.$store.state.sessions.session.user_id = data.new_user_id;
         }
+      });
+
+      CH_MESSAGE.bind(`message.from.client`, async data => {
+        let { message, session } = data;
+
+        if ("session" in this.session && this.session.session == session) {
+          // mart it as read
+          axios.put(`/portal/session/${session}/seen`);
+
+          this.$store.commit("messages/PUSH_MESSAGE", { ...message, attachments: [] });
+        }
+      });
+
+      CH_MESSAGE.bind(`attachment.created`, async data => {
+        let { attachment, client, message, session } = data;
+
+        this.$store.commit("messages/INSERT_ATTACHMENT", {
+          ...message,
+          attachment
+        });
       });
     }
   },

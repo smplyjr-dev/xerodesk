@@ -5,6 +5,7 @@
       { "name": "View Tickets", "slug": "view_tickets" },
       { "name": "View Ticket", "slug": "view_ticket" },
       { "name": "Reply to Ticket", "slug": "reply_to_ticket" },
+      { "name": "Assign Ticket", "slug": "assign_ticket" },
       { "name": "Transfer Ticket", "slug": "transfer_ticket" },
       { "name": "Edit Ticket", "slug": "edit_ticket" }
     ]

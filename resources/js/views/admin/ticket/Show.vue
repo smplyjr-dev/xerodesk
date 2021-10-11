@@ -50,46 +50,15 @@ export default {
       this.client = data.client;
       this.company = data.client.company;
       this.$store.commit("messages/SET_MESSAGES", data.messages);
-    },
-    setupListeners() {
-      const self = this;
-
-      // pusher init
-      const PUSHER = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
-        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        encrypted: true
-      });
-
-      // channel to subscribe
-      const CH_MESSAGE = PUSHER.subscribe("message");
-
-      CH_MESSAGE.bind(`message.from.client`, async data => {
-        let { message, session } = data;
-
-        if ("session" in self.session && self.session.session == session) {
-          // mart it as read
-          axios.put(`/portal/session/${session}/seen`);
-
-          self.$store.commit("messages/PUSH_MESSAGE", { ...message, attachments: [] });
-        }
-      });
-
-      CH_MESSAGE.bind(`attachment.created`, async data => {
-        let { attachment, client, message, session } = data;
-
-        self.$store.commit("messages/INSERT_ATTACHMENT", {
-          ...message,
-          attachment
-        });
-      });
     }
   },
   async created() {
+    if (process.env.NODE_ENV == "development") this.$emit("toggle-sidebar", true);
+
     this.isComponentReady = false;
 
     await this.fetchSession();
     if (this.$isEmpty(this.users)) this.$store.dispatch("auth/fetchUsers");
-    this.setupListeners();
 
     // set the session to localStorage
     localStorage.setItem("LCS_Session", this.session.session);

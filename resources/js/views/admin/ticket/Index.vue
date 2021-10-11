@@ -4,9 +4,7 @@
       <h4 class="mb-2">Manage Tickets</h4>
 
       <button type="button" class="btn btn-primary mb-2" @click="isOpen = true">
-        <div class="d-flex">
-          <span class="d-none d-md-block mr-1">Refine Search</span> <InlineSvg name="template/mdi-update.svg" size="1.25rem" />
-        </div>
+        <div class="d-flex"><span class="d-none d-md-block mr-1">Refine Search</span> <InlineSvg name="template/mdi-update.svg" size="1.25rem" /></div>
       </button>
     </div>
 
@@ -62,6 +60,8 @@ export default {
     }
   },
   async created() {
+    if (process.env.NODE_ENV == "development") this.$emit("toggle-sidebar", true);
+
     await this.$store.dispatch("auth/fetchUsers");
     await this.$store.dispatch("groups/fetchGroups");
     await this.$store.dispatch("slas/fetchSlas");

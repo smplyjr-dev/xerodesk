@@ -42,7 +42,7 @@
                 <div class="dt-mobile-item">
                   <div class="title">Priority:</div>
                   <div class="content">
-                    <app-dropdown @away="filter_priorities = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                    <app-dropdown @away="filter_priorities = ''">
                       <template slot="value">{{ !p.priority ? "--" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
 
                       <app-dropdown-content>
@@ -60,7 +60,7 @@
                 <div class="dt-mobile-item">
                   <div class="title">Group:</div>
                   <div class="content">
-                    <app-dropdown @away="filter_groups = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                    <app-dropdown @away="filter_groups = ''">
                       <template slot="value">{{ !p.group_id ? "--" : groups.find(g => g.id == p.group_id).name }}</template>
 
                       <app-dropdown-content>
@@ -78,38 +78,43 @@
                 <div class="dt-mobile-item">
                   <div class="title">Agent:</div>
                   <div class="content">
-                    <app-dropdown @away="filter_agents = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || ifNotAllowed() || ifAssignedAlready(p)">
-                      <template slot="value">{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                    <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                    <template v-else>
+                      <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
+                        <template slot="value">{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
 
-                      <app-dropdown-content>
-                        <div class="p-2">
-                          <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
-                        </div>
+                        <app-dropdown-content>
+                          <div class="p-2">
+                            <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
+                          </div>
 
-                        <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
-                          {{ `${u.bio.first_name} ${u.bio.last_name}` }}
-                        </app-dropdown-item>
-                      </app-dropdown-content>
-                    </app-dropdown>
+                          <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                            {{ `${u.bio.first_name} ${u.bio.last_name}` }}
+                          </app-dropdown-item>
+                        </app-dropdown-content>
+                      </app-dropdown>
+                    </template>
                   </div>
                 </div>
                 <div class="dt-mobile-item">
                   <div class="title">Status:</div>
                   <div class="content">
-                    <span class="badge badge-danger text-uppercase font-weight-bold" v-if="!p.agent_id">Unassigned</span>
-                    <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || isClosedAlready(p.status)" v-else>
-                      <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
+                    <template v-if="!p.agent_id"><span class="badge badge-danger text-uppercase font-weight-bold">Unassigned</span></template>
+                    <template v-else>
+                      <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
+                        <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
 
-                      <app-dropdown-content>
-                        <div class="p-2">
-                          <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
-                        </div>
+                        <app-dropdown-content>
+                          <div class="p-2">
+                            <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
+                          </div>
 
-                        <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
-                          {{ fs.name }}
-                        </app-dropdown-item>
-                      </app-dropdown-content>
-                    </app-dropdown>
+                          <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
+                            {{ fs.name }}
+                          </app-dropdown-item>
+                        </app-dropdown-content>
+                      </app-dropdown>
+                    </template>
                   </div>
                 </div>
                 <div class="dt-mobile-item">
@@ -145,7 +150,7 @@
 
               <!-- Priority -->
               <td>
-                <app-dropdown @away="filter_priorities = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                <app-dropdown @away="filter_priorities = ''">
                   <template slot="value">{{ !p.priority ? "--" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
 
                   <app-dropdown-content>
@@ -162,7 +167,7 @@
 
               <!-- Groups -->
               <td>
-                <app-dropdown @away="filter_groups = ''" :disabled="ifNotAssignedToSelf(p.agent_id)">
+                <app-dropdown @away="filter_groups = ''">
                   <template slot="value">{{ !p.group_id ? "--" : groups.find(g => g.id == p.group_id).name }}</template>
 
                   <app-dropdown-content>
@@ -179,37 +184,42 @@
 
               <!-- Agent -->
               <td>
-                <app-dropdown @away="filter_agents = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || ifNotAllowed() || ifAssignedAlready(p)">
-                  <template slot="value">{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                <template v-else>
+                  <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
+                    <template slot="value">{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
 
-                  <app-dropdown-content>
-                    <div class="p-2">
-                      <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
-                    </div>
+                    <app-dropdown-content>
+                      <div class="p-2">
+                        <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
+                      </div>
 
-                    <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
-                      {{ `${u.bio.first_name} ${u.bio.last_name}` }}
-                    </app-dropdown-item>
-                  </app-dropdown-content>
-                </app-dropdown>
+                      <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                        {{ `${u.bio.first_name} ${u.bio.last_name}` }}
+                      </app-dropdown-item>
+                    </app-dropdown-content>
+                  </app-dropdown>
+                </template>
               </td>
 
               <!-- Status -->
               <td>
-                <span class="badge badge-danger text-uppercase font-weight-bold" v-if="!p.agent_id">Unassigned</span>
-                <app-dropdown @away="filter_statuses = ''" :disabled="ifNotAssignedToSelf(p.agent_id) || isClosedAlready(p.status)" v-else>
-                  <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
+                <template v-if="!p.agent_id"><span class="badge badge-danger text-uppercase font-weight-bold">Unassigned</span></template>
+                <template v-else>
+                  <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
+                    <template slot="value">{{ `${status.find(s => s.id == p.status).name}` }}</template>
 
-                  <app-dropdown-content>
-                    <div class="p-2">
-                      <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
-                    </div>
+                    <app-dropdown-content>
+                      <div class="p-2">
+                        <input type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_statuses" />
+                      </div>
 
-                    <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
-                      {{ fs.name }}
-                    </app-dropdown-item>
-                  </app-dropdown-content>
-                </app-dropdown>
+                      <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
+                        {{ fs.name }}
+                      </app-dropdown-item>
+                    </app-dropdown-content>
+                  </app-dropdown>
+                </template>
               </td>
 
               <!-- Created At -->
@@ -472,7 +482,7 @@ export default {
         };
       }
     },
-    ifNotAssignedToSelf(assigned_id) {
+    /* ifNotAssignedToSelf(assigned_id) {
       if (
         this.user.id == assigned_id || // if assigned to the user
         ["Super"].includes(this.user.role) // if you are an super admin
@@ -481,13 +491,13 @@ export default {
       }
 
       return true;
-    },
+    }, */
     isClosedAlready(status) {
       if (status == 4) return true;
       return false;
     },
     ifNotAllowed() {
-      return !this.user.permissions.pluck("slug").includes("transfer_ticket");
+      return !this.user.permissions.pluck("slug").includes("assign_ticket");
     },
     ifAssignedAlready(ticket) {
       // if the ticket is assigned already
