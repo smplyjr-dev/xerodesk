@@ -39,7 +39,8 @@ export default {
     isOpen: false
   }),
   computed: {
-    ...mapState("auth", ["user"])
+    ...mapState("auth", ["user"]),
+    ...mapState("sessions", ["session"])
   },
   methods: {
     setupListeners() {
