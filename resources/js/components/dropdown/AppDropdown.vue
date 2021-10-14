@@ -1,10 +1,7 @@
 <template>
   <div class="cd" :class="{ disabled: disabled }" v-on-clickaway="away">
     <div class="d-flex align-items-center" @click="toggle">
-      <span class="mb-0">
-        <slot name="value">--</slot>
-      </span>
-
+      <slot name="value">--</slot>
       <InlineSvg name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" :style="`transform: rotate(${sharedState.active ? 180 : 0}deg)`" />
     </div>
 

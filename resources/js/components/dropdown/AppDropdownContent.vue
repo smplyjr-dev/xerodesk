@@ -1,7 +1,8 @@
 <template>
   <transition name="cdc">
     <div v-if="active" class="cdc">
-      <slot />
+      <div class="filter" v-show="showFilter"><slot name="filter" /></div>
+      <div class="content" v-show="showContent"><slot name="content" /></div>
     </div>
   </transition>
 </template>
@@ -10,6 +11,10 @@
 export default {
   name: "AppDropdownContent",
   inject: ["sharedState"],
+  data: () => ({
+    showFilter: false,
+    showContent: false
+  }),
   computed: {
     active: {
       get: function() {
@@ -19,6 +24,15 @@ export default {
         this.sharedState.active = newVal;
       }
     }
+  },
+  methods: {
+    setShowSlots() {
+      this.showFilter = this.$slots.filter?.[0];
+      this.showContent = this.$slots.content?.[0];
+    }
+  },
+  mounted() {
+    this.setShowSlots();
   }
 };
 </script>

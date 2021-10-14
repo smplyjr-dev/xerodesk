@@ -1,7 +1,7 @@
 .cd {
   cursor: pointer;
   position: relative;
-  width: auto;
+  width: max-content;
 
   &.disabled {
     cursor: not-allowed;
@@ -10,18 +10,44 @@
 
 .cdc {
   position: absolute;
-  right: 0;
+  left: 0;
   margin-top: 1rem;
   background: #fff;
   border-radius: 0.25rem;
-  border: 1px solid #ccc;
-  padding: 0.25rem 0;
+  box-shadow: 0 2px 18px 0 rgba(18, 52, 77, 0.16), 0 2px 4px 0 rgba(18, 52, 77, 0.06);
   transform-origin: top right;
   overflow: auto;
-  width: 100%;
+  width: max-content;
   min-width: 200px;
-  max-height: 300px;
+  max-height: 265px;
   z-index: 1;
+
+  .filter {
+    padding: 0.25rem 0.4rem;
+    border-bottom: 1px solid $gray-300;
+
+    input {
+      border: 0;
+      border-radius: 0;
+    }
+  }
+  .content {
+    padding: 0.5rem 0.65rem;
+  }
+}
+
+.cdci {
+  display: block;
+  border-radius: 0.25rem;
+  font-size: $text-sm;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none !important;
+  color: $gray-900;
+
+  &:hover {
+    background: #dddddd;
+    color: $gray-900;
+  }
 }
 
 .cdc-enter-active,
@@ -32,15 +58,4 @@
 .cdc-leave-to {
   opacity: 0;
   transform: translateY(-10px);
-}
-
-.cdci {
-  display: block;
-  padding: 0.5rem 0.75rem;
-  text-decoration: none;
-  color: #000000;
-
-  &:hover {
-    background: #dddddd;
-  }
 }
