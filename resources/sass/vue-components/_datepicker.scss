@@ -1,0 +1,7 @@
+$sidebar-margin-left: 120px;
+@import "@Node/vue2-datepicker/scss/index.scss";
+
+.#{$namespace}-datepicker,
+.#{$namespace}-datepicker-range {
+  width: 100% !important;
+}

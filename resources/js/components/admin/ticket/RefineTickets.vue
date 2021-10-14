@@ -58,7 +58,7 @@
             </div>
             <div class="form-group">
               <label>Timestamp</label>
-              <ADatePicker v-model="refine.created_at" />
+              <a-date-picker v-model="refine.created_at" />
             </div>
             <div class="form-group">
               <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
