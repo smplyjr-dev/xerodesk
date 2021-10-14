@@ -2,8 +2,9 @@
 .client-datatable,
 .server-datatable {
   .table-responsive {
-    overflow-x: visible;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     margin: 1.5rem 0;
+    overflow-x: visible;
   }
 
   thead {
@@ -36,12 +37,12 @@
         }
 
         .content {
+          // overflow: hidden;
+          // text-overflow: ellipsis;
           font-weight: normal;
           text-align: left;
           width: 60%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          white-space: normal;
           margin-left: 5px;
         }
       }
@@ -49,11 +50,12 @@
       // for sla only
       .sla-mobile {
         position: absolute;
-        left: 10px;
         top: 10px;
-        bottom: 0;
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
         width: 5px;
-        height: calc(100% - 20px);
+        // height: calc(100% - 20px);
       }
     }
 

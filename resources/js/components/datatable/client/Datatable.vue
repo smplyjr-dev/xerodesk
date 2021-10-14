@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-bordered m-0">
+    <table class="table table-borderless table-hover m-0">
       <thead>
         <tr>
           <th class="text-secondary" v-for="column in filteredColumns" :key="column.name" @click="handleSorting(column)" :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" :style="handleStyle(column)">
