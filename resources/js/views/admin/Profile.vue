@@ -50,15 +50,13 @@
                 </div>
 
                 <div class="col-md-6">
-                  <div class="form-group row">
-                    <div class="col-md-6">
-                      <label for="fname">First Name <span class="text-danger">*</span></label>
-                      <input id="fname" type="text" class="form-control" v-model="user.bio.first_name" />
-                    </div>
-                    <div class="col-md-6">
-                      <label for="lname">Last Name <span class="text-danger">*</span></label>
-                      <input id="lname" type="text" class="form-control" v-model="user.bio.last_name" />
-                    </div>
+                  <div class="form-group">
+                    <label for="fname">First Name <span class="text-danger">*</span></label>
+                    <input id="fname" type="text" class="form-control" v-model="user.bio.first_name" />
+                  </div>
+                  <div class="form-group">
+                    <label for="lname">Last Name <span class="text-danger">*</span></label>
+                    <input id="lname" type="text" class="form-control" v-model="user.bio.last_name" />
                   </div>
                   <div class="form-group">
                     <label for="email">Email <span class="text-danger">*</span></label>
@@ -68,12 +66,12 @@
                     <label for="uname">Username <span class="text-danger">*</span></label>
                     <input id="uname" type="text" class="form-control" v-model="user.username" />
                   </div>
+                </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="dob">Date of Birth</label>
                     <a-date-picker v-model="user.bio.dob" />
                   </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group">
                     <label for="facebook">Facebook</label>
                     <input id="facebook" type="text" class="form-control" v-model="user.bio.facebook" />
@@ -86,7 +84,10 @@
                     <label for="linkedin">LinkedIn</label>
                     <input id="linkedin" type="text" class="form-control" v-model="user.bio.linkedin" />
                   </div>
-                  <div class="text-right mt-4">
+                </div>
+
+                <div class="col-md-12">
+                  <div class="text-right">
                     <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
                       <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
                       <span v-else>Update Profile</span>

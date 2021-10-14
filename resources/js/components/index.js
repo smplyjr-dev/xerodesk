@@ -7,6 +7,13 @@ import AppDropdownItem from "@Components/dropdown/AppDropdownItem.vue";
   Vue.component(Component.name, Component);
 });
 
+// Skeleton Components
+import Skeleton from "@Components/skeleton/Skeleton.vue";
+
+[Skeleton].forEach(Component => {
+  Vue.component(Component.name, Component);
+});
+
 // Other Components
 import FormAlert from "./neutral/FormAlert.vue";
 import InlineSvg from "./neutral/InlineSvg.vue";

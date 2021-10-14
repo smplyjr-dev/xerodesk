@@ -7,23 +7,34 @@
     <!-- <p>This module is still in progress. Please, come back later.</p> -->
 
     <div class="row">
-      <TicketWidget title="Open Tickets" :length="open.length" />
-      <TicketWidget title="Pending Tickets" :length="pending.length" />
-      <TicketWidget title="Resolved Tickets" :length="resolved.length" />
-      <TicketWidget title="Closed Tickets" :length="closed.length" />
-      <TicketWidget title="Unassigned Tickets" :length="unassigned.length" />
+      <TicketWidget title="Open Tickets" :loading="loading.sessions" :length="open.length" />
+      <TicketWidget title="Pending Tickets" :loading="loading.sessions" :length="pending.length" />
+      <TicketWidget title="Resolved Tickets" :loading="loading.sessions" :length="resolved.length" />
+      <TicketWidget title="Closed Tickets" :loading="loading.sessions" :length="closed.length" />
+      <TicketWidget title="Unassigned Tickets" :loading="loading.sessions" :length="unassigned.length" />
     </div>
 
     <div class="row">
       <div class="col-md-8 mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.
+        <div class="card card-1 card-body">
+          <skeleton :show="loading.clients" w="100%">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.
+          </skeleton>
         </div>
       </div>
       <div class="col-md-4 mb-4">
-        <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
-          <p class="text-secondary font-weight-bold">Recently Added Clients</p>
-          <ul class="list-unstyled mb-0">
+        <div class="card card-1 card-body">
+          <p class="text-secondary font-weight-bold">
+            <skeleton :show="loading.clients" w="75%">
+              Recently Added Clients
+            </skeleton>
+          </p>
+          <ul class="list-unstyled mb-0" v-if="loading.clients">
+            <li v-for="c in 3" :key="c.id" class="mt-2">
+              <skeleton :show="loading.clients" w="50%"></skeleton>
+            </li>
+          </ul>
+          <ul class="list-unstyled mb-0" v-else>
             <li v-for="c in clients" :key="c.id">
               <a href="javascript:void(0)">
                 {{ c.name }}
@@ -47,7 +58,11 @@ export default {
   middleware: ["auth"],
   data: () => ({
     clients: [],
-    sessions: []
+    sessions: [],
+    loading: {
+      clients: false,
+      sessions: false
+    }
   }),
   computed: {
     open() {
@@ -68,14 +83,22 @@ export default {
   },
   methods: {
     async fetchTickets() {
-      let { data } = await axios.get(`/session`);
+      this.loading.sessions = true;
 
+      let { data } = await axios.get(`/session`);
+      // await this.$delay(3000);
       this.sessions = data;
+
+      this.loading.sessions = false;
     },
     async fetchRecentClients() {
-      let { data } = await axios.get(`/portal/client/recent`);
+      this.loading.clients = true;
 
+      let { data } = await axios.get(`/portal/client/recent`);
+      // await this.$delay(3000);
       this.clients = data;
+
+      this.loading.clients = false;
     }
   },
   created() {
