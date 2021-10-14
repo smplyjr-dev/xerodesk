@@ -3,10 +3,11 @@
     "baseUrl": ".",
     "paths": {
       "@Components/*": ["resources/js/components/*"],
+      "@Node/*": ["node_modules/*"],
       "@Public/*": ["public/*"],
       "@Scripts/*": ["resources/js/*"],
-      "@Styles/*": ["resources/sass/*"],
       "@SDT/*": ["/resources/js/components/datatable/server/index.js"],
+      "@Styles/*": ["resources/sass/*"],
     }
   },
   "exclude": [

@@ -29,10 +29,11 @@ mix.webpackConfig({
   resolve: {
     alias: {
       "@Components": path.join(__dirname, "./resources/js/components"),
+      "@Node": path.join(__dirname, "./node_modules"),
       "@Public": path.join(__dirname, "./public"),
       "@Scripts": path.join(__dirname, "./resources/js"),
-      "@Styles": path.join(__dirname, "./resources/sass"),
-      "@SDT": path.join(__dirname, "./resources/js/components/datatable/server/index.js")
+      "@SDT": path.join(__dirname, "./resources/js/components/datatable/server/index.js"),
+      "@Styles": path.join(__dirname, "./resources/sass")
     }
   },
   output: {
