@@ -34,7 +34,7 @@ class CreateClientManagementTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('session', 25);
             $table->string('title')->nullable();
-            $table->tinyInteger('priority')->nullable(); // 1 = Low, 2 = Medium, 3 = High, 4 = Urgent
+            $table->tinyInteger('priority')->nullable(); // 1 = Low, 2 = Medium, 3 = High, 4 = Urgent, 5 = Critical
             $table->string('token')->nullable();
             $table->string('category')->nullable();
             $table->string('resolution_code')->nullable();
