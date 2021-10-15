@@ -503,6 +503,7 @@ export default {
   },
   created() {
     this.getUsers();
+    this.$store.dispatch("roles/fetchRoles");
   }
 };
 </script>
