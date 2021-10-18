@@ -5,12 +5,12 @@
         <div class="d-flex justify-content-between align-items-center flex-wrap">
           <length @onSelect="handleOnSelect" />
 
-          <button class="btn btn-success" @click="isOpen = true">
+          <!-- <button class="btn btn-success" @click="isOpen = true">
             <div class="d-flex">
               <span class="d-none d-md-block mr-1">Export</span>
               <InlineSvg name="template/mdi-file-export-outline.svg" size="1.25rem" />
             </div>
-          </button>
+          </button> -->
         </div>
 
         <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -521,6 +521,8 @@ export default {
   created() {
     this.setupListeners();
     this.setTableData();
+
+    if ("isExporting" in this.$route.query && this.$route.query.isExporting == "true") this.isOpen = true;
   },
   watch: {
     $route() {
