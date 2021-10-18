@@ -42,6 +42,7 @@
                     range-separator=" to "
                     range
                     format="MM/DD/YYYY"
+                    valueType="YYYY-MM-DD"
                   />
                 </div>
               </div>
@@ -185,8 +186,13 @@ export default {
       // set date range by 1 week
       let thisWeek = new Date();
       thisWeek = thisWeek.setDate(thisWeek.getDate() - 7);
+      thisWeek = new Date(thisWeek);
+      thisWeek = `${thisWeek.getFullYear()}-${String(thisWeek.getMonth() + 1).padStart(2, "0")}-${thisWeek.getDate()}`;
 
-      this.refine.range = [new Date(thisWeek), new Date()];
+      let thisDate = new Date();
+      thisDate = `${thisDate.getFullYear()}-${String(thisDate.getMonth() + 1).padStart(2, "0")}-${thisDate.getDate()}`;
+
+      this.refine.range = [thisWeek, thisDate];
     }
   },
   mounted() {
