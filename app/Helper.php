@@ -2,6 +2,16 @@
 
 use Illuminate\Validation\ValidationException;
 
+if (!function_exists('constants')) {
+    /**
+     * @param String $key String to get
+     */
+    function constants($key)
+    {
+        return config('constants.' . $key);
+    }
+}
+
 if (!function_exists('encrypter')) {
     /**
      * @param String $action Choose between 'encrypt' or 'decrypt'

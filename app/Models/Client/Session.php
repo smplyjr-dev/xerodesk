@@ -4,6 +4,7 @@ namespace App\Models\Client;
 
 use App\BaseModel;
 use App\Mail\SendMessages;
+use App\Models\Group\Group;
 use App\Models\Taggable\Taggable;
 use App\Models\User\User;
 use Illuminate\Support\Facades\Mail;
@@ -35,5 +36,10 @@ class Session extends BaseModel
     public function taggables()
     {
         return $this->belongsToMany(Taggable::class, 'client_session_taggable', 'session_id', 'taggable_id')->withTimestamps();
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 }

@@ -60,12 +60,12 @@ export default {
   },
   methods: {
     fetchCompany() {
-      axios.get(`/portal/user/${this.user.id}/company`).then(res => {
+      axios.get(`/portal/company/${this.user.company_id}`).then(res => {
         this.company = res.data;
       });
     },
     updateCompany() {
-      axios.put(`/portal/user/${this.user.id}/company`, this.company).then(res => {
+      axios.put(`/portal/company/${this.user.company_id}`, this.company).then(res => {
         this.company = res.data;
 
         this.$store.dispatch("notifications/addNotification", {

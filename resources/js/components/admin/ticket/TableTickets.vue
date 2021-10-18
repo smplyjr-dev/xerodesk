@@ -4,7 +4,13 @@
       <div class="server-datatable">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
           <length @onSelect="handleOnSelect" />
-          <!-- <search @onSearch="searchDatatable" /> -->
+
+          <button class="btn btn-success" @click="isOpen = true">
+            <div class="d-flex">
+              <span class="d-none d-md-block mr-1">Export</span>
+              <InlineSvg name="template/mdi-file-export-outline.svg" size="1.25rem" />
+            </div>
+          </button>
         </div>
 
         <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -239,6 +245,8 @@
         </div>
       </div>
     </div>
+
+    <ExportTickets :isOpen="isOpen" @toggleDrawer="isOpen = $event" @onExport="isOpen = $event" />
   </div>
 </template>
 
@@ -247,11 +255,12 @@ import { nanoid } from "nanoid";
 import { mapState } from "vuex";
 import { tickets } from "@Scripts/observable";
 import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
+import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
 
 export default {
   props: ["isReady"],
   mixins: [Mixin],
-  components: { Length, Search, Datatable, Entries, Pagination },
+  components: { Length, Search, Datatable, Entries, Pagination, ExportTickets },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
@@ -288,7 +297,10 @@ export default {
       filter_priorities: "",
       filter_groups: "",
       filter_agents: "",
-      filter_statuses: ""
+      filter_statuses: "",
+
+      // export tickets
+      isOpen: false
     };
   },
   computed: {
