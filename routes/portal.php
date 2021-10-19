@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/client/recent', [ClientController::class, 'recent']);
 
-Route::post('/session/export',          [SessionController::class, 'export']);
+Route::get('/session/export',           [SessionController::class, 'export']);
 Route::get('/session/{session}',        [SessionController::class, 'show']);
 Route::put('/session/{session}/status', [SessionController::class, 'status']);
 Route::put('/session/{session}/seen',   [SessionController::class, 'seen']);

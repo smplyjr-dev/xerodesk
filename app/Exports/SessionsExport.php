@@ -10,10 +10,17 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class SessionsExport implements FromQuery, WithHeadings, WithMapping
 {
+    public $request;
+
+    public function __construct()
+    {
+        $this->request = json_decode(request('refine'), true);
+    }
+
     public function query()
     {
-        $from = Carbon::createFromDate(request('range')[0]);
-        $to = Carbon::createFromDate(request('range')[1]);
+        $from = Carbon::createFromDate($this->request['range'][0]);
+        $to = Carbon::createFromDate($this->request['range'][1]);
 
         return Session::query()
             ->whereBetween('created_at', [$from, $to->addDay()]);
@@ -30,14 +37,14 @@ class SessionsExport implements FromQuery, WithHeadings, WithMapping
         $priority = collect(constants('ticket.priority'))->where('id', $session->priority)->first();
         $status   = collect(constants('ticket.status'))->where('id', $session->status)->first();
 
-        if (request('fields')['client']) $field[] = $session->client->name;
-        if (request('fields')['title']) $field[] = $session->title;
-        if (request('fields')['session']) $field[] = $session->session;
-        if (request('fields')['priority']) $field[] = $priority['name'] ?? null;
-        if (request('fields')['group']) $field[] = $group;
-        if (request('fields')['agent']) $field[] = $agent;
-        if (request('fields')['status']) $field[] = $status['name'] ?? null;
-        if (request('fields')['timestamp']) $field[] = $session->created_at;
+        if ($this->request['fields']['client']) $field[] = $session->client->name;
+        if ($this->request['fields']['title']) $field[] = $session->title;
+        if ($this->request['fields']['session']) $field[] = $session->session;
+        if ($this->request['fields']['priority']) $field[] = $priority['name'] ?? null;
+        if ($this->request['fields']['group']) $field[] = $group;
+        if ($this->request['fields']['agent']) $field[] = $agent;
+        if ($this->request['fields']['status']) $field[] = $status['name'] ?? null;
+        if ($this->request['fields']['timestamp']) $field[] = $session->created_at;
 
         return $field;
     }
@@ -46,14 +53,14 @@ class SessionsExport implements FromQuery, WithHeadings, WithMapping
     {
         $headings = [];
 
-        if (request('fields')['client']) $headings[] = 'Client';
-        if (request('fields')['title']) $headings[] = 'Title';
-        if (request('fields')['session']) $headings[] = 'Session';
-        if (request('fields')['priority']) $headings[] = 'Priority';
-        if (request('fields')['group']) $headings[] = 'Group';
-        if (request('fields')['agent']) $headings[] = 'Agent';
-        if (request('fields')['status']) $headings[] = 'Status';
-        if (request('fields')['timestamp']) $headings[] = 'Timestamp';
+        if ($this->request['fields']['client']) $headings[] = 'Client';
+        if ($this->request['fields']['title']) $headings[] = 'Title';
+        if ($this->request['fields']['session']) $headings[] = 'Session';
+        if ($this->request['fields']['priority']) $headings[] = 'Priority';
+        if ($this->request['fields']['group']) $headings[] = 'Group';
+        if ($this->request['fields']['agent']) $headings[] = 'Agent';
+        if ($this->request['fields']['status']) $headings[] = 'Status';
+        if ($this->request['fields']['timestamp']) $headings[] = 'Timestamp';
 
         return $headings;
     }

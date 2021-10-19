@@ -20,7 +20,8 @@ class SessionController extends Controller
 
     public function export()
     {
-        $extension = ucwords(request('type'));
+        $request   = json_decode(request('refine'), true);
+        $extension = ucwords($request['type']);
 
         return Excel::download(new SessionsExport, 'sessions', $extension);
     }

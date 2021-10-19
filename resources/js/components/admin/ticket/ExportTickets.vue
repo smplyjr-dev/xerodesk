@@ -169,9 +169,9 @@ export default {
     submitExport() {
       axios({
         url: `/portal/session/export`,
-        method: "POST",
+        method: "GET",
         responseType: "blob",
-        data: this.refine
+        params: { refine: JSON.stringify(this.refine) }
       }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
