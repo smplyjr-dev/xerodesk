@@ -10,7 +10,7 @@ trait UserTrait
 {
     public function datatable()
     {
-        $query = User::with('bio:id,user_id,first_name,last_name,facebook,twitter,linkedin');
+        $query = User::with(['bio:id,user_id,first_name,last_name,facebook,twitter,linkedin']);
         $query->whereNotIn('id', [1]);
 
         if (request()->date) $query->whereDate('created_at', Carbon::create(request()->date));

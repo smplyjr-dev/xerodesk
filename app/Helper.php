@@ -2,6 +2,18 @@
 
 use Illuminate\Validation\ValidationException;
 
+if (!function_exists('remember_for')) {
+    /**
+     * @param Int $onset Days in integer to remember the cache
+     */
+    function remember_for($onset)
+    {
+        $day = 60 * 60 * 24;
+
+        return $day * $onset;
+    }
+}
+
 if (!function_exists('constants')) {
     /**
      * @param String $key String to get

@@ -15,15 +15,17 @@ class RoleController extends Controller
 
     public function index()
     {
-        $query = Role::query();
-        $query->where('id', '!=', 1);
+        $query = cache()->remember('roles-index', remember_for(5), function () {
+            return Role::where('id', '!=', 1)->get();
+        });
 
-        return response()->json($query->get(), 200);
+        return response()->json($query, 200);
     }
 
     public function store()
     {
         verify_permission(auth()->user(), ['create_role']);
+        cache()->forget('roles-index');
 
         request()->validate([
             'name'        => 'required|unique:roles',
@@ -64,6 +66,7 @@ class RoleController extends Controller
     public function update($id)
     {
         verify_permission(auth()->user(), ['edit_role']);
+        cache()->forget('roles-index');
 
         request()->validate([
             'name'        => 'required|unique:roles,name,' . $id,
@@ -116,6 +119,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         verify_permission(auth()->user(), ['delete_role']);
+        cache()->forget('roles-index');
 
         $role = Role::findOrFail($id);
 
