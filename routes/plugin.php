@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Plugin\ClientController;
+use App\Http\Controllers\Plugin\MessageController;
 use App\Http\Controllers\Plugin\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,9 @@ Route::get('/quickemailverification', function () {
 Route::get('/client/{token}/sessions', [ClientController::class, 'sessions']);
 Route::get('/client/{token}',          [ClientController::class, 'show']);
 Route::post('/client',                 [ClientController::class, 'store']);
+
+Route::post('/message/{hash}/attachment', [MessageController::class, 'attachment']);
+Route::post('/message',                   [MessageController::class, 'store']);
 
 Route::get('/session/{session}/messages', [SessionController::class, 'messages']);
 Route::put('/session/{session}/seen',     [SessionController::class, 'seen']);

@@ -45,56 +45,6 @@ trait ClientTrait
         }
     }
 
-    public function verify($token)
-    {
-        $response = [];
-        $cookie   = encrypter('decrypt', request()->cookie);
-        $client   = Client::with(['sessions.messages'])->whereToken($token)->first();
-
-        if ($client) {
-            // let's check if the token from your storage belongs to you by email
-            if ($client->email == $cookie['user_email']) {
-                // let's update the client, they maybe change email or picture already
-                $client->update([
-                    'email'   => $cookie['user_email'],
-                    'name'    => $cookie['user_name'],
-                    'phone'   => $cookie['user_phone'],
-                    'picture' => $cookie['user_picture']
-                ]);
-
-                $response = [
-                    "status"  => "success",
-                    "message" => "Success! Check the data property.",
-                    "data"    => $client
-                ];
-            } else {
-                $model = Client::with(['sessions.messages'])->whereEmail($cookie['user_email'])->first();
-
-                if ($model) {
-                    // let's update the client, they maybe change email or picture already
-                    $model->update([
-                        'email'   => $cookie['user_email'],
-                        'name'    => $cookie['user_name'],
-                        'phone'   => $cookie['user_phone'],
-                        'picture' => $cookie['user_picture']
-                    ]);
-
-                    $response = [
-                        "status"  => "success",
-                        "message" => "Success! Check the data property.",
-                        "data"    => $model
-                    ];
-                } else {
-                    return $this->store();
-                }
-            }
-        } else {
-            return $this->store();
-        }
-
-        return response()->json($response, 200);
-    }
-
     public function attachments($id)
     {
         $tickets = Session::where('client_id', $id)->get();

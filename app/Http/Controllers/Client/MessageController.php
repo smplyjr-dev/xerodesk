@@ -22,12 +22,7 @@ class MessageController extends Controller
         DB::beginTransaction();
 
         try {
-            $session = Session::firstOrCreate([
-                'session'   => request()->session
-            ], [
-                'client_id' => request()->client_id,
-                'session'   => request()->session
-            ]);
+            $session = Session::where('session', request('session'))->firstOrFail();
 
             $message = Message::create([
                 'session_id'   => $session->id,

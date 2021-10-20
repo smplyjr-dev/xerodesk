@@ -9,6 +9,18 @@ use Carbon\Carbon;
 
 class SessionController extends Controller
 {
+    public function store()
+    {
+        $abbr  = Company::first()->abbr;
+        $count = Session::whereDate('created_at', Carbon::today()->toDateString())->count();
+        $model = Session::create([
+            'client_id' => request()->client_id,
+            'session'   => 'XD' . $abbr . date('ymd') . ($count + 1)
+        ]);
+
+        return $model->fresh();
+    }
+
     public function messages($session)
     {
         $model = Session::with('messages', 'messages.attachments');
@@ -34,17 +46,5 @@ class SessionController extends Controller
         }
 
         return $model;
-    }
-
-    public function store()
-    {
-        $abbr  = Company::first()->abbr;
-        $count = Session::whereDate('created_at', Carbon::today()->toDateString())->count();
-        $model = Session::create([
-            'client_id' => request()->client_id,
-            'session'   => 'XD' . $abbr . date('ymd') . ($count + 1)
-        ]);
-
-        return $model->fresh();
     }
 }

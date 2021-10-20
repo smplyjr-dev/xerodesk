@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Client\Client;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,15 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/email', function () {
-    $client = Client::findOrFail(1);
-    $client->sendWelcomeMessageNotification();
-
-    return response()->json(['The email has been sent! Thanks.'], 200);
-});
-
 Route::namespace('Auth')->group(function () {
-    Route::post('logout',   'LoginController@logout');
+    Route::post('logout', 'LoginController@logout');
 
     Route::post('login',    'LoginController@login');
     Route::post('register', 'RegisterController@register');
@@ -34,34 +26,23 @@ Route::namespace('Auth')->group(function () {
     Route::post('email/resend',        'VerificationController@resend');
 });
 
-Route::namespace('Client')->group(function () {
-    Route::get('/client/datatable',        'ClientController@datatable');
-    Route::get('/client/{token}/verify',   'ClientController@verify');
-    Route::get('/client/{token}/sessions', 'ClientController@sessions');
-    Route::resource('/client',             'ClientController');
-
-    Route::get('/message/session/{session}',  'MessageController@session');
-    Route::post('/message/{hash}/attachment', 'MessageController@attachment');
-    Route::resource('/message',               'MessageController');
-
-    Route::get('/session/clients',              'SessionController@clients');
-    Route::get('/session/{session}/tag',        'SessionController@tags');
-    Route::post('/session/{session}/tag',       'SessionController@attach');
-    Route::delete('/session/{session}/tag',     'SessionController@detach');
-    Route::get('/session/{session}/verify',     'SessionController@verify');
-    Route::get('/session/{session}/messages',   'SessionController@messages');
-    Route::put('/session/{session}/transfer',   'SessionController@transfer');
-    Route::get('/session/{session}/transcript', 'SessionController@transcript');
-    Route::resource('/session',                 'SessionController');
-});
-
-Route::namespace('Company')->group(function () {
-    Route::get('/company/verify', 'CompanyController@verify');
-});
-
 Route::group(['middleware' => 'auth:api'], function () {
     Route::namespace('Client')->group(function () {
-        Route::get('/ticket/datatable', 'TicketController@datatable');
+        Route::get('/client/datatable',             'ClientController@datatable');
+        Route::get('/client/{token}/sessions',      'ClientController@sessions');
+        Route::resource('/client',                  'ClientController');
+
+        Route::post('/message/{hash}/attachment',   'MessageController@attachment');
+        Route::resource('/message',                 'MessageController');
+
+        Route::get('/session/datatable',            'SessionController@datatable');
+        Route::get('/session/{session}/tag',        'SessionController@tags');
+        Route::post('/session/{session}/tag',       'SessionController@attach');
+        Route::delete('/session/{session}/tag',     'SessionController@detach');
+        Route::get('/session/{session}/messages',   'SessionController@messages');
+        Route::put('/session/{session}/transfer',   'SessionController@transfer');
+        Route::get('/session/{session}/transcript', 'SessionController@transcript');
+        Route::resource('/session',                 'SessionController');
     });
 
     Route::namespace('Company')->group(function () {
@@ -86,14 +67,14 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::resource('/slas',      'SLAController');
     });
 
+    Route::namespace('Taggable')->group(function () {
+        Route::resource('/tag', 'TaggableController');
+    });
+
     Route::namespace('User')->group(function () {
         Route::get('/users/me',        'UserController@me');
         Route::get('/users/datatable', 'UserController@datatable');
         Route::post('/users/picture',  'UserController@picture');
         Route::resource('/users',      'UserController');
-    });
-
-    Route::namespace('Taggable')->group(function () {
-        Route::resource('/tag', 'TaggableController');
     });
 });

@@ -355,7 +355,7 @@ export default {
     }
   },
   methods: {
-    getDatatable(url = `/ticket/datatable`) {
+    getDatatable(url = `/session/datatable`) {
       // this.isLoading = true;
       this.tableData.draw++;
 

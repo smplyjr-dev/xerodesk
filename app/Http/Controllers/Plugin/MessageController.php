@@ -1,14 +1,58 @@
 <?php
 
-namespace App\Traits\Client;
+namespace App\Http\Controllers\Plugin;
 
 use App\Events\Message\MessageAttachment;
+use App\Http\Controllers\Controller;
 use App\Models\Client\Client;
 use App\Models\Client\Message;
+use App\Models\Client\Session;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-trait MessageTrait
+class MessageController extends Controller
 {
+    public function store()
+    {
+        DB::beginTransaction();
+
+        try {
+            $session = Session::where('session', request('session'))->firstOrFail();
+
+            $message = Message::create([
+                'session_id'   => $session->id,
+                'user_id'      => request()->user_id,
+                'hash'         => request()->hash,
+                'sender'       => request()->sender,
+                'message'      => request()->message,
+                'reply_to'     => request()->reply_to
+            ]);
+
+            DB::commit();
+
+            $response = [
+                "status"  => "success",
+                "message" => "Your chat conversation has been saved successfully.",
+                "data"    => $message->fresh()
+            ];
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response = [
+                "status"        => "error",
+                "message"       => "Something went wrong. Please contact your system administrator.",
+                "error_code"    => $e->getCode(),
+                "error_message" => $e->getMessage()
+            ];
+
+            return response()->json($response, 503);
+        }
+    }
+
+
     public function attachment($hash)
     {
         try {
@@ -53,7 +97,7 @@ trait MessageTrait
             MessageAttachment::dispatch($message, $attachment, $s, $c);
 
             return response()->json($attachment, 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
     }
