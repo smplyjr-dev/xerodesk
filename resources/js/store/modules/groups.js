@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   async fetchGroups({ commit }) {
-    let { data } = await axios.get(`/groups`);
+    let { data } = await axios.get(`/portal/group`);
 
     commit("SET_GROUPS", data);
   }

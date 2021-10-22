@@ -229,7 +229,7 @@ export default {
 
     async fetchUser() {
       let id = this.$store.state.auth.user.id;
-      let { data } = await axios.get(`/users/${id}`);
+      let { data } = await axios.get(`/portal/user/${id}`);
 
       this.user = data;
     },
@@ -245,7 +245,7 @@ export default {
       };
 
       try {
-        let { data } = await axios.post("/users/picture", params);
+        let { data } = await axios.post(`/portal/user/picture`, params);
 
         await this.fetchUser();
 
@@ -285,7 +285,7 @@ export default {
       this.profileError = [];
 
       try {
-        let { data } = await axios.put(`/users/${this.user.id}`, {
+        let { data } = await axios.put(`/portal/user/${this.user.id}`, {
           method: "profile",
           role: this.user.role,
           status: this.user.status,
@@ -329,7 +329,7 @@ export default {
       this.passwordError = [];
 
       try {
-        let { data } = await axios.put(`/users/${this.user.id}`, {
+        let { data } = await axios.put(`/portal/user/${this.user.id}`, {
           method: "password",
           old_password: this.old_password,
           new_password: this.new_password,

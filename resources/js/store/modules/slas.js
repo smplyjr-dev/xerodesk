@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   async fetchSlas({ commit }) {
-    let { data } = await axios.get(`/slas`);
+    let { data } = await axios.get(`/portal/sla`);
 
     commit("SET_SLAS", data);
   }

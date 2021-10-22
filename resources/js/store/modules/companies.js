@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   async fetchCompanies({ commit }) {
-    let { data } = await axios.get(`/company`);
+    let { data } = await axios.get(`/portal/company`);
 
     commit("SET_COMPANIES", data);
   }

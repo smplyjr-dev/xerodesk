@@ -53,13 +53,7 @@ const mutations = {
   }
 };
 
-const actions = {
-  async fetchSessionMessages({ commit }, session) {
-    let { data } = await axios.get(`/session/${session}/messages`);
-
-    commit("SET_MESSAGES", data);
-  }
-};
+const actions = {};
 
 export default {
   namespaced,

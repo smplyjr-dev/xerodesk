@@ -78,7 +78,7 @@ export default {
 
       try {
         // update the session user_id
-        await axios.put(`/session/${this.session.session}/transfer`, {
+        await axios.put(`/portal/session/${this.session.session}/transfer`, {
           old_user_id: this.session.user_id,
           new_user_id: this.selected.id
         });
@@ -97,7 +97,7 @@ export default {
         });
 
         // save the message
-        await axios.post(`/message`, {
+        await axios.post(`/portal/message`, {
           ...message,
           client_id: this.session.client.id,
           session: this.session.session,

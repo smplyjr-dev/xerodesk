@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   async fetchSession({ commit }) {
-    let { data } = await axios.get(`/session/${this.$route.params.session}`);
+    let { data } = await axios.get(`/portal/session/${this.$route.params.session}`);
 
     commit("SET_SESSION", data);
   }

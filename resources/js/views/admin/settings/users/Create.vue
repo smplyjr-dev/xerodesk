@@ -243,7 +243,7 @@ export default {
 
     async fetchUser() {
       let id = 1;
-      let { data } = await axios.get(`/users/${id}`);
+      let { data } = await axios.get(`/portal/user/${id}`);
 
       this.user = data;
     },
@@ -259,7 +259,7 @@ export default {
       };
 
       try {
-        let { data } = await axios.post("/users/picture", params);
+        let { data } = await axios.post(`/portal/user/picture`, params);
 
         await this.fetchUser();
 
@@ -313,7 +313,7 @@ export default {
           linkedin: this.user.bio.linkedin
         };
 
-        let { data } = await axios.put(`/users/${this.user.id}`, user);
+        let { data } = await axios.put(`/portal/user/${this.user.id}`, user);
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
@@ -345,7 +345,7 @@ export default {
       this.passwordError = [];
 
       try {
-        let { data } = await axios.put(`/users/${this.user.id}`, {
+        let { data } = await axios.put(`/portal/user/${this.user.id}`, {
           method: "password",
           old_password: this.old_password,
           new_password: this.new_password,

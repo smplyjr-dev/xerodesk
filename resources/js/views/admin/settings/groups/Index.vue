@@ -276,19 +276,14 @@ export default {
     }
   },
   methods: {
-    getGroups(shouldRefresh = true, url = "/groups/datatable") {
+    async getGroups(shouldRefresh = true, url = `/portal/group/datatable`) {
       this.isLoading = shouldRefresh;
 
-      axios
-        .get(url, { params: this.tableData })
-        .then(response => {
-          this.groups = response.data;
-          this.pagination.total = this.groups.length;
-          this.isLoading = false;
-        })
-        .catch(errors => {
-          console.log(errors);
-        });
+      let { data } = await axios.get(url, { params: this.tableData });
+      this.groups = data;
+      this.pagination.total = this.groups.length;
+
+      this.isLoading = false;
     },
     paginate(array, length, pageNumber) {
       this.pagination.from = array.length ? (pageNumber - 1) * length + 1 : " ";
@@ -373,7 +368,7 @@ export default {
         });
 
         if (this.groupMethod == "create") {
-          let { data } = await axios.post(`/groups`, {
+          let { data } = await axios.post(`/portal/group`, {
             name: this.groupDetails.name,
             description: this.groupDetails.description
           });
@@ -382,7 +377,7 @@ export default {
         }
 
         if (this.groupMethod == "update") {
-          let { data } = await axios.put(`/groups/${this.groupDetails.id}`, {
+          let { data } = await axios.put(`/portal/group/${this.groupDetails.id}`, {
             name: this.groupDetails.name,
             description: this.groupDetails.description
           });
@@ -391,7 +386,7 @@ export default {
         }
 
         if (this.groupMethod == "delete") {
-          let { data } = await axios.delete(`/groups/${this.groupDetails.id}`);
+          let { data } = await axios.delete(`/portal/group/${this.groupDetails.id}`);
 
           response = data;
         }
@@ -403,7 +398,7 @@ export default {
         this.getGroups(false);
 
         // refresh groups from store
-        this.$store.dispatch("group/fetchGroups");
+        this.$store.dispatch("groups/fetchGroups");
 
         // show notification
         this.$store.dispatch("notifications/addNotification", {
@@ -451,8 +446,7 @@ export default {
       $("#users-modal").modal("show");
     },
     async handleRefresh() {
-      this.getGroups(false);
-      await this.$delay(300);
+      await this.getGroups(false);
       this.group = this.groups.find(g => g.id == this.group.id);
     }
   },

@@ -4,9 +4,11 @@ namespace App\Traits\Client;
 
 use App\Events\Session\SessionTransferFrom;
 use App\Events\Session\SessionTransferTo;
+use App\Exports\SessionsExport;
 use App\Models\Client\Session;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 trait SessionTrait
 {
@@ -106,15 +108,6 @@ trait SessionTrait
         return response()->json($response, 200);
     }
 
-    public function messages($session)
-    {
-        $session = Session::with(['messages', 'messages.attachments'])
-            ->whereSession($session)
-            ->first();
-
-        return response()->json($session->messages, 200);
-    }
-
     public function transcript($session)
     {
         $session = Session::where('session', $session)->firstOrFail();
@@ -124,5 +117,51 @@ trait SessionTrait
             'status'  => 'success',
             'message' => 'The transcript has been sent succesfully to the client email.',
         ], 200);
+    }
+
+    public function export()
+    {
+        $request   = json_decode(request('refine'), true);
+        $extension = ucwords($request['type']);
+
+        return Excel::download(new SessionsExport, 'sessions', $extension);
+    }
+
+    public function status($session)
+    {
+        $model = Session::where('session', $session)->firstOrFail();
+
+        if ($model->status != request()->status) {
+            $model->update([
+                'status' => request()->status
+            ]);
+
+            $model->messages()->create([
+                'hash'    => request()->hash,
+                'sender'  => request()->sender,
+                'message' => request()->message
+            ]);
+        }
+
+        return $model;
+    }
+
+    public function seen($session)
+    {
+
+        $model = Session::with(['messages' => function ($query) {
+            $query->where('is_read', false)
+                ->whereIn('sender', ['client']);
+        }]);
+        $model = $model->where('session', $session);
+        $model = $model->first();
+
+        foreach ($model->messages as $message) {
+            $message->update([
+                'is_read' => true
+            ]);
+        }
+
+        return $model;
     }
 }

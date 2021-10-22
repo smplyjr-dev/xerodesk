@@ -8,16 +8,20 @@
   .custom-control-input:checked ~ .custom-control-label::after {
     transform: translateX(1rem) !important;
   }
-  .custom-control-label::before {
-    cursor: pointer;
-    border-radius: 1.25rem;
-    height: 1.5rem;
-    width: 2.5rem;
-  }
-  .custom-control-label::after {
-    cursor: pointer;
-    border-radius: 1.25rem;
-    height: 1.25rem;
-    width: 1.25rem;
+  .custom-control-label {
+    top: -4px;
+
+    &::before {
+      cursor: pointer;
+      border-radius: 1.25rem;
+      height: 1.5rem;
+      width: 2.5rem;
+    }
+    &::after {
+      cursor: pointer;
+      border-radius: 1.25rem;
+      height: 1.25rem;
+      width: 1.25rem;
+    }
   }
 }

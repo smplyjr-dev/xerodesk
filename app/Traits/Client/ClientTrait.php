@@ -61,4 +61,11 @@ trait ClientTrait
 
         return $sessions;
     }
+
+    public function recent()
+    {
+        $model = Client::latest()->limit(5)->get();
+
+        return $model;
+    }
 }

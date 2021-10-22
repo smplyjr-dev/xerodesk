@@ -198,7 +198,7 @@ export default {
     }
   },
   methods: {
-    getDatatable(url = `/client/datatable`) {
+    getDatatable(url = `/portal/client/datatable`) {
       this.isLoading = true;
       this.tableData.draw++;
 
@@ -221,7 +221,7 @@ export default {
       this.client = client;
 
       this.sessions = [];
-      let { data } = await axios.get(`/client/${client.token}/sessions`);
+      let { data } = await axios.get(`/portal/client/${client.token}/sessions`);
       this.sessions = data.sessions;
     },
     onAttmClick(message) {

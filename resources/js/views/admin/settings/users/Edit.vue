@@ -240,7 +240,7 @@ export default {
     },
     async fetchUser() {
       let id = this.$route.params.id;
-      let { data } = await axios.get(`/users/${id}`);
+      let { data } = await axios.get(`/portal/user/${id}`);
 
       this.user = data;
     },
@@ -255,7 +255,7 @@ export default {
       };
 
       try {
-        await axios.post("/users/picture", params);
+        await axios.post(`/portal/user/picture`, params);
         await this.fetchUser();
 
         this.$store.dispatch("notifications/addNotification", {
@@ -293,7 +293,7 @@ export default {
       this.profileError = [];
 
       try {
-        await axios.put(`/users/${this.user.id}`, {
+        await axios.put(`/portal/user/${this.user.id}`, {
           method: "profile",
           status: this.user.status,
           role: this.user.role,
@@ -336,7 +336,7 @@ export default {
       this.passwordError = [];
 
       try {
-        await axios.put(`/users/${this.user.id}`, {
+        await axios.put(`/portal/user/${this.user.id}`, {
           method: "password",
           old_password: this.old_password,
           new_password: this.new_password,

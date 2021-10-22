@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   async fetchRoles({ commit }) {
-    let { data } = await axios.get(`/roles`);
+    let { data } = await axios.get(`/portal/role`);
     commit("SET_ROLES", data);
   }
 };

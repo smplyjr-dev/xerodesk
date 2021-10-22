@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SLA;
+namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\SLA\SLA;

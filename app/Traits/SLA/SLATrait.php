@@ -2,7 +2,6 @@
 
 namespace App\Traits\Client;
 
-use App\Models\SLA\SLA;
 use Exception;
 use Illuminate\Support\Facades\DB;
 

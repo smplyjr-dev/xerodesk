@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   async fetchTags({ commit }) {
-    let { data } = await axios.get(`/tag`);
+    let { data } = await axios.get(`/portal/tag`);
 
     commit("SET_TAGS", data);
   }

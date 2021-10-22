@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async fetchSessionTags() {
-      let { data } = await axios.get(`/session/${this.session.session}/tag`);
+      let { data } = await axios.get(`/portal/session/${this.session.session}/tag`);
 
       this.sessionTags = data.map(d => {
         return {
@@ -104,7 +104,7 @@ export default {
       this.isCreatingAttaching = true;
 
       // create the taggable
-      let { data } = await axios.post(`/tag`, {
+      let { data } = await axios.post(`/portal/tag`, {
         name: this.newTag
       });
 
@@ -120,7 +120,7 @@ export default {
     async attachTag(tag) {
       this.isAttaching.push(tag.id);
 
-      let { data } = await axios.post(`/session/${this.session.session}/tag`, {
+      let { data } = await axios.post(`/portal/session/${this.session.session}/tag`, {
         taggable_id: tag.id
       });
 
@@ -132,7 +132,7 @@ export default {
     async detachTag(tag) {
       this.isAttaching.push(tag.id);
 
-      let { data } = await axios.delete(`/session/${this.session.session}/tag`, {
+      let { data } = await axios.delete(`/portal/session/${this.session.session}/tag`, {
         params: {
           taggable_id: tag.id
         }

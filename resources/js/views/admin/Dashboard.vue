@@ -85,7 +85,7 @@ export default {
     async fetchTickets() {
       this.loading.sessions = true;
 
-      let { data } = await axios.get(`/session`);
+      let { data } = await axios.get(`/portal/session`);
       // await this.$delay(3000);
       this.sessions = data;
 

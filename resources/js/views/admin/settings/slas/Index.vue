@@ -209,7 +209,7 @@ export default {
     ...mapGetters("auth", ["permissions"])
   },
   methods: {
-    getDatatable(shouldRefresh = true, url = "/slas/datatable") {
+    getDatatable(shouldRefresh = true, url = `/portal/sla/datatable`) {
       this.isLoading = shouldRefresh;
       this.tableData.draw++;
 
@@ -275,7 +275,7 @@ export default {
         let response = "";
 
         if (this.slaMethod == "create") {
-          let { data } = await axios.post(`/slas`, {
+          let { data } = await axios.post(`/portal/sla`, {
             name: this.slaDetails.name,
             color: this.slaDetails.color,
             range: this.slaDetails.range
@@ -285,7 +285,7 @@ export default {
         }
 
         if (this.slaMethod == "update") {
-          let { data } = await axios.put(`/slas/${this.slaDetails.id}`, {
+          let { data } = await axios.put(`/portal/sla/${this.slaDetails.id}`, {
             name: this.slaDetails.name,
             color: this.slaDetails.color,
             range: this.slaDetails.range
@@ -295,7 +295,7 @@ export default {
         }
 
         if (this.slaMethod == "delete") {
-          let { data } = await axios.delete(`/slas/${this.slaDetails.id}`);
+          let { data } = await axios.delete(`/portal/sla/${this.slaDetails.id}`);
 
           response = data;
         }

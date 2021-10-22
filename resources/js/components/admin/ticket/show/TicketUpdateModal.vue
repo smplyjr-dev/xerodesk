@@ -109,7 +109,7 @@ export default {
       if (this.$isNull(this.session.status)) this.sessionError.push("status");
 
       if (this.$isEmpty(this.sessionError)) {
-        await axios.put(`/session/${this.session.session}`, {
+        await axios.put(`/portal/session/${this.session.session}`, {
           user_id: this.user.id,
           title: this.session.title,
           category: this.session.category,

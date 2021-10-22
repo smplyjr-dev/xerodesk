@@ -35,16 +35,7 @@ const mutations = {
   }
 };
 
-const actions = {
-  async fetchClients({ commit }) {
-    commit("SET_LOADING", true);
-
-    let { data } = await axios.get(`/client`);
-    commit("SET_CLIENTS", data);
-
-    commit("SET_LOADING", false);
-  }
-};
+const actions = {};
 
 export default {
   namespaced,

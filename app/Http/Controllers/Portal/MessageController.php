@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client\Message;
@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\DB;
 class MessageController extends Controller
 {
     use MessageTrait;
-
-    public function index()
-    {
-    }
 
     public function store()
     {
@@ -54,20 +50,5 @@ class MessageController extends Controller
 
             return response()->json($response, 503);
         }
-    }
-
-    public function show($id)
-    {
-        $model = Message::findOrFail($id);
-    }
-
-    public function update($id)
-    {
-        $model = Message::findOrFail($id);
-    }
-
-    public function destroy($id)
-    {
-        $model = Message::findOrFail($id);
     }
 }

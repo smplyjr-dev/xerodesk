@@ -121,7 +121,7 @@ export default {
         if (this.session.user_id == this.user.id || this.user.role == "Super") {
           this.isSending = true;
 
-          let { data } = await axios.get(`/session/${this.session.session}/transcript`);
+          let { data } = await axios.get(`/portal/session/${this.session.session}/transcript`);
 
           this.$store.dispatch("notifications/addNotification", {
             variant: "bg-success",

@@ -91,13 +91,13 @@ export default {
     async lockSession() {
       this.isLocking = true;
 
-      let session = await axios.put(`/session/${this.session.session}`, {
+      let session = await axios.put(`/portal/session/${this.session.session}`, {
         ...this.session,
         user_id: this.user.id
       });
       this.session.user_id = session.data.user_id;
 
-      let message = await axios.post(`/message`, {
+      let message = await axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
@@ -145,7 +145,7 @@ export default {
 
             // then save the attachments in background
             await axios
-              .post(`/message`, {
+              .post(`/portal/message`, {
                 ...message,
                 client_id: this.data.client.id,
                 session: localStorage.getItem("LCS_Session"),
@@ -154,7 +154,7 @@ export default {
               .then(response => {
                 this.$store.commit("messages/UPDATE_MESSAGE", response.data.data);
 
-                axios.post(`/message/${response.data.data.hash}/attachment`, form, headers).then(result => {
+                axios.post(`/portal/message/${response.data.data.hash}/attachment`, form, headers).then(result => {
                   // this.$store.commit("messages/INSERT_ATTACHMENT", {
                   //   hash: response.data.data.hash,
                   //   attachment: result.data
@@ -207,7 +207,7 @@ export default {
 
           // then save the message in background
           await axios
-            .post(`/message`, {
+            .post(`/portal/message`, {
               ...message,
               client_id: this.data.client.id,
               session: localStorage.getItem("LCS_Session"),

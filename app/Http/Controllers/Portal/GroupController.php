@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Group;
+namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group\Group;
 use App\Traits\Group\GroupTrait;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -41,7 +42,7 @@ class GroupController extends Controller
                 'status'  => 'success',
                 'message' => 'A group has been successfully created.'
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             throw ValidationException::withMessages([
@@ -49,10 +50,6 @@ class GroupController extends Controller
                 'data' => [$e->getMessage()]
             ]);
         }
-    }
-
-    public function show($id)
-    {
     }
 
     public function update($id)

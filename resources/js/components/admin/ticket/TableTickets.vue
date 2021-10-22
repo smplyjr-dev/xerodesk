@@ -355,7 +355,7 @@ export default {
     }
   },
   methods: {
-    getDatatable(url = `/session/datatable`) {
+    getDatatable(url = `/portal/session/datatable`) {
       // this.isLoading = true;
       this.tableData.draw++;
 
@@ -422,18 +422,18 @@ export default {
           message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == val).name}</strong>.</p>`
         });
       } else {
-        axios.put(`/session/${session.session}`, data);
+        axios.put(`/portal/session/${session.session}`, data);
       }
     },
     updateAgent(s) {
       let agent = this.users.find(u => u.id == s.agent_id);
 
-      axios.put(`/session/${s.session}`, {
+      axios.put(`/portal/session/${s.session}`, {
         ...s,
         user_id: agent.id
       });
 
-      axios.post(`/message`, {
+      axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${agent.bio.first_name} ${agent.bio.last_name}</strong>.</p>`,

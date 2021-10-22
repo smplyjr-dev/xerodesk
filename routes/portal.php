@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\Portal\ClientController;
-use App\Http\Controllers\Portal\CompanyController;
+use App\Http\Controllers\Portal\GroupController;
+use App\Http\Controllers\Portal\MessageController;
+use App\Http\Controllers\Portal\RoleController;
 use App\Http\Controllers\Portal\SessionController;
+use App\Http\Controllers\Portal\SLAController;
+use App\Http\Controllers\Portal\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +21,49 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/client/recent', [ClientController::class, 'recent']);
+    // Client Routes
+    Route::get('/client/datatable',        [ClientController::class, 'datatable']);
+    Route::get('/client/recent',           [ClientController::class, 'recent']);
+    Route::get('/client/{token}/sessions', [ClientController::class, 'sessions']);
 
-    Route::get('/session/export',           [SessionController::class, 'export']);
-    Route::get('/session/{session}',        [SessionController::class, 'show']);
-    Route::put('/session/{session}/status', [SessionController::class, 'status']);
-    Route::put('/session/{session}/seen',   [SessionController::class, 'seen']);
+    // Group Routes
+    Route::get('/group/datatable', [GroupController::class, 'datatable']);
 
-    Route::get('/company/{company}', [CompanyController::class, 'show']);
-    Route::put('/company/{company}', [CompanyController::class, 'update']);
+    // Message Routes
+    Route::post('/message/{hash}/attachment', [MessageController::class, 'attachment']);
+
+    // Role Routes
+    Route::get('/role/datatable', [RoleController::class, 'datatable']);
+
+    // Session Routes
+    Route::get('/session/datatable',            [SessionController::class, 'datatable']);
+    Route::get('/session/export',               [SessionController::class, 'export']);
+    Route::get('/session/{session}/tag',        [SessionController::class, 'tags']);
+    Route::post('/session/{session}/tag',       [SessionController::class, 'attach']);
+    Route::delete('/session/{session}/tag',     [SessionController::class, 'detach']);
+    Route::put('/session/{session}/transfer',   [SessionController::class, 'transfer']);
+    Route::get('/session/{session}/transcript', [SessionController::class, 'transcript']);
+    Route::put('/session/{session}/status',     [SessionController::class, 'status']);
+    Route::put('/session/{session}/seen',       [SessionController::class, 'seen']);
+
+    // SLA Policy Routes
+    Route::get('/sla/datatable', [SLAController::class, 'datatable']);
+
+    // User Routes
+    Route::get('/user/datatable', [UserController::class, 'datatable']);
+    Route::get('/user/me',        [UserController::class, 'me']);
+    Route::post('/user/picture',  [UserController::class, 'picture']);
+
+    // All Resources Routes
+    Route::namespace('Portal')->group(function () {
+        Route::resource('company',    'CompanyController');
+        Route::resource('group',      'GroupController');
+        Route::resource('group-user', 'GroupUserController');
+        Route::resource('message',    'MessageController');
+        Route::resource('role',       'RoleController');
+        Route::resource('session',    'SessionController');
+        Route::resource('sla',        'SLAController');
+        Route::resource('tag',        'TaggableController');
+        Route::resource('user',       'UserController');
+    });
 });

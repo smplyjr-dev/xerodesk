@@ -41,9 +41,13 @@
               <div class="d-flex">
                 <span class="w-25 font-weight-bold text-right">Action:</span>
                 <div class="w-75 ml-1 align-self-end">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" />
-                    <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                  <div class="d-flex align-items-center">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" :disabled="isProcessing.includes(p.id)" />
+                      <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                    </div>
+
+                    <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
                   </div>
                 </div>
               </div>
@@ -51,9 +55,13 @@
 
             <td>{{ p.name }}</td>
             <td>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" />
-                <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+              <div class="d-flex align-items-center">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" :disabled="isProcessing.includes(p.id)" />
+                  <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                </div>
+
+                <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
               </div>
             </td>
           </tr>
@@ -67,9 +75,13 @@
               <div class="d-flex">
                 <span class="w-25 font-weight-bold text-right">Action:</span>
                 <div class="w-75 ml-1 align-self-end">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" />
-                    <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                  <div class="d-flex align-items-center">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" :disabled="isProcessing.includes(p.id)" />
+                      <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                    </div>
+
+                    <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
                   </div>
                 </div>
               </div>
@@ -77,9 +89,13 @@
 
             <td>{{ p.name }}</td>
             <td>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" />
-                <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+              <div class="d-flex align-items-center">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" :id="`switch${p.id}`" @click="setUser(p.id)" :checked="pluckedUsers.includes(p.id)" :disabled="isProcessing.includes(p.id)" />
+                  <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
+                </div>
+
+                <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
               </div>
             </td>
           </tr>
@@ -136,7 +152,8 @@ export default {
       },
 
       // custom data
-      isLoading: false
+      isLoading: false,
+      isProcessing: []
     };
   },
   computed: {
@@ -191,7 +208,7 @@ export default {
       this.isLoading = shouldRefresh ?? false;
 
       axios
-        .get(`/groups/datatable`, { params: this.tableData })
+        .get(`/portal/group/datatable`, { params: this.tableData })
         .then(response => {
           this.users = response.data;
           this.pagination.total = this.users.length;
@@ -238,17 +255,19 @@ export default {
       }
     },
     async setUser(id) {
+      this.isProcessing.push(id);
+
       let method = this.pluckedUsers.includes(id) ? "delete" : "create";
 
       if (method == "delete") {
-        await axios.delete(`/group-users/${id}`, {
+        await axios.delete(`/portal/group-user/${id}`, {
           data: {
             group_id: this.group.id,
             user_id: id
           }
         });
       } else {
-        await axios.post(`/group-users`, {
+        await axios.post(`/portal/group-user`, {
           group_id: this.group.id,
           user_id: id
         });
@@ -259,6 +278,8 @@ export default {
 
       // refresh the datatable without showing loader
       this.getUsers();
+
+      this.isProcessing = this.isProcessing.filter(i => i != id);
     }
   },
   watch: {

@@ -51,14 +51,14 @@ const mutations = {
 
 const actions = {
   async fetchUsers({ commit }) {
-    let { data } = await axios.get(`/users`);
+    let { data } = await axios.get(`/portal/user`);
 
     commit("SET_USERS", data);
   },
 
   async fetchUser({ commit }) {
     try {
-      let { data } = await axios.get(`/users/me`);
+      let { data } = await axios.get(`/portal/user/me`);
 
       commit("FETCH_USER_SUCCESS", data);
     } catch (e) {

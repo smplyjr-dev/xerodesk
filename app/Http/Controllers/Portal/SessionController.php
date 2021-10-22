@@ -2,13 +2,33 @@
 
 namespace App\Http\Controllers\Portal;
 
-use App\Exports\SessionsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Client\Session;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Traits\Client\SessionTagTrait;
+use App\Traits\Client\SessionTrait;
+use Exception;
 
 class SessionController extends Controller
 {
+    use SessionTrait, SessionTagTrait;
+
+    public function index()
+    {
+        $sessions = Session::all();
+
+        return response()->json($sessions, 200);
+    }
+
+    public function store()
+    {
+        $model = Session::create([
+            'client_id' => request()->client_id,
+            'session'   => request()->session
+        ]);
+
+        return $model->fresh();
+    }
+
     public function show($session)
     {
         $model = Session::with(['taggables', 'client.company', 'messages.attachments', 'user.bio'])
@@ -18,49 +38,36 @@ class SessionController extends Controller
         return $model;
     }
 
-    public function export()
+    public function update($session)
     {
-        $request   = json_decode(request('refine'), true);
-        $extension = ucwords($request['type']);
+        verify_permission(auth()->user(), ['edit_ticket']);
 
-        return Excel::download(new SessionsExport, 'sessions', $extension);
+        try {
+            $model = Session::whereSession($session)->firstOrFail();
+
+            $model->update(request()->only([
+                'group_id',
+                'user_id',
+                'title',
+                'category',
+                'priority',
+                'resolution_code',
+                'solution',
+                'token',
+                'status',
+            ]));
+
+            return $model->fresh();
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
-    public function status($session)
+    public function destroy($session)
     {
         $model = Session::where('session', $session)->firstOrFail();
+        $model->delete();
 
-        if ($model->status != request()->status) {
-            $model->update([
-                'status' => request()->status
-            ]);
-
-            $model->messages()->create([
-                'hash'    => request()->hash,
-                'sender'  => request()->sender,
-                'message' => request()->message
-            ]);
-        }
-
-        return $model;
-    }
-
-    public function seen($session)
-    {
-
-        $model = Session::with(['messages' => function ($query) {
-            $query->where('is_read', false)
-                ->whereIn('sender', ['client']);
-        }]);
-        $model = $model->where('session', $session);
-        $model = $model->first();
-
-        foreach ($model->messages as $message) {
-            $message->update([
-                'is_read' => true
-            ]);
-        }
-
-        return $model;
+        return true;
     }
 }

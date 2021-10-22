@@ -246,7 +246,7 @@ export default {
     }
   },
   methods: {
-    getRoles(shouldRefresh = true, url = "/roles/datatable") {
+    getRoles(shouldRefresh = true, url = `/portal/role/datatable`) {
       this.isLoading = shouldRefresh;
 
       axios
@@ -318,7 +318,7 @@ export default {
         let response = "";
 
         if (this.roleMethod == "create") {
-          let { data } = await axios.post(`/roles`, {
+          let { data } = await axios.post(`/portal/role`, {
             name: this.roleDetails.name,
             permissions: this.roleDetails.permissions
           });
@@ -327,7 +327,7 @@ export default {
         }
 
         if (this.roleMethod == "update") {
-          let { data } = await axios.put(`/roles/${this.roleDetails.id}`, {
+          let { data } = await axios.put(`/portal/role/${this.roleDetails.id}`, {
             name: this.roleDetails.name,
             permissions: this.roleDetails.permissions
           });
@@ -336,7 +336,7 @@ export default {
         }
 
         if (this.roleMethod == "delete") {
-          let { data } = await axios.delete(`/roles/${this.roleDetails.id}`);
+          let { data } = await axios.delete(`/portal/role/${this.roleDetails.id}`);
 
           response = data;
         }
@@ -348,7 +348,7 @@ export default {
         this.getRoles(false);
 
         // refresh roles from store
-        this.$store.dispatch("role/fetchRoles");
+        this.$store.dispatch("roles/fetchRoles");
 
         // show notification
         this.$store.dispatch("notifications/addNotification", {

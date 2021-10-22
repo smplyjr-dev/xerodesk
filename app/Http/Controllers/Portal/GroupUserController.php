@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Group;
+namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group\GroupUser;

@@ -351,7 +351,7 @@ export default {
     };
   },
   methods: {
-    getUsers(shouldRefresh = true, url = "/users/datatable") {
+    getUsers(shouldRefresh = true, url = `/portal/user/datatable`) {
       this.isLoading = shouldRefresh;
 
       axios
