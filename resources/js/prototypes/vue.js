@@ -42,3 +42,8 @@ Vue.prototype.$rand = function(min, max) {
   if (!min && !max) return Math.floor(Math.random() * 100);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+// Image On Error Fallback
+Vue.prototype.$onImgError = function(e, i) {
+  if (i == 1) e.target.src = `${process.env.MIX_APP_URL}/images/generic-profile.png`;
+};

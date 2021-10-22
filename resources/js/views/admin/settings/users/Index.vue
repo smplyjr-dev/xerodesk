@@ -49,7 +49,7 @@
                 <td>
                   <div class="my-2 text-center">
                     <router-link :to="`/settings/users/${p.id}/edit`" style="min-width: 150px;">
-                      <img loading="lazy" class="object-cover" :src="profilePicture(p)" :alt="`${p.name}`" height="75px" width="75px" />
+                      <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="75px" width="75px" />
                       <div class="d-flex flex-column mt-2">
                         <span>{{ `${p.name}` }}</span>
                         <span class="text-muted text-xs">{{ p.meta.email }}</span>
@@ -99,7 +99,7 @@
 
                 <td>
                   <router-link :to="`/settings/users/${p.id}/edit`" class="d-flex align-items-center">
-                    <img loading="lazy" class="object-cover" :src="profilePicture(p)" :alt="`${p.name}`" height="50px" width="50px" />
+                    <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="50px" width="50px" />
                     <div class="d-flex flex-column ml-2">
                       <span>{{ `${p.name}` }}</span>
                       <span class="text-muted text-xs">{{ p.meta.email }}</span>

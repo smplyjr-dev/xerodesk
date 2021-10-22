@@ -16,7 +16,7 @@ import store from "@Scripts/store";
 // Require Directives and Filters
 // ======================================================== >>
 require("./components");
-require("./directives");
+// require("./directives");
 // require("./filters");
 require("./plugins");
 require("./prototypes");

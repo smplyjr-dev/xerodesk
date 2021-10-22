@@ -59,7 +59,7 @@
                     <span class="w-50 ml-1 align-self-end">
                       <div class="social-media">
                         <router-link :to="`/settings/users/${u.pivot.user_id}/edit`" v-for="(u, $u) in p.users" :key="$u">
-                          <img :src="profilePicture(u)" :alt="u.profile_picture" />
+                          <img :src="profilePicture(u)" @error="$onImgError($event, 1)" :alt="u.profile_picture" />
                         </router-link>
 
                         <a href="javascript:void(0)" @click="selectUsers(p)">
@@ -81,7 +81,7 @@
                 <td>
                   <div class="social-media">
                     <router-link :to="`/settings/users/${u.pivot.user_id}/edit`" v-for="(u, $u) in p.users" :key="$u">
-                      <img :src="profilePicture(u)" :alt="u.profile_picture" />
+                      <img :src="profilePicture(u)" @error="$onImgError($event, 1)" :alt="u.profile_picture" />
                     </router-link>
 
                     <a href="javascript:void(0)" @click="selectUsers(p)">
