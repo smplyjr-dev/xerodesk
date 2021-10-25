@@ -3,6 +3,8 @@
 namespace App\Models\Client;
 
 use App\BaseModel;
+use App\Mail\MailSessionLock;
+use App\Mail\MailSessionUpdated;
 use App\Mail\SendMessages;
 use App\Models\Group\Group;
 use App\Models\Taggable\Taggable;
@@ -12,6 +14,13 @@ use Illuminate\Support\Facades\Mail;
 class Session extends BaseModel
 {
     protected $table = 'client_sessions';
+
+    const STATUS_OPEN = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_RESOLVED = 3;
+    const STATUS_CLOSED = 4;
+    const STATUS_WAITING_FOR_AGENT = 5;
+    const STATUS_CWAITING_FOR_CLIENT = 6;
 
     public function user()
     {
@@ -41,5 +50,15 @@ class Session extends BaseModel
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function sendSessionUpdateNotification()
+    {
+        Mail::to($this->client->email)->send(new MailSessionUpdated($this, 'client'));
+    }
+
+    public function sendSessionLockNotification()
+    {
+        Mail::to($this->client->email)->send(new MailSessionLock($this, 'client'));
     }
 }

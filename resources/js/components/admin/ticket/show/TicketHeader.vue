@@ -5,7 +5,7 @@
         <InlineSvg name="template/mdi-chevron-left.svg" color="#464646" size="1.25rem" />
       </router-link>
 
-      <div class="card-title mb-0">{{ data.client.name }}</div>
+      <div class="card-title mb-0">{{ data.session.session }}</div>
     </div>
 
     <button type="button" class="btn btn-default p-0" @click="$emit('toggle')">

@@ -91,7 +91,7 @@ export default {
     async lockSession() {
       this.isLocking = true;
 
-      let session = await axios.put(`/portal/session/${this.session.session}`, {
+      let session = await axios.put(`/portal/session/${this.session.session}/lock`, {
         ...this.session,
         user_id: this.user.id
       });

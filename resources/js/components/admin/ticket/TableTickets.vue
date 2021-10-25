@@ -413,22 +413,21 @@ export default {
       if (field == "group_id") data = { group_id: val };
       if (field == "user_id") data = { user_id: val };
 
-      if (field == "status") {
-        // specific endpoint for status update
-        axios.put(`/portal/session/${session.session}/status`, {
-          status: val,
-          hash: nanoid(),
-          sender: "session",
-          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == val).name}</strong>.</p>`
-        });
-      } else {
-        axios.put(`/portal/session/${session.session}`, data);
-      }
+      // for request for status update
+      if (field != "status") return axios.put(`/portal/session/${session.session}/field`, data);
+
+      // for request other than status update
+      return axios.put(`/portal/session/${session.session}/status`, {
+        status: val,
+        hash: nanoid(),
+        sender: "session",
+        message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == val).name}</strong>.</p>`
+      });
     },
     updateAgent(s) {
       let agent = this.users.find(u => u.id == s.agent_id);
 
-      axios.put(`/portal/session/${s.session}`, {
+      axios.put(`/portal/session/${s.session}/lock`, {
         ...s,
         user_id: agent.id
       });
@@ -490,16 +489,6 @@ export default {
         };
       }
     },
-    /* ifNotAssignedToSelf(assigned_id) {
-      if (
-        this.user.id == assigned_id || // if assigned to the user
-        ["Super"].includes(this.user.role) // if you are an super admin
-      ) {
-        return false;
-      }
-
-      return true;
-    }, */
     isClosedAlready(status) {
       if (status == 4) return true;
       return false;

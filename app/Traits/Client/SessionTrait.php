@@ -148,7 +148,6 @@ trait SessionTrait
 
     public function seen($session)
     {
-
         $model = Session::with(['messages' => function ($query) {
             $query->where('is_read', false)
                 ->whereIn('sender', ['client']);
@@ -161,6 +160,31 @@ trait SessionTrait
                 'is_read' => true
             ]);
         }
+
+        return $model;
+    }
+
+    public function lock($session)
+    {
+        $model = Session::where('session', $session)->firstOrFail();
+
+        $model->update(request()->only([
+            'user_id'
+        ]));
+
+        $model->sendSessionLockNotification();
+
+        return $model;
+    }
+
+    public function field($session)
+    {
+        $model = Session::where('session', $session)->firstOrFail();
+
+        $model->update(request()->only([
+            'priority',
+            'group_id',
+        ]));
 
         return $model;
     }

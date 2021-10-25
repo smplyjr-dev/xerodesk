@@ -4,18 +4,27 @@ namespace App\Observers\Client;
 
 use App\Events\Session\SessionCreated;
 use App\Events\Session\SessionUpdate;
+use App\Mail\MailSessionCreated;
 use App\Models\Client\Session;
+use Illuminate\Support\Facades\Mail;
 
 class SessionObserver
 {
     public function created(Session $session)
     {
-        $client = $session->client()->with(['company', 'sessions', 'sessions.messages'])->first();
-        SessionCreated::dispatch($client);
+        // send email to ithelpdesk@xmcbpo.com
+        Mail::to('ithelpdesk@xmcbpo.com')->send(new MailSessionCreated($session, 'admin'));
+
+        // send email to the client
+        Mail::to($session->client->email)->send(new MailSessionCreated($session, 'client'));
+
+        // fire an event for real-time purposes
+        SessionCreated::dispatch($session);
     }
 
     public function updated(Session $session)
     {
+        // fire an event for real-time purposes
         SessionUpdate::dispatch($session);
     }
 

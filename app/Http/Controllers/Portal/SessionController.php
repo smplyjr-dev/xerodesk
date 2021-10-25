@@ -46,16 +46,14 @@ class SessionController extends Controller
             $model = Session::whereSession($session)->firstOrFail();
 
             $model->update(request()->only([
-                'group_id',
-                'user_id',
                 'title',
-                'category',
                 'priority',
+                'category',
                 'resolution_code',
                 'solution',
-                'token',
-                'status',
             ]));
+
+            $model->sendSessionUpdateNotification();
 
             return $model->fresh();
         } catch (Exception $e) {

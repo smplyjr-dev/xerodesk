@@ -14,16 +14,16 @@ class SessionCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $client;
+    public $session;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($client)
+    public function __construct($session)
     {
-        $this->client = $client;
+        $this->session = $session;
     }
 
     /**
