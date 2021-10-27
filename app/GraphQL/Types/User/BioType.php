@@ -9,8 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class BioType extends GraphQLType
 {
     protected $attributes = [
-        'name'        => 'Bio',
-        'description' => 'List of user\'s bio',
+        'name' => 'bios',
     ];
 
     public function fields(): array

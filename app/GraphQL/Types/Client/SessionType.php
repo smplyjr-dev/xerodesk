@@ -9,8 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class SessionType extends GraphQLType
 {
     protected $attributes = [
-        'name'        => 'Session',
-        'description' => 'List of all sessions',
+        'name' => 'sessions',
     ];
 
     public function fields(): array

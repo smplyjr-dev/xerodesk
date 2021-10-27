@@ -11,6 +11,11 @@ use Rebing\GraphQL\Support\Query;
 
 class BiosQuery extends Query
 {
+    protected $attributes = [
+        'name' => 'Bios',
+        'description' => 'List of all bios'
+    ];
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('bio'));

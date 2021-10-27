@@ -11,6 +11,11 @@ use Rebing\GraphQL\Support\Query;
 
 class SessionsQuery extends Query
 {
+    protected $attributes = [
+        'name' => 'Sessions',
+        'description' => 'List of all sessions'
+    ];
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('session'));

@@ -11,6 +11,11 @@ use Rebing\GraphQL\Support\Query;
 
 class CompaniesQuery extends Query
 {
+    protected $attributes = [
+        'name' => 'Companies',
+        'description' => 'List of all companies'
+    ];
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('company'));
@@ -18,11 +23,15 @@ class CompaniesQuery extends Query
 
     public function args(): array
     {
-        return [];
+        return [
+            'id' => ['name' => 'id', 'type' => Type::int()],
+        ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
+        if (isset($args['id'])) return Company::where('id', $args['id'])->get();
+
         return Company::all();
     }
 }

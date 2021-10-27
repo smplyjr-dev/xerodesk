@@ -11,6 +11,11 @@ use Rebing\GraphQL\Support\Query;
 
 class ClientsQuery extends Query
 {
+    protected $attributes = [
+        'name' => 'Clients',
+        'description' => 'List of all clients'
+    ];
+
     public function type(): Type
     {
         return Type::listOf(GraphQL::type('client'));

@@ -9,8 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class CompanyType extends GraphQLType
 {
     protected $attributes = [
-        'name'        => 'Company',
-        'description' => 'List of companies',
+        'name' => 'companies',
     ];
 
     public function fields(): array

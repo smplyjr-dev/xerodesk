@@ -9,8 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class ClientType extends GraphQLType
 {
     protected $attributes = [
-        'name'        => 'Client',
-        'description' => 'List of all clients',
+        'name' => 'clients',
     ];
 
     public function fields(): array
