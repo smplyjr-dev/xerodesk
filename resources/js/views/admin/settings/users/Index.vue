@@ -402,7 +402,7 @@ export default {
       }
     },
     async confirmDelete() {
-      let { data } = await axios.delete(`/users/${this.toDelete.id}`);
+      let { data } = await axios.delete(`/portal/user/${this.toDelete.id}`);
       let name = `${data.bio.last_name}, ${data.bio.first_name}`;
 
       // close modal
@@ -464,7 +464,7 @@ export default {
       this.userError = [];
 
       try {
-        let { data } = await axios.post(`/users`, this.user);
+        let { data } = await axios.post(`/portal/user`, this.user);
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
