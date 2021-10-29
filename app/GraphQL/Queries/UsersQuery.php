@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries\User;
+namespace App\GraphQL\Queries;
 
 use App\Models\User\User;
 use Closure;
@@ -12,7 +12,7 @@ use Rebing\GraphQL\Support\Query;
 class UsersQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Users',
+        'name' => 'users',
         'description' => 'List of all users'
     ];
 
@@ -24,9 +24,9 @@ class UsersQuery extends Query
     public function args(): array
     {
         return [
-            'id'       => ['name' => 'id', 'type' => Type::int()],
-            'username' => ['name' => 'username', 'type' => Type::string()],
-            'email'    => ['name' => 'email', 'type' => Type::string()],
+            'id'       => ['type' => Type::int()],
+            'username' => ['type' => Type::string()],
+            'email'    => ['type' => Type::string()],
         ];
     }
 

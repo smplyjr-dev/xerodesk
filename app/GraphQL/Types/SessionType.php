@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Types\Client;
+namespace App\GraphQL\Types;
 
 use GraphQL;
 use GraphQL\Type\Definition\Type;
@@ -9,7 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class SessionType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'sessions',
+        'name' => 'session',
     ];
 
     public function fields(): array

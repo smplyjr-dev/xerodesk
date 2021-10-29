@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
-use App\GraphQL\Queries\Client\ClientsQuery;
-use App\GraphQL\Queries\Client\SessionsQuery;
+use App\GraphQL\Mutations\Company\CompanyCreateMutation;
+use App\GraphQL\Mutations\Company\CompanyDeleteMutation;
+use App\GraphQL\Mutations\Company\CompanyUpdateMutation;
+use App\GraphQL\Queries\ClientsQuery;
+use App\GraphQL\Queries\SessionsQuery;
 use App\GraphQL\Queries\CompaniesQuery;
-use App\GraphQL\Queries\User\BiosQuery;
-use App\GraphQL\Queries\User\UsersQuery;
-use App\GraphQL\Types\Client\ClientType;
-use App\GraphQL\Types\Client\SessionType;
+use App\GraphQL\Queries\BiosQuery;
+use App\GraphQL\Queries\UsersQuery;
+use App\GraphQL\Types\ClientType;
+use App\GraphQL\Types\SessionType;
 use App\GraphQL\Types\CompanyType;
-use App\GraphQL\Types\User\BioType;
-use App\GraphQL\Types\User\UserType;
+use App\GraphQL\Types\BioType;
+use App\GraphQL\Types\UserType;
 
 return [
 
@@ -107,13 +110,17 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'bios'      => BiosQuery::class,
-                'clients'   => ClientsQuery::class,
-                'companies' => CompaniesQuery::class,
-                'sessions'  => SessionsQuery::class,
-                'users'     => UsersQuery::class,
+                BiosQuery::class,
+                ClientsQuery::class,
+                CompaniesQuery::class,
+                SessionsQuery::class,
+                UsersQuery::class,
             ],
-            'mutation' => [],
+            'mutation' => [
+                CompanyCreateMutation::class,
+                CompanyDeleteMutation::class,
+                CompanyUpdateMutation::class,
+            ],
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
@@ -133,11 +140,11 @@ return [
         // 'relation_example'  => ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
 
-        'bio'     => BioType::class,
-        'client'  => ClientType::class,
-        'company' => CompanyType::class,
-        'session' => SessionType::class,
-        'user'    => UserType::class,
+        BioType::class,
+        ClientType::class,
+        CompanyType::class,
+        SessionType::class,
+        UserType::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

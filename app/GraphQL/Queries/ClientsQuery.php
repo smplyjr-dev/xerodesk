@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries\Client;
+namespace App\GraphQL\Queries;
 
 use App\Models\Client\Client;
 use Closure;
@@ -12,7 +12,7 @@ use Rebing\GraphQL\Support\Query;
 class ClientsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Clients',
+        'name' => 'clients',
         'description' => 'List of all clients'
     ];
 

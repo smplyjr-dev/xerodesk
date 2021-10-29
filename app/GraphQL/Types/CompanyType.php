@@ -9,17 +9,19 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class CompanyType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'companies',
+        'name' => 'company',
     ];
 
     public function fields(): array
     {
         return [
-            'id'      => ['type' => Type::nonNull(Type::int())],
-            'name'    => ['type' => Type::nonNull(Type::string())],
-            'address' => ['type' => Type::nonNull(Type::string())],
-            'url'     => ['type' => Type::nonNull(Type::string())],
-            'abbr'    => ['type' => Type::nonNull(Type::string())],
+            'id'         => ['type' => Type::nonNull(Type::int())],
+            'name'       => ['type' => Type::nonNull(Type::string())],
+            'address'    => ['type' => Type::nonNull(Type::string())],
+            'url'        => ['type' => Type::nonNull(Type::string())],
+            'abbr'       => ['type' => Type::nonNull(Type::string())],
+            'created_at' => ['type' => Type::nonNull(Type::string())],
+            'updated_at' => ['type' => Type::nonNull(Type::string())],
 
             // start of relationship query
             'users' => [

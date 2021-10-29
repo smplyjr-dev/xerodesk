@@ -12,7 +12,7 @@ use Rebing\GraphQL\Support\Query;
 class CompaniesQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Companies',
+        'name' => 'companies',
         'description' => 'List of all companies'
     ];
 

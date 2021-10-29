@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Types\User;
+namespace App\GraphQL\Types;
 
 use GraphQL;
 use GraphQL\Type\Definition\Type;
@@ -9,7 +9,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class BioType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'bios',
+        'name' => 'bio',
     ];
 
     public function fields(): array
@@ -30,7 +30,7 @@ class BioType extends GraphQLType
             // start of relationship
             'user' => [
                 'type' => Type::listOf(GraphQL::type('user')),
-                'description' => 'The user where the bio belongsTo',
+                'description' => 'The user where the bio belongs to',
             ]
         ];
     }

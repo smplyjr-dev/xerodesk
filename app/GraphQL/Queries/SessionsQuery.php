@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries\Client;
+namespace App\GraphQL\Queries;
 
 use App\Models\Client\Session;
 use Closure;
@@ -12,7 +12,7 @@ use Rebing\GraphQL\Support\Query;
 class SessionsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Sessions',
+        'name' => 'sessions',
         'description' => 'List of all sessions'
     ];
 

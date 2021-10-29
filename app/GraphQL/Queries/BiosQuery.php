@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries\User;
+namespace App\GraphQL\Queries;
 
 use App\Models\User\UserBio;
 use Closure;
@@ -12,7 +12,7 @@ use Rebing\GraphQL\Support\Query;
 class BiosQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Bios',
+        'name' => 'bios',
         'description' => 'List of all bios'
     ];
 
@@ -24,7 +24,7 @@ class BiosQuery extends Query
     public function args(): array
     {
         return [
-            'id' => ['name' => 'id', 'type' => Type::int()],
+            'id' => ['type' => Type::int()],
         ];
     }
 
