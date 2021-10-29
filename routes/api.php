@@ -25,3 +25,7 @@ Route::namespace('Auth')->group(function () {
     Route::post('email/verify/{user}', 'VerificationController@verify')->name('verification.verify');
     Route::post('email/resend',        'VerificationController@resend');
 });
+
+Route::post('/rest', function () {
+    return App\Models\User\User::with(['company'])->get();
+});
