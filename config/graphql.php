@@ -9,11 +9,13 @@ use App\GraphQL\Queries\ClientsQuery;
 use App\GraphQL\Queries\SessionsQuery;
 use App\GraphQL\Queries\CompaniesQuery;
 use App\GraphQL\Queries\BiosQuery;
+use App\GraphQL\Queries\MessagesQuery;
 use App\GraphQL\Queries\UsersQuery;
 use App\GraphQL\Types\ClientType;
 use App\GraphQL\Types\SessionType;
 use App\GraphQL\Types\CompanyType;
 use App\GraphQL\Types\BioType;
+use App\GraphQL\Types\MessageType;
 use App\GraphQL\Types\UserType;
 
 return [
@@ -113,6 +115,7 @@ return [
                 BiosQuery::class,
                 ClientsQuery::class,
                 CompaniesQuery::class,
+                MessagesQuery::class,
                 SessionsQuery::class,
                 UsersQuery::class,
             ],
@@ -143,6 +146,7 @@ return [
         BioType::class,
         ClientType::class,
         CompanyType::class,
+        MessageType::class,
         SessionType::class,
         UserType::class,
     ],
@@ -221,7 +225,9 @@ return [
     /*
      * Any headers that will be added to the response returned by the default controller
      */
-    'headers' => [],
+    'headers' => [
+        'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMVwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTQ3Mjc1OSwiZXhwIjoxNjM1NDkwNzU5LCJuYmYiOjE2MzU0NzI3NTksImp0aSI6IkxyeFBIdGVPTk1WbXU1S2YiLCJzdWIiOjEsInBydiI6ImI5MTI3OTk3OGYxMWFhN2JjNTY3MDQ4N2ZmZjAxZTIyODI1M2ZlNDgifQ.LVaSd6ZULDLc6U5CTm7-eJK_FH3oQPY7_KJbiIUdREw'
+    ],
 
     /*
      * Any JSON encoding options when returning a response from the default controller
