@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-1 card-ticket">
+  <div class="card card-1 card-ticket mx-3">
     <TicketHeader :data="{ isComponentReady, session, client, company }" @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">
@@ -72,5 +72,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@Styles/ticket.scss";
+@import "@Styles/pages/ticket.scss";
 </style>
