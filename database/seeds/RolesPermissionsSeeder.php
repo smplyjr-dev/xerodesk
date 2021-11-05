@@ -18,7 +18,7 @@ class RolesPermissionsSeeder extends Seeder
 
         $permissions = json_decode(file_get_contents(public_path('/docs/permissions.json')), true);
 
-        $super = Role::create(['name' => 'Super']);
+        $super = Role::create(['name' => 'Super Admin']);
         $admin = Role::create(['name' => 'Admin']);
         $agent = Role::create(['name' => 'Agent']);
 

@@ -2,7 +2,7 @@
   <div class="cd" :class="{ disabled: disabled }" v-on-clickaway="away">
     <div class="d-flex align-items-center" @click="toggle">
       <slot name="value">--</slot>
-      <InlineSvg name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" :style="`transform: rotate(${sharedState.active ? 180 : 0}deg)`" />
+      <InlineSvg v-show="carret" name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" :style="`transform: rotate(${sharedState.active ? 180 : 0}deg)`" />
     </div>
 
     <slot />
@@ -14,10 +14,20 @@ import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   props: {
+    carret: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     disabled: {
       type: Boolean,
-      default: false,
-      required: false
+      required: false,
+      default: false
+    },
+    position: {
+      type: String,
+      required: false,
+      default: "left"
     }
   },
   name: "AppDropdown",
@@ -30,7 +40,8 @@ export default {
   data() {
     return {
       sharedState: {
-        active: false
+        active: false,
+        position: null
       }
     };
   },
@@ -46,6 +57,9 @@ export default {
         this.$emit("away");
       }
     }
+  },
+  created() {
+    this.sharedState.position = this.position;
   }
 };
 </script>

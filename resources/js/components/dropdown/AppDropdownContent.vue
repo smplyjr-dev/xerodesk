@@ -1,6 +1,6 @@
 <template>
   <transition name="cdc">
-    <div v-if="active" class="cdc">
+    <div v-if="active" class="cdc" :class="position">
       <div class="filter" v-show="showFilter"><slot name="filter" /></div>
       <div class="content" v-show="showContent"><slot name="content" /></div>
     </div>
@@ -17,11 +17,19 @@ export default {
   }),
   computed: {
     active: {
-      get: function() {
+      get: function () {
         return this.sharedState.active;
       },
-      set: function(newVal) {
+      set: function (newVal) {
         this.sharedState.active = newVal;
+      }
+    },
+    position: {
+      get: function () {
+        return this.sharedState.position;
+      },
+      set: function (newVal) {
+        this.sharedState.position = newVal;
       }
     }
   },

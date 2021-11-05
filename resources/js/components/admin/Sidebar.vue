@@ -1,31 +1,40 @@
 <template>
-  <aside class="h-100">
-    <ul class="nav flex-column">
-      <li class="nav-item" v-for="(nav, navKey) in navs" :key="navKey">
-        <template v-if="nav.child">
-          <router-link class="nav-link" :to="nav.to" data-toggle="collapse" :data-target="`#${nav.name.toLowerCase()}`" :aria-expanded="$route.fullPath.includes(nav.to)" :event="''">
-            <InlineSvg :name="nav.icon" size="1.5rem" />
-            <span>{{ nav.name }}</span>
-            <InlineSvg class="dropdown-icon" name="svg/chevron/down.svg" size=".75rem" />
-          </router-link>
+  <aside>
+    <div class="sidebar-logo">
+      <div class="sidebar-logo--big">XeroDesk</div>
+      <div class="sidebar-logo--small">XD</div>
 
-          <div :id="`${nav.name.toLowerCase()}`" class="collapse m-0 p-0" :class="{ show: $route.fullPath.includes(nav.to) }">
-            <ul class="nav-child">
-              <li class="nav-child-item" v-for="(child, childKey) in nav.child" :key="childKey">
-                <router-link class="nav-child-item-link" :to="child.to" @click.native="$emit('toggle-sidebar', false)">{{ child.name }}</router-link>
-              </li>
-            </ul>
-          </div>
-        </template>
+      <div class="toggler" @click="$emit('toggle-sidebar', false)">
+        <InlineSvg name="template/mdi-close.svg" color="#4c5771" size="1.5rem" />
+      </div>
+    </div>
+    <div class="sidebar-navs">
+      <ul class="nav flex-column">
+        <li v-for="(nav, navKey) in ready" :key="navKey">
+          <template v-if="nav.child">
+            <router-link :to="nav.to" data-toggle="collapse" :data-target="`#${nav.name.toLowerCase()}`" :aria-expanded="$route.fullPath.includes(nav.to)" :event="''">
+              <div class="nav-icon"><InlineSvg :name="nav.icon" size="1.5rem" /></div>
+              <div class="nav-text">{{ nav.name }}</div>
+            </router-link>
 
-        <template v-else>
-          <router-link class="nav-link" :to="nav.to" @click.native="$emit('toggle-sidebar', false)">
-            <InlineSvg :name="nav.icon" size="1.5rem" />
-            <span>{{ nav.name }}</span>
-          </router-link>
-        </template>
-      </li>
-    </ul>
+            <div :id="`${nav.name.toLowerCase()}`" class="collapse m-0 p-0" :class="{ show: $route.fullPath.includes(nav.to) }">
+              <ul class="nav-child">
+                <li class="nav-child-item" v-for="(child, childKey) in nav.child" :key="childKey">
+                  <router-link class="nav-child-item-link" :to="child.to" @click.native="$emit('toggle-sidebar', false)">{{ child.name }}</router-link>
+                </li>
+              </ul>
+            </div>
+          </template>
+
+          <template v-else>
+            <router-link @click.native="$emit('toggle-sidebar', false)" :to="nav.to">
+              <div class="nav-icon"><InlineSvg :name="nav.icon" size="1.5rem" /></div>
+              <div class="nav-text">{{ nav.name }}</div>
+            </router-link>
+          </template>
+        </li>
+      </ul>
+    </div>
   </aside>
 </template>
 
@@ -33,67 +42,100 @@
 export default {
   props: ["isOpen"],
   name: "Sidebar",
-  data: () => ({
-    navs: [
-      // {
-      //   name: "Dashboard",
-      //   to: "/dashboard",
-      //   icon: "template/mdi-dashboard.svg"
-      // },
-      {
-        name: "Ticket",
-        to: "/tickets",
-        icon: "template/mdi-ticket-confirmation.svg"
-      },
-      {
-        name: "Client",
-        to: "/clients",
-        icon: "template/mdi-account-group.svg"
-      },
-      // {
-      //   name: "Report",
-      //   to: "/reports",
-      //   icon: "template/mdi-file-chart.svg"
-      // },
-      {
-        name: "Settings",
-        to: "/settings",
-        icon: "template/mdi-cog.svg",
-        child: [
-          {
-            name: "SLA",
-            to: "/settings/slas"
-          },
-          {
-            name: "Company",
-            to: "/settings/company"
-          },
-          {
-            name: "Groups",
-            to: "/settings/groups"
-          },
-          {
-            name: "Roles",
-            to: "/settings/roles"
-          },
-          {
-            name: "Users",
-            to: "/settings/users"
-          }
-        ]
-      }
-      /* {
-        name: "Developers",
-        to: "/developers",
-        icon: "template/mdi-code.svg",
-        child: [
-          {
-            name: "Web Notification",
-            to: "/developers/webnotif"
-          }
-        ]
-      } */
-    ]
-  })
+  data() {
+    let isDevelopment = process.env.NODE_ENV == "development" ? 1 : 0;
+
+    return {
+      navs: [
+        {
+          name: "Dashboard",
+          to: "/dashboard",
+          icon: "template/mdi-dashboard.svg",
+          ready: isDevelopment
+        },
+        {
+          name: "Ticket",
+          to: "/tickets",
+          icon: "template/mdi-ticket-confirmation.svg",
+          ready: true
+        },
+        {
+          name: "Live Chat",
+          to: "/chats",
+          icon: "template/mdi-forum.svg",
+          ready: isDevelopment
+        },
+        {
+          name: "Client",
+          to: "/clients",
+          icon: "template/mdi-account-group.svg",
+          ready: true
+        },
+        {
+          name: "Report",
+          to: "/reports",
+          icon: "template/mdi-file-chart.svg",
+          ready: isDevelopment
+        },
+        {
+          name: "Settings",
+          to: "/settings",
+          icon: "template/mdi-cog.svg",
+          ready: true,
+          child: [
+            {
+              name: "SLA",
+              to: "/settings/slas"
+            },
+            {
+              name: "Company",
+              to: "/settings/company"
+            },
+            {
+              name: "Groups",
+              to: "/settings/groups"
+            },
+            {
+              name: "Roles",
+              to: "/settings/roles"
+            },
+            {
+              name: "Users",
+              to: "/settings/users"
+            }
+          ]
+        },
+        {
+          name: "Developers",
+          to: "/developers",
+          icon: "template/mdi-code.svg",
+          ready: isDevelopment,
+          child: [
+            {
+              name: "Web Notification",
+              to: "/developers/webnotif"
+            }
+          ]
+        }
+      ]
+    };
+  },
+  computed: {
+    ready() {
+      return this.navs.filter((n) => n.ready);
+    }
+  },
+  methods: {
+    async logout() {
+      // Clear all the notifications
+      // this.$store.commit("notifications/CLEAR_NOTIFICATIONS");
+
+      // Log out the user
+      await this.$store.dispatch("auth/logout");
+
+      // Redirect to auth using native JavaScript
+      window.location.href = "/";
+    }
+  }
 };
 </script>

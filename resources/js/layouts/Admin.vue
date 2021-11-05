@@ -1,19 +1,19 @@
 <template>
   <div class="layout layout-admin" :class="{ 'is-open': isOpen }">
-    <AdminHeader :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+    <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+
+    <div class="aside-backdrop" @click.self="isOpen = false"></div>
 
     <main>
-      <AdminSidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+      <section class="d-flex flex-column h-100 overflow-scroll">
+        <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
 
-      <section class="d-flex flex-column h-100">
         <transition name="fade" mode="out-in">
-          <RouterView @toggle-sidebar="isOpen = $event" />
+          <RouterView class="px-4 mt-4" @toggle-sidebar="isOpen = $event" />
         </transition>
 
-        <footer class="footer mt-auto pt-4 pb-3">
-          <p class="text-muted text-sm mb-0">
-            Copyright &copy; 2020 Xerodesk. All rights reserved.
-          </p>
+        <footer class="footer mt-auto pt-4 px-4">
+          <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
         </footer>
       </section>
     </main>
@@ -25,19 +25,24 @@
 <script>
 import { mapState } from "vuex";
 import Notification from "@Components/neutral/Notification.vue";
-import AdminHeader from "@Components/admin/Header.vue";
-import AdminSidebar from "@Components/admin/Sidebar.vue";
+import Navbar from "@Components/admin/Navbar.vue";
+import Sidebar from "@Components/admin/Sidebar.vue";
 
 export default {
   name: "Admin",
-  components: { Notification, AdminHeader, AdminSidebar },
+  components: { Notification, Navbar, Sidebar },
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
     titleTemplate: `XMCIT - %s`
   }),
-  data: () => ({
-    isOpen: false
-  }),
+  data() {
+    let now = new Date();
+
+    return {
+      isOpen: false,
+      currentYear: now.getFullYear()
+    };
+  },
   computed: {
     ...mapState("auth", ["user"]),
     ...mapState("sessions", ["session"])
@@ -54,7 +59,7 @@ export default {
       const CH_SESSION = PUSHER.subscribe("session");
       const CH_MESSAGE = PUSHER.subscribe("message");
 
-      CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async data => {
+      CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async (data) => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
           icon: "fa-check",
@@ -66,7 +71,7 @@ export default {
         this.$store.state.sessions.session.user_id = this.new_user_id;
       });
 
-      CH_SESSION.bind(`session.transferred.to.${this.user.id}`, async data => {
+      CH_SESSION.bind(`session.transferred.to.${this.user.id}`, async (data) => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-info",
           icon: "fa-exclamation-circle",
@@ -80,7 +85,7 @@ export default {
         }
       });
 
-      CH_MESSAGE.bind(`message.from.client`, async data => {
+      CH_MESSAGE.bind(`message.from.client`, async (data) => {
         let { message, session } = data;
 
         if ("session" in this.session && this.session.session == session) {
@@ -91,7 +96,7 @@ export default {
         }
       });
 
-      CH_MESSAGE.bind(`attachment.created`, async data => {
+      CH_MESSAGE.bind(`attachment.created`, async (data) => {
         let { attachment, client, message, session } = data;
 
         this.$store.commit("messages/INSERT_ATTACHMENT", {

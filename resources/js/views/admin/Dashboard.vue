@@ -4,8 +4,6 @@
       <h4 class="mb-2">Dashboard</h4>
     </div>
 
-    <!-- <p>This module is still in progress. Please, come back later.</p> -->
-
     <div class="row">
       <TicketWidget title="Open Tickets" :loading="loading.sessions" :length="open.length" />
       <TicketWidget title="Pending Tickets" :loading="loading.sessions" :length="pending.length" />

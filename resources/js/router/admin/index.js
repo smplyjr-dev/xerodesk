@@ -12,7 +12,10 @@ export default [
   { path: "/tickets",          component: page("ticket/Index.vue") },
   { path: "/tickets/:session", component: page("ticket/Show.vue") },
 
-  // Ticket Routes
+  // Live Chat Routes
+  { path: "/chats", component: page("chat/Index.vue") },
+
+  // Client Routes
   { path: "/clients",     component: page("client/Index.vue") },
   { path: "/clients/:id", component: page("client/Show.vue") },
 
@@ -26,5 +29,5 @@ export default [
   { path: "/settings/slas",           component: page("settings/slas/Index.vue") },
 
   // Developer Routes (for testing purposes only)
-  // { path: "/developers/webnotif", component: page("developer/WebNotif.vue") }
+  { path: "/developers/webnotif", component: page("developer/WebNotif.vue") },
 ];
