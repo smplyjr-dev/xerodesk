@@ -12,7 +12,7 @@
           <RouterView class="px-4 mt-4" @toggle-sidebar="isOpen = $event" />
         </transition>
 
-        <footer class="footer mt-auto pt-4 px-4">
+        <footer class="footer mt-auto py-4 px-4">
           <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
         </footer>
       </section>

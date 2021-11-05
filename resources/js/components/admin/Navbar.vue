@@ -1,8 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <div class="mr-auto">
-      <div class="toggler" @click="$emit('toggle-sidebar', !isOpen)">
-        <InlineSvg name="template/mdi-sort-variant.svg" color="#4c5771" size="1.5rem" />
+      <div class="burger" @click="$emit('toggle-sidebar', !isOpen)">
+        <div class="burger--item"></div>
+        <div class="burger--item"></div>
+        <div class="burger--item"></div>
       </div>
     </div>
 
