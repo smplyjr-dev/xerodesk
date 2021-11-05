@@ -52,6 +52,7 @@
               margin-left: 10px;
             }
 
+            &.router-link-active,
             &.router-link-exact-active {
               color: $gray-300;
             }
