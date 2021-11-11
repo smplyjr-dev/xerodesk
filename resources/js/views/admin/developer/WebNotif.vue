@@ -25,7 +25,7 @@
 <script>
 export default {
   layout: "Admin",
-  name: "Web Notification",
+  name: "WebNotification",
   metaInfo: () => ({ title: "Web Notification" }),
   middleware: ["auth"],
   components: {},

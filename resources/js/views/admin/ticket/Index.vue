@@ -60,8 +60,6 @@ export default {
     }
   },
   async created() {
-    if (process.env.NODE_ENV == "development") this.$emit("toggle-sidebar", true);
-
     await this.$store.dispatch("auth/fetchUsers");
     await this.$store.dispatch("groups/fetchGroups");
     await this.$store.dispatch("slas/fetchSlas");

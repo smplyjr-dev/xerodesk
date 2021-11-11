@@ -1,14 +1,14 @@
 // Dropdown Components
-import AppDropdown from "@Components/dropdown/AppDropdown.vue";
-import AppDropdownContent from "@Components/dropdown/AppDropdownContent.vue";
-import AppDropdownItem from "@Components/dropdown/AppDropdownItem.vue";
+import AppDropdown from "./neutral/dropdown/AppDropdown.vue";
+import AppDropdownContent from "./neutral/dropdown/AppDropdownContent.vue";
+import AppDropdownItem from "./neutral/dropdown/AppDropdownItem.vue";
 
 [AppDropdown, AppDropdownContent, AppDropdownItem].forEach(Component => {
   Vue.component(Component.name, Component);
 });
 
 // Skeleton Components
-import Skeleton from "@Components/skeleton/Skeleton.vue";
+import Skeleton from "./neutral/Skeleton.vue";
 
 [Skeleton].forEach(Component => {
   Vue.component(Component.name, Component);

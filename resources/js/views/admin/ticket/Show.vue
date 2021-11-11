@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-1 card-ticket mx-3">
+  <div class="card card-1 card-ticket m-4">
     <TicketHeader :data="{ isComponentReady, session, client, company }" @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">
@@ -23,7 +23,7 @@ import { mapState } from "vuex";
 
 export default {
   components: { TicketHeader, TicketContents, TicketMetas },
-  layout: "Admin",
+  layout: "Ticket",
   name: "Ticket",
   metaInfo: () => ({ title: "Ticket" }),
   middleware: ["auth", "permission:view_ticket"],
@@ -53,8 +53,6 @@ export default {
     }
   },
   async created() {
-    if (process.env.NODE_ENV == "development") this.$emit("toggle-sidebar", true);
-
     this.isComponentReady = false;
 
     await this.fetchSession();

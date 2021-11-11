@@ -13,7 +13,7 @@
         <li class="nav-item">
           <app-dropdown :carret="false" position="right">
             <template v-slot:value>
-              <a href="javascript:void(0)" class="nav-link p-1">
+              <a href="javascript:void(0)" class="nav-link p-0">
                 <img class="rounded-circle object-cover" :src="profilePicture" @error="$onImgError($event, 1)" alt="Profile Picture" height="37px" width="37px" />
               </a>
             </template>
