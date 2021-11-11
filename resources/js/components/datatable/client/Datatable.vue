@@ -9,8 +9,8 @@
 
               <div class="sorting-icon" v-if="column.sortable">
                 <div v-if="sortKey === column.name">
-                  <i class="fa fa-sort-asc" aria-hidden="true" v-if="sortOrders[column.name] < 0"></i>
-                  <i class="fa fa-sort-desc" aria-hidden="true" v-if="sortOrders[column.name] > 0"></i>
+                  <i class="fa fa-sort-up" aria-hidden="true" v-if="sortOrders[column.name] < 0"></i>
+                  <i class="fa fa-sort-down" aria-hidden="true" v-if="sortOrders[column.name] > 0"></i>
                 </div>
                 <div v-else>
                   <i class="fa fa-sort" aria-hidden="true"></i>

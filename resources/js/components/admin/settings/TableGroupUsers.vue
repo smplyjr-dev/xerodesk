@@ -47,7 +47,7 @@
                       <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
                     </div>
 
-                    <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
+                    <i class="fa fa-fw fa-circle-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
                   </div>
                 </div>
               </div>
@@ -61,7 +61,7 @@
                   <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
                 </div>
 
-                <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
+                <i class="fa fa-fw fa-circle-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
               </div>
             </td>
           </tr>
@@ -81,7 +81,7 @@
                       <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
                     </div>
 
-                    <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
+                    <i class="fa fa-fw fa-circle-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
                   </div>
                 </div>
               </div>
@@ -95,7 +95,7 @@
                   <label class="custom-control-label" :for="`switch${p.id}`">&nbsp;</label>
                 </div>
 
-                <i class="fa fa-fw fa-circle-o-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
+                <i class="fa fa-fw fa-circle-notch fa-spin ml-2" v-show="isProcessing.includes(p.id)"></i>
               </div>
             </td>
           </tr>

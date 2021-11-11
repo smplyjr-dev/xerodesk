@@ -18,7 +18,7 @@
             <transition name="fade">
               <!-- Update Record Notice -->
               <div class="updater" v-if="isUpdated" @click="getDatatable(), (isUpdated = !isUpdated)">
-                <div class="updater-content shadow"><i class="fa fa-refresh mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
+                <div class="updater-content shadow"><i class="fa fa-sync-alt mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
               </div>
             </transition>
 

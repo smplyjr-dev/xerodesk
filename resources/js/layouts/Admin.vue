@@ -59,7 +59,7 @@ export default {
       const CH_SESSION = PUSHER.subscribe("session");
       const CH_MESSAGE = PUSHER.subscribe("message");
 
-      CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async (data) => {
+      CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
           icon: "fa-check",
@@ -71,7 +71,7 @@ export default {
         this.$store.state.sessions.session.user_id = this.new_user_id;
       });
 
-      CH_SESSION.bind(`session.transferred.to.${this.user.id}`, async (data) => {
+      CH_SESSION.bind(`session.transferred.to.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-info",
           icon: "fa-exclamation-circle",
@@ -85,7 +85,7 @@ export default {
         }
       });
 
-      CH_MESSAGE.bind(`message.from.client`, async (data) => {
+      CH_MESSAGE.bind(`message.from.client`, async data => {
         let { message, session } = data;
 
         if ("session" in this.session && this.session.session == session) {
@@ -96,7 +96,7 @@ export default {
         }
       });
 
-      CH_MESSAGE.bind(`attachment.created`, async (data) => {
+      CH_MESSAGE.bind(`attachment.created`, async data => {
         let { attachment, client, message, session } = data;
 
         this.$store.commit("messages/INSERT_ATTACHMENT", {

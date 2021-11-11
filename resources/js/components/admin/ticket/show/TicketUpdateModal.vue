@@ -61,7 +61,7 @@
           <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating">
             <span v-if="isUpdating">
               Please wait...
-              <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
+              <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i>
             </span>
 
             <span v-else>Update</span>

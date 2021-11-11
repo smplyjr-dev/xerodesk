@@ -4,7 +4,7 @@
     <template v-if="$isNull(session.user_id)">
       <div class="p-3">
         <button class="btn btn-brand-2 btn-block text-white" @click="lockSession" :disabled="isLocking">
-          <span v-if="isLocking">Please wait... <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i></span>
+          <span v-if="isLocking">Please wait... <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i></span>
           <span v-else>Accept &amp; Lock Client</span>
         </button>
       </div>
