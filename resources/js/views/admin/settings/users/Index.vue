@@ -2,160 +2,156 @@
   <div class="container-fluid">
     <SettingMeta />
 
-    <div class="card card-1">
-      <div class="card-body">
-        <div class="page-title">
-          <div>
-            <h5 class="mb-2">Users</h5>
-            <p class="text-secondary">Below are the list of your users. You can either create a user, update an existing one or resend a verification link.</p>
-          </div>
+    <div class="page-title">
+      <div>
+        <h5 class="mb-2">Users</h5>
+        <p class="text-secondary">Below are the list of your users. You can either create a user, update an existing one or resend a verification link.</p>
+      </div>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user">Create User</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user">Create User</button>
+    </div>
+
+    <div class="client-datatable">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="control d-flex align-items-center">
+          Show
+          <div class="select mx-2">
+            <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+          entries
         </div>
 
-        <div class="client-datatable">
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="control d-flex align-items-center">
-              Show
-              <div class="select mx-2">
-                <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
-                  <option>10</option>
-                  <option>20</option>
-                  <option>30</option>
-                  <option>50</option>
-                  <option>100</option>
-                </select>
-              </div>
-              entries
-            </div>
-
-            <div class="search">
-              <div class="d-flex align-items-center">
-                <label class="mb-0 mr-2" for="search">Search:</label>
-                <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-              </div>
-            </div>
+        <div class="search">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 mr-2" for="search">Search:</label>
+            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
           </div>
+        </div>
+      </div>
 
-          <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-            <tbody class="text-sm">
-              <tr class="text-center" v-if="isLoading">
-                <td colspan="6">
-                  <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-                </td>
-              </tr>
+      <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+        <tbody class="text-sm">
+          <tr class="text-center" v-if="isLoading">
+            <td colspan="6">
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            </td>
+          </tr>
 
-              <tr class="text-sm" v-else v-for="(p, i) in paginated" :key="p.id">
-                <td>
-                  <div class="my-2 text-center">
-                    <router-link :to="`/settings/users/${p.id}/edit`" style="min-width: 150px;">
-                      <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="75px" width="75px" />
-                      <div class="d-flex flex-column mt-2">
-                        <span>{{ `${p.name}` }}</span>
-                        <span class="text-muted text-xs">{{ p.meta.email }}</span>
-                      </div>
-                    </router-link>
+          <tr class="text-sm" v-else v-for="(p, i) in paginated" :key="p.id">
+            <td>
+              <div class="my-2 text-center">
+                <router-link :to="`/settings/users/${p.id}/edit`" style="min-width: 150px;">
+                  <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="75px" width="75px" />
+                  <div class="d-flex flex-column mt-2">
+                    <span>{{ `${p.name}` }}</span>
+                    <span class="text-muted text-xs">{{ p.meta.email }}</span>
                   </div>
-                  <div class="d-flex align-items-center">
-                    <span class="w-100 text-center">
-                      <div class="social-media justify-content-center">
-                        <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
-                          <i class="fa fa-fw fa-facebook" v-if="p.meta.bio.facebook"></i>
-                        </a>
-                        <a :href="p.meta.bio.twitter" target="_blank" v-if="p.meta.bio.twitter">
-                          <i class="fa fa-fw fa-twitter" v-if="p.meta.bio.twitter"></i>
-                        </a>
-                        <a :href="p.meta.bio.linkedin" target="_blank" v-if="p.meta.bio.linkedin">
-                          <i class="fa fa-fw fa-linkedin" v-if="p.meta.bio.linkedin"></i>
-                        </a>
-                      </div>
-
-                      <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
-                        No Social Media
-                      </template>
-                    </span>
-                  </div>
-                  <div class="text-center">
-                    <p class="font-weight-bold my-2">
-                      {{ p.role }} /
-                      <span class="badge badge-pill badge-primary" v-if="p.status == 'Active'">{{ p.status }}</span>
-                      <span class="badge badge-pill badge-secondary" v-if="p.status == 'Inactive'">{{ p.status }}</span>
-                    </p>
-                  </div>
-                  <div class="text-center">
-                    <div class="flex-center text-success font-weight-bold my-2" v-if="!$isNull(p.email_verified_at)">
-                      <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
-                      Account Verified
-                    </div>
-                    <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
-                      <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
-                      <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
-                    </button>
-
-                    <!-- <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete-user" @click="toDelete = p">Delete</button> -->
-                    <router-link class="btn btn-secondary btn-sm my-1" :to="`/settings/users/${p.id}/edit`">Edit</router-link>
-                  </div>
-                </td>
-
-                <td>
-                  <router-link :to="`/settings/users/${p.id}/edit`" class="d-flex align-items-center">
-                    <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="50px" width="50px" />
-                    <div class="d-flex flex-column ml-2">
-                      <span>{{ `${p.name}` }}</span>
-                      <span class="text-muted text-xs">{{ p.meta.email }}</span>
-                    </div>
-                  </router-link>
-                </td>
-                <td>
-                  <div class="social-media">
+                </router-link>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="w-100 text-center">
+                  <div class="social-media justify-content-center">
                     <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
-                      <i class="fa fa-fw fa-facebook" v-if="p.meta.bio.facebook"></i>
+                      <i class="fab fa-facebook" v-if="p.meta.bio.facebook"></i>
                     </a>
                     <a :href="p.meta.bio.twitter" target="_blank" v-if="p.meta.bio.twitter">
-                      <i class="fa fa-fw fa-twitter" v-if="p.meta.bio.twitter"></i>
+                      <i class="fab fa-twitter" v-if="p.meta.bio.twitter"></i>
                     </a>
                     <a :href="p.meta.bio.linkedin" target="_blank" v-if="p.meta.bio.linkedin">
-                      <i class="fa fa-fw fa-linkedin" v-if="p.meta.bio.linkedin"></i>
+                      <i class="fab fa-linkedin-in" v-if="p.meta.bio.linkedin"></i>
                     </a>
                   </div>
 
                   <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
                     No Social Media
                   </template>
-                </td>
-                <td>{{ p.role }}</td>
-                <td>
-                  <span class="badge badge-pill badge-primary" v-if="p.status == 'Activated'">{{ p.status }}</span>
-                  <span class="badge badge-pill badge-secondary" v-if="p.status == 'Deactivated'">{{ p.status }}</span>
-                </td>
-                <td>
-                  <div class="d-flex align-items-center text-success font-weight-bold" v-if="!$isNull(p.email_verified_at)">
-                    <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
-                    Account Verified
-                  </div>
+                </span>
+              </div>
+              <div class="text-center">
+                <p class="font-weight-bold my-2">
+                  {{ p.role }} /
+                  <span class="badge badge-pill badge-primary" v-if="p.status == 'Active'">{{ p.status }}</span>
+                  <span class="badge badge-pill badge-secondary" v-if="p.status == 'Inactive'">{{ p.status }}</span>
+                </p>
+              </div>
+              <div class="text-center">
+                <div class="flex-center text-success font-weight-bold my-2" v-if="!$isNull(p.email_verified_at)">
+                  <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
+                  Account Verified
+                </div>
+                <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
+                  <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
+                  <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
+                </button>
 
-                  <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
-                    <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
-                    <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
-                  </button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete-user" @click="toDelete = p">Delete</button>
-                  <router-link class="btn btn-secondary btn-sm my-1" :to="`/settings/users/${p.id}/edit`">Edit</router-link>
-                </td>
-              </tr>
+                <router-link class="btn btn-secondary btn-sm my-1" :to="`/settings/users/${p.id}/edit`">Edit</router-link>
+                <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete-user" @click="toDelete = p">Delete</button>
+              </div>
+            </td>
 
-              <tr v-if="!isLoading && !paginated.length">
-                <td colspan="6">
-                  <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                </td>
-              </tr>
-            </tbody>
-          </datatable>
+            <td>
+              <router-link :to="`/settings/users/${p.id}/edit`" class="d-flex align-items-center">
+                <img loading="lazy" class="object-cover rounded-circle" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="32px" width="32px" />
+                <div class="d-flex flex-column ml-2">
+                  <span>{{ `${p.name}` }}</span>
+                  <span class="text-muted text-xs">{{ p.meta.email }}</span>
+                </div>
+              </router-link>
+            </td>
+            <td>
+              <div class="social-media">
+                <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
+                  <i class="fab fa-facebook" v-if="p.meta.bio.facebook"></i>
+                </a>
+                <a :href="p.meta.bio.twitter" target="_blank" v-if="p.meta.bio.twitter">
+                  <i class="fab fa-twitter" v-if="p.meta.bio.twitter"></i>
+                </a>
+                <a :href="p.meta.bio.linkedin" target="_blank" v-if="p.meta.bio.linkedin">
+                  <i class="fab fa-linkedin-in" v-if="p.meta.bio.linkedin"></i>
+                </a>
+              </div>
 
-          <pagination :pagination="pagination" :client="true" :filtered="filteredUsers" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
-        </div>
-      </div>
+              <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
+                No Social Media
+              </template>
+            </td>
+            <td>{{ p.role }}</td>
+            <td>
+              <span class="badge badge-pill badge-primary" v-if="p.status == 'Activated'">{{ p.status }}</span>
+              <span class="badge badge-pill badge-secondary" v-if="p.status == 'Deactivated'">{{ p.status }}</span>
+            </td>
+            <td>
+              <div class="d-flex align-items-center text-success font-weight-bold" v-if="!$isNull(p.email_verified_at)">
+                <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
+                Account Verified
+              </div>
+
+              <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
+                <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
+                <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
+              </button>
+            </td>
+            <td>
+              <router-link class="btn btn-secondary btn-sm my-1" :to="`/settings/users/${p.id}/edit`">Edit</router-link>
+              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete-user" @click="toDelete = p">Delete</button>
+            </td>
+          </tr>
+
+          <tr v-if="!isLoading && !paginated.length">
+            <td colspan="6">
+              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+            </td>
+          </tr>
+        </tbody>
+      </datatable>
+
+      <pagination :pagination="pagination" :client="true" :filtered="filteredUsers" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
     <div id="add-user" class="modal fade">
@@ -516,7 +512,7 @@ export default {
   a {
     text-decoration: none;
 
-    .fa {
+    .fab {
       padding: 1rem;
       border: 3px solid #fff;
       border-radius: 100%;
@@ -533,7 +529,7 @@ export default {
       &.fa-twitter {
         background: #1da1f2;
       }
-      &.fa-linkedin {
+      &.fa-linkedin-in {
         background: #0073b0;
       }
     }

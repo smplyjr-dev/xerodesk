@@ -1,19 +1,19 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-border table-hover m-0">
+    <table class="table table-border m-0">
       <thead>
         <tr>
-          <th class="text-secondary" v-for="column in filteredColumns" :key="column.name" @click="handleSorting(column)" :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" :style="handleStyle(column)">
-            <div class="d-flex align-items-center justify-content-between">
+          <th v-for="column in filteredColumns" :key="column.name" @click="handleSorting(column)" :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" :style="handleStyle(column)">
+            <div class="d-flex align-items-center">
               {{ column.label }}
 
               <div class="sorting-icon" v-if="column.sortable">
-                <div v-if="sortKey === column.name">
-                  <i class="fa fa-sort-up" aria-hidden="true" v-if="sortOrders[column.name] < 0"></i>
-                  <i class="fa fa-sort-down" aria-hidden="true" v-if="sortOrders[column.name] > 0"></i>
+                <div v-show="sortKey === column.name">
+                  <InlineSvg name="template/mdi-menu-up.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] < 0" />
+                  <InlineSvg name="template/mdi-menu-down.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] > 0" />
                 </div>
-                <div v-else>
-                  <i class="fa fa-sort" aria-hidden="true"></i>
+                <div v-show="sortKey !== column.name">
+                  <InlineSvg name="template/mdi-menu-swap.svg" color="#464646" size="1.25rem" />
                 </div>
               </div>
             </div>

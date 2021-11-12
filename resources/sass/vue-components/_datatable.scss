@@ -2,105 +2,109 @@
 .client-datatable,
 .server-datatable {
   .table-responsive {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: $box-shadow;
+    border-radius: 8px;
+    overflow: visible;
     margin: 1.5rem 0;
-    overflow-x: visible;
   }
 
-  thead {
-    background: #f1f1f1;
+  table {
+    thead {
+      background: #fafafa;
 
-    th {
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      font-weight: $font-weight-semi;
-      padding: 1rem 0.75rem;
-
-      &:not(:first-child) {
-        display: none;
-      }
-    }
-  }
-
-  tbody {
-    .dt-mobile {
-      position: relative;
-
-      .dt-mobile-item {
-        display: flex;
-        align-items: center;
-
-        .title {
-          font-weight: bold;
-          text-align: right;
-          width: 40%;
-        }
-
-        .content {
-          // overflow: hidden;
-          // text-overflow: ellipsis;
-          font-weight: normal;
-          text-align: left;
-          width: 60%;
-          white-space: normal;
-          margin-left: 5px;
-        }
-      }
-
-      // for sla only
-      .sla-mobile {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        bottom: 10px;
-        left: 10px;
-        width: 5px;
-        // height: calc(100% - 20px);
-      }
-    }
-
-    tr {
-      td {
-        padding: 0.5rem 0.75rem;
-
-        .dropdown-menu {
-          &.show {
-            z-index: 99999;
-          }
-        }
+      th {
+        color: #25282B;
+        font-weight: $font-weight-semi;
+        padding: 1.25rem;
+        border-top: none;
+        border-bottom: 1px solid #dbdde0;
 
         &:not(:first-child) {
           display: none;
         }
       }
+    }
+    tbody {
+      .dt-mobile {
+        position: relative;
 
-      &.hoverable {
-        &:hover {
-          background-color: #f1f1f1;
+        .dt-mobile-item {
+          display: flex;
+          align-items: center;
+
+          .title {
+            font-weight: bold;
+            text-align: right;
+            width: 40%;
+          }
+
+          .content {
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            font-weight: normal;
+            text-align: left;
+            width: 60%;
+            white-space: normal;
+            margin-left: 5px;
+          }
+        }
+
+        // for sla only
+        .sla-mobile {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          bottom: 10px;
+          left: 10px;
+          width: 5px;
+          // height: calc(100% - 20px);
         }
       }
-    }
 
-    // for table ticket only
-    .updater {
-      left: 0;
-      right: 0;
-      top: 0;
-      position: absolute;
-      text-align: center;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
+      tr {
+        td {
+          padding: 0.75rem 1.25rem;
+          background-color: $white;
 
-      .updater-content {
-        background: #4d83ff;
-        border-radius: 2rem;
-        color: #ffffff;
-        cursor: pointer;
-        padding: 0.25rem 0.75rem;
-        display: inline-block;
+          .dropdown-menu {
+            &.show {
+              z-index: 99999;
+            }
+          }
+
+          &:not(:first-child) {
+            display: none;
+          }
+        }
+
+        &.hoverable {
+          &:hover {
+            background-color: #f1f1f1;
+          }
+        }
+      }
+
+      // for table ticket only
+      .updater {
+        left: 0;
+        right: 0;
+        top: 0;
+        position: absolute;
+        text-align: center;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        .updater-content {
+          background: #4d83ff;
+          border-radius: 2rem;
+          color: #ffffff;
+          cursor: pointer;
+          padding: 0.25rem 0.75rem;
+          display: inline-block;
+        }
       }
     }
   }
@@ -117,31 +121,32 @@
 @media (min-width: 768px) {
   .client-datatable,
   .server-datatable {
-    thead {
-      th {
-        &:first-child {
-          display: none;
-          text-align: center;
-        }
-
-        &:not(:first-child) {
-          display: table-cell;
-        }
-      }
-    }
-
-    tbody {
-      // because the tr with text-sm is where the data leaves
-      // without text-sm, it will affect the loader
-      // dont mind the class name text-sm, you can change it
-      tr.text-sm {
-        td {
+    table {
+      thead {
+        th {
           &:first-child {
             display: none;
+            text-align: center;
           }
 
           &:not(:first-child) {
             display: table-cell;
+          }
+        }
+      }
+      tbody {
+        // because the tr with text-sm is where the data leaves
+        // without text-sm, it will affect the loader
+        // dont mind the class name text-sm, you can change it
+        tr.text-sm {
+          td {
+            &:first-child {
+              display: none;
+            }
+
+            &:not(:first-child) {
+              display: table-cell;
+            }
           }
         }
       }

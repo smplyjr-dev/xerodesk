@@ -1,15 +1,29 @@
 <template>
-  <div class="container-fluid">
-    <div class="page-title">
-      <h4 class="mb-2">Manage Tickets</h4>
+  <div class="">
+    <div class="container-fluid px-4 py-3" style="background-color: #fafafa; border-bottom: 1px solid #e6e7e9;">
+      <div class="flex-center-between">
+        <button class="btn rounded-pill btn-primary" @click="isRefineOpen = true">
+          <div class="d-flex align-items-center">
+            <span class="d-none d-md-block mr-1">Refine Search</span>
+            <i class="fa fa-fw fa-search"></i>
+          </div>
+        </button>
 
-      <button type="button" class="btn btn-primary mb-2" @click="isOpen = true">
-        <div class="d-flex"><span class="d-none d-md-block mr-1">Refine Search</span> <InlineSvg name="template/mdi-update.svg" size="1.25rem" /></div>
-      </button>
+        <button class="btn rounded-pill btn-success" @click="isExportOpen = true">
+          <div class="d-flex align-items-center">
+            <span class="d-none d-md-block mr-1">Export</span>
+            <i class="fa fa-fw fa-cloud-download-alt"></i>
+          </div>
+        </button>
+      </div>
+
+      <RefineTickets :isOpen="isRefineOpen" @toggleDrawer="isRefineOpen = $event" @onSearch="handleSearch" />
+      <ExportTickets :isOpen="isExportOpen" @toggleDrawer="isExportOpen = $event" />
     </div>
 
-    <RefineTickets :isOpen="isOpen" @toggleDrawer="isOpen = $event" @onSearch="handleSearch" />
-    <TableTickets :isReady="isReady" />
+    <div class="container-fluid px-4 mt-4">
+      <TableTickets :isReady="isReady" />
+    </div>
   </div>
 </template>
 
@@ -17,16 +31,18 @@
 import { mapState } from "vuex";
 import RefineTickets from "@Components/admin/ticket/RefineTickets.vue";
 import TableTickets from "@Components/admin/ticket/TableTickets.vue";
+import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
 
 export default {
-  layout: "Admin",
+  layout: "Admin2",
   name: "Tickets",
-  components: { RefineTickets, TableTickets },
+  components: { RefineTickets, TableTickets, ExportTickets },
   metaInfo: () => ({ title: "Tickets" }),
   middleware: ["auth", "permission:view_tickets"],
   data: () => ({
     isReady: false,
-    isOpen: false
+    isRefineOpen: false,
+    isExportOpen: false
   }),
   computed: {
     ...mapState("auth", ["user"])

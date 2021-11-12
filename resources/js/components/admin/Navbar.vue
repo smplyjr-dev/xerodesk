@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+  <nav class="navbar navbar-expand-lg py-3 px-4">
     <div class="mr-auto">
       <div class="burger" @click="$emit('toggle-sidebar', !isOpen)">
         <div class="burger--item"></div>

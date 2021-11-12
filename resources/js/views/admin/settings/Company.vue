@@ -2,13 +2,19 @@
   <div class="container-fluid">
     <SettingMeta />
 
+    <div class="page-title">
+      <div>
+        <h5 class="mb-2">Company</h5>
+            <p class="text-secondary">You may edit your company details in here.</p>
+      </div>
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user">Create User</button>
+    </div>
+
     <div class="row">
       <div class="col-md-6">
         <div class="card card-1">
           <div class="card-body">
-            <h5 class="mb-2">Company</h5>
-            <p class="text-secondary">You may edit your company details in here.</p>
-
             <form @submit.prevent="updateCompany()">
               <div class="form-group">
                 <label for="name">Name:</label>

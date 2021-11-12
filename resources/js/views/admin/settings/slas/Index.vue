@@ -2,85 +2,81 @@
   <div class="container-fluid">
     <SettingMeta />
 
-    <div class="card card-1">
-      <div class="card-body">
-        <div class="page-title">
-          <div>
-            <h5 class="mb-2">Service-level Agreement</h5>
-            <p class="text-secondary">Set the level of your SLA's in here.</p>
-          </div>
+    <div class="page-title">
+      <div>
+        <h5 class="mb-2">Service-level Agreement</h5>
+        <p class="text-secondary">Set the level of your SLA's in here.</p>
+      </div>
 
-          <button type="button" class="btn btn-primary" @click="setMethod('create')">Create SLA</button>
-        </div>
+      <button type="button" class="btn btn-primary" @click="setMethod('create')">Create SLA</button>
+    </div>
 
-        <div class="server-datatable">
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <length @onSelect="handleOnSelect" />
-            <search @onSearch="searchDatatable" />
-          </div>
+    <div class="server-datatable">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <length @onSelect="handleOnSelect" />
+        <search @onSearch="searchDatatable" />
+      </div>
 
-          <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-            <tbody class="text-sm">
-              <tr class="text-center" v-if="isLoading">
-                <td colspan="4">
-                  <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-                </td>
-              </tr>
+      <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+        <tbody class="text-sm">
+          <tr class="text-center" v-if="isLoading">
+            <td colspan="4">
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            </td>
+          </tr>
 
-              <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div class="w-50 font-weight-bold text-right">Name:</div>
-                    <div class="w-50 ml-1 align-self-end">{{ p.name }}</div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <div class="w-50 font-weight-bold text-right">Color:</div>
-                    <div class="w-50 ml-1 align-self-end">
-                      <div class="sla-colors">
-                        <div class="color-item cursor-default active">
-                          <div class="color-content" :style="{ background: p.color }"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <div class="w-50 font-weight-bold text-right">Range:</div>
-                    <div class="w-50 ml-1 align-self-end">{{ p.range }}</div>
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
-                  </div>
-                </td>
-
-                <td>{{ p.name }}</td>
-                <td>
+          <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="w-50 font-weight-bold text-right">Name:</div>
+                <div class="w-50 ml-1 align-self-end">{{ p.name }}</div>
+              </div>
+              <div class="d-flex align-items-center">
+                <div class="w-50 font-weight-bold text-right">Color:</div>
+                <div class="w-50 ml-1 align-self-end">
                   <div class="sla-colors">
                     <div class="color-item cursor-default active">
                       <div class="color-content" :style="{ background: p.color }"></div>
                     </div>
                   </div>
-                </td>
-                <td>{{ p.range }}</td>
-                <td>
-                  <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
-                  <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
-                </td>
-              </tr>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <div class="w-50 font-weight-bold text-right">Range:</div>
+                <div class="w-50 ml-1 align-self-end">{{ p.range }}</div>
+              </div>
+              <div class="text-center">
+                <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
+              </div>
+            </td>
 
-              <tr v-if="!isLoading && !paginated.length">
-                <td colspan="4">
-                  <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                </td>
-              </tr>
-            </tbody>
-          </datatable>
+            <td>{{ p.name }}</td>
+            <td>
+              <div class="sla-colors">
+                <div class="color-item cursor-default active">
+                  <div class="color-content" :style="{ background: p.color }"></div>
+                </div>
+              </div>
+            </td>
+            <td>{{ p.range }}</td>
+            <td>
+              <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
+            </td>
+          </tr>
 
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <entries :pagination="pagination" />
-            <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
-          </div>
-        </div>
+          <tr v-if="!isLoading && !paginated.length">
+            <td colspan="4">
+              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+            </td>
+          </tr>
+        </tbody>
+      </datatable>
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <entries :pagination="pagination" />
+        <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
       </div>
     </div>
 

@@ -17,7 +17,7 @@ import store from "@Scripts/store";
 // ======================================================== >>
 require("./components");
 // require("./directives");
-// require("./filters");
+require("./filters");
 require("./plugins");
 require("./prototypes");
 

@@ -2,86 +2,82 @@
   <div class="container-fluid">
     <SettingMeta />
 
-    <div class="card card-1">
-      <div class="card-body">
-        <div class="page-title">
-          <div>
-            <h5 class="mb-2">Roles</h5>
-            <p class="text-secondary">Want to assign some role to a user? You can do that in here.</p>
-          </div>
+    <div class="page-title">
+      <div>
+        <h5 class="mb-2">Roles</h5>
+        <p class="text-secondary">Want to assign some role to a user? You can do that in here.</p>
+      </div>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-role" @click="setMethod('create')">Create Role</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-role" @click="setMethod('create')">Create Role</button>
+    </div>
+
+    <div class="client-datatable">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="control d-flex align-items-center">
+          Show
+          <div class="select mx-2">
+            <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+          entries
         </div>
 
-        <div class="client-datatable">
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="control d-flex align-items-center">
-              Show
-              <div class="select mx-2">
-                <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
-                  <option>10</option>
-                  <option>20</option>
-                  <option>30</option>
-                  <option>50</option>
-                  <option>100</option>
-                </select>
-              </div>
-              entries
-            </div>
-
-            <div class="search">
-              <div class="d-flex align-items-center">
-                <label class="mb-0 mr-2" for="search">Search:</label>
-                <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-              </div>
-            </div>
+        <div class="search">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 mr-2" for="search">Search:</label>
+            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
           </div>
-
-          <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-            <tbody class="text-sm">
-              <tr class="text-center" v-if="isLoading">
-                <td colspan="6">
-                  <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-                </td>
-              </tr>
-
-              <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-                <td>
-                  <div class="d-flex">
-                    <span class="w-50 font-weight-bold text-right">Name:</span>
-                    <span class="w-50 ml-1 align-self-end">{{ p.name }}</span>
-                  </div>
-                  <div class="text-center">
-                    <p class="font-weight-bold mb-0">Permissions:</p>
-                    <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.name }}</span>
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
-                    <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
-                  </div>
-                </td>
-
-                <td>{{ p.name }}</td>
-                <td>
-                  <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.slug }}</span>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
-                  <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
-                </td>
-              </tr>
-
-              <tr v-if="!isLoading && !paginated.length">
-                <td colspan="6">
-                  <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                </td>
-              </tr>
-            </tbody>
-          </datatable>
-
-          <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
         </div>
       </div>
+
+      <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+        <tbody class="text-sm">
+          <tr class="text-center" v-if="isLoading">
+            <td colspan="6">
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            </td>
+          </tr>
+
+          <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+            <td>
+              <div class="d-flex">
+                <span class="w-50 font-weight-bold text-right">Name:</span>
+                <span class="w-50 ml-1 align-self-end">{{ p.name }}</span>
+              </div>
+              <div class="text-center">
+                <p class="font-weight-bold mb-0">Permissions:</p>
+                <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.name }}</span>
+              </div>
+              <div class="text-center">
+                <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
+              </div>
+            </td>
+
+            <td>{{ p.name }}</td>
+            <td>
+              <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.slug }}</span>
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
+            </td>
+          </tr>
+
+          <tr v-if="!isLoading && !paginated.length">
+            <td colspan="6">
+              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+            </td>
+          </tr>
+        </tbody>
+      </datatable>
+
+      <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
     <div id="manage-role" class="modal fade">

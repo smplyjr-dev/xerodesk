@@ -9,8 +9,9 @@ import AppDropdownItem from "./neutral/dropdown/AppDropdownItem.vue";
 
 // Skeleton Components
 import Skeleton from "./neutral/Skeleton.vue";
+import Popup from "./neutral/Popup.vue";
 
-[Skeleton].forEach(Component => {
+[Skeleton, Popup].forEach(Component => {
   Vue.component(Component.name, Component);
 });
 

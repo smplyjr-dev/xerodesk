@@ -1,252 +1,248 @@
 <template>
-  <div class="card card-1">
-    <div class="card-body">
-      <div class="server-datatable">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-          <length @onSelect="handleOnSelect" />
-
-          <button class="btn btn-success" @click="isOpen = true">
-            <div class="d-flex">
-              <span class="d-none d-md-block mr-1">Export</span>
-              <InlineSvg name="template/mdi-file-export-outline.svg" size="1.25rem" />
-            </div>
-          </button>
-        </div>
-
-        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-          <tbody class="text-sm">
-            <transition name="fade">
-              <!-- Update Record Notice -->
-              <div class="updater" v-if="isUpdated" @click="getDatatable(), (isUpdated = !isUpdated)">
-                <div class="updater-content shadow"><i class="fa fa-sync-alt mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
-              </div>
-            </transition>
-
-            <tr class="text-center" v-if="isLoading || !isReady">
-              <td colspan="8">
-                <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-              </td>
-            </tr>
-
-            <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-              <!-- Mobile View -->
-              <td class="dt-mobile">
-                <div class="d-flex">
-                  <div class="sla-mobile" :style="{ background: getSla(p) }"></div>
-                  <div class="ml-2">
-                    <div class="dt-mobile-item">
-                      <div class="title">Name:</div>
-                      <div class="content d-flex">
-                        <span>{{ p.client || "No Name" }} </span>
-                        <span class="ticket-counter--mobile" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Session:</div>
-                      <div class="content">
-                        <router-link :to="`/tickets/${p.session}`">{{ p.title || p.session }}</router-link>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Priority:</div>
-                      <div class="content">
-                        <app-dropdown @away="filter_priorities = ''">
-                          <template v-slot:value>{{ !p.priority ? "--" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
-
-                          <app-dropdown-content>
-                            <template v-slot:content>
-                              <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
-                                {{ fp.name }}
-                              </app-dropdown-item>
-                            </template>
-                          </app-dropdown-content>
-                        </app-dropdown>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Group:</div>
-                      <div class="content">
-                        <app-dropdown @away="filter_groups = ''">
-                          <template v-slot:value>{{ !p.group_id ? "--" : groups.find(g => g.id == p.group_id).name }}</template>
-
-                          <app-dropdown-content>
-                            <template v-slot:content>
-                              <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
-                                {{ `${fg.name}` }}
-                              </app-dropdown-item>
-                            </template>
-                          </app-dropdown-content>
-                        </app-dropdown>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Agent:</div>
-                      <div class="content">
-                        <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
-                        <template v-else>
-                          <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
-                            <template v-slot:value>{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
-
-                            <app-dropdown-content>
-                              <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
-
-                              <template v-slot:content>
-                                <span class="px-2" v-show="!filtered_agents.length">No record found</span>
-
-                                <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
-                                  {{ `${u.bio.first_name} ${u.bio.last_name}` }}
-                                </app-dropdown-item>
-                              </template>
-                            </app-dropdown-content>
-                          </app-dropdown>
-                        </template>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Status:</div>
-                      <div class="content">
-                        <template v-if="!p.agent_id"><span class="badge badge-danger text-uppercase font-weight-bold">Unassigned</span></template>
-                        <template v-else>
-                          <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
-                            <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
-
-                            <app-dropdown-content>
-                              <template v-slot:content>
-                                <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
-                                  {{ fs.name }}
-                                </app-dropdown-item>
-                              </template>
-                            </app-dropdown-content>
-                          </app-dropdown>
-                        </template>
-                      </div>
-                    </div>
-                    <div class="dt-mobile-item">
-                      <div class="title">Timestamp:</div>
-                      <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
-                    </div>
-                  </div>
-                </div>
-              </td>
-
-              <!-- Client -->
-              <td>
-                <div class="d-flex">
-                  <div class="ticket-color" :style="{ background: getSla(p) }"></div>
-                  <div class="d-flex w-100" style="position: relative;">
-                    <img class="object-cover mx-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
-                    <div class="d-flex flex-column">
-                      <span>{{ p.client || "No Name" }}</span>
-                      <span class="text-muted text-xs">{{ p.client_email || "No Email" }}</span>
-                      <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-
-              <!-- Title -->
-              <td>
-                <router-link :to="`/tickets/${p.session}`">{{ p.title || "--" }}</router-link>
-              </td>
-
-              <!-- Session -->
-              <td>
-                <router-link :to="`/tickets/${p.session}`">{{ p.session }}</router-link>
-              </td>
-
-              <!-- Priority -->
-              <td>
-                <app-dropdown @away="filter_priorities = ''">
-                  <template v-slot:value>{{ !p.priority ? "--" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
-
-                  <app-dropdown-content>
-                    <template v-slot:content>
-                      <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
-                        {{ fp.name }}
-                      </app-dropdown-item>
-                    </template>
-                  </app-dropdown-content>
-                </app-dropdown>
-              </td>
-
-              <!-- Groups -->
-              <td>
-                <app-dropdown @away="filter_groups = ''">
-                  <template v-slot:value>{{ !p.group_id ? "--" : groups.find(g => g.id == p.group_id).name }}</template>
-
-                  <app-dropdown-content>
-                    <template v-slot:content>
-                      <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
-                        {{ `${fg.name}` }}
-                      </app-dropdown-item>
-                    </template>
-                  </app-dropdown-content>
-                </app-dropdown>
-              </td>
-
-              <!-- Agent -->
-              <td>
-                <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
-                <template v-else>
-                  <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
-                    <template v-slot:value>{{ !p.agent_id ? "--" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
-
-                    <app-dropdown-content>
-                      <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
-
-                      <template v-slot:content>
-                        <span class="px-2" v-show="!filtered_agents.length">No record found</span>
-
-                        <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
-                          {{ `${u.bio.first_name} ${u.bio.last_name}` }}
-                        </app-dropdown-item>
-                      </template>
-                    </app-dropdown-content>
-                  </app-dropdown>
-                </template>
-              </td>
-
-              <!-- Status -->
-              <td>
-                <template v-if="!p.agent_id"><span class="badge badge-danger text-uppercase font-weight-bold">Unassigned</span></template>
-                <template v-else>
-                  <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
-                    <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
-
-                    <app-dropdown-content>
-                      <template v-slot:content>
-                        <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
-                          {{ fs.name }}
-                        </app-dropdown-item>
-                      </template>
-                    </app-dropdown-content>
-                  </app-dropdown>
-                </template>
-              </td>
-
-              <!-- Created At -->
-              <td>
-                {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
-                {{ $dayjs("format", p.created_at, "hh:mm A") }}
-              </td>
-            </tr>
-
-            <tr v-if="!isLoading && !paginated.length && isReady">
-              <td colspan="8">
-                <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-              </td>
-            </tr>
-          </tbody>
-        </datatable>
-
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-          <entries :pagination="pagination" />
-          <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
-        </div>
-      </div>
+  <div class="server-datatable">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <length @onSelect="handleOnSelect" />
     </div>
 
-    <ExportTickets :isOpen="isOpen" @toggleDrawer="isOpen = $event" @onExport="isOpen = $event" />
+    <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+      <tbody class="text-sm">
+        <transition name="fade">
+          <!-- Update Record Notice -->
+          <div class="updater" v-if="isUpdated" @click="getDatatable(), (isUpdated = !isUpdated)">
+            <div class="updater-content shadow"><i class="fa fa-sync-alt mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
+          </div>
+        </transition>
+
+        <tr class="text-center" v-if="isLoading || !isReady">
+          <td colspan="8">
+            <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+          </td>
+        </tr>
+
+        <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+          <!-- Mobile View -->
+          <td class="dt-mobile">
+            <div class="d-flex">
+              <div class="sla-mobile" :style="{ background: getSla(p) }"></div>
+              <div class="ml-2">
+                <div class="dt-mobile-item">
+                  <div class="title">Client:</div>
+                  <div class="content d-flex">
+                    <span>{{ p.client || "No Name" }} </span>
+                    <span class="ticket-counter--mobile" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Session:</div>
+                  <div class="content">
+                    <router-link :to="`/tickets/${p.session}`">{{ p.title || p.session }}</router-link>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Priority:</div>
+                  <div class="content">
+                    <app-dropdown @away="filter_priorities = ''">
+                      <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
+
+                      <app-dropdown-content>
+                        <template v-slot:content>
+                          <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
+                            {{ fp.name }}
+                          </app-dropdown-item>
+                        </template>
+                      </app-dropdown-content>
+                    </app-dropdown>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Group:</div>
+                  <div class="content">
+                    <app-dropdown @away="filter_groups = ''">
+                      <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find(g => g.id == p.group_id).name }}</template>
+
+                      <app-dropdown-content>
+                        <template v-slot:content>
+                          <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
+                            {{ `${fg.name}` }}
+                          </app-dropdown-item>
+                        </template>
+                      </app-dropdown-content>
+                    </app-dropdown>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Agent:</div>
+                  <div class="content">
+                    <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                    <template v-else>
+                      <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
+                        <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+
+                        <app-dropdown-content>
+                          <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
+
+                          <template v-slot:content>
+                            <span class="px-2" v-show="!filtered_agents.length">No record found</span>
+
+                            <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                              {{ `${u.bio.first_name} ${u.bio.last_name}` }}
+                            </app-dropdown-item>
+                          </template>
+                        </app-dropdown-content>
+                      </app-dropdown>
+                    </template>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Status:</div>
+                  <div class="content">
+                    <template v-if="!p.agent_id">Unassigned</template>
+                    <template v-else>
+                      <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
+                        <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
+
+                        <app-dropdown-content>
+                          <template v-slot:content>
+                            <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
+                              {{ fs.name }}
+                            </app-dropdown-item>
+                          </template>
+                        </app-dropdown-content>
+                      </app-dropdown>
+                    </template>
+                  </div>
+                </div>
+                <div class="dt-mobile-item">
+                  <div class="title">Timestamp:</div>
+                  <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
+                </div>
+              </div>
+            </div>
+          </td>
+
+          <!-- SLA -->
+          <td>
+            <div class="h-100 w-100 text-white py-0 px-1 text-center rounded-pill text-xs" :style="{ background: getSla(p) }">
+              &nbsp;
+            </div>
+          </td>
+
+          <!-- Client -->
+          <td>
+            <div class="d-flex align-items-center">
+              <div style="position-relative">
+                <img class="object-cover mr-2 rounded-circle" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" />
+                <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
+              </div>
+              <span class="text-titlecase">{{ p.client | capitalize }}</span>
+            </div>
+          </td>
+
+          <!-- Session -->
+          <td>
+            <router-link :to="`/tickets/${p.session}`">{{ p.session }}</router-link>
+          </td>
+
+          <!-- Priority -->
+          <td>
+            <!-- <popup :arrow="false" offset="-25px,0px" placement="bottom" toggle="hide">
+              <ul class="list-unstyled text-left m-0 py-0 px-2" slot="content">
+                <li v-for="fp in filtered_priority" :key="fp.id">
+                  {{ fp.name }}
+                </li>
+              </ul>
+              <div class="d-flex align-items-center" slot="reference">
+                <div>Not Set</div>
+                <InlineSvg name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" />
+              </div>
+            </popup> -->
+
+            <app-dropdown @away="filter_priorities = ''">
+              <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
+
+              <app-dropdown-content>
+                <template v-slot:content>
+                  <app-dropdown-item v-for="fp in filtered_priority" :key="fp.id" @select="(p.priority = fp.id), updateFields(p, 'priority', p.priority)">
+                    {{ fp.name }}
+                  </app-dropdown-item>
+                </template>
+              </app-dropdown-content>
+            </app-dropdown>
+          </td>
+
+          <!-- Groups -->
+          <td>
+            <app-dropdown @away="filter_groups = ''">
+              <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find(g => g.id == p.group_id).name }}</template>
+
+              <app-dropdown-content>
+                <template v-slot:content>
+                  <app-dropdown-item v-for="fg in filtered_groups" :key="fg.id" @select="(p.group_id = fg.id), updateFields(p, 'group_id', p.group_id)">
+                    {{ `${fg.name}` }}
+                  </app-dropdown-item>
+                </template>
+              </app-dropdown-content>
+            </app-dropdown>
+          </td>
+
+          <!-- Agent -->
+          <td>
+            <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+            <template v-else>
+              <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
+                <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+
+                <app-dropdown-content>
+                  <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
+
+                  <template v-slot:content>
+                    <span class="px-2" v-show="!filtered_agents.length">No record found</span>
+
+                    <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                      {{ `${u.bio.first_name} ${u.bio.last_name}` }}
+                    </app-dropdown-item>
+                  </template>
+                </app-dropdown-content>
+              </app-dropdown>
+            </template>
+          </td>
+
+          <!-- Status -->
+          <td>
+            <template v-if="!p.agent_id">Unassigned</template>
+            <template v-else>
+              <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)" position="right">
+                <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
+
+                <app-dropdown-content>
+                  <template v-slot:content>
+                    <app-dropdown-item v-for="fs in filtered_statuses" :key="fs.id" @select="(p.status = fs.id), updateFields(p, 'status', p.status)">
+                      {{ fs.name }}
+                    </app-dropdown-item>
+                  </template>
+                </app-dropdown-content>
+              </app-dropdown>
+            </template>
+          </td>
+
+          <!-- Modal -->
+          <td class="pl-0">
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-info-circle"></i></a>
+          </td>
+        </tr>
+
+        <tr v-if="!isLoading && !paginated.length && isReady">
+          <td colspan="8">
+            <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+          </td>
+        </tr>
+      </tbody>
+    </datatable>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <entries :pagination="pagination" />
+      <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+    </div>
   </div>
 </template>
 
@@ -255,25 +251,25 @@ import { nanoid } from "nanoid";
 import { mapState } from "vuex";
 import { tickets } from "@Scripts/observable";
 import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
-import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
-
 export default {
   props: ["isReady"],
   mixins: [Mixin],
-  components: { Length, Search, Datatable, Entries, Pagination, ExportTickets },
+  components: { Length, Search, Datatable, Entries, Pagination },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "client", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "title", label: "Title" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "session", label: "Session" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "priority", label: "Priority" },
-      { sortable: 1, hide: 0, type: types[1], width: "12.5%", name: "groups", label: "Groups" },
-      { sortable: 1, hide: 0, type: types[0], width: "12.5%", name: "agent", label: "Agent" },
-      { sortable: 1, hide: 0, type: types[1], width: "12.5%", name: "status", label: "Status" },
-      { sortable: 1, hide: 0, type: types[2], width: "12.5%", name: "created_at", label: "Timestamp" }
+      { sortable: 0, hide: 0, type: types[0], width: "10%", name: "sla", label: "SLA" },
+      { sortable: 1, hide: 0, type: types[0], width: "22%", name: "client", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "10%", name: "session", label: "Session" },
+      { sortable: 1, hide: 0, type: types[0], width: "14%", name: "priority", label: "Priority" },
+      { sortable: 1, hide: 0, type: types[1], width: "14%", name: "groups", label: "Groups" },
+      { sortable: 1, hide: 0, type: types[0], width: "14%", name: "agent", label: "Agent" },
+      { sortable: 1, hide: 0, type: types[1], width: "14%", name: "status", label: "Status" },
+      { sortable: 0, hide: 0, type: types[1], width: "5%", name: "see_more", label: "" }
+      // { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "title", label: "Title" },
+      // { sortable: 1, hide: 0, type: types[2], width: "12.5%", name: "created_at", label: "Timestamp" }
     ];
     columns.forEach(column => {
       sortOrders[column.name] = -1;

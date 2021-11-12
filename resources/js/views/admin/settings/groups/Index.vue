@@ -2,83 +2,59 @@
   <div class="container-fluid">
     <SettingMeta />
 
-    <div class="card card-1">
-      <div class="card-body">
-        <div class="page-title">
-          <div>
-            <h5 class="mb-2">Groups</h5>
-            <p class="text-secondary">You can organize your users by attaching them to a group in here.</p>
-          </div>
+    <div class="page-title">
+      <div>
+        <h5 class="mb-2">Groups</h5>
+        <p class="text-secondary">You can organize your users by attaching them to a group in here.</p>
+      </div>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-group" @click="setMethod('create')">Create Group</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-group" @click="setMethod('create')">Create Group</button>
+    </div>
+
+    <div class="client-datatable">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="control d-flex align-items-center">
+          Show
+          <div class="select mx-2">
+            <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+          entries
         </div>
 
-        <div class="client-datatable">
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="control d-flex align-items-center">
-              Show
-              <div class="select mx-2">
-                <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
-                  <option>10</option>
-                  <option>20</option>
-                  <option>30</option>
-                  <option>50</option>
-                  <option>100</option>
-                </select>
-              </div>
-              entries
-            </div>
-
-            <div class="search">
-              <div class="d-flex align-items-center">
-                <label class="mb-0 mr-2" for="search">Search:</label>
-                <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-              </div>
-            </div>
+        <div class="search">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 mr-2" for="search">Search:</label>
+            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
           </div>
+        </div>
+      </div>
 
-          <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-            <tbody class="text-sm">
-              <tr class="text-center" v-if="isLoading">
-                <td colspan="6">
-                  <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-                </td>
-              </tr>
+      <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+        <tbody class="text-sm">
+          <tr class="text-center" v-if="isLoading">
+            <td colspan="6">
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            </td>
+          </tr>
 
-              <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-                <td>
-                  <div class="d-flex">
-                    <span class="w-50 font-weight-bold text-right">Name:</span>
-                    <span class="w-50 ml-1 align-self-end">
-                      <p class="mb-0 font-weight-semi">{{ p.name }}</p>
-                      <p class="mb-0 text-secondary text-sm">{{ p.description }}</p>
-                    </span>
-                  </div>
-                  <div class="d-flex">
-                    <span class="w-50 font-weight-bold text-right">Users:</span>
-                    <span class="w-50 ml-1 align-self-end">
-                      <div class="social-media">
-                        <router-link :to="`/settings/users/${u.pivot.user_id}/edit`" v-for="(u, $u) in p.users" :key="$u">
-                          <img :src="profilePicture(u)" @error="$onImgError($event, 1)" :alt="u.profile_picture" />
-                        </router-link>
-
-                        <a href="javascript:void(0)" @click="selectUsers(p)">
-                          <i class="fa fa-fw fa-plus"></i>
-                        </a>
-                      </div>
-                    </span>
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
-                  </div>
-                </td>
-
-                <td>
+          <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+            <td>
+              <div class="d-flex">
+                <span class="w-50 font-weight-bold text-right">Name:</span>
+                <span class="w-50 ml-1 align-self-end">
                   <p class="mb-0 font-weight-semi">{{ p.name }}</p>
                   <p class="mb-0 text-secondary text-sm">{{ p.description }}</p>
-                </td>
-                <td>
+                </span>
+              </div>
+              <div class="d-flex">
+                <span class="w-50 font-weight-bold text-right">Users:</span>
+                <span class="w-50 ml-1 align-self-end">
                   <div class="social-media">
                     <router-link :to="`/settings/users/${u.pivot.user_id}/edit`" v-for="(u, $u) in p.users" :key="$u">
                       <img :src="profilePicture(u)" @error="$onImgError($event, 1)" :alt="u.profile_picture" />
@@ -88,24 +64,44 @@
                       <i class="fa fa-fw fa-plus"></i>
                     </a>
                   </div>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
-                  <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
-                </td>
-              </tr>
+                </span>
+              </div>
+              <div class="text-center">
+                <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
+              </div>
+            </td>
 
-              <tr v-if="!isLoading && !paginated.length">
-                <td colspan="6">
-                  <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                </td>
-              </tr>
-            </tbody>
-          </datatable>
+            <td>
+              <p class="mb-0 font-weight-semi">{{ p.name }}</p>
+              <p class="mb-0 text-secondary text-sm">{{ p.description }}</p>
+            </td>
+            <td>
+              <div class="social-media">
+                <router-link :to="`/settings/users/${u.pivot.user_id}/edit`" v-for="(u, $u) in p.users" :key="$u">
+                  <img :src="profilePicture(u)" @error="$onImgError($event, 1)" :alt="u.profile_picture" />
+                </router-link>
 
-          <pagination :pagination="pagination" :client="true" :filtered="filteredGroups" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
-        </div>
-      </div>
+                <a href="javascript:void(0)" @click="selectUsers(p)">
+                  <i class="fa fa-fw fa-plus"></i>
+                </a>
+              </div>
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
+            </td>
+          </tr>
+
+          <tr v-if="!isLoading && !paginated.length">
+            <td colspan="6">
+              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+            </td>
+          </tr>
+        </tbody>
+      </datatable>
+
+      <pagination :pagination="pagination" :client="true" :filtered="filteredGroups" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
     <div id="users-modal" class="modal fade">
@@ -466,7 +462,7 @@ export default {
   a {
     text-decoration: none;
 
-    .fa,
+    .fab,
     img {
       background: $secondary;
       border: 3px solid #ccc;

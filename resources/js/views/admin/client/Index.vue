@@ -5,77 +5,73 @@
       &nbsp;
     </div>
 
-    <div class="card card-1">
-      <div class="card-body">
-        <div class="server-datatable">
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <length @onSelect="handleOnSelect" />
-            <search @onSearch="searchDatatable" />
-          </div>
+    <div class="server-datatable">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <length @onSelect="handleOnSelect" />
+        <search @onSearch="searchDatatable" />
+      </div>
 
-          <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-            <tbody class="text-sm">
-              <tr class="text-center" v-if="isLoading">
-                <td colspan="8">
-                  <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
-                </td>
-              </tr>
+      <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+        <tbody class="text-sm">
+          <tr class="text-center" v-if="isLoading">
+            <td colspan="8">
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            </td>
+          </tr>
 
-              <tr class="text-sm hoverable cursor-pointer" v-else v-for="p in paginated" :key="p.id" @click="showClient(p)">
-                <!-- Mobile View -->
-                <td class="dt-mobile">
-                  <div class="dt-mobile-item">
-                    <div class="title">Client:</div>
-                    <div class="content">{{ p.name }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
-                    <div class="title">Email Address:</div>
-                    <div class="content">{{ p.email }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
-                    <div class="title">Token:</div>
-                    <div class="content">{{ p.token }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
-                    <div class="title">Phone:</div>
-                    <div class="content">{{ p.phone || "--" }}</div>
-                  </div>
-                  <div class="dt-mobile-item">
-                    <div class="title">Timestamp:</div>
-                    <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
-                  </div>
-                </td>
+          <tr class="text-sm hoverable cursor-pointer" v-else v-for="p in paginated" :key="p.id" @click="showClient(p)">
+            <!-- Mobile View -->
+            <td class="dt-mobile">
+              <div class="dt-mobile-item">
+                <div class="title">Client:</div>
+                <div class="content">{{ p.name }}</div>
+              </div>
+              <div class="dt-mobile-item">
+                <div class="title">Email Address:</div>
+                <div class="content">{{ p.email }}</div>
+              </div>
+              <div class="dt-mobile-item">
+                <div class="title">Token:</div>
+                <div class="content">{{ p.token }}</div>
+              </div>
+              <div class="dt-mobile-item">
+                <div class="title">Phone:</div>
+                <div class="content">{{ p.phone || "--" }}</div>
+              </div>
+              <div class="dt-mobile-item">
+                <div class="title">Timestamp:</div>
+                <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
+              </div>
+            </td>
 
-                <td>
-                  <div class="d-flex w-100" style="position: relative;">
-                    <img class="object-cover mr-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.name || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
-                    <div class="d-flex flex-column">
-                      <span>{{ p.name }}</span>
-                      <span class="text-muted text-xs">{{ p.email }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ p.token }}</td>
-                <td>{{ p.phone || "--" }}</td>
-                <td>
-                  {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
-                  {{ $dayjs("format", p.created_at, "hh:mm A") }}
-                </td>
-              </tr>
+            <td>
+              <div class="d-flex w-100" style="position: relative;">
+                <img class="object-cover mr-2" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.name || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
+                <div class="d-flex flex-column">
+                  <span>{{ p.name }}</span>
+                  <span class="text-muted text-xs">{{ p.email }}</span>
+                </div>
+              </div>
+            </td>
+            <td>{{ p.token }}</td>
+            <td>{{ p.phone || "--" }}</td>
+            <td>
+              {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+              {{ $dayjs("format", p.created_at, "hh:mm A") }}
+            </td>
+          </tr>
 
-              <tr v-if="!isLoading && !paginated.length">
-                <td colspan="8">
-                  <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                </td>
-              </tr>
-            </tbody>
-          </datatable>
+          <tr v-if="!isLoading && !paginated.length">
+            <td colspan="8">
+              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+            </td>
+          </tr>
+        </tbody>
+      </datatable>
 
-          <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <entries :pagination="pagination" />
-            <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
-          </div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <entries :pagination="pagination" />
+        <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
       </div>
     </div>
 

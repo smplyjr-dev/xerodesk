@@ -19,6 +19,10 @@ $font-weight-bolder:  bolder;
 $text-muted: #9eabc0; // default is: #6c757d
 
 // =================== Fonts Sizes =================== //
+$font-size-base: 0.85rem;
+$font-size-lg:   $font-size-base * 1.25;
+$font-size-sm:   $font-size-base * .875;
+
 $text-xs:   0.75rem;
 $text-sm:   0.875rem;
 $text-base: 1rem;
@@ -31,7 +35,7 @@ $text-5xl:  3rem;
 $text-6xl:  4rem;
 
 // =================== Fonts Family =================== //
-$font-family-base: "Roboto", "Raleway", "sans-serif";
+$font-family-base: "Roboto", "Poppins", "Open Sans", "Montserrat", "Rubik", "Raleway";
 
 // =================== Color Scheming =================== //
 $primary:   #4d83ff; // default is: #007bff

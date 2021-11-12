@@ -22,9 +22,9 @@ import TicketMetas from "@Components/admin/ticket/show/TicketMetas.vue";
 import { mapState } from "vuex";
 
 export default {
+  name: "Ticket",
   components: { TicketHeader, TicketContents, TicketMetas },
   layout: "Ticket",
-  name: "Ticket",
   metaInfo: () => ({ title: "Ticket" }),
   middleware: ["auth", "permission:view_ticket"],
   data: () => ({
