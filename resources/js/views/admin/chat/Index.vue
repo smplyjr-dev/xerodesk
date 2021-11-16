@@ -1,9 +1,9 @@
 <template>
   <div class="chat-wrapper" :class="{ selected: $route.query.cId }">
     <Contacts />
-    <Messages v-show="$route.query.cId" @toggle="open = !open" :open="open" />
-    <Meta v-show="$route.query.cId" @toggle="open = !open" :class="{ open: open }" />
-    <div v-show="!$route.query.cId" class="flex-center w-100">Please select a customer</div>
+    <Messages @toggle="open = !open" :open="open" />
+    <Meta @toggle="open = !open" :class="{ open: open }" />
+    <div v-show="!$route.query.cId" class="no-client">Please select a customer</div>
   </div>
 </template>
 

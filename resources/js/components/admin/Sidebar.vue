@@ -84,10 +84,6 @@ export default {
           ready: true,
           child: [
             {
-              name: "SLA",
-              to: "/settings/slas"
-            },
-            {
               name: "Company",
               to: "/settings/company"
             },
@@ -98,6 +94,10 @@ export default {
             {
               name: "Roles",
               to: "/settings/roles"
+            },
+            {
+              name: "SLA",
+              to: "/settings/slas"
             },
             {
               name: "Users",
@@ -122,14 +122,11 @@ export default {
   },
   computed: {
     ready() {
-      return this.navs.filter((n) => n.ready);
+      return this.navs.filter(n => n.ready);
     }
   },
   methods: {
     async logout() {
-      // Clear all the notifications
-      // this.$store.commit("notifications/CLEAR_NOTIFICATIONS");
-
       // Log out the user
       await this.$store.dispatch("auth/logout");
 

@@ -33,6 +33,9 @@ trait SessionTrait
                     'client_sessions.title AS title',
                     'client_sessions.session AS session',
                     'client_sessions.priority AS priority',
+                    'client_sessions.category AS category',
+                    'client_sessions.resolution_code AS resolution_code',
+                    'client_sessions.solution AS solution',
                     'client_sessions.status AS status',
                     'client_sessions.group_id AS group_id',
 

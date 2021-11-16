@@ -54,9 +54,6 @@ export default {
   },
   methods: {
     async logout() {
-      // Clear all the notifications
-      // this.$store.commit("notifications/CLEAR_NOTIFICATIONS");
-
       // Log out the user
       await this.$store.dispatch("auth/logout");
 

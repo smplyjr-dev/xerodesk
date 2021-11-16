@@ -23,8 +23,13 @@
           <!-- Mobile View -->
           <td class="dt-mobile">
             <div class="d-flex">
-              <div class="sla-mobile" :style="{ background: getSla(p) }"></div>
-              <div class="ml-2">
+              <div class="w-100 ml-2">
+                <div class="dt-mobile-item">
+                  <div class="title">SLA:</div>
+                  <div class="content">
+                    <TicketSla :p="p" :sla="sorted_slas" />
+                  </div>
+                </div>
                 <div class="dt-mobile-item">
                   <div class="title">Client:</div>
                   <div class="content d-flex">
@@ -114,7 +119,10 @@
                 </div>
                 <div class="dt-mobile-item">
                   <div class="title">Timestamp:</div>
-                  <div class="content">{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</div>
+                  <div class="content">
+                    {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+                    {{ $dayjs("format", p.created_at, "hh:mm A") }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -122,16 +130,14 @@
 
           <!-- SLA -->
           <td>
-            <div class="h-100 w-100 text-white py-0 px-1 text-center rounded-pill text-xs" :style="{ background: getSla(p) }">
-              &nbsp;
-            </div>
+            <TicketSla :p="p" :sla="sorted_slas" />
           </td>
 
           <!-- Client -->
           <td>
             <div class="d-flex align-items-center">
               <div style="position-relative">
-                <img class="object-cover mr-2 rounded-circle" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" />
+                <!-- <img class="object-cover mr-2 rounded-circle" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" /> -->
                 <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
               </div>
               <span class="text-titlecase">{{ p.client | capitalize }}</span>
@@ -145,18 +151,6 @@
 
           <!-- Priority -->
           <td>
-            <!-- <popup :arrow="false" offset="-25px,0px" placement="bottom" toggle="hide">
-              <ul class="list-unstyled text-left m-0 py-0 px-2" slot="content">
-                <li v-for="fp in filtered_priority" :key="fp.id">
-                  {{ fp.name }}
-                </li>
-              </ul>
-              <div class="d-flex align-items-center" slot="reference">
-                <div>Not Set</div>
-                <InlineSvg name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" />
-              </div>
-            </popup> -->
-
             <app-dropdown @away="filter_priorities = ''">
               <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
 
@@ -225,9 +219,9 @@
             </template>
           </td>
 
-          <!-- Modal -->
+          <!-- See More -->
           <td class="pl-0">
-            <a href="javascript:void(0)"><i class="fa fa-fw fa-info-circle"></i></a>
+            <TicketPopup :p="p" />
           </td>
         </tr>
 
@@ -251,23 +245,26 @@ import { nanoid } from "nanoid";
 import { mapState } from "vuex";
 import { tickets } from "@Scripts/observable";
 import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
+import TicketSla from "./TicketSla.vue";
+import TicketPopup from "./TicketPopup.vue";
+
 export default {
   props: ["isReady"],
   mixins: [Mixin],
-  components: { Length, Search, Datatable, Entries, Pagination },
+  components: { Length, Search, Datatable, Entries, Pagination, TicketSla, TicketPopup },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
-      { sortable: 0, hide: 0, type: types[0], width: "10%", name: "sla", label: "SLA" },
-      { sortable: 1, hide: 0, type: types[0], width: "22%", name: "client", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "10%", name: "session", label: "Session" },
-      { sortable: 1, hide: 0, type: types[0], width: "14%", name: "priority", label: "Priority" },
-      { sortable: 1, hide: 0, type: types[1], width: "14%", name: "groups", label: "Groups" },
-      { sortable: 1, hide: 0, type: types[0], width: "14%", name: "agent", label: "Agent" },
-      { sortable: 1, hide: 0, type: types[1], width: "14%", name: "status", label: "Status" },
-      { sortable: 0, hide: 0, type: types[1], width: "5%", name: "see_more", label: "" }
+      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "sla", label: "SLA" },
+      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "client", label: "Client" },
+      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "session", label: "Session" },
+      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "priority", label: "Priority" },
+      { sortable: 1, hide: 0, type: types[1], width: "16.66%", name: "groups", label: "Groups" },
+      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "agent", label: "Agent" },
+      { sortable: 1, hide: 0, type: types[1], width: "16.66%", name: "status", label: "Status" },
+      { sortable: 0, hide: 0, type: types[1], width: "0%", name: "see_more", label: "" }
       // { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "title", label: "Title" },
       // { sortable: 1, hide: 0, type: types[2], width: "12.5%", name: "created_at", label: "Timestamp" }
     ];
@@ -295,8 +292,8 @@ export default {
       filter_agents: "",
       filter_statuses: "",
 
-      // export tickets
-      isOpen: false
+      // ticket details modal
+      ticket: null
     };
   },
   computed: {
@@ -305,9 +302,14 @@ export default {
     ...mapState("slas", ["slas"]),
 
     sorted_slas() {
-      return this.slas.sort(function(a, b) {
-        return a.range - b.range;
-      });
+      return this.slas
+        .sort((a, b) => {
+          return a.range - b.range;
+        })
+        .map(s => ({
+          ...s,
+          range: s.range * 60
+        }));
     },
     filtered_priority() {
       let search = this.filter_priorities;
@@ -438,35 +440,6 @@ export default {
         user_id: this.user.id
       });
     },
-    getSla(p) {
-      let date = new Date(p.created_at);
-      let today = new Date();
-      let days = today.getTime() - date.getTime();
-      let difference = days / (1000 * 3600);
-      let rounded = difference; // Math.round(difference);
-      let choosen = null;
-
-      // early return if the status is resolved or closed
-      if ([3, 4].includes(p.status)) return "transparent";
-
-      this.sorted_slas.every((s, $s) => {
-        if (rounded <= s.range) {
-          choosen = s.color;
-          return false;
-        } else {
-          let last_sla = this.sorted_slas[this.sorted_slas.length - 1];
-
-          if (rounded > last_sla.range) {
-            choosen = last_sla.color;
-            return false;
-          }
-
-          return true;
-        }
-      });
-
-      return choosen;
-    },
     setTableData() {
       let defaultData = {
         draw: this.tableData.draw,
@@ -498,9 +471,7 @@ export default {
       if (ticket.agent_id) return true;
     },
     getUnreadCount(p) {
-      let messages = p.messages;
-
-      return messages.filter(m => m.sender == "client" && m.is_read == false).length;
+      return p.messages.filter(m => m.sender == "client" && m.is_read == false).length;
     }
   },
   created() {

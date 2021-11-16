@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="col-md-9">
     <div class="card card-picture card-1" style="background-image: url('/images/template/bg-profile.jpg')">
       <div class="card-body">
         <div class="card-picture-container">
@@ -157,7 +157,7 @@ import { mapState } from "vuex";
 import ADatePicker from "@Components/neutral/ADatePicker.vue";
 
 export default {
-  layout: "Admin",
+  layout: "Settings",
   name: "SettingEditUser",
   metaInfo: () => ({ title: "Setting / Edit User" }),
   middleware: ["auth"],

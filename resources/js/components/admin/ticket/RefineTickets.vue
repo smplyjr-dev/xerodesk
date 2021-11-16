@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
               <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
-              <button class="btn btn-primary pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
+              <button class="btn btn-light pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
               <div class="clearfix"></div>
             </div>
           </form>
@@ -62,7 +62,7 @@
             </div>
             <div class="form-group">
               <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
-              <button class="btn btn-primary pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
+              <button class="btn btn-light pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
               <div class="clearfix"></div>
             </div>
           </form>

@@ -1,16 +1,5 @@
 <template>
-  <div class="container-fluid">
-    <SettingMeta />
-
-    <div class="page-title">
-      <div>
-        <h5 class="mb-2">Users</h5>
-        <p class="text-secondary">Below are the list of your users. You can either create a user, update an existing one or resend a verification link.</p>
-      </div>
-
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user">Create User</button>
-    </div>
-
+  <div class="col-9">
     <div class="client-datatable">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div class="control d-flex align-items-center">
@@ -26,13 +15,7 @@
           </div>
           entries
         </div>
-
-        <div class="search">
-          <div class="d-flex align-items-center">
-            <label class="mb-0 mr-2" for="search">Search:</label>
-            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user"><i class="fa fa-plus mr-1"></i> Add User</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -250,7 +233,7 @@ import Pagination from "@Components/datatable/client/Pagination.vue";
 import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
-  layout: "Admin",
+  layout: "Settings",
   name: "SettingUsers",
   metaInfo: () => ({ title: "Setting / Users" }),
   middleware: ["auth", "permission:view_users"],
@@ -505,6 +488,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@Styles/bootstrap/_variables.scss";
+
 .social-media {
   display: flex;
   align-items: center;
@@ -514,9 +499,9 @@ export default {
 
     .fab {
       padding: 1rem;
-      border: 3px solid #fff;
+      border: 3px solid $white;
       border-radius: 100%;
-      color: #fff;
+      color: $white;
       height: 20px;
       width: 20px;
       display: flex;

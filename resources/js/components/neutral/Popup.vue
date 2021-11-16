@@ -1,7 +1,7 @@
 <template>
   <popper
     :visible-arrow="arrow"
-    trigger="click"
+    :trigger="trigger"
     :options="{
       placement: placement,
       modifiers: {
@@ -41,6 +41,10 @@ export default {
     toggle: {
       type: String,
       default: "hide"
+    },
+    trigger: {
+      type: String,
+      default: "click"
     }
   },
   name: "Popup",

@@ -1,20 +1,9 @@
 <template>
-  <div class="container-fluid">
-    <SettingMeta />
-
-    <div class="page-title">
-      <div>
-        <h5 class="mb-2">Service-level Agreement</h5>
-        <p class="text-secondary">Set the level of your SLA's in here.</p>
-      </div>
-
-      <button type="button" class="btn btn-primary" @click="setMethod('create')">Create SLA</button>
-    </div>
-
+  <div class="col-md-9">
     <div class="server-datatable">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <length @onSelect="handleOnSelect" />
-        <search @onSearch="searchDatatable" />
+        <button type="button" class="btn btn-primary" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add SLA</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -43,7 +32,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <div class="w-50 font-weight-bold text-right">Range:</div>
-                <div class="w-50 ml-1 align-self-end">{{ p.range }}</div>
+                <div class="w-50 ml-1 align-self-end">{{ p.range }} hours</div>
               </div>
               <div class="text-center">
                 <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
@@ -59,7 +48,7 @@
                 </div>
               </div>
             </td>
-            <td>{{ p.range }}</td>
+            <td>{{ p.range }} hours</td>
             <td>
               <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
               <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
@@ -160,7 +149,7 @@ import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
   mixins: [Mixin],
-  layout: "Admin",
+  layout: "Settings",
   name: "SettingSlas",
   metaInfo: () => ({ title: "Setting / SLA's" }),
   middleware: ["auth", "permission:view_slas"],
@@ -172,7 +161,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "SLA Details" },
       { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Name" },
       { sortable: 1, hide: 0, type: types[0], width: "25%", name: "color", label: "Color" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve (hours)" },
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve" },
       { sortable: 0, hide: 0, type: types[0], width: "25%", name: "action", label: "Action" }
     ];
     columns.forEach(column => {

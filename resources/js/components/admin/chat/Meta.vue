@@ -49,12 +49,18 @@
       </p>
 
       <div style="display: grid; gap: 0.75rem; grid-template-columns: repeat(3, 1fr);">
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
-        <img class="object-cover w-100" height="65px" style="border-radius: 8px;" src="https://via.placeholder.com/200x100.png?text=Holder" />
+        <!-- <img src="https://decoholic.org/wp-content/uploads/2013/02/minimalism_22_living_room.jpg" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <!-- <img src="https://s-media-cache-ak0.pinimg.com/originals/95/fa/0e/95fa0e315cf80554b784946ac5ea583c.jpg" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <!-- <img src="https://i.pinimg.com/originals/00/ef/dd/00efdd1ec996450fecea6fd19edf6b22.png" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <!-- <img src="https://ae01.alicdn.com/kf/HTB1Oo2bphuTBuNkHFNRq6A9qpXaz/Living-Room-Sofa-set-minimalist-modern-sofa-real-genuine-cow-leather-sectional-sofa-muebles-de-sala.jpg" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <!-- <img src="https://www.digsdigs.com/photos/Modern-minimalist-living-room-designs-by-MobilFresno-23.jpg" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <!-- <img src="https://i.pinimg.com/originals/0a/e1/8f/0ae18fb1236467fe18b8290d890473c7.jpg" class="object-cover w-100" height="65px" style="border-radius: 8px;" /> -->
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
+        <img src="https://via.placeholder.com/200x100.png?text=Holder" class="object-cover w-100" height="65px" style="border-radius: 8px;" />
       </div>
 
       <hr />

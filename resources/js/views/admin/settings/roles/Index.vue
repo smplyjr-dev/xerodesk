@@ -1,16 +1,5 @@
 <template>
-  <div class="container-fluid">
-    <SettingMeta />
-
-    <div class="page-title">
-      <div>
-        <h5 class="mb-2">Roles</h5>
-        <p class="text-secondary">Want to assign some role to a user? You can do that in here.</p>
-      </div>
-
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-role" @click="setMethod('create')">Create Role</button>
-    </div>
-
+  <div class="col-9">
     <div class="client-datatable">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div class="control d-flex align-items-center">
@@ -26,13 +15,7 @@
           </div>
           entries
         </div>
-
-        <div class="search">
-          <div class="d-flex align-items-center">
-            <label class="mb-0 mr-2" for="search">Search:</label>
-            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-role" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Role</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -156,7 +139,7 @@ import Permissions from "@Public/docs/permissions.json";
 import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
-  layout: "Admin",
+  layout: "Settings",
   name: "SettingRoles",
   metaInfo: () => ({ title: "Setting / Roles" }),
   middleware: ["auth", "permission:view_roles"],

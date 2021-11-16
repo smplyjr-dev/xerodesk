@@ -1,16 +1,5 @@
 <template>
-  <div class="container-fluid">
-    <SettingMeta />
-
-    <div class="page-title">
-      <div>
-        <h5 class="mb-2">Groups</h5>
-        <p class="text-secondary">You can organize your users by attaching them to a group in here.</p>
-      </div>
-
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-group" @click="setMethod('create')">Create Group</button>
-    </div>
-
+  <div class="col-9">
     <div class="client-datatable">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div class="control d-flex align-items-center">
@@ -26,13 +15,7 @@
           </div>
           entries
         </div>
-
-        <div class="search">
-          <div class="d-flex align-items-center">
-            <label class="mb-0 mr-2" for="search">Search:</label>
-            <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-group" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Group</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -184,7 +167,7 @@ import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 import TableGroupUsers from "@Components/admin/settings/TableGroupUsers.vue";
 
 export default {
-  layout: "Admin",
+  layout: "Settings",
   name: "SettingGroups",
   metaInfo: () => ({ title: "Setting / Groups" }),
   middleware: ["auth", "permission:view_groups"],
@@ -462,12 +445,12 @@ export default {
   a {
     text-decoration: none;
 
-    .fab,
+    .fa,
     img {
       background: $secondary;
-      border: 3px solid #ccc;
+      border: 3px solid $white;
       border-radius: 100%;
-      color: #fff;
+      color: $white;
       display: flex;
       align-items: center;
       justify-content: center;
