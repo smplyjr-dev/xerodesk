@@ -132,7 +132,7 @@ export default {
           if (file.size < 20000000 && this.extensions.includes(attachment.ext.toLowerCase())) {
             form.append("id", this.data.client.id);
             form.append("extension", file.name.split(".").pop());
-            form.append("session", localStorage.getItem("LCS_Session"));
+            form.append("session", this.$route.params.session);
             form.append("name", file.name.split(".").slice(0, -1).join(".")); // prettier-ignore
             form.append("file", file);
 
@@ -148,7 +148,7 @@ export default {
               .post(`/portal/message`, {
                 ...message,
                 client_id: this.data.client.id,
-                session: localStorage.getItem("LCS_Session"),
+                session: this.$route.params.session,
                 user_id: this.user.id
               })
               .then(response => {
@@ -210,7 +210,7 @@ export default {
             .post(`/portal/message`, {
               ...message,
               client_id: this.data.client.id,
-              session: localStorage.getItem("LCS_Session"),
+              session: this.$route.params.session,
               user_id: this.user.id
             })
             .then(({ data }) => {

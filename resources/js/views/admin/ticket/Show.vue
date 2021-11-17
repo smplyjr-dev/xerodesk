@@ -58,9 +58,6 @@ export default {
     await this.fetchSession();
     if (this.$isEmpty(this.users)) this.$store.dispatch("auth/fetchUsers");
 
-    // set the session to localStorage
-    localStorage.setItem("LCS_Session", this.session.session);
-
     // mart it as read
     axios.put(`/portal/session/${this.session.session}/seen`);
 
