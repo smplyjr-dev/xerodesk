@@ -129,18 +129,18 @@
           </td>
 
           <!-- SLA -->
-          <td>
+          <td class="pr-0">
             <TicketSla :p="p" :sla="sorted_slas" />
           </td>
 
           <!-- Client -->
           <td>
             <div class="d-flex align-items-center">
-              <div style="position-relative">
-                <!-- <img class="object-cover mr-2 rounded-circle" :src="`https://ui-avatars.com/api/?font-size=0.35&name=${p.client || 'No Name'}`" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" /> -->
+              <div class="position-relative">
+                <img class="object-cover mr-2 rounded-circle" src="/images/generic-profile.png" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" />
                 <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
               </div>
-              <span class="text-titlecase">{{ p.client | capitalize }}</span>
+              <span>{{ p.client | capitalize }}</span>
             </div>
           </td>
 
