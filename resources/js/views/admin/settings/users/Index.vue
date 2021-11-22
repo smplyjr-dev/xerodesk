@@ -1,5 +1,5 @@
 <template>
-  <div class="col-9">
+  <div class="col-md-9">
     <div class="client-datatable">
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div class="control d-flex align-items-center">
@@ -37,7 +37,7 @@
                   </div>
                 </router-link>
               </div>
-              <div class="d-flex align-items-center">
+              <!-- <div class="d-flex align-items-center">
                 <span class="w-100 text-center">
                   <div class="social-media justify-content-center">
                     <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
@@ -55,7 +55,7 @@
                     No Social Media
                   </template>
                 </span>
-              </div>
+              </div> -->
               <div class="text-center">
                 <p class="font-weight-bold my-2">
                   {{ p.role }} /
@@ -87,7 +87,7 @@
                 </div>
               </router-link>
             </td>
-            <td>
+            <!-- <td>
               <div class="social-media">
                 <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
                   <i class="fab fa-facebook" v-if="p.meta.bio.facebook"></i>
@@ -103,7 +103,7 @@
               <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
                 No Social Media
               </template>
-            </td>
+            </td> -->
             <td>{{ p.role }}</td>
             <td>
               <span class="badge badge-pill badge-primary" v-if="p.status == 'Activated'">{{ p.status }}</span>
@@ -285,7 +285,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "User Details" },
       { sortable: 0, hide: 1, type: types[1], width: "0%", name: "id", label: "Id" },
       { sortable: 1, hide: 0, type: types[0], width: "0%", name: "name", label: "Name" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "social", label: "Social Media" },
+      // { sortable: 0, hide: 0, type: types[0], width: "0%", name: "social", label: "Social Media" },
       { sortable: 1, hide: 0, type: types[0], width: "0%", name: "role", label: "Role" },
       { sortable: 1, hide: 0, type: types[0], width: "0%", name: "status", label: "Status" },
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "verification", label: "Verification" },

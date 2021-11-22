@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3 mb-4">
                 <div class="card card-body p-0">
                   <ul class="setting-meta">
                     <router-link to="/settings/company" :class="{ active: parent == 'company' }">Company</router-link>

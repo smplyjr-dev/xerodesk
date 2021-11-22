@@ -85,7 +85,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group mb-0">
+            <div class="form-group d-flex flex-row-reverse">
               <button class="btn btn-primary pull-right" type="submit">Export</button>
               <button class="btn btn-light pull-right" type="button" @click="resetExport()">Reset</button>
               <div class="clearfix"></div>

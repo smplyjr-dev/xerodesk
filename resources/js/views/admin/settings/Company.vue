@@ -1,5 +1,5 @@
 <template>
-  <div class="col-9">
+  <div class="col-md-9">
     <div class="card card-1">
       <div class="card-body">
         <form @submit.prevent="updateCompany()">

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\SLA\SLA;
-use App\Traits\Client\SLATrait;
+use App\Traits\SLA\SLATrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 

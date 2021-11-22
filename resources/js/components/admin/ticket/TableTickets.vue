@@ -27,7 +27,7 @@
                 <div class="dt-mobile-item">
                   <div class="title">SLA:</div>
                   <div class="content">
-                    <TicketSla :p="p" :sla="sorted_slas" />
+                    <TicketSla v-show="![3, 4].includes(p.status)" :p="p" :sla="sorted_slas" />
                   </div>
                 </div>
                 <div class="dt-mobile-item">
@@ -130,7 +130,7 @@
 
           <!-- SLA -->
           <td class="pr-0">
-            <TicketSla :p="p" :sla="sorted_slas" />
+            <TicketSla v-show="![3, 4].includes(p.status)" :p="p" :sla="sorted_slas" />
           </td>
 
           <!-- Client -->

@@ -121,10 +121,14 @@
       visibility: visible;
     }
   }
+  footer {
+    text-align: center;
+  }
 }
 
 // @media (min-width: 576px) {}
 // @media (min-width: 768px) {}
+// @media (min-width: 992px) {}
 @media (min-width: 1200px) {
   .layout-admin {
     aside {
@@ -194,6 +198,8 @@
         width: calc(100% - 55px);
       }
     }
+    footer {
+      text-align: center;
+    }
   }
 }
-// @media (min-width: 1200px) {}

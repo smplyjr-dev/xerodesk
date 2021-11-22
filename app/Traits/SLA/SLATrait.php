@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Client;
+namespace App\Traits\SLA;
 
 use Exception;
 use Illuminate\Support\Facades\DB;

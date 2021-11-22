@@ -13,10 +13,9 @@
               <label>Session</label>
               <input type="text" class="form-control" v-model="refine.session" />
             </div>
-            <div class="form-group">
-              <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
-              <button class="btn btn-light pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
-              <div class="clearfix"></div>
+            <div class="form-group d-flex flex-row-reverse">
+              <button class="btn btn-primary" type="submit">Search</button>
+              <button class="btn btn-light" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
             </div>
           </form>
 
@@ -60,10 +59,9 @@
               <label>Timestamp</label>
               <a-date-picker v-model="refine.created_at" />
             </div>
-            <div class="form-group">
-              <button class="btn btn-primary pull-right ml-1" type="submit">Search</button>
-              <button class="btn btn-light pull-right ml-0" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
-              <div class="clearfix"></div>
+            <div class="form-group d-flex flex-row-reverse">
+              <button class="btn btn-primary" type="submit">Search</button>
+              <button class="btn btn-light" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
             </div>
           </form>
         </div>
