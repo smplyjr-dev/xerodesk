@@ -1,0 +1,28 @@
+.emoji-picker {
+  &-content {
+    height: 300px;
+    width: 300px;
+    overflow-y: auto;
+    font-size: $text-xl;
+
+    .emoji-picker-items {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.25rem;
+
+      button {
+        height: 30px;
+        width: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+    }
+  }
+
+  &-reference {
+    cursor: pointer;
+    display: inline;
+  }
+}

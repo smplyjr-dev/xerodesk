@@ -1,21 +1,16 @@
 <template>
   <popup :toggle="toggle">
-    <div class="emoji-content" slot="content">
+    <div class="emoji-picker-content" slot="content">
       <template v-if="emojis.length">
-        <!-- <div class="emoji-group">
-          <span v-for="(e, $e) in emojis" :key="$e" @click="group = $e">
-            {{ e.emojiList[0].unicode }}
-          </span>
-        </div> -->
-        <div class="emoji-items">
+        <div class="emoji-picker-items">
           <button class="border-0 bg-transparent" v-for="(e, $e) in emojis" :key="$e" @click="emit(e.unicode)">
             {{ e.unicode }}
           </button>
         </div>
       </template>
     </div>
-    <div class="emoji-reference" slot="reference" @click="fetch()">
-      <i class="far fa-smile"></i>
+    <div class="emoji-picker-reference" slot="reference" @click="fetch()">
+      <slot />
     </div>
   </popup>
 </template>

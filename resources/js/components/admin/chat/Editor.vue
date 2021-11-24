@@ -4,7 +4,10 @@
       <EditorContent class="editor" :editor="editor" />
     </div>
     <div class="formatter">
-      <EmojiPicker @onSelect="logEmoji" />
+      <emoji-picker @onSelect="logEmoji">
+        <i class="far fa-smile mx-1"></i>
+      </emoji-picker>
+
       <button @click="formatter('toggleBold')" :class="{ 'is-active': editor.isActive('bold') }"><strong>B</strong></button>
       <button @click="formatter('toggleItalic')" :class="{ 'is-active': editor.isActive('italic') }"><i>I</i></button>
       <!-- <button @click="formatter('toggleStrike')" :class="{ 'is-active': editor.isActive('strike') }"><i class="fa fa-strikethrough"></i></button> -->

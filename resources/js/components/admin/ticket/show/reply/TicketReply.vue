@@ -20,14 +20,15 @@
     <!-- Reply Form -->
     <template v-else>
       <div class="d-flex flex-column">
-        <TicketReplyEmoji v-if="picker" @selectEmoji="selectEmoji" />
         <TicketReplyAttachment v-if="attachments.length" :attachments="attachments" @removeAttachment="removeAttachment" />
         <TicketReplyTo v-if="reply_to" :reply_to="reply_to" />
 
         <div class="d-flex align-items-center px-3 py-2">
-          <button type="button" class="btn btn-default px-0" @click="picker = !picker">
-            <InlineSvg name="template/mdi-emoticon-happy-outline.svg" color="#d0d0d0" size="23px" />
-          </button>
+          <emoji-picker @onSelect="emoji = $event">
+            <button type="button" class="btn btn-default px-0">
+              <InlineSvg name="template/mdi-emoticon-happy-outline.svg" color="#d0d0d0" size="23px" />
+            </button>
+          </emoji-picker>
 
           <input type="file" ref="file" class="d-none" @change="onFileChange" :accept="accept" multiple />
           <TicketReplyEditor v-model="message" :emoji="emoji" @onEnter="submitChat()" />
@@ -50,22 +51,21 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { nanoid } from "nanoid";
-import TicketReplyEmoji from "../reply/TicketReplyEmoji.vue";
 import TicketReplyAttachment from "../reply/TicketReplyAttachment.vue";
 import TicketReplyAttachmentModal from "../reply/TicketReplyAttachmentModal.vue";
 import TicketReplyTo from "./TicketReplyTo.vue";
 import TicketReplyEditor from "./TicketReplyEditor.vue";
+import EmojiPicker from "@Components/neutral/EmojiPicker.vue";
 
 export default {
   name: "TicketReply",
-  components: { TicketReplyEmoji, TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor },
+  components: { TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor, EmojiPicker },
   props: ["data"],
   data: () => ({
     isLocking: false,
     accept: "text/csv,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/gif,text/html,image/vnd.microsoft.icon,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.rar,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-7z-compressed",
     extensions: ["csv", "doc", "docx", "gif", "htm", "html", "ico", "jpeg", "jpg", "png", "pdf", "pptx", "rar", "txt", "xls", "xlsx", "zip", "7z"],
     emoji: "",
-    picker: false,
     agent: null,
     message: "",
     attachments: [],
@@ -81,10 +81,6 @@ export default {
     }
   },
   methods: {
-    selectEmoji(e) {
-      this.picker = false;
-      this.emoji = e;
-    },
     removeAttachment(e) {
       this.attachments = e;
     },

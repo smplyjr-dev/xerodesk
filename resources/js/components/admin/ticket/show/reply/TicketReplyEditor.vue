@@ -80,15 +80,20 @@ export default {
 
           return false;
         }
-      }
+      },
+      preserveWhitespace: "full"
     });
 
     editor.on("update", e => {
-      // HTML
-      self.$emit("input", self.editor.getHTML());
+      let trimmed = e.editor.state.doc.textContent.trim();
 
-      // JSON
-      // self.$emit("input", self.editor.getJSON());
+      if (trimmed != "") {
+        // HTML
+        self.$emit("input", self.editor.getHTML());
+
+        // JSON
+        // self.$emit("input", self.editor.getJSON());
+      }
     });
 
     this.editor = editor;
