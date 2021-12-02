@@ -71,7 +71,14 @@ trait SessionTrait
                 $query->whereDate('client_sessions.created_at', $date);
             }
 
-            $tickets = $query->paginate($length);
+            // using tap() to update the fields queried from paginate()
+            $tickets = tap($query->paginate($length), function ($init) {
+                return $init->getCollection()->transform(function ($item) {
+                    // do your customization here
+                    // $item->sla = 'Some value...';
+                    return $item;
+                });
+            });
 
             return ['data' => $tickets, 'draw' => request()->draw];
         } catch (Exception $e) {
