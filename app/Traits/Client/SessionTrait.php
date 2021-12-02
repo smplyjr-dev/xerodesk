@@ -15,7 +15,7 @@ trait SessionTrait
     public function datatable()
     {
         try {
-            $columns = ['client', 'company', 'session', 'priority', 'group_id', 'agent_id', 'status', 'created_at'];
+            $columns = ['sla', 'client', 'session', 'priority', 'group_id', 'agent_id', 'status', 'created_at'];
 
             $length = request()->length;
             $column = request()->column; // index

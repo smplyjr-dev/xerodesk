@@ -140,15 +140,21 @@ export default {
     enlargeAtt(att) {
       this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.data.client.token}/${this.data.session.session}/${att.name}.${att.extension}`;
       this.enlargeToggle = true;
+    },
+    scrollToLatest() {
+      let scrollTo = this.$el.querySelector("#scroll-to");
+      scrollTo.scrollIntoView({ behavior: "smooth" });
     }
+  },
+  mounted() {
+    this.scrollToLatest();
   },
   watch: {
     messages: {
       deep: true,
       handler: function() {
         setTimeout(() => {
-          let scrollTo = this.$el.querySelector("#scroll-to");
-          scrollTo.scrollIntoView({ behavior: "smooth" });
+          this.scrollToLatest();
         }, 100);
       }
     }
