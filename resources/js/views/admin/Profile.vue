@@ -150,20 +150,6 @@ export default {
   metaInfo: () => ({ title: "Profile" }),
   middleware: ["auth"],
   components: { ADatePicker },
-  computed: {
-    ...mapState("roles", ["roles"]),
-
-    profilePicture() {
-      if (this.user.profile_picture == "generic-profile.png") {
-        return `${this.$APP_URL}/images/${this.user.profile_picture}`;
-      } else {
-        return `${this.$APP_URL}/storage/uploads/users/${this.user.id}/${this.user.profile_picture}`;
-      }
-    },
-    name() {
-      return `${this.user.bio.last_name}, ${this.user.bio.first_name}`;
-    }
-  },
   data: () => ({
     isPictureLoading: false,
     isProfileLoading: false,
@@ -195,6 +181,20 @@ export default {
       }
     }
   }),
+  computed: {
+    ...mapState("roles", ["roles"]),
+
+    profilePicture() {
+      if (this.user.profile_picture == "generic-profile.png") {
+        return `${this.$APP_URL}/images/generic-profile.png`;
+      } else {
+        return `${this.$APP_URL}/storage/uploads/users/${this.user.id}/${this.user.profile_picture}`;
+      }
+    },
+    name() {
+      return `${this.user.bio.last_name}, ${this.user.bio.first_name}`;
+    }
+  },
   methods: {
     onFileChange(e) {
       this.isPictureLoading = true;
