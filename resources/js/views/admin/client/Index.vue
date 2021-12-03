@@ -126,8 +126,13 @@
     </transition>
 
     <transition name="fade">
-      <div class="large-attm" style="color: white;" v-if="enlargeToggle" @click.self="enlargeToggle = false">
-        <img :src="enlargeUrl" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(enlargeExtension.toLowerCase())" />
+      <div class="la-wrapper" v-if="enlargeToggle">
+        <div class="la-content">
+          <div class="la-close" @click="enlargeToggle = false">
+            <InlineSvg name="template/mdi-close.svg" color="#fff" />
+          </div>
+          <img class="la-image" :src="enlargeUrl" />
+        </div>
       </div>
     </transition>
   </div>
@@ -221,11 +226,13 @@ export default {
       this.sessions = data.sessions;
     },
     onAttmClick(message) {
-      let attachment = message.attachments[0];
+      if (["ico", "jpeg", "jpg", "png"].includes(message.attachments[0].extension)) {
+        let attachment = message.attachments[0];
 
-      this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.client.token}/${message.session}/${attachment.name}.${attachment.extension}`;
-      this.enlargeExtension = attachment.extension;
-      this.enlargeToggle = true;
+        this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.client.token}/${message.session}/${attachment.name}.${attachment.extension}`;
+        this.enlargeExtension = attachment.extension;
+        this.enlargeToggle = true;
+      }
     },
     getAttachment(message) {
       return message.attachments[0];

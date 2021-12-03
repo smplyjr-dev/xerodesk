@@ -49,8 +49,13 @@
     </div>
 
     <transition name="fade">
-      <div class="large-attm" v-if="enlargeToggle" @click.self="enlargeToggle = false">
-        <img :src="enlargeUrl" />
+      <div class="la-wrapper" v-if="enlargeToggle">
+        <div class="la-content">
+          <div class="la-close" @click="enlargeToggle = false">
+            <InlineSvg name="template/mdi-close.svg" color="#fff" />
+          </div>
+          <img class="la-image" :src="enlargeUrl" />
+        </div>
       </div>
     </transition>
 
