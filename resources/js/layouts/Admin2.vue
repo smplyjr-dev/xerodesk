@@ -49,15 +49,9 @@ export default {
   },
   methods: {
     setupListeners() {
-      // pusher init
-      const PUSHER = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
-        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        encrypted: true
-      });
-
       // channel to subscribe
-      const CH_SESSION = PUSHER.subscribe("session");
-      const CH_MESSAGE = PUSHER.subscribe("message");
+      const CH_SESSION = window.pusher.subscribe("session");
+      const CH_MESSAGE = window.pusher.subscribe("message");
 
       CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async data => {
         this.$store.dispatch("notifications/addNotification", {
@@ -108,6 +102,10 @@ export default {
   },
   mounted() {
     this.setupListeners();
+  },
+  destroyed() {
+    window.pusher.unsubscribe("session");
+    window.pusher.unsubscribe("message");
   }
 };
 </script>

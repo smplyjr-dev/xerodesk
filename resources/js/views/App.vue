@@ -96,6 +96,12 @@ export default {
     }
   },
   mounted() {
+    // pusher init
+    window.pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+      encrypted: true
+    });
+
     this.$loading = this.$refs.loading;
   }
 };

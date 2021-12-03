@@ -372,27 +372,19 @@ export default {
         });
     },
     setupListeners() {
-      const self = this;
-
-      // pusher init
-      const PUSHER = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
-        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        encrypted: true
-      });
-
       // channel to subscribe
-      const CH_SESSION = PUSHER.subscribe("session");
-      const CH_MESSAGE = PUSHER.subscribe("message");
+      const CH_SESSION = window.pusher.subscribe("session");
+      const CH_MESSAGE = window.pusher.subscribe("message");
 
       CH_SESSION.bind(`session.created`, async data => {
-        self.isUpdated = true;
+        this.isUpdated = true;
       });
 
       CH_MESSAGE.bind(`message.from.client`, async data => {
         let { message, session } = data;
 
         // push the message to its session
-        self.paginated = self.paginated.map(p => {
+        this.paginated = this.paginated.map(p => {
           if (p.session == session) {
             let updated = p;
             updated.messages.push(message);
@@ -483,6 +475,10 @@ export default {
       this.setTableData();
       this.getDatatable();
     }
+  },
+  destroyed() {
+    window.pusher.unsubscribe("session");
+    window.pusher.unsubscribe("message");
   }
 };
 </script>
