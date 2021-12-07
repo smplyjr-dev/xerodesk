@@ -1,7 +1,10 @@
 <template>
   <div id="xerodesk-portal">
     <loading ref="loading" :layout="layout" />
-    <component :is="layout" v-if="layout" />
+
+    <transition name="page" mode="out-in">
+      <component :is="layout" v-if="layout" />
+    </transition>
 
     <div id="unauth-modal" class="modal fade" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-dialog-centered">

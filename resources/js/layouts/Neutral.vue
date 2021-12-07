@@ -1,9 +1,7 @@
 <template>
   <div class="layout layout-neutral">
     <div class="container-fluid h-100">
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
+      <RouterView />
     </div>
   </div>
 </template>

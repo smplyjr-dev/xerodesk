@@ -7,19 +7,13 @@ import AppDropdownItem from "./neutral/dropdown/AppDropdownItem.vue";
   Vue.component(Component.name, Component);
 });
 
-// Skeleton Components
+// Other Components
 import Skeleton from "./neutral/Skeleton.vue";
 import Popup from "./neutral/Popup.vue";
-
-[Skeleton, Popup].forEach(Component => {
-  Vue.component(Component.name, Component);
-});
-
-// Other Components
 import FormAlert from "./neutral/FormAlert.vue";
 import InlineSvg from "./neutral/InlineSvg.vue";
 import Spinner from "./neutral/Spinner.vue";
 
-[FormAlert, InlineSvg, Spinner].forEach(Component => {
+[Skeleton, Popup, FormAlert, InlineSvg, Spinner].forEach(Component => {
   Vue.component(Component.name, Component);
 });

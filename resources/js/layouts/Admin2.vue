@@ -7,10 +7,7 @@
     <main>
       <section class="d-flex flex-column h-100 overflow-scroll">
         <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
-
-        <transition name="fade" mode="out-in">
-          <RouterView @toggle-sidebar="isOpen = $event" />
-        </transition>
+        <RouterView @toggle-sidebar="isOpen = $event" />
 
         <footer class="footer mt-auto py-3 px-4">
           <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
