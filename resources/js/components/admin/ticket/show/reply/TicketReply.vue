@@ -1,5 +1,9 @@
 <template>
-  <div class="ticket-reply">
+  <form-alert class="m-3" variant="info" v-if="session.status == 4">
+    <p class="m-0">This is now a <strong>read-only</strong> ticket.</p>
+  </form-alert>
+
+  <div class="ticket-reply" v-else>
     <!-- Locking / Accepting -->
     <template v-if="$isNull(session.user_id)">
       <div class="p-3">

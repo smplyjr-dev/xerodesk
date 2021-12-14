@@ -35,7 +35,15 @@ export default {
   },
   computed: {
     ...mapState("auth", ["user"]),
-    ...mapState("sessions", ["session"])
+
+    session: {
+      get() {
+        return this.$store.state.sessions.session;
+      },
+      set(newValue) {
+        this.$store.state.sessions.session = newValue;
+      }
+    }
   },
   methods: {
     setupListeners() {
@@ -67,6 +75,11 @@ export default {
         if (this.$store.state.sessions.session.session == data.session) {
           this.$store.state.sessions.session.user_id = data.new_user_id;
         }
+      });
+
+      CH_SESSION.bind(`session.update`, async (data) => {
+        let { session } = data;
+        if (this.session.session == session.session) this.session = session;
       });
 
       CH_MESSAGE.bind(`message.from.client`, async (data) => {
