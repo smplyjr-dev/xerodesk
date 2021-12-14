@@ -11,11 +11,18 @@ class MessageObserver
     public function created(Message $message)
     {
         if ($message->sender == 'client') {
-            MessageToAdmin::dispatch($message, $message->session()->first()->session);
+            MessageToAdmin::dispatch(
+                $message,
+                $message->session()->first()->session
+            );
         }
 
         if ($message->sender == 'admin' || $message->sender == 'session') {
-            MessageToClient::dispatch($message, $message->session->session, $message->session()->first()->client()->first()->token);
+            MessageToClient::dispatch(
+                $message,
+                $message->session->session,
+                $message->session()->first()->client()->first()->token
+            );
         }
     }
 
