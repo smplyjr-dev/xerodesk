@@ -1,7 +1,7 @@
 <template>
   <div class="ticket-metas">
     <div class="picture-style-a">
-      <img class="client-img" :src="`https://ui-avatars.com/api/?size=256&font-size=0.35&name=${client.name || 'No Name'}`" alt="Profile Picture" loading="lazy" />
+      <img class="client-img" :src="profilePicture" alt="Profile Picture" loading="lazy" />
 
       <div class="client-name">
         <h5 class="font-weight-bold mb-0">{{ client.name || "No Name" }}</h5>
@@ -72,6 +72,13 @@ export default {
     ...mapState("auth", ["user"]),
     ...mapState("messages", ["messages"]),
 
+    profilePicture() {
+      if (process.env.NODE_ENV == "development") {
+        return `${this.$APP_URL}/images/generic-profile.png`;
+      } else {
+        return `https://ui-avatars.com/api/?size=300&name=${this.client.name}`;
+      }
+    },
     session() {
       return this.data.session;
     },
