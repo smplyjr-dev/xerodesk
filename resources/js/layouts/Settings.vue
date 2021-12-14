@@ -23,7 +23,7 @@
             <div class="col-md-3 mb-4">
               <div class="card card-body p-0">
                 <ul class="setting-meta">
-                  <router-link to="/settings/company" :class="{ active: parent == 'company' }">Company</router-link>
+                  <router-link to="/settings/companies" :class="{ active: parent == 'companies' }">Companies</router-link>
                   <router-link to="/settings/groups" :class="{ active: parent == 'groups' }">Groups</router-link>
                   <router-link to="/settings/roles" :class="{ active: parent == 'roles' }">Roles</router-link>
                   <router-link to="/settings/slas" :class="{ active: parent == 'slas' }">Service-level Agreements</router-link>
@@ -73,8 +73,8 @@ export default {
     ...mapState("auth", ["user"]),
     ...mapState("sessions", ["session"])
   },
-  watch: {
-    $route(newValue) {
+  methods: {
+    setParent(newValue) {
       const parent = newValue.path.split("/")[2];
 
       switch (parent) {
@@ -83,9 +83,9 @@ export default {
           this.meta.description = "Set the level of your SLA's in here.";
           break;
 
-        case "company":
-          this.meta.title = "Company";
-          this.meta.description = "You may edit your company details in here.";
+        case "companies":
+          this.meta.title = "Companies";
+          this.meta.description = "You may edit each companies details in here.";
           break;
 
         case "groups":
@@ -105,6 +105,14 @@ export default {
       }
 
       this.parent = parent;
+    }
+  },
+  mounted() {
+    this.setParent(this.$route);
+  },
+  watch: {
+    $route(newValue) {
+      this.setParent(newValue);
     }
   }
 };
