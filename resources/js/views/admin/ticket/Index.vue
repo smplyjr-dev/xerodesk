@@ -34,7 +34,7 @@ import TableTickets from "@Components/admin/ticket/TableTickets.vue";
 import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
 
 export default {
-  layout: "Admin2",
+  layout: "Admin",
   name: "Tickets",
   components: { RefineTickets, TableTickets, ExportTickets },
   metaInfo: () => ({ title: "Tickets" }),

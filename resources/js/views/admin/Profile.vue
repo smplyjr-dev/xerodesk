@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid px-4 mt-4">
     <div class="card card-picture card-1" style="background-image: url('/images/template/bg-profile.jpg')">
       <div class="card-body">
         <div class="card-picture-container">

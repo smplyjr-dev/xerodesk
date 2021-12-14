@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid px-4 mt-4">
     <h4 class="font-weight-normal mb-4">Create User</h4>
 
     <div class="card card-picture" style="background-image: url('/images/template/bg-profile.jpg')">
