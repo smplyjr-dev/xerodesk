@@ -83,9 +83,9 @@ export default {
           this.meta.description = "Set the level of your SLA's in here.";
           break;
 
-        case "companies":
-          this.meta.title = "Companies";
-          this.meta.description = "You may edit each companies details in here.";
+        case "company":
+          this.meta.title = "Company";
+          this.meta.description = "You may edit your company details in here.";
           break;
 
         case "groups":
