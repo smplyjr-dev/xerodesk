@@ -664,6 +664,13 @@ body,
   }
 }
 
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 @keyframes wiggle-to-left {
   // from { }
   to {

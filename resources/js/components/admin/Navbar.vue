@@ -23,7 +23,7 @@
                 <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
                 <p class="mx-2 mb-2 text-xs text-secondary">{{ user.role }}</p>
                 <hr class="my-1" />
-                <app-dropdown-item @select="$router.push('/profile')">Profile</app-dropdown-item>
+                <app-dropdown-item><router-link class="link-unstyled" to="/profile">Profile</router-link> </app-dropdown-item>
                 <hr class="my-1" />
                 <app-dropdown-item @select="logout()">Logout</app-dropdown-item>
               </template>
