@@ -184,10 +184,10 @@ export default {
       let thisWeek = new Date();
       thisWeek = thisWeek.setDate(thisWeek.getDate() - 7);
       thisWeek = new Date(thisWeek);
-      thisWeek = `${thisWeek.getFullYear()}-${String(thisWeek.getMonth() + 1).padStart(2, "0")}-${thisWeek.getDate()}`;
+      thisWeek = `${thisWeek.getFullYear()}-${String(thisWeek.getMonth() + 1).padStart(2, "0")}-${thisWeek.getDate().toString().padStart(2, "0")}`;
 
       let thisDate = new Date();
-      thisDate = `${thisDate.getFullYear()}-${String(thisDate.getMonth() + 1).padStart(2, "0")}-${thisDate.getDate()}`;
+      thisDate = `${thisDate.getFullYear()}-${String(thisDate.getMonth() + 1).padStart(2, "0")}-${thisDate.getDate().toString().padStart(2, "0")}`;
 
       this.refine.range = [thisWeek, thisDate];
     }
