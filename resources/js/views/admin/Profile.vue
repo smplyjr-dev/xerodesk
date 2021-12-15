@@ -5,7 +5,7 @@
         <div class="card-picture-container">
           <input type="file" class="d-none" ref="file" @change="onFileChange" />
 
-          <img loading="lazy" class="object-cover" :src="profilePicture" alt="Profile Picture" />
+          <img loading="lazy" class="object-cover" :src="profilePicture" @error="$onImgError($event, 1)" alt="Profile Picture" />
 
           <div class="loader" v-if="isPictureLoading">
             <div class="spinner-border text-light" style="height: 3rem; width: 3rem;" role="status"></div>
