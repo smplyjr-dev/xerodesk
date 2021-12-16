@@ -8,9 +8,10 @@ trait RoleTrait
 {
     public function datatable()
     {
-        $query = Role::with('permissions');
-        $query->whereNotIn('id', [1]);
+        $query = cache()->remember('roles-index', remember_for(5), function () {
+            return Role::with('permissions')->whereNotIn('id', [1]);
+        });
 
-        return $query->get();
+        return response()->json($query, 200);
     }
 }
