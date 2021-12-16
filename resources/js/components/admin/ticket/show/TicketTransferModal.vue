@@ -55,10 +55,16 @@ export default {
     filtered() {
       if (!this.agent) return [];
 
-      return this.users.filter(user => {
+      // remove current user from the choices
+      let sorted = this.users.filter((u) => u.id != this.user.id);
+
+      // show the users base on what the agent typed
+      sorted = sorted.filter((user) => {
         let name = `${user.bio.first_name} ${user.bio.last_name}`;
         return !name.toLowerCase().indexOf(this.agent.toLowerCase());
       });
+
+      return sorted;
     },
     current() {
       if (this.session.user) return `${this.session.user.bio.first_name} ${this.session.user.bio.last_name}`;
@@ -99,7 +105,7 @@ export default {
         // save the message
         await axios.post(`/portal/message`, {
           ...message,
-          client_id: this.session.client.id,
+          client_id: this.session.client_id,
           session: this.session.session,
           user_id: this.selected.id
         });
