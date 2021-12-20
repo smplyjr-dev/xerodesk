@@ -22,7 +22,7 @@
         <tbody class="text-sm">
           <tr class="text-center" v-if="isLoading">
             <td colspan="6">
-              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
             </td>
           </tr>
 
@@ -153,7 +153,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "70%", name: "permissions", label: "Permissions" },
       { sortable: 0, hide: 0, type: types[0], width: "15%", name: "action", label: "Action" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -190,13 +190,9 @@ export default {
     filteredRoles() {
       let roles = this.roles;
       if (this.search) {
-        roles = roles.filter(row => {
-          return Object.keys(row).some(key => {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(this.search.toLowerCase()) > -1
-            );
+        roles = roles.filter((row) => {
+          return Object.keys(row).some((key) => {
+            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           });
         });
       }
@@ -230,12 +226,12 @@ export default {
 
       axios
         .get(url, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           this.roles = response.data;
           this.pagination.total = this.roles.length;
           this.isLoading = false;
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
@@ -274,13 +270,14 @@ export default {
       if (method == "create") {
         this.roleMethod = "create";
         this.roleDetails.name = "";
+        this.roleDetails.permissions = [];
       }
 
       if (method == "update") {
         this.roleMethod = "update";
         this.roleDetails.id = role.id;
         this.roleDetails.name = role.name;
-        this.roleDetails.permissions = [...role.permissions.map(p => ({ name: p.name, slug: p.slug }))];
+        this.roleDetails.permissions = [...role.permissions.map((p) => ({ name: p.name, slug: p.slug }))];
       }
 
       if (method == "delete") {
@@ -348,7 +345,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.roleError.push(message);
             });
           }
