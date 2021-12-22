@@ -89,16 +89,16 @@ export default {
       return this.data.company;
     },
     history() {
-      return this.messages.filter(m => m.sender == "session").reverse();
+      return this.messages.filter((m) => m.sender == "session").reverse();
     }
   },
   methods: {
-    forbiddenNotif() {
+    forbiddenNotif(message = "This ticket is not currently assigned to you.") {
       this.$store.dispatch("notifications/addNotification", {
         variant: "bg-danger",
         icon: "fa-times",
         title: "Forbidden!",
-        body: "This ticket is not currently assigned to you."
+        body: message
       });
     },
     updateSession() {
@@ -109,10 +109,14 @@ export default {
       }
     },
     transferSession() {
-      if (this.session.user_id == this.user.id || this.user.role == "Super") {
-        $("#transfer-ticket-modal").modal("show");
+      if (this.session.status != 4) {
+        if (this.session.user_id == this.user.id || this.user.role == "Super") {
+          $("#transfer-ticket-modal").modal("show");
+        } else {
+          this.forbiddenNotif();
+        }
       } else {
-        this.forbiddenNotif();
+        this.forbiddenNotif("The ticket is already closed.");
       }
     },
     async transcriptSession() {
