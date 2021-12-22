@@ -22,7 +22,7 @@ class SendMessages extends Mailable
      */
     public function __construct($user, $client, $messages)
     {
-        $this->user = $user;
+        $this->user = $user->bio->first_name . ' ' . $user->bio->last_name;
         $this->client = $client;
         $this->messages = $messages;
     }

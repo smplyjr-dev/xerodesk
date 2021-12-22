@@ -104,6 +104,10 @@
       border: 0;
       outline: none;
     }
+
+    p {
+      margin: 0;
+    }
   </style>
 
 </head>
@@ -179,7 +183,7 @@
           <!-- Heading: Sentences -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Please find the below chat log of your session.</p>
+              <p style="margin: 0;">Please find the below transcript of your session.</p>
             </td>
           </tr>
 
@@ -188,70 +192,27 @@
             <td align="left" bgcolor="#ffffff">
               <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                  <td align="center" bgcolor="#ffffff" style="padding: 12px;">
-                    <table border="0" cellpadding="0" cellspacing="0" style="margin:0 15px;" width="100%">
+                  <td bgcolor="#ffffff" style="padding: 12px 8px;">
+                    <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 15px;" width="100%">
                       <tr>
-                        <td align="center" style=" padding:20px 20px 40px 20px;">
+                        <td>
                           @foreach ($messages as $message)
-                            @if ($message->sender == 'admin')
-                              <table style="margin-top: 15px;">
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      @if ($user->profile_picture !== 'generic-profile.png')
-                                        <img style="border-radius: 30px;" src="{{ url('/storage/uploads/users/' . $user->id . '/' . $user->profile_picture) }}" width="30px" />
-                                      @else
-                                        <img style="border-radius: 30px;" src="{{ url('/images/generic-profile.png') }}" width="30px" />
-                                      @endif
-                                    </td>
-                                    <td align="left" bgcolor="#ffffff" style="font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; padding-left: 10px;">
-                                      {{ $user->bio->first_name . ' ' . $user->bio->last_name }}
-                                      <span style="text-align: center; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 11px; font-style: italic; line-height: 30px;">{{ $message->created_at }}</span>
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td align="left" bgcolor="#ffffff" style="padding: 10px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 24px; background-color:#f2f2f2; border-radius: 6px;">
-                                      <p style="margin: 0;">{!! $message->message !!}</p>
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            @endif
+                            @php
+                              $sender     = (is_null($message->user_id)) ? $client->name : $message->user->bio->first_name . ' ' . $message->user->bio->last_name;
+                              $created_at = $message->created_at;
+                              $content    = $message->message;
+                            @endphp
 
-                            @if ($message->sender == 'client')
-                              <table style="margin-top: 15px;">
-                                <tbody>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td align="right" bgcolor="#ffffff" style="font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; padding-right: 10px;">
-                                      {{ $client->name }}
-                                      <span style="text-align: center; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 11px; font-style: italic; line-height: 30px;">{{ $message->created_at }}</span>
-                                    </td>
-                                    <td>
-                                      @if (is_null($client->picture))
-                                        <img style="border-radius: 30px;" src="{{ url('/images/generic-profile.png') }}" width="30px" />
-                                      @else
-                                        <img style="border-radius: 30px;" src="{{ url($client->company->url . '/' . $client->picture) }}" width="30px" />
-                                      @endif
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td align="left" bgcolor="#ffffff" style="padding: 10px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 24px; background-color: rgb(215, 250, 234); border-radius: 6px;">
-                                      <p style="margin: 0;">{!! $message->message !!}</p>
-                                    </td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            @endif
+                            <table style="margin-top: 10px;" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div><strong>{{ $sender }}</strong> [{{ $created_at }}]:</div>
+                                    <div>{!! $content !!}</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
                           @endforeach
                         </td>
                       </tr>
