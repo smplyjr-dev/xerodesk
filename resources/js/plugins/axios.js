@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+const axios = window.axios;
 import store from "@Scripts/store";
 import App from "@Scripts/views/App.vue";
 

@@ -10,20 +10,16 @@ Vue.prototype.$delay = async function(ms) {
 };
 
 // Date Formatter
-Vue.prototype.$dayjs = function(trans, date, data) {
+Vue.prototype.$dayjs = function (trans, date, data) {
   let result;
-  let dayjs = require("dayjs");
-  let relativeTime = require("dayjs/plugin/relativeTime");
+  // let dayjs = require("dayjs");
+  // let relativeTime = require("dayjs/plugin/relativeTime");
+  // dayjs.extend(relativeTime);
 
-  dayjs.extend(relativeTime);
+  window.dayjs.extend(window.dayjs_plugin_relativeTime);
 
-  if (trans == "format") {
-    result = dayjs(date).format(data);
-  }
-
-  if (trans == "fromNow") {
-    result = dayjs(date).fromNow();
-  }
+  if (trans == "format") result = window.dayjs(date).format(data);
+  if (trans == "fromNow") result = window.dayjs(date).fromNow();
 
   return result;
 };

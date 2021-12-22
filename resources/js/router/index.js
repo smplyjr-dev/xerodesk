@@ -1,4 +1,4 @@
-import VueMeta from "vue-meta";
+// import VueMeta from "vue-meta";
 import store from "@Scripts/store";
 import { sync } from "vuex-router-sync";
 
