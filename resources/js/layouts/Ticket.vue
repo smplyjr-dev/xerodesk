@@ -26,7 +26,7 @@ export default {
   components: { Notification, Navbar, Sidebar },
   metaInfo: () => ({
     title: "Live Chat", // set the title on each page, this is just a fallback
-    titleTemplate: `XMCIT - %s`
+    titleTemplate: `FiliChat - %s`
   }),
   data() {
     return {
@@ -79,7 +79,7 @@ export default {
 
       CH_SESSION.bind(`session.update`, async (data) => {
         let { session } = data;
-        if (this.session.session == session.session) this.session = session;
+        if (this.session.session == session.session) this.session = { ...this.session, ...session };
       });
 
       CH_MESSAGE.bind(`message.from.client`, async (data) => {

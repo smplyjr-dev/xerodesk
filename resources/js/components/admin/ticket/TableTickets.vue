@@ -5,17 +5,17 @@
     </div>
 
     <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-      <tbody class="text-sm">
+      <tbody class="position-relative text-sm">
         <transition name="fade">
           <!-- Update Record Notice -->
-          <div class="updater" v-if="isUpdated" @click="getDatatable(), (isUpdated = !isUpdated)">
-            <div class="updater-content shadow"><i class="fa fa-sync-alt mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
+          <div class="updater" v-if="isUpdated">
+            <div class="updater-content shadow" @click="getDatatable(), (isUpdated = !isUpdated)"><i class="fa fa-sync-alt mr-1" aria-hidden="true"></i> A new ticket has been found.</div>
           </div>
         </transition>
 
         <tr class="text-center" v-if="isLoading || !isReady">
           <td colspan="8">
-            <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
           </td>
         </tr>
 
@@ -47,7 +47,7 @@
                   <div class="title">Priority:</div>
                   <div class="content">
                     <app-dropdown @away="filter_priorities = ''">
-                      <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
+                      <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find((pr) => pr.id == p.priority).name}` }}</template>
 
                       <app-dropdown-content>
                         <template v-slot:content>
@@ -63,7 +63,7 @@
                   <div class="title">Group:</div>
                   <div class="content">
                     <app-dropdown @away="filter_groups = ''">
-                      <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find(g => g.id == p.group_id).name }}</template>
+                      <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find((g) => g.id == p.group_id).name }}</template>
 
                       <app-dropdown-content>
                         <template v-slot:content>
@@ -78,10 +78,10 @@
                 <div class="dt-mobile-item">
                   <div class="title">Agent:</div>
                   <div class="content">
-                    <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                    <template v-if="p.agent_id">{{ `${users.find((u) => u.id == p.agent_id).bio.first_name} ${users.find((u) => u.id == p.agent_id).bio.last_name}` }}</template>
                     <template v-else>
                       <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
-                        <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                        <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find((u) => u.id == p.agent_id).bio.first_name} ${users.find((u) => u.id == p.agent_id).bio.last_name}` }}</template>
 
                         <app-dropdown-content>
                           <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
@@ -104,7 +104,7 @@
                     <template v-if="!p.agent_id">Unassigned</template>
                     <template v-else>
                       <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)">
-                        <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
+                        <template v-slot:value>{{ `${status.find((s) => s.id == p.status).name}` }}</template>
 
                         <app-dropdown-content>
                           <template v-slot:content>
@@ -152,7 +152,7 @@
           <!-- Priority -->
           <td>
             <app-dropdown @away="filter_priorities = ''">
-              <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find(pr => pr.id == p.priority).name}` }}</template>
+              <template v-slot:value>{{ !p.priority ? "Not Set" : `${priority.find((pr) => pr.id == p.priority).name}` }}</template>
 
               <app-dropdown-content>
                 <template v-slot:content>
@@ -167,7 +167,7 @@
           <!-- Groups -->
           <td>
             <app-dropdown @away="filter_groups = ''">
-              <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find(g => g.id == p.group_id).name }}</template>
+              <template v-slot:value>{{ !p.group_id ? "Not Set" : groups.find((g) => g.id == p.group_id).name }}</template>
 
               <app-dropdown-content>
                 <template v-slot:content>
@@ -181,10 +181,10 @@
 
           <!-- Agent -->
           <td>
-            <template v-if="p.agent_id">{{ `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+            <template v-if="p.agent_id">{{ `${users.find((u) => u.id == p.agent_id).bio.first_name} ${users.find((u) => u.id == p.agent_id).bio.last_name}` }}</template>
             <template v-else>
               <app-dropdown @away="filter_agents = ''" :disabled="ifNotAllowed() || ifAssignedAlready(p)">
-                <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find(u => u.id == p.agent_id).bio.first_name} ${users.find(u => u.id == p.agent_id).bio.last_name}` }}</template>
+                <template v-slot:value>{{ !p.agent_id ? "Not Set" : `${users.find((u) => u.id == p.agent_id).bio.first_name} ${users.find((u) => u.id == p.agent_id).bio.last_name}` }}</template>
 
                 <app-dropdown-content>
                   <input slot="filter" type="text" class="form-control" placeholder="Enter a keyword..." v-model="filter_agents" />
@@ -206,7 +206,7 @@
             <template v-if="!p.agent_id">Unassigned</template>
             <template v-else>
               <app-dropdown @away="filter_statuses = ''" :disabled="isClosedAlready(p.status)" position="right">
-                <template v-slot:value>{{ `${status.find(s => s.id == p.status).name}` }}</template>
+                <template v-slot:value>{{ `${status.find((s) => s.id == p.status).name}` }}</template>
 
                 <app-dropdown-content>
                   <template v-slot:content>
@@ -268,7 +268,7 @@ export default {
       // { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "title", label: "Title" },
       // { sortable: 1, hide: 0, type: types[2], width: "12.5%", name: "created_at", label: "Timestamp" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -306,14 +306,14 @@ export default {
         .sort((a, b) => {
           return a.range - b.range;
         })
-        .map(s => ({
+        .map((s) => ({
           ...s,
           range: s.range * 60
         }));
     },
     filtered_priority() {
       let search = this.filter_priorities;
-      let filtered = this.priority.filter(p => {
+      let filtered = this.priority.filter((p) => {
         let name = p.name.toLowerCase();
 
         return name.includes(search.toLowerCase());
@@ -323,7 +323,7 @@ export default {
     },
     filtered_groups() {
       let search = this.filter_groups;
-      let filtered = this.groups.filter(g => {
+      let filtered = this.groups.filter((g) => {
         let name = g.name.toLowerCase();
 
         return name.includes(search.toLowerCase());
@@ -333,7 +333,7 @@ export default {
     },
     filtered_agents() {
       let search = this.filter_agents;
-      let filtered = this.users.filter(u => {
+      let filtered = this.users.filter((u) => {
         let name = `${u.bio.first_name} ${u.bio.last_name}`.toLowerCase();
 
         return name.includes(search.toLowerCase());
@@ -343,7 +343,7 @@ export default {
     },
     filtered_statuses() {
       let search = this.filter_statuses;
-      let filtered = this.status.filter(s => {
+      let filtered = this.status.filter((s) => {
         let name = s.name.toLowerCase();
 
         return name.includes(search.toLowerCase());
@@ -359,7 +359,7 @@ export default {
 
       axios
         .get(url, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
             this.paginated = data.data.data;
@@ -367,7 +367,7 @@ export default {
             // this.isLoading = false;
           }
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
@@ -376,15 +376,15 @@ export default {
       const CH_SESSION = window.pusher.subscribe("session");
       const CH_MESSAGE = window.pusher.subscribe("message");
 
-      CH_SESSION.bind(`session.created`, async data => {
+      CH_SESSION.bind(`session.created`, async (data) => {
         this.isUpdated = true;
       });
 
-      CH_MESSAGE.bind(`message.from.client`, async data => {
+      CH_MESSAGE.bind(`message.from.client`, async (data) => {
         let { message, session } = data;
 
         // push the message to its session
-        this.paginated = this.paginated.map(p => {
+        this.paginated = this.paginated.map((p) => {
           if (p.session == session) {
             let updated = p;
             updated.messages.push(message);
@@ -411,11 +411,11 @@ export default {
         status: val,
         hash: nanoid(),
         sender: "session",
-        message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == val).name}</strong>.</p>`
+        message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == val).name}</strong>.</p>`
       });
     },
     updateAgent(s) {
-      let agent = this.users.find(u => u.id == s.agent_id);
+      let agent = this.users.find((u) => u.id == s.agent_id);
 
       axios.put(`/portal/session/${s.session}/lock`, {
         ...s,
@@ -463,7 +463,7 @@ export default {
       if (ticket.agent_id) return true;
     },
     getUnreadCount(p) {
-      return p.messages.filter(m => m.sender == "client" && m.is_read == false).length;
+      return p.messages.filter((m) => m.sender == "client" && m.is_read == false).length;
     }
   },
   created() {

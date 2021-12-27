@@ -41,8 +41,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/session/{session}/tag',        [SessionController::class, 'tags']);
     Route::post('/session/{session}/tag',       [SessionController::class, 'attach']);
     Route::delete('/session/{session}/tag',     [SessionController::class, 'detach']);
-    Route::put('/session/{session}/transfer',   [SessionController::class, 'transfer']);
     Route::get('/session/{session}/transcript', [SessionController::class, 'transcript']);
+    Route::put('/session/{session}/transfer',   [SessionController::class, 'transfer']);
     Route::put('/session/{session}/status',     [SessionController::class, 'status']);
     Route::put('/session/{session}/seen',       [SessionController::class, 'seen']);
     Route::put('/session/{session}/lock',       [SessionController::class, 'lock']);
