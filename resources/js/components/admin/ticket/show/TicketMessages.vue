@@ -23,7 +23,7 @@
             </div>
             <div class="message-attm--item" v-for="attachment in message.attachments" :key="attachment.id">
               <div class="message-attm--item-image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(attachment.extension.toLowerCase())" @click="enlargeAtt(attachment)">
-                <img :src="`${$APP_URL}/storage/uploads/clients/${data.client.token}/${data.session.session}/${attachment.name}.${attachment.extension}`" />
+                <img :src="`${$APP_URL}/storage/uploads/clients/${session.client.token}/${session.session}/${attachment.name}.${attachment.extension}`" />
               </div>
               <div class="message-attm--item-file" v-else>
                 <div class="message-attm--item-icon" @click="downloadAtt(attachment)">
@@ -40,7 +40,7 @@
             <span v-if="['admin', 'client'].includes(message.sender)">
               &#8226;
               <template v-if="message.sender == 'admin'">{{ getSender(message) }}</template>
-              <template v-else>{{ data.client.name }}</template>
+              <template v-else>{{ session.client.name }}</template>
             </span>
           </div>
           <Spinner v-if="$isEmpty(message.message) && $isEmpty(message.attachments)" />
@@ -69,14 +69,14 @@ import TicketReplyingTo from "@Components/admin/ticket/show/TicketReplyingTo.vue
 
 export default {
   components: { TicketReplyingTo },
-  props: ["data"],
   data: () => ({
     enlargeToggle: false,
     enlargeUrl: null
   }),
   computed: {
     ...mapState("auth", ["users"]),
-    ...mapState("messages", ["messages"])
+    ...mapState("messages", ["messages"]),
+    ...mapState("sessions", ["session"])
   },
   methods: {
     shouldShow(message, index) {
@@ -118,13 +118,13 @@ export default {
       if (["rar", "zip", "7z"].includes(ext)) return "folder";
     },
     getSender(message) {
-      let user = this.users.find(u => u.id == message.user_id);
+      let user = this.users.find((u) => u.id == message.user_id);
 
       if (user) return `${user.bio.first_name} ${user.bio.last_name}`;
       return;
     },
     downloadAtt(att) {
-      let url = `${this.$APP_URL}/storage/uploads/clients/${this.data.client.token}/${this.data.session.session}/${att.name}.${att.extension}`;
+      let url = `${this.$APP_URL}/storage/uploads/clients/${this.session.client.token}/${this.session.session}/${att.name}.${att.extension}`;
       let link = document.createElement("a");
 
       // if you don't know the name or want to use the webserver default set name = ''
@@ -143,7 +143,7 @@ export default {
       this.downloadAtt(message.attachments[0]);
     },
     enlargeAtt(att) {
-      this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.data.client.token}/${this.data.session.session}/${att.name}.${att.extension}`;
+      this.enlargeUrl = `${this.$APP_URL}/storage/uploads/clients/${this.session.client.token}/${this.session.session}/${att.name}.${att.extension}`;
       this.enlargeToggle = true;
     },
     scrollToLatest() {
@@ -157,7 +157,7 @@ export default {
   watch: {
     messages: {
       deep: true,
-      handler: function() {
+      handler: function () {
         setTimeout(() => {
           this.scrollToLatest();
         }, 100);

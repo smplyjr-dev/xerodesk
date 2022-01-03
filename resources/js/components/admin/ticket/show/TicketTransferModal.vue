@@ -42,7 +42,6 @@ import { nanoid } from "nanoid";
 import { mapState } from "vuex";
 
 export default {
-  props: ["session"],
   data: () => ({
     agent: null,
     list: false,
@@ -51,6 +50,7 @@ export default {
   }),
   computed: {
     ...mapState("auth", ["users", "user"]),
+    ...mapState("sessions", ["session"]),
 
     filtered() {
       if (!this.agent) return [];

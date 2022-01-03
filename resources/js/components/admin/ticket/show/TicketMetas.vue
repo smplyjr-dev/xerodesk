@@ -52,8 +52,8 @@
       </li>
     </ul>
 
-    <TicketUpdateModal :session="session" />
-    <TicketTransferModal :session="session" />
+    <TicketUpdateModal />
+    <TicketTransferModal />
   </div>
 </template>
 
@@ -79,14 +79,19 @@ export default {
         return `https://ui-avatars.com/api/?size=300&name=${this.client.name}`;
       }
     },
-    session() {
-      return this.data.session;
+    session: {
+      get() {
+        return this.$store.state.sessions.session;
+      },
+      set(newValue) {
+        this.$store.state.sessions.session = newValue;
+      }
     },
     client() {
-      return this.data.client;
+      return this.session.client;
     },
     company() {
-      return this.data.company;
+      return this.client.company;
     },
     history() {
       return this.messages.filter((m) => m.sender == "session").reverse();

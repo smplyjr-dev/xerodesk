@@ -64,7 +64,6 @@ import EmojiPicker from "@Components/neutral/EmojiPicker.vue";
 export default {
   name: "TicketReply",
   components: { TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor, EmojiPicker },
-  props: ["data"],
   data: () => ({
     isLocking: false,
     accept: "text/csv,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/gif,text/html,image/vnd.microsoft.icon,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.rar,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-7z-compressed",
@@ -80,8 +79,13 @@ export default {
     ...mapState("messages", ["reply_to_shadow"]),
     ...mapGetters("auth", ["permissions"]),
 
-    session() {
-      return this.data.session;
+    session: {
+      get() {
+        return this.$store.state.sessions.session;
+      },
+      set(newValue) {
+        this.$store.state.sessions.session = newValue;
+      }
     }
   },
   methods: {
@@ -95,14 +99,14 @@ export default {
         ...this.session,
         user_id: this.user.id
       });
-      this.session.user_id = session.data.user_id;
+      this.session = { ...this.session, user: session.data.user };
 
       let message = await axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
         // message: `<p>Thank you for waiting. <br /> You are now connected to agent <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
-        client_id: this.data.client.id,
+        client_id: this.session.client.id,
         session: this.session.session,
         user_id: this.user.id
       });
@@ -111,7 +115,7 @@ export default {
       this.isLocking = false;
     },
     async onFileChange(e) {
-      [...e.target.files].forEach(file => {
+      [...e.target.files].forEach((file) => {
         this.attachments.push({
           file,
           ext: file.name.split(".").pop()
@@ -122,7 +126,7 @@ export default {
       let attachments = this.$store.state.messages.message_attachments;
 
       await Promise.all(
-        attachments.map(async attachment => {
+        attachments.map(async (attachment) => {
           let form = new FormData();
           let file = attachment.file;
           let headers = { "Content-Type": "multipart/form-data" };
@@ -130,7 +134,7 @@ export default {
           if (this.$store.state.messages.reply_to) message.reply_to = this.$store.state.messages.reply_to;
 
           if (file.size < 20000000 && this.extensions.includes(attachment.ext.toLowerCase())) {
-            form.append("id", this.data.client.id);
+            form.append("id", this.session.client.id);
             form.append("extension", file.name.split(".").pop());
             form.append("session", this.$route.params.session);
             form.append("name", file.name.split(".").slice(0, -1).join(".")); // prettier-ignore
@@ -147,14 +151,14 @@ export default {
             await axios
               .post(`/portal/message`, {
                 ...message,
-                client_id: this.data.client.id,
+                client_id: this.session.client.id,
                 session: this.$route.params.session,
                 user_id: this.user.id
               })
-              .then(response => {
+              .then((response) => {
                 this.$store.commit("messages/UPDATE_MESSAGE", response.data.data);
 
-                axios.post(`/portal/message/${response.data.data.hash}/attachment`, form, headers).then(result => {
+                axios.post(`/portal/message/${response.data.data.hash}/attachment`, form, headers).then((result) => {
                   // this.$store.commit("messages/INSERT_ATTACHMENT", {
                   //   hash: response.data.data.hash,
                   //   attachment: result.data
@@ -169,7 +173,7 @@ export default {
       let is_allowed = true;
 
       // check permission
-      ["reply_to_ticket"].forEach(allowed_permission => {
+      ["reply_to_ticket"].forEach((allowed_permission) => {
         if (!this.permissions.includes(allowed_permission)) {
           // display a notification
           this.$store.dispatch("notifications/addNotification", {
@@ -209,7 +213,7 @@ export default {
           await axios
             .post(`/portal/message`, {
               ...message,
-              client_id: this.data.client.id,
+              client_id: this.session.client.id,
               session: this.$route.params.session,
               user_id: this.user.id
             })

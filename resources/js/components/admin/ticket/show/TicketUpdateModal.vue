@@ -79,7 +79,6 @@ import { tickets } from "@Scripts/observable";
 import { nanoid } from "nanoid";
 
 export default {
-  props: ["session"],
   components: { TicketTag },
   data: () => ({
     category: tickets.category,
@@ -92,7 +91,8 @@ export default {
     newStatus: null
   }),
   computed: {
-    ...mapState("auth", ["user"])
+    ...mapState("auth", ["user"]),
+    ...mapState("sessions", ["session"])
   },
   methods: {
     async updateSession() {
@@ -138,7 +138,7 @@ export default {
           status: this.newStatus,
           hash: nanoid(),
           sender: "session",
-          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find(s => s.id == this.newStatus).name}</strong>.</p>`
+          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == this.newStatus).name}</strong>.</p>`
         };
 
         await axios.put(`/portal/session/${this.session.session}/status`, message);

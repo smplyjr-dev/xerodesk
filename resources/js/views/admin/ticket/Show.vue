@@ -1,6 +1,6 @@
 <template>
   <div class="card card-1 card-ticket m-4">
-    <TicketHeader :data="{ isComponentReady, session, client, company }" @toggle="isMetaOpen = !isMetaOpen" />
+    <TicketHeader @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">
       <div class="h-100 w-100 flex-center" v-if="!isComponentReady">
@@ -8,8 +8,8 @@
       </div>
 
       <template v-else>
-        <TicketContents :data="{ session, client, company }" />
-        <TicketMetas :data="{ session, client, company }" />
+        <TicketContents />
+        <TicketMetas />
       </template>
     </div>
   </div>
@@ -28,8 +28,6 @@ export default {
   metaInfo: () => ({ title: "Ticket" }),
   middleware: ["auth", "permission:view_ticket"],
   data: () => ({
-    client: {},
-    company: {},
     isMetaOpen: true,
     isComponentReady: false
   }),
@@ -40,15 +38,11 @@ export default {
   methods: {
     async fetchSession() {
       this.$store.state.sessions.session = {};
-      this.client = {};
-      this.company = {};
       this.$store.commit("messages/SET_MESSAGES", []);
 
       let { data } = await axios.get(`/portal/session/${this.$route.params.session}`);
 
       this.$store.state.sessions.session = data;
-      this.client = data.client;
-      this.company = data.client.company;
       this.$store.commit("messages/SET_MESSAGES", data.messages);
     }
   },
