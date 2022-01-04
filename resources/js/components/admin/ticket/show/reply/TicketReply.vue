@@ -5,7 +5,7 @@
 
   <div class="ticket-reply" v-else>
     <!-- Locking / Accepting -->
-    <template v-if="$isNull(session.user_id)">
+    <template v-if="$isNull(session.user_id) || isLocking">
       <div class="p-3">
         <button class="btn btn-brand-2 btn-block text-white" @click="lockSession" :disabled="isLocking">
           <span v-if="isLocking">Please wait... <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i></span>
@@ -99,13 +99,12 @@ export default {
         ...this.session,
         user_id: this.user.id
       });
-      this.session = { ...this.session, user: session.data.user };
+      this.session = { ...this.session, user: session.data };
 
       let message = await axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
-        // message: `<p>Thank you for waiting. <br /> You are now connected to agent <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
         client_id: this.session.client.id,
         session: this.session.session,
         user_id: this.user.id

@@ -177,15 +177,15 @@ trait SessionTrait
 
     public function lock($session)
     {
-        $model = Session::where('session', $session)->firstOrFail();
+        $model = Session::whereSession($session)->firstOrFail();
 
-        $model->update(request()->only([
-            'user_id'
-        ]));
+        $model->update([
+            'user_id' => request()->user_id
+        ]);
 
         $model->sendSessionLockNotification();
 
-        return $model;
+        return $model->user()->with('bio')->first();
     }
 
     public function field($session)

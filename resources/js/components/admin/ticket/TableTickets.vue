@@ -427,7 +427,6 @@ export default {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${agent.bio.first_name} ${agent.bio.last_name}</strong>.</p>`,
-        // message: `<p>Thank you for waiting. <br /> You are now connected to agent <strong>${agent.bio.first_name} ${agent.bio.last_name}</strong>.</p>`,
         client_id: s.id,
         session: s.session,
         user_id: this.user.id

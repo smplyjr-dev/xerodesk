@@ -83,31 +83,31 @@ export default {
       this.transfering = true;
 
       try {
-        // update the session user_id
-        await axios.put(`/portal/session/${this.session.session}/transfer`, {
-          old_user_id: this.session.user_id,
-          new_user_id: this.selected.id
-        });
-
         let message = {
           hash: nanoid(),
           sender: "session",
           message: `<p>The session has been re-assigned to <strong>${this.selected.bio.first_name} ${this.selected.bio.last_name}</strong>.</p>`
         };
 
-        // push the message immediately for real-time experience
-        this.$store.commit("messages/PUSH_MESSAGE", {
-          ...message,
-          created_at: this.$dayjs("format", new Date(), "YYYY-MM-DD HH:mm:ss"),
-          attachments: []
-        });
-
         // save the message
         await axios.post(`/portal/message`, {
           ...message,
           client_id: this.session.client_id,
           session: this.session.session,
-          user_id: this.selected.id
+          user_id: this.user.id
+        });
+
+        // update the session user_id
+        await axios.put(`/portal/session/${this.session.session}/transfer`, {
+          old_user_id: this.session.user_id,
+          new_user_id: this.selected.id
+        });
+
+        // push the message immediately for real-time experience
+        this.$store.commit("messages/PUSH_MESSAGE", {
+          ...message,
+          created_at: this.$dayjs("format", new Date(), "YYYY-MM-DD HH:mm:ss"),
+          attachments: []
         });
 
         // hide the modal

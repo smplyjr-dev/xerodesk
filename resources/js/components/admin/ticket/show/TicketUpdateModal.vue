@@ -138,6 +138,7 @@ export default {
           status: this.newStatus,
           hash: nanoid(),
           sender: "session",
+          user_id: this.user.id,
           message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == this.newStatus).name}</strong>.</p>`
         };
 

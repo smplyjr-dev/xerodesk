@@ -208,7 +208,13 @@
                                 <tr>
                                   <td>
                                     <div><strong>{{ $sender }}</strong> [{{ $created_at }}]:</div>
-                                    <div>{!! $content !!}</div>
+                                    <div>
+                                      @if ($message->attachments->count())
+                                        {{ $message->attachments[0]->name . '.' . $message->attachments[0]->extension }}
+                                      @else
+                                        {!! $content !!}
+                                      @endif
+                                    </div>
                                   </td>
                                 </tr>
                               </tbody>
@@ -227,7 +233,7 @@
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 24px; border-bottom: 3px solid #d4dadf; text-align: center;">
               <p style="margin: 0;">
-                Have Questions: We are here to help. Learn more <a href="#">here</a> or <a href="#">contact us</a>
+                Have questions? We are here to help. Learn more <a href="https://support.filipayroll.com">here</a> or ask an assistance from your administrator.
               </p>
             </td>
           </tr>

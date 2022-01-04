@@ -41,7 +41,10 @@ export default {
         return this.$store.state.sessions.session;
       },
       set(newValue) {
-        this.$store.state.sessions.session = newValue;
+        this.$store.state.sessions.session = {
+          ...this.$store.state.sessions.session,
+          ...newValue
+        };
       }
     }
   },
