@@ -149,7 +149,8 @@ trait SessionTrait
             $model->messages()->create([
                 'hash'    => request()->hash,
                 'sender'  => request()->sender,
-                'message' => request()->message
+                'message' => request()->message,
+                'user_id' => request()->user_id
             ]);
         }
 
