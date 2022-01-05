@@ -52,7 +52,6 @@ class MessageController extends Controller
         }
     }
 
-
     public function attachment($hash)
     {
         try {
