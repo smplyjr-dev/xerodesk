@@ -84,7 +84,6 @@ export default {
     category: tickets.category,
     priority: tickets.priority,
     resolution: tickets.resolution,
-    status: tickets.status,
     sessionError: [],
     isUpdating: false,
     isDisable: false,
@@ -92,7 +91,15 @@ export default {
   }),
   computed: {
     ...mapState("auth", ["user"]),
-    ...mapState("sessions", ["session"])
+    ...mapState("sessions", ["session"]),
+
+    status() {
+      let status = tickets.status.filter((s) => {
+        return s.name != "Unassigned";
+      });
+
+      return status;
+    }
   },
   methods: {
     async updateSession() {

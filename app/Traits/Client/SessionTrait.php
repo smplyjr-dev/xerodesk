@@ -49,8 +49,14 @@ trait SessionTrait
                     'c.email AS client_email',
                     'client_sessions.created_at AS created_at',
                     'client_sessions.updated_at AS updated_at'
-                )
-                ->orderBy($columns[$column], $dir);
+                );
+
+            if ($column != 6) {
+                $query->orderBy($columns[$column], $dir);
+            } else {
+                $order = $dir == 'asc' ? '4,1,2,3,0,5,6' : '6,5,0,3,2,1,4';
+                $query->orderByRaw("FIELD(client_sessions.status, $order)");
+            }
 
             // if ($searchValue) {
             //     $query->where(function ($query) use ($searchValue) {
@@ -180,6 +186,7 @@ trait SessionTrait
         $model = Session::whereSession($session)->firstOrFail();
 
         $model->update([
+            'status'  => 1,
             'user_id' => request()->user_id
         ]);
 

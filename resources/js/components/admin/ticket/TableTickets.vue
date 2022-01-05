@@ -89,7 +89,7 @@
                           <template v-slot:content>
                             <span class="px-2" v-show="!filtered_agents.length">No record found</span>
 
-                            <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                            <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="((p.agent_id = u.id), (p.status = 1)), updateAgent(p)">
                               {{ `${u.bio.first_name} ${u.bio.last_name}` }}
                             </app-dropdown-item>
                           </template>
@@ -192,7 +192,7 @@
                   <template v-slot:content>
                     <span class="px-2" v-show="!filtered_agents.length">No record found</span>
 
-                    <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="(p.agent_id = u.id), updateAgent(p)">
+                    <app-dropdown-item v-for="u in filtered_agents" :key="u.id" @select="((p.agent_id = u.id), (p.status = 1)), updateAgent(p)">
                       {{ `${u.bio.first_name} ${u.bio.last_name}` }}
                     </app-dropdown-item>
                   </template>
@@ -343,11 +343,14 @@ export default {
     },
     filtered_statuses() {
       let search = this.filter_statuses;
-      let filtered = this.status.filter((s) => {
-        let name = s.name.toLowerCase();
-
-        return name.includes(search.toLowerCase());
-      });
+      let filtered = this.status
+        .filter((s) => {
+          let name = s.name.toLowerCase();
+          return name.includes(search.toLowerCase());
+        })
+        .filter((s) => {
+          return s.name != "Unassigned";
+        });
 
       return filtered;
     }

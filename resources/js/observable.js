@@ -20,6 +20,7 @@ const tickets = {
     { id: 3, name: "Resolved by Caller" }
   ],
   status: [
+    { id: 0, name: "Unassigned" },
     { id: 1, name: "Open" },
     { id: 2, name: "Pending" },
     { id: 3, name: "Resolved" },

@@ -81,7 +81,6 @@ export default {
   data() {
     return {
       priority: tickets.priority,
-      status: tickets.status,
       refine: {
         company: null,
         session: null,
@@ -94,7 +93,15 @@ export default {
   },
   computed: {
     ...mapState("auth", ["users"]),
-    ...mapState("companies", ["companies"])
+    ...mapState("companies", ["companies"]),
+
+    status() {
+      let status = tickets.status.filter((s) => {
+        return s.name != "Unassigned";
+      });
+
+      return status;
+    }
   },
   methods: {
     setRefineValues() {

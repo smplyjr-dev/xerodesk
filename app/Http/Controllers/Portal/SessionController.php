@@ -23,7 +23,8 @@ class SessionController extends Controller
     {
         $model = Session::create([
             'client_id' => request()->client_id,
-            'session'   => request()->session
+            'session'   => request()->session,
+            'status'    => 0
         ]);
 
         return $model->fresh();
