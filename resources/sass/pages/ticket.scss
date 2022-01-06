@@ -134,8 +134,8 @@
                 align-items: center;
                 flex-grow: 0;
                 flex-shrink: 0;
-                flex-basis: 200px;
-                width: 200px;
+                // flex-basis: 200px;
+                max-width: 200px;
 
                 &-image {
                   cursor: pointer;
@@ -245,7 +245,9 @@
                 }
 
                 &--item {
-                  background-color: $brand-2;
+                  &-file {
+                    background-color: $brand-2;
+                  }
                 }
               }
               .message-date {
@@ -299,7 +301,9 @@
                 }
 
                 &--item {
-                  background-color: #ebebeb;
+                  &-file {
+                    background-color: #ebebeb;
+                  }
                 }
               }
               .message-date {

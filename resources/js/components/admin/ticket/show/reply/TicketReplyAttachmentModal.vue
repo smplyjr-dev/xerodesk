@@ -68,7 +68,7 @@ export default {
       let response = "";
 
       if (!this.extensions.includes(extension)) response = "type";
-      if (size > 20000000) response = "size";
+      if (size > 2000000) response = "size";
 
       return response;
     },

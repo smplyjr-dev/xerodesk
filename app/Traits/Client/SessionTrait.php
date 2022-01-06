@@ -58,6 +58,8 @@ trait SessionTrait
                 $query->orderByRaw("FIELD(client_sessions.status, $order)");
             }
 
+            $query->orderBy('client_sessions.created_at', 'DESC');
+
             // if ($searchValue) {
             //     $query->where(function ($query) use ($searchValue) {
             //         $query->where('client_sessions.title', 'like', '%' . $searchValue . '%');

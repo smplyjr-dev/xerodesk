@@ -9,8 +9,8 @@
       </div>
       <div class="footer-att-item-name">
         <template v-if="!$isEmpty(checkValidity(a))">
-          <span>Error.</span>
-          <span v-if="checkValidity(a) == 'size'">File too large.</span>
+          <span>{{ a.file.name }}</span>
+          <span v-if="checkValidity(a) == 'size'">File size exceeds 2MB limit.</span>
           <span v-if="checkValidity(a) == 'type'">Invalid file type.</span>
         </template>
 
@@ -54,7 +54,7 @@ export default {
       let response = "";
 
       if (!this.extensions.includes(extension)) response = "type";
-      if (size > 20000000) response = "size";
+      if (size > 2000000) response = "size";
 
       return response;
     }
@@ -85,8 +85,6 @@ export default {
   margin: 5px 5px 10px 0px;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 150px;
-  width: 150px;
 
   &:last-child {
     margin-right: 0px;

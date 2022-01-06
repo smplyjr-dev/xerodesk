@@ -132,7 +132,7 @@ export default {
           let message = { hash: nanoid(), sender: "admin", message: "" };
           if (this.$store.state.messages.reply_to) message.reply_to = this.$store.state.messages.reply_to;
 
-          if (file.size < 20000000 && this.extensions.includes(attachment.ext.toLowerCase())) {
+          if (file.size < 2000000 && this.extensions.includes(attachment.ext.toLowerCase())) {
             form.append("id", this.session.client.id);
             form.append("extension", file.name.split(".").pop());
             form.append("session", this.$route.params.session);

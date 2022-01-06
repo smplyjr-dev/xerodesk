@@ -6,6 +6,8 @@ use App\Events\Message\MessageAttachment;
 use App\Models\Client\Client;
 use App\Models\Client\Message;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 trait MessageTrait
 {
@@ -38,8 +40,12 @@ trait MessageTrait
                 // if (!file_exists($path)) mkdir($path, 777, true);
 
                 // save to directory
-                $image = \Image::make($file);
-                $image->save("$path/$name.$extension", 30, 'jpg');
+                if ($extension == 'ico') {
+                    Storage::putFileAs("public/uploads/clients/$client->token/$session", $file, "$name.$extension");
+                } else {
+                    $image = Image::make($file);
+                    $image->save("$path/$name.$extension", 30, 'jpg');
+                }
             } else {
                 $path = "\\public\\uploads\\clients\\$client->token\\$session";
 
