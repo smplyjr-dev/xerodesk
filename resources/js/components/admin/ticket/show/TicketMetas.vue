@@ -38,8 +38,9 @@
         <div class="cd-info" v-else>
           <ul class="timeline">
             <li v-for="h in history" :key="h.id">
-              <div class="time">{{ $dayjs("format", h.created_at, "MM/DD/YYYY h:mm A") }}</div>
+              <div class="user">{{ findUserById(h.user_id) }}</div>
               <div class="content" v-html="h.message"></div>
+              <div class="time">{{ $dayjs("format", h.created_at, "MM/DD/YYYY h:mm A") }}</div>
             </li>
           </ul>
         </div>
@@ -63,7 +64,7 @@ export default {
     isSending: false
   }),
   computed: {
-    ...mapState("auth", ["user"]),
+    ...mapState("auth", ["users", "user"]),
     ...mapState("messages", ["messages"]),
 
     profilePicture() {
@@ -145,6 +146,12 @@ export default {
           this.forbiddenNotif();
         }
       }
+    },
+    findUserById(id) {
+      let user = this.users.find((u) => u.id == id);
+
+      if (user) return `${user.bio.first_name} ${user.bio.last_name}`;
+      else return "Unrecorded";
     }
   },
   mounted() {

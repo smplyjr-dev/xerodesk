@@ -511,24 +511,15 @@
     }
   }
 
-  .time {
-    font-weight: 400;
+  .user {
+    font-weight: 600;
     transform: translateY(-1px);
-
-    @include mobile-and-up {
-      font-size: 0.9rem;
-    }
-
-    @include mobile-only {
-      margin-bottom: 0.3rem;
-      font-size: 0.85rem;
-    }
+    margin-bottom: 0.3rem;
   }
 
   .content {
     font-weight: 400;
     transform: translateY(-1px);
-    font-size: 14px;
 
     p {
       margin: 0;
@@ -537,6 +528,14 @@
     @include mobile-only {
       font-size: 0.9rem;
     }
+  }
+
+  .time {
+    font-weight: 400;
+    transform: translateY(-1px);
+    margin-top: 0.35rem;
+    font-style: italic;
+    font-size: 0.75rem;
   }
 }
 
