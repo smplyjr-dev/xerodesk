@@ -27,7 +27,7 @@
 
     @if (config('app.env') == 'local')
         {{-- LaravelMix: For Development Only --}}
-        <script src="http://localhost:35729/livereload.js"></script>
+        <script src="http://localhost:35729/livereload.js" defer></script>
 
         {{-- Core Plugins --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js" integrity="sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

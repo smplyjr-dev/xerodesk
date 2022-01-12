@@ -1,12 +1,9 @@
+// Define $APP_URL for Vue files
 Vue.prototype.$APP_URL = process.env.MIX_APP_URL;
 
 // Async Delayer
-Vue.prototype.$delay = async function(ms) {
-  return await new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, ms);
-  });
+Vue.prototype.$delay = async function (ms) {
+  return await Promise.delay(ms);
 };
 
 // Date Formatter
@@ -25,21 +22,21 @@ Vue.prototype.$dayjs = function (trans, date, data) {
 };
 
 // Array Range
-Vue.prototype.$range = function(min, max) {
+Vue.prototype.$range = function (min, max) {
   return Array.from(
-    (function*(x, y) {
+    (function* (x, y) {
       while (x <= y) yield x++;
     })(min, max)
   );
 };
 
 // Generate Random Number
-Vue.prototype.$rand = function(min, max) {
+Vue.prototype.$rand = function (min, max) {
   if (!min && !max) return Math.floor(Math.random() * 100);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 // Image On Error Fallback
-Vue.prototype.$onImgError = function(e, i) {
+Vue.prototype.$onImgError = function (e, i) {
   if (i == 1) e.target.src = `${process.env.MIX_APP_URL}/images/generic-profile.png`;
 };
