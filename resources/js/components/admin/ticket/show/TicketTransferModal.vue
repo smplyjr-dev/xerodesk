@@ -83,15 +83,11 @@ export default {
       this.transfering = true;
 
       try {
-        let message = {
+        // save the message
+        let { data } = await axios.post(`/portal/message`, {
           hash: nanoid(),
           sender: "session",
-          message: `<p>The session has been re-assigned to <strong>${this.selected.bio.first_name} ${this.selected.bio.last_name}</strong>.</p>`
-        };
-
-        // save the message
-        await axios.post(`/portal/message`, {
-          ...message,
+          message: `<p>The session has been re-assigned to <strong>${this.selected.bio.first_name} ${this.selected.bio.last_name}</strong>.</p>`,
           client_id: this.session.client_id,
           session: this.session.session,
           user_id: this.user.id
@@ -104,11 +100,7 @@ export default {
         });
 
         // push the message immediately for real-time experience
-        this.$store.commit("messages/PUSH_MESSAGE", {
-          ...message,
-          created_at: this.$dayjs("format", new Date(), "YYYY-MM-DD HH:mm:ss"),
-          attachments: []
-        });
+        this.$store.commit("messages/PUSH_MESSAGE", data.data);
 
         // hide the modal
         $("#transfer-ticket-modal").modal("hide");
