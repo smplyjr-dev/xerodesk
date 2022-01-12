@@ -15,7 +15,8 @@ class SessionController extends Controller
         $count = Session::whereDate('created_at', Carbon::today()->toDateString())->count();
         $model = Session::create([
             'client_id' => request()->client_id,
-            'session'   => 'XD' . $abbr . date('ymd') . ($count + 1)
+            'session'   => 'XD' . $abbr . date('ymd') . ($count + 1),
+            'status'    => 0
         ]);
 
         return $model->fresh();
