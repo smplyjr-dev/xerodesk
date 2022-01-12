@@ -7,6 +7,7 @@ use App\Models\Client\Session;
 use App\Traits\Client\SessionTagTrait;
 use App\Traits\Client\SessionTrait;
 use Exception;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SessionController extends Controller
 {
@@ -32,9 +33,10 @@ class SessionController extends Controller
 
     public function show($session)
     {
-        $model = Session::with(['taggables', 'client.company', 'messages.attachments', 'user.bio'])
+        $model = QueryBuilder::for(Session::class)
+            ->allowedIncludes('client.company', 'messages.attachments', 'taggables', 'user.bio')
             ->where('session', $session)
-            ->first();
+            ->firstOrFail();
 
         return $model;
     }

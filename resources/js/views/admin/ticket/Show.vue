@@ -40,7 +40,8 @@ export default {
       this.$store.state.sessions.session = {};
       this.$store.commit("messages/SET_MESSAGES", []);
 
-      let { data } = await axios.get(`/portal/session/${this.$route.params.session}`);
+      let include = "include=client.company,messages.attachments,taggables,user.bio";
+      let { data } = await axios.get(`/portal/session/${this.$route.params.session}?${include}`);
 
       this.$store.state.sessions.session = data;
       this.$store.commit("messages/SET_MESSAGES", data.messages);
