@@ -23,7 +23,7 @@
             <div class="col-md-3 mb-4">
               <div class="card card-body p-0">
                 <ul class="setting-meta">
-                  <router-link to="/settings/companies" :class="{ active: parent == 'companies' }">Companies</router-link>
+                  <router-link to="/settings/company" :class="{ active: parent == 'company' }">Company</router-link>
                   <router-link to="/settings/groups" :class="{ active: parent == 'groups' }">Groups</router-link>
                   <router-link to="/settings/roles" :class="{ active: parent == 'roles' }">Roles</router-link>
                   <router-link to="/settings/slas" :class="{ active: parent == 'slas' }">Service-level Agreements</router-link>
