@@ -1,7 +1,7 @@
 <template>
   <div class="client-datatable">
     <div class="d-flex justify-content-between align-items-center flex-wrap">
-      <div class="control d-flex align-items-center mb-4">
+      <!-- <div class="control d-flex align-items-center mb-4">
         Show
         <div class="select mx-2">
           <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
@@ -13,9 +13,10 @@
           </select>
         </div>
         entries
-      </div>
+      </div> -->
 
-      <div class="search mb-4">
+      &nbsp;
+      <div class="search">
         <div class="d-flex align-items-center">
           <label class="mb-0 mr-2" for="search">Search:</label>
           <input class="form-control form-control-sm" type="text" v-model="search" @input="resetPagination()" />
@@ -27,7 +28,7 @@
       <tbody class="text-sm">
         <tr class="text-center" v-if="isLoading">
           <td colspan="8">
-            <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+            <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
           </td>
         </tr>
 
@@ -129,7 +130,7 @@ export default {
       { sortable: 1, hide: 0, type: types[0], width: "0%", name: "name", label: "Name" },
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -137,7 +138,7 @@ export default {
       columns: columns,
       sortKey: "",
       sortOrders: sortOrders,
-      length: 10,
+      length: 5,
       search: "",
       tableData: {
         for_user: true
@@ -160,13 +161,9 @@ export default {
     filteredUsers() {
       let users = this.users;
       if (this.search) {
-        users = users.filter(row => {
-          return Object.keys(row).some(key => {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(this.search.toLowerCase()) > -1
-            );
+        users = users.filter((row) => {
+          return Object.keys(row).some((key) => {
+            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           });
         });
       }
@@ -194,13 +191,13 @@ export default {
       return this.paginate(this.filteredUsers, this.length, this.pagination.currentPage);
     },
     pluckedUsers() {
-      return this.group.users.pluck("pivot").pluck("user_id");
+      return this.group.users.pluckArray("pivot").pluckArray("user_id");
     },
     selectedUsers() {
-      return this.filteredUsers.filter(p => this.pluckedUsers.includes(p.id));
+      return this.filteredUsers.filter((p) => this.pluckedUsers.includes(p.id));
     },
     unselectedUsers() {
-      return this.paginated.filter(p => !this.pluckedUsers.includes(p.id));
+      return this.paginated.filter((p) => !this.pluckedUsers.includes(p.id));
     }
   },
   methods: {
@@ -209,12 +206,12 @@ export default {
 
       axios
         .get(`/portal/group/datatable`, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           this.users = response.data;
           this.pagination.total = this.users.length;
           this.isLoading = false;
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
@@ -260,17 +257,21 @@ export default {
       let method = this.pluckedUsers.includes(id) ? "delete" : "create";
 
       if (method == "delete") {
-        await axios.delete(`/portal/group-user/${id}`, {
-          data: {
+        await axios
+          .delete(`/portal/group-user/${id}`, {
+            data: {
+              group_id: this.group.id,
+              user_id: id
+            }
+          })
+          .takeAtLeast(500);
+      } else {
+        await axios
+          .post(`/portal/group-user`, {
             group_id: this.group.id,
             user_id: id
-          }
-        });
-      } else {
-        await axios.post(`/portal/group-user`, {
-          group_id: this.group.id,
-          user_id: id
-        });
+          })
+          .takeAtLeast(500);
       }
 
       // set the new group object
@@ -279,13 +280,13 @@ export default {
       // refresh the datatable without showing loader
       this.getUsers();
 
-      this.isProcessing = this.isProcessing.filter(i => i != id);
+      this.isProcessing = this.isProcessing.filter((i) => i != id);
     }
   },
   watch: {
     group: {
       deep: true,
-      handler: function() {
+      handler: function () {
         this.getUsers();
       }
     }

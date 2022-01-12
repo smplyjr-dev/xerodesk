@@ -19,7 +19,7 @@ const getters = {
   check: state => state.user !== null,
   token: state => state.token,
   user: state => state.user,
-  permissions: state => ("permissions" in state.user ? state.user.permissions.pluck("slug") : [])
+  permissions: state => ("permissions" in state.user ? state.user.permissions.pluckArray("slug") : [])
 };
 
 const mutations = {

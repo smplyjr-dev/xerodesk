@@ -458,7 +458,7 @@ export default {
       return false;
     },
     ifNotAllowed() {
-      return !this.user.permissions.pluck("slug").includes("assign_ticket");
+      return !this.user.permissions.pluckArray("slug").includes("assign_ticket");
     },
     ifAssignedAlready(ticket) {
       // if the ticket is assigned already
