@@ -14,7 +14,7 @@
         </transition>
 
         <tr class="text-center" v-if="isLoading || !isReady">
-          <td colspan="8">
+          <td colspan="9">
             <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
           </td>
         </tr>
@@ -219,6 +219,12 @@
             </template>
           </td>
 
+          <!-- Created At -->
+          <td>
+            {{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} <br />
+            {{ $dayjs("format", p.created_at, "hh:mm A") }}
+          </td>
+
           <!-- See More -->
           <td class="pl-0">
             <TicketPopup :p="p" />
@@ -226,7 +232,7 @@
         </tr>
 
         <tr v-if="!isLoading && !paginated.length && isReady">
-          <td colspan="8">
+          <td colspan="9">
             <div class="w-100 my-3 flex-center flex-column">No result found.</div>
           </td>
         </tr>
@@ -253,29 +259,9 @@ export default {
   mixins: [Mixin],
   components: { Length, Search, Datatable, Entries, Pagination, TicketSla, TicketPopup },
   data() {
-    let sortOrders = {};
-    let types = ["string", "number", "date"];
-    let columns = [
-      { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "sla", label: "SLA" },
-      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "client", label: "Client" },
-      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "session", label: "Session" },
-      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "priority", label: "Priority" },
-      { sortable: 1, hide: 0, type: types[1], width: "16.66%", name: "groups", label: "Groups" },
-      { sortable: 1, hide: 0, type: types[0], width: "16.66%", name: "agent", label: "Agent" },
-      { sortable: 1, hide: 0, type: types[1], width: "16.66%", name: "status", label: "Status" },
-      { sortable: 0, hide: 0, type: types[1], width: "0%", name: "see_more", label: "" }
-      // { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "title", label: "Title" },
-      // { sortable: 1, hide: 0, type: types[2], width: "12.5%", name: "created_at", label: "Timestamp" }
-    ];
-    columns.forEach((column) => {
-      sortOrders[column.name] = -1;
-    });
     return {
       // for datatable only
-      columns: columns,
-      sortKey: null,
-      sortOrders: sortOrders,
+      sortKey: "",
       tableData: {
         column: 7 // column where sortation will happen
       },
@@ -300,6 +286,24 @@ export default {
     ...mapState("auth", ["user", "users"]),
     ...mapState("groups", ["groups"]),
     ...mapState("slas", ["slas"]),
+
+    columns() {
+      let types = ["string", "number", "date"];
+      let columns = [
+        { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Ticket Details" },
+        { sortable: 0, hide: 0, type: types[0], width: "0%", name: "sla", label: "SLA" },
+        { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "client", label: "Client" },
+        { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "session", label: "Session" },
+        { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "priority", label: "Priority" },
+        { sortable: 1, hide: 0, type: types[1], width: "14.3%", name: "groups", label: "Groups" },
+        { sortable: 1, hide: 0, type: types[0], width: "14.3%", name: "agent", label: "Agent" },
+        { sortable: 1, hide: 0, type: types[1], width: "14.3%", name: "status", label: "Status" },
+        { sortable: 1, hide: 0, type: types[2], width: "14.3%", name: "created_at", label: "Timestamp" },
+        { sortable: 0, hide: 0, type: types[1], width: "0%", name: "see_more", label: "" }
+      ];
+
+      return columns;
+    },
 
     sorted_slas() {
       return this.slas

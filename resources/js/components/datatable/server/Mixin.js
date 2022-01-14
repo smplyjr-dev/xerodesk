@@ -24,6 +24,17 @@ export default {
       }
     };
   },
+  computed: {
+    sortOrders() {
+      let sortOrders = {};
+
+      this.columns.forEach((column) => {
+        sortOrders[column.name] = -1;
+      });
+
+      return sortOrders;
+    }
+  },
   methods: {
     configPagination(data) {
       this.pagination.lastPage = data.last_page;
@@ -43,9 +54,9 @@ export default {
       this.getDatatable();
     },
     getIndex(array, key, value) {
-      return array.findIndex(i => i[key] == value);
+      return array.findIndex((i) => i[key] == value);
     },
-    searchDatatable: debounce(function(e) {
+    searchDatatable: debounce(function (e) {
       this.tableData.search = e;
       this.getDatatable();
     }, 500),

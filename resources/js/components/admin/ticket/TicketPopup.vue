@@ -25,11 +25,11 @@
       <!-- <div class="d-flex flex-column mb-2">
         <span class="font-weight-bold">Ticket Tags</span>
         <span>{{ p.tags || "Not Set" }}</span>
-      </div> -->
+      </div>
       <div class="d-flex flex-column mb-0">
         <span class="font-weight-bold">Ticket Timestamp</span>
         <span>{{ $dayjs("format", p.created_at, "MM/DD/YYYY hh:mm A") }}</span>
-      </div>
+      </div> -->
     </div>
 
     <i class="fa fa-info-circle text-info cursor-pointer" slot="reference"></i>

@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <div class="container-fluid px-4 py-3" style="background-color: #fafafa; border-bottom: 1px solid #e6e7e9;">
+  <div class="container-fluid px-4 mt-4">
+    <div class="pb-3" style="background-color: #fafafa; border-bottom: 1px solid #e6e7e9">
       <div class="flex-center-between">
         <button class="btn rounded-pill btn-primary" @click="isRefineOpen = true">
           <div class="d-flex align-items-center">
@@ -17,11 +17,16 @@
         </button>
       </div>
 
-      <RefineTickets :isOpen="isRefineOpen" @toggleDrawer="isRefineOpen = $event" @onSearch="handleSearch" />
-      <ExportTickets :isOpen="isExportOpen" @toggleDrawer="isExportOpen = $event" />
+      <drawer :toggle="isRefineOpen" @toggleDrawer="isRefineOpen = $event" position="left">
+        <RefineTickets @onSearch="handleSearch" />
+      </drawer>
+
+      <drawer :toggle="isExportOpen" @toggleDrawer="isExportOpen = $event" position="right">
+        <ExportTickets />
+      </drawer>
     </div>
 
-    <div class="container-fluid px-4 mt-4">
+    <div class="mt-4">
       <TableTickets :isReady="isReady" />
     </div>
   </div>
@@ -49,7 +54,7 @@ export default {
   },
   methods: {
     handleSearch(e) {
-      this.isOpen = false;
+      this.isRefineOpen = false;
 
       let build = {};
 
@@ -64,14 +69,14 @@ export default {
       }
 
       if (this.$isEmpty(build)) {
-        this.$router.push(`/tickets`).catch(err => {});
+        this.$router.push(`/tickets`).catch((err) => {});
       } else {
         this.$router
           .push({
             path: `/tickets`,
             query: build
           })
-          .catch(err => {});
+          .catch((err) => {});
       }
     }
   },

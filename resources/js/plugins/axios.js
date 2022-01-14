@@ -1,12 +1,12 @@
 // import axios from "axios";
-const axios = window.axios;
+let init = window.axios;
 import store from "@Scripts/store";
 import App from "@Scripts/views/App.vue";
 
-axios.defaults.baseURL = process.env.MIX_APP_URL + "/api";
+init.defaults.baseURL = process.env.MIX_APP_URL + "/api";
 
 // Request interceptor for authorization token
-axios.interceptors.request.use(request => {
+init.interceptors.request.use((request) => {
   const token = store.getters["auth/token"];
 
   if (token) {
@@ -17,9 +17,9 @@ axios.interceptors.request.use(request => {
 });
 
 // Response interceptor for failed ajax request
-axios.interceptors.response.use(
-  response => response,
-  error => {
+init.interceptors.response.use(
+  (response) => response,
+  (error) => {
     const { status } = error.response;
 
     if (status >= 500) {
@@ -41,4 +41,4 @@ axios.interceptors.response.use(
   }
 );
 
-window.axios = axios;
+window.axios = init;

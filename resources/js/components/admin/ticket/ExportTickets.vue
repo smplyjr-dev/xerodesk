@@ -1,36 +1,29 @@
 <template>
-  <transition name="fade">
-    <div class="drawer-backdrop" v-show="isOpen" @click.self="$emit('toggleDrawer', false)">
-      <transition name="right">
-        <div class="drawer-container" v-show="isOpen">
-          <div class="drawer-close" @click="$emit('toggleDrawer', false)">
-            <InlineSvg name="template/mdi-close.svg" color="#c6c6c6" size="100%" />
-          </div>
-
-          <form @submit.prevent="submitExport">
-            <h4>Export Tickets</h4>
-            <div class="form-group row align-items-center">
-              <label class="col-md-3 mb-0">Export As</label>
-              <div class="col-md-9">
-                <div class="form-control border-0 px-0">
-                  <div class="d-flex align-items-center">
-                    <div class="custom-control custom-radio mr-4">
-                      <input type="radio" class="custom-control-input" id="xlsx" value="xlsx" v-model="refine.type" />
-                      <label class="custom-control-label" for="xlsx">Excel</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="csv" value="csv" v-model="refine.type" />
-                      <label class="custom-control-label" for="csv">CSV</label>
-                    </div>
-                  </div>
-                </div>
+  <div class="drawer-content">
+    <form @submit.prevent="submitExport">
+      <h4>Export Tickets</h4>
+      <div class="form-group row align-items-center">
+        <label class="col-md-3 mb-0">Export As</label>
+        <div class="col-md-9">
+          <div class="form-control border-0 px-0">
+            <div class="d-flex align-items-center">
+              <div class="custom-control custom-radio mr-4">
+                <input type="radio" class="custom-control-input" id="xlsx" value="xlsx" v-model="refine.type" />
+                <label class="custom-control-label" for="xlsx">Excel</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="csv" value="csv" v-model="refine.type" />
+                <label class="custom-control-label" for="csv">CSV</label>
               </div>
             </div>
-            <div class="form-group row align-items-center">
-              <label class="col-md-3 mb-0">Filter By</label>
-              <div class="col-md-9">
-                <!-- prettier-ignore -->
-                <date-picker
+          </div>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-md-3 mb-0">Filter By</label>
+        <div class="col-md-9">
+          <!-- prettier-ignore -->
+          <date-picker
                     v-model="refine.range"
                     :clearable="false"
                     :disabled-date="disabledAfterToday"
@@ -42,66 +35,62 @@
                     format="MM/DD/YYYY"
                     valueType="YYYY-MM-DD"
                   />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="mb-2">Column Fields</label>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="client" v-model="refine.fields.client" />
-                    <label class="custom-control-label" for="client">Client</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="title" v-model="refine.fields.title" />
-                    <label class="custom-control-label" for="title">Title</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="session" v-model="refine.fields.session" />
-                    <label class="custom-control-label" for="session">Session</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="priority" v-model="refine.fields.priority" />
-                    <label class="custom-control-label" for="priority">Priority</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="group" v-model="refine.fields.group" />
-                    <label class="custom-control-label" for="group">Group</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="agent" v-model="refine.fields.agent" />
-                    <label class="custom-control-label" for="agent">Agent</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="status" v-model="refine.fields.status" />
-                    <label class="custom-control-label" for="status">Status</label>
-                  </div>
-                  <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="timestamp" v-model="refine.fields.timestamp" />
-                    <label class="custom-control-label" for="timestamp">Timestamp</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group d-flex flex-row-reverse">
-              <button class="btn btn-primary pull-right" type="submit">Export</button>
-              <button class="btn btn-light pull-right" type="button" @click="resetExport()">Reset</button>
-              <div class="clearfix"></div>
-            </div>
-          </form>
         </div>
-      </transition>
-    </div>
-  </transition>
+      </div>
+      <div class="form-group">
+        <label class="mb-2">Column Fields</label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="client" v-model="refine.fields.client" />
+              <label class="custom-control-label" for="client">Client</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="title" v-model="refine.fields.title" />
+              <label class="custom-control-label" for="title">Title</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="session" v-model="refine.fields.session" />
+              <label class="custom-control-label" for="session">Session</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="priority" v-model="refine.fields.priority" />
+              <label class="custom-control-label" for="priority">Priority</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="group" v-model="refine.fields.group" />
+              <label class="custom-control-label" for="group">Group</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="agent" v-model="refine.fields.agent" />
+              <label class="custom-control-label" for="agent">Agent</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="status" v-model="refine.fields.status" />
+              <label class="custom-control-label" for="status">Status</label>
+            </div>
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="timestamp" v-model="refine.fields.timestamp" />
+              <label class="custom-control-label" for="timestamp">Timestamp</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group d-flex flex-row-reverse">
+        <button class="btn btn-primary pull-right" type="submit">Export</button>
+        <button class="btn btn-light pull-right" type="button" @click="resetExport()">Reset</button>
+        <div class="clearfix"></div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
 import { tickets } from "@Scripts/observable";
 
 export default {
-  props: ["isOpen"],
   data() {
     return {
       priority: tickets.priority,
@@ -169,7 +158,7 @@ export default {
         method: "GET",
         responseType: "blob",
         params: { refine: JSON.stringify(this.refine) }
-      }).then(response => {
+      }).then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
 
