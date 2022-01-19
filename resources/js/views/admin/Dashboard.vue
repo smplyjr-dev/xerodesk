@@ -5,27 +5,23 @@
     </div>
 
     <div class="row">
-      <TicketWidget title="Open Tickets" :loading="loading.sessions" :length="open.length" />
-      <TicketWidget title="Pending Tickets" :loading="loading.sessions" :length="pending.length" />
-      <TicketWidget title="Resolved Tickets" :loading="loading.sessions" :length="resolved.length" />
-      <TicketWidget title="Closed Tickets" :loading="loading.sessions" :length="closed.length" />
-      <TicketWidget title="Unassigned Tickets" :loading="loading.sessions" :length="unassigned.length" />
+      <TicketWidget title="Open" :loading="loading.sessions" :length="filterBy('status', 1)" />
+      <TicketWidget title="Pending" :loading="loading.sessions" :length="filterBy('status', 2)" />
+      <TicketWidget title="Resolved" :loading="loading.sessions" :length="filterBy('status', 3)" />
+      <TicketWidget title="Closed" :loading="loading.sessions" :length="filterBy('status', 4)" />
+      <TicketWidget title="Unassigned" :loading="loading.sessions" :length="filterBy('user_id', null)" />
     </div>
 
     <div class="row">
       <div class="col-md-8 mb-4">
         <div class="card card-1 card-body">
-          <skeleton :show="loading.clients" w="100%">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.
-          </skeleton>
+          <skeleton :show="loading.clients" w="100%">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.</skeleton>
         </div>
       </div>
       <div class="col-md-4 mb-4">
         <div class="card card-1 card-body">
           <p class="text-secondary font-weight-bold">
-            <skeleton :show="loading.clients" w="75%">
-              Recently Added Clients
-            </skeleton>
+            <skeleton :show="loading.clients" w="75%">Recently Added Clients</skeleton>
           </p>
           <ul class="list-unstyled mb-0" v-if="loading.clients">
             <li v-for="c in 3" :key="c.id" class="mt-2">
@@ -62,38 +58,22 @@ export default {
       sessions: false
     }
   }),
-  computed: {
-    open() {
-      return this.sessions.filter(s => s.status == 1);
-    },
-    pending() {
-      return this.sessions.filter(s => s.status == 2);
-    },
-    resolved() {
-      return this.sessions.filter(s => s.status == 3);
-    },
-    closed() {
-      return this.sessions.filter(s => s.status == 4);
-    },
-    unassigned() {
-      return this.sessions.filter(s => s.user_id == null);
-    }
-  },
   methods: {
+    filterBy(param, stat) {
+      return this.sessions.filter((s) => s[param] == stat).length;
+    },
     async fetchTickets() {
       this.loading.sessions = true;
 
-      let { data } = await axios.get(`/portal/session`);
-      // await this.$delay(3000);
-      this.sessions = data;
+      let { data } = await axios.get(`/portal/session`).takeAtLeast(300);
+      this.sessions = data.data;
 
       this.loading.sessions = false;
     },
     async fetchRecentClients() {
       this.loading.clients = true;
 
-      let { data } = await axios.get(`/portal/client/recent`);
-      // await this.$delay(3000);
+      let { data } = await axios.get(`/portal/client/recent`).takeAtLeast(400);
       this.clients = data;
 
       this.loading.clients = false;

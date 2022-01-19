@@ -1,7 +1,7 @@
 <template>
   <div class="drawer-content">
     <form @submit.prevent="submitExport">
-      <h4>Export Tickets</h4>
+      <h4 class="mb-4">Export Tickets</h4>
       <div class="form-group row align-items-center">
         <label class="col-md-3 mb-0">Export As</label>
         <div class="col-md-9">

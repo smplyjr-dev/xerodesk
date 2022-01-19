@@ -3,7 +3,7 @@ Vue.prototype.$APP_URL = process.env.MIX_APP_URL;
 
 // Async Delayer
 Vue.prototype.$delay = async function (ms) {
-  return await Promise.delay(ms);
+  return await Promise.prototype.delay(ms);
 };
 
 // Date Formatter

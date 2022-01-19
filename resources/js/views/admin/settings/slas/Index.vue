@@ -170,7 +170,6 @@ export default {
     return {
       columns: columns,
       sortKey: "id",
-      sortOrders: sortOrders,
 
       // over tableData defaults from the mixin
       tableData: {

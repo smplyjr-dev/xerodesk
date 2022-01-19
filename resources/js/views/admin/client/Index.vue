@@ -164,7 +164,6 @@ export default {
     return {
       columns: columns,
       sortKey: "id",
-      sortOrders: sortOrders,
 
       // custom data
       isLoading: false,
