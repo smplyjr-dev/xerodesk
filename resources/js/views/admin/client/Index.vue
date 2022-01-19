@@ -15,7 +15,7 @@
         <tbody class="text-sm">
           <tr class="text-center" v-if="isLoading">
             <td colspan="8">
-              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
             </td>
           </tr>
 
@@ -45,7 +45,7 @@
             </td>
 
             <td>
-              <div class="d-flex w-100" style="position: relative;">
+              <div class="d-flex w-100" style="position: relative">
                 <img class="object-cover mr-2 rounded-circle" src="/images/generic-profile.png" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
                 <div class="d-flex flex-column">
                   <span>{{ p.name }}</span>
@@ -75,55 +75,45 @@
       </div>
     </div>
 
-    <transition name="fade">
-      <div class="drawer-backdrop" v-show="isOpen" @click.self="isOpen = false">
-        <transition name="right">
-          <div class="drawer-container" v-show="isOpen" v-if="!$isEmpty(client)">
-            <div class="drawer-close" @click="isOpen = false">
-              <InlineSvg name="template/mdi-close.svg" color="#c6c6c6" size="100%" />
-            </div>
+    <drawer :toggle="isOpen" @toggleDrawer="isOpen = $event" position="right">
+      <h4 class="mb-0">{{ client.name }}</h4>
+      <p class="text-muted">{{ client.email }}</p>
+      <br />
 
-            <h4 class="mb-0">{{ client.name }}</h4>
-            <p class="text-muted">{{ client.email }}</p>
-            <br />
-
-            <ul class="nav nav-tabs" id="myTab">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#sessions">Sessions</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " data-toggle="tab" href="#attachments">Attachments</a>
-              </li>
-            </ul>
-            <div class="tab-content p-4 border" style="margin-top: -1px;">
-              <div class="tab-pane fade show active" id="sessions">
-                <ul class="list-unstyled mb-0">
-                  <li v-for="s in sessions" :key="s.id">
-                    <router-link :to="`tickets/${s.session}`">
-                      {{ s.session }} <span v-show="s.title"> - {{ s.title }}</span>
-                    </router-link>
-                  </li>
-                </ul>
-                <span v-if="$isEmpty(sessions)">No session found.</span>
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#sessions">Sessions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#attachments">Attachments</a>
+        </li>
+      </ul>
+      <div class="tab-content p-4 border" style="margin-top: -1px">
+        <div class="tab-pane fade show active" id="sessions">
+          <ul class="list-unstyled mb-0">
+            <li v-for="s in sessions" :key="s.id">
+              <router-link :to="`tickets/${s.session}`">
+                {{ s.session }} <span v-show="s.title"> - {{ s.title }}</span>
+              </router-link>
+            </li>
+          </ul>
+          <span v-if="$isEmpty(sessions)">No session found.</span>
+        </div>
+        <div class="tab-pane fade" id="attachments">
+          <div class="grid-container">
+            <div class="grid-item" v-for="m in filtered" :key="m.id" @click="onAttmClick(m)">
+              <div class="grid-item--image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(getAttachment(m).extension.toLowerCase())">
+                <img :src="`${$APP_URL}/storage/uploads/clients/${client.token}/${m.session}/${getAttachment(m).name}.${getAttachment(m).extension}`" />
               </div>
-              <div class="tab-pane fade " id="attachments">
-                <div class="grid-container">
-                  <div class="grid-item" v-for="m in filtered" :key="m.id" @click="onAttmClick(m)">
-                    <div class="grid-item--image" v-if="['ico', 'jpeg', 'jpg', 'png'].includes(getAttachment(m).extension.toLowerCase())">
-                      <img :src="`${$APP_URL}/storage/uploads/clients/${client.token}/${m.session}/${getAttachment(m).name}.${getAttachment(m).extension}`" />
-                    </div>
-                    <div class="grid-item--file" v-else>
-                      {{ `${getAttachment(m).name}.${getAttachment(m).extension}` }}
-                    </div>
-                  </div>
-                </div>
-                <span v-if="$isEmpty(filtered)">No attachment found.</span>
+              <div class="grid-item--file" v-else>
+                {{ `${getAttachment(m).name}.${getAttachment(m).extension}` }}
               </div>
             </div>
           </div>
-        </transition>
+          <span v-if="$isEmpty(filtered)">No attachment found.</span>
+        </div>
       </div>
-    </transition>
+    </drawer>
 
     <transition name="fade">
       <div class="la-wrapper" v-if="enlargeToggle">
@@ -158,7 +148,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
       { sortable: 1, hide: 0, type: types[2], width: "25%", name: "created_at", label: "Timestamp" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -186,13 +176,13 @@ export default {
     filtered() {
       let messages = [];
 
-      this.sessions.forEach(session => {
-        session.messages.forEach(message => {
+      this.sessions.forEach((session) => {
+        session.messages.forEach((message) => {
           messages.push({ ...message, session: session.session });
         });
       });
 
-      return messages.filter(m => {
+      return messages.filter((m) => {
         return m.attachments.length > 0;
       });
     }
@@ -204,7 +194,7 @@ export default {
 
       axios
         .get(url, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
             this.paginated = data.data.data;
@@ -212,7 +202,7 @@ export default {
             this.isLoading = false;
           }
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
