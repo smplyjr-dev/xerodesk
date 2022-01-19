@@ -47,16 +47,26 @@ class SessionController extends Controller
 
         try {
             $model = Session::whereSession($session)->firstOrFail();
-
+            $model_temp = $model->replicate()->setRawAttributes($model->getOriginal());
             $model->update(request()->only([
                 'title',
                 'priority',
                 'category',
                 'resolution_code',
                 'solution',
+                'status',
             ]));
-
+            $model->logger('update');
             $model->sendSessionUpdateNotification();
+
+            if ($model_temp->status != request()->status) {
+                $model->messages()->create([
+                    'user_id' => request()->user_id,
+                    'hash'    => request()->hash,
+                    'sender'  => request()->sender,
+                    'message' => request()->message
+                ]);
+            }
 
             return $model->fresh();
         } catch (Exception $e) {

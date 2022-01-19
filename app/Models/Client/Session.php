@@ -9,18 +9,14 @@ use App\Mail\SendMessages;
 use App\Models\Group\Group;
 use App\Models\Taggable\Taggable;
 use App\Models\User\User;
+use App\Traits\Logger;
 use Illuminate\Support\Facades\Mail;
 
 class Session extends BaseModel
 {
-    protected $table = 'client_sessions';
+    use Logger;
 
-    const STATUS_OPEN = 1;
-    const STATUS_PENDING = 2;
-    const STATUS_RESOLVED = 3;
-    const STATUS_CLOSED = 4;
-    const STATUS_WAITING_FOR_AGENT = 5;
-    const STATUS_CWAITING_FOR_CLIENT = 6;
+    protected $table = 'client_sessions';
 
     public function user()
     {
@@ -62,5 +58,46 @@ class Session extends BaseModel
     public function sendSessionLockNotification()
     {
         Mail::to($this->client->email)->send(new MailSessionLock($this, 'client'));
+    }
+
+    public function logger($type)
+    {
+        if (!config('activitylog.enabled')) return false;
+
+        if ($type == 'create') {
+            $starting = $this->replicate()->setRawAttributes($this->getOriginal())->toArray();
+            unset($starting['client']);
+
+            $a = activity();
+            $a->on($this);
+            $a->by($this->client);
+            $a->withProperties(['starting' => $starting, 'ending' => []]);
+            $a->useLog('SESSION');
+            $a->log('CREATE');
+        } else if ($type == 'transcript') {
+            $a = activity();
+            $a->on($this);
+            $a->by(request()->user());
+            $a->withProperties(['starting' => [], 'ending' => []]);
+            $a->useLog('SESSION');
+            $a->log('TRANSCRIPT');
+        } else {
+            $old = static::$old;
+            $dirty = $this->getChanges();
+            $starting = [];
+            $ending = $dirty;
+            foreach ($dirty as $nK => $n) $starting[$nK] = $old[$nK];
+
+            if (in_array($type, ['assign', 'lock', 'status', 'transcript', 'transfer', 'update'])) {
+                $a = activity();
+                $a->on($this);
+                $a->by(request()->user());
+                $a->withProperties(['starting' => $starting, 'ending' => $ending]);
+                $a->useLog('SESSION');
+                $a->log(strtoupper($type));
+            }
+        }
+
+        return response()->json($a, 200);
     }
 }

@@ -18,6 +18,7 @@ class SessionController extends Controller
             'session'   => 'XD' . $abbr . date('ymd') . ($count + 1),
             'status'    => 0
         ]);
+        $model->logger('create');
 
         return $model->fresh();
     }

@@ -42,11 +42,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/session/{session}/tag',       [SessionController::class, 'attach']);
     Route::delete('/session/{session}/tag',     [SessionController::class, 'detach']);
     Route::get('/session/{session}/transcript', [SessionController::class, 'transcript']);
+    Route::get('/session/{session}/logs',       [SessionController::class, 'logs']);
     Route::put('/session/{session}/transfer',   [SessionController::class, 'transfer']);
-    Route::put('/session/{session}/status',     [SessionController::class, 'status']);
     Route::put('/session/{session}/seen',       [SessionController::class, 'seen']);
     Route::put('/session/{session}/lock',       [SessionController::class, 'lock']);
-    Route::put('/session/{session}/field',      [SessionController::class, 'field']);
 
     // SLA Policy Routes
     Route::get('/sla/datatable', [SLAController::class, 'datatable']);
@@ -58,6 +57,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // All Resources Routes
     Route::namespace('Portal')->group(function () {
+        Route::resource('client' ,    'ClientController');
         Route::resource('company',    'CompanyController');
         Route::resource('group',      'GroupController');
         Route::resource('group-user', 'GroupUserController');

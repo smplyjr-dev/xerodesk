@@ -50,7 +50,7 @@
           </div>
           <div class="form-group mb-0">
             <label>Status <span class="text-danger">*</span></label>
-            <select class="custom-select" v-model="newStatus" :disabled="isDisable">
+            <select class="custom-select" v-model="session.status" :disabled="isDisable">
               <option :value="null">-- Select Status --</option>
               <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
             </select>
@@ -86,8 +86,7 @@ export default {
     resolution: tickets.resolution,
     sessionError: [],
     isUpdating: false,
-    isDisable: false,
-    newStatus: null
+    isDisable: false
   }),
   computed: {
     ...mapState("auth", ["user"]),
@@ -120,12 +119,16 @@ export default {
           category: this.session.category,
           priority: this.session.priority,
           resolution_code: this.session.resolution_code,
+          status: this.session.status,
           solution: this.session.solution,
-          token: nanoid()
+          token: nanoid(),
+
+          // for status changes
+          hash: nanoid(),
+          sender: "session",
+          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == this.session.status).name}</strong>.</p>`
         });
 
-        await this.processMessage();
-        this.session.status = this.newStatus;
         $("#update-ticket-modal").modal("hide");
 
         // show notification
@@ -138,25 +141,9 @@ export default {
       }
 
       this.isUpdating = false;
-    },
-    async processMessage() {
-      if (this.session.status != this.newStatus) {
-        let message = {
-          status: this.newStatus,
-          hash: nanoid(),
-          sender: "session",
-          user_id: this.user.id,
-          message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == this.newStatus).name}</strong>.</p>`
-        };
-
-        await axios.put(`/portal/session/${this.session.session}/status`, message);
-        this.$store.commit("messages/PUSH_MESSAGE", message);
-        if (this.newStatus == 4) this.isDisable = true;
-      }
     }
   },
   mounted() {
-    this.newStatus = this.session.status;
     if (this.session.status == 4) this.isDisable = true;
   }
 };

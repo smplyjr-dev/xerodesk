@@ -106,6 +106,7 @@ trait SessionTrait
             SessionTransferTo::dispatch(request()->new_user_id, $session->session);
 
             DB::commit();
+            $session->logger('transfer');
 
             $response = [
                 'status'  => 'success',
@@ -128,8 +129,9 @@ trait SessionTrait
 
     public function transcript($session)
     {
-        $session = Session::where('session', $session)->firstOrFail();
-        $session->sendSessionMessagesNotification();
+        $model = Session::where('session', $session)->firstOrFail();
+        $model->sendSessionMessagesNotification();
+        $model->logger('transcript');
 
         return response()->json([
             'status'  => 'success',
@@ -143,26 +145,6 @@ trait SessionTrait
         $extension = ucwords($request['type']);
 
         return Excel::download(new SessionsExport, 'sessions', $extension);
-    }
-
-    public function status($session)
-    {
-        $model = Session::where('session', $session)->firstOrFail();
-
-        if ($model->status != request()->status) {
-            $model->update([
-                'status' => request()->status
-            ]);
-
-            $model->messages()->create([
-                'hash'    => request()->hash,
-                'sender'  => request()->sender,
-                'message' => request()->message,
-                'user_id' => request()->user_id
-            ]);
-        }
-
-        return $model;
     }
 
     public function seen($session)
@@ -186,26 +168,22 @@ trait SessionTrait
     public function lock($session)
     {
         $model = Session::whereSession($session)->firstOrFail();
-
         $model->update([
             'status'  => 1,
             'user_id' => request()->user_id
         ]);
-
         $model->sendSessionLockNotification();
+        $model->logger(request()->logger);
 
         return $model->user()->with('bio')->first();
     }
 
-    public function field($session)
+    public function logs($session)
     {
-        $model = Session::where('session', $session)->firstOrFail();
+        $query = Session::whereSession($session)
+            ->firstOrFail()
+            ->logs();
 
-        $model->update(request()->only([
-            'priority',
-            'group_id',
-        ]));
-
-        return $model;
+        return $query;
     }
 }

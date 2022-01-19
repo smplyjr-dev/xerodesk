@@ -55,6 +55,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { nanoid } from "nanoid";
+import { tickets } from "@Scripts/observable";
 import TicketReplyAttachment from "../reply/TicketReplyAttachment.vue";
 import TicketReplyAttachmentModal from "../reply/TicketReplyAttachmentModal.vue";
 import TicketReplyTo from "./TicketReplyTo.vue";
@@ -95,13 +96,16 @@ export default {
     async lockSession() {
       this.isLocking = true;
 
-      let session = await axios.put(`/portal/session/${this.session.session}/lock`, {
-        ...this.session,
-        user_id: this.user.id
+      let { data } = await axios.put(`/portal/session/${this.session.session}/lock`, {
+        user_id: this.user.id,
+        logger: "lock"
       });
-      this.session = { ...this.session, user: session.data };
 
-      let message = await axios.post(`/portal/message`, {
+      // update the local copy of the session
+      this.session.status = 1;
+      this.session.user = data;
+
+      await axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
         message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
@@ -109,7 +113,6 @@ export default {
         session: this.session.session,
         user_id: this.user.id
       });
-      this.$store.commit("messages/PUSH_MESSAGE", message.data.data);
 
       this.isLocking = false;
     },

@@ -404,30 +404,26 @@ export default {
       });
     },
     updateFields(session, field, val) {
-      let data = {};
-
-      if (field == "priority") data = { priority: val };
-      if (field == "group_id") data = { group_id: val };
-      if (field == "user_id") data = { user_id: val };
-
-      // for request for status update
-      if (field != "status") return axios.put(`/portal/session/${session.session}/field`, data);
-
-      // for request other than status update
-      return axios.put(`/portal/session/${session.session}/status`, {
-        status: val,
+      let data = {
         hash: nanoid(),
         sender: "session",
         user_id: this.user.id,
         message: `<p>The status of the ticket has been updated to <strong>${tickets.status.find((s) => s.id == val).name}</strong>.</p>`
-      });
+      };
+
+      if (field == "priority") data.priority = val;
+      if (field == "group_id") data.group_id = val;
+      if (field == "user_id") data.user_id = val;
+      if (field == "status") data.status = val;
+
+      axios.put(`/portal/session/${session.session}`, data);
     },
     updateAgent(s) {
       let agent = this.users.find((u) => u.id == s.agent_id);
 
       axios.put(`/portal/session/${s.session}/lock`, {
-        ...s,
-        user_id: agent.id
+        user_id: agent.id,
+        logger: "assign"
       });
 
       axios.post(`/portal/message`, {

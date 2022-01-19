@@ -25,7 +25,7 @@ const mutations = {
 
   PUSH_MESSAGE: (state, params) => {
     let { message, sender } = params;
-    let clients_id = state.clients.map(c => c.id);
+    let clients_id = state.clients.map((c) => c.id);
     let client_key = clients_id.indexOf(params.client_id);
 
     state.clients[client_key].sessions[state.clients[client_key].sessions.length - 1].messages.push({
@@ -35,7 +35,13 @@ const mutations = {
   }
 };
 
-const actions = {};
+const actions = {
+  async fetchClients({ commit }) {
+    let { data } = await axios.get(`/portal/client`);
+
+    commit("SET_CLIENTS", data);
+  }
+};
 
 export default {
   namespaced,

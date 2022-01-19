@@ -10,7 +10,7 @@ class MessageObserver
 {
     public function created(Message $message)
     {
-        if ($message->sender == 'client') {
+        if ($message->sender == 'client' || $message->sender == 'session') {
             MessageToAdmin::dispatch(
                 $message,
                 $message->session()->first()->session

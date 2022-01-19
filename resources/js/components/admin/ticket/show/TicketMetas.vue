@@ -34,9 +34,11 @@
       </li>
       <li>
         <p class="cd-title">Ticket History</p>
-        <p class="cd-info ellipsis" v-if="!history.length">No history found</p>
-        <div class="cd-info" v-else>
+        <div class="cd-info">
           <ul class="timeline">
+            <li>
+              <a href="javascript:void(0)" @click="isLogVisible = !isLogVisible" data-toggle="modal" data-target="#ticket-log-modal">View Full Activity Log</a>
+            </li>
             <li v-for="h in history" :key="h.id">
               <div class="user">{{ findUserById(h.user_id) }}</div>
               <div class="content" v-html="h.message"></div>
@@ -47,6 +49,7 @@
       </li>
     </ul>
 
+    <TicketLogModal v-if="isLogVisible" @onHidden="isLogVisible = $event" />
     <TicketUpdateModal />
     <TicketTransferModal />
   </div>
@@ -54,14 +57,16 @@
 
 <script>
 import { mapState } from "vuex";
+import TicketLogModal from "./TicketLogModal.vue";
 import TicketUpdateModal from "./TicketUpdateModal.vue";
 import TicketTransferModal from "./TicketTransferModal.vue";
 
 export default {
   props: ["data"],
-  components: { TicketUpdateModal, TicketTransferModal },
+  components: { TicketLogModal, TicketUpdateModal, TicketTransferModal },
   data: () => ({
-    isSending: false
+    isSending: false,
+    isLogVisible: false
   }),
   computed: {
     ...mapState("auth", ["users", "user"]),
