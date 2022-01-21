@@ -201,6 +201,7 @@ export default {
 
       if (p.description == "ASSIGN") message += `<strong>${user}</strong> has assigned this ticket to <strong>${this.getUser(p.properties.ending.user_id, "App\\Models\\User\\User")}</strong>.`;
       if (p.description == "CREATE") message += `<strong>${user}</strong> has open this ticket.`;
+      if (p.description == "GRAB") message += `<strong>${user}</strong> has grabbed and locked this ticket.`;
       if (p.description == "LOCK") message += `<strong>${user}</strong> has accepted and locked this ticket.`;
       if (p.description == "STATUS") message += `<strong>${user}</strong> has update the status of the ticket.`;
       if (p.description == "TRANSCRIPT") message += `<strong>${user}</strong> has sent a copy of transcript to the client.`;

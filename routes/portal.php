@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/session/{session}/logs',       [SessionController::class, 'logs']);
     Route::put('/session/{session}/transfer',   [SessionController::class, 'transfer']);
     Route::put('/session/{session}/seen',       [SessionController::class, 'seen']);
+    Route::put('/session/{session}/grab',       [SessionController::class, 'grab']);
     Route::put('/session/{session}/lock',       [SessionController::class, 'lock']);
 
     // SLA Policy Routes

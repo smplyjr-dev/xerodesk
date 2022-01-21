@@ -17,7 +17,7 @@
     <!-- Show Notice -->
     <template v-else-if="session.user_id != user.id">
       <div class="p-3">
-        <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you.</div>
+        <div class="alert alert-warning m-0"><strong>Notice!</strong> This client is not currently assigned to you. <a @click="grabSession" href="javascript:void(0)">Grab the ticket</a>.</div>
       </div>
     </template>
 
@@ -66,6 +66,7 @@ export default {
   name: "TicketReply",
   components: { TicketReplyAttachment, TicketReplyAttachmentModal, TicketReplyTo, TicketReplyEditor, EmojiPicker },
   data: () => ({
+    isGrabbing: false,
     isLocking: false,
     accept: "text/csv,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/gif,text/html,image/vnd.microsoft.icon,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.rar,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-7z-compressed",
     extensions: ["csv", "doc", "docx", "gif", "htm", "html", "ico", "jpeg", "jpg", "png", "pdf", "pptx", "rar", "txt", "xls", "xlsx", "zip", "7z"],
@@ -93,6 +94,25 @@ export default {
     removeAttachment(e) {
       this.attachments = e;
     },
+    async grabSession() {
+      this.isGrabbing = true;
+
+      let { data } = await axios.put(`/portal/session/${this.session.session}/grab`);
+
+      // update the local copy of the session
+      this.session.user = data;
+
+      await axios.post(`/portal/message`, {
+        hash: nanoid(),
+        sender: "session",
+        message: `<p>The session has been re-assigned to <strong>${this.session.user.bio.first_name} ${this.session.user.bio.last_name}</strong>.</p>`,
+        client_id: this.session.client.id,
+        session: this.session.session,
+        user_id: this.user.id
+      });
+
+      this.isGrabbing = false;
+    },
     async lockSession() {
       this.isLocking = true;
 
@@ -108,7 +128,7 @@ export default {
       await axios.post(`/portal/message`, {
         hash: nanoid(),
         sender: "session",
-        message: `<p>The session has been assigned to <strong>${this.user.bio.first_name} ${this.user.bio.last_name}</strong>.</p>`,
+        message: `<p>The session has been assigned to <strong>${this.session.user.bio.first_name} ${this.session.user.bio.last_name}</strong>.</p>`,
         client_id: this.session.client.id,
         session: this.session.session,
         user_id: this.user.id

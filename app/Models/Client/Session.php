@@ -88,7 +88,7 @@ class Session extends BaseModel
             $ending = $dirty;
             foreach ($dirty as $nK => $n) $starting[$nK] = $old[$nK];
 
-            if (in_array($type, ['assign', 'lock', 'status', 'transcript', 'transfer', 'update'])) {
+            if (in_array($type, ['assign', 'grab', 'lock', 'status', 'transcript', 'transfer', 'update'])) {
                 $a = activity();
                 $a->on($this);
                 $a->by(request()->user());

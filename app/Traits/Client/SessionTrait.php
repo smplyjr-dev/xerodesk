@@ -165,6 +165,18 @@ trait SessionTrait
         return $model;
     }
 
+    public function grab($session)
+    {
+        $model = Session::whereSession($session)->firstOrFail();
+        $model->update([
+            'user_id' => request()->user()->id
+        ]);
+        $model->sendSessionLockNotification();
+        $model->logger('grab');
+
+        return $model->user()->with('bio')->first();
+    }
+
     public function lock($session)
     {
         $model = Session::whereSession($session)->firstOrFail();
