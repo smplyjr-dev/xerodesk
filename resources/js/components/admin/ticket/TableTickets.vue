@@ -470,9 +470,9 @@ export default {
     }
   },
   created() {
-    this.getDatatable();
     this.setupListeners();
     this.setTableData();
+    this.getDatatable();
   },
   watch: {
     $route() {

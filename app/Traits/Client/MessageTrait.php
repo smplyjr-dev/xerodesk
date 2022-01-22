@@ -5,6 +5,8 @@ namespace App\Traits\Client;
 use App\Events\Message\MessageAttachment;
 use App\Models\Client\Client;
 use App\Models\Client\Message;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -61,6 +63,49 @@ trait MessageTrait
             return response()->json($attachment, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
+        }
+    }
+
+    public function search()
+    {
+        try {
+            $columns = ['message'];
+
+            $length = request()->length;
+            $column = request()->column; // index
+            $dir = request()->dir;
+            $searchValue = request()->search;
+
+            $query = DB::table('client_session_messages as csm')
+                ->leftJoin('client_sessions AS cs', 'csm.session_id', '=', 'cs.id')
+                ->leftJoin('clients AS c', 'cs.client_id', '=', 'c.id')
+                ->leftJoin('users AS u', 'csm.user_id', '=', 'u.id')
+                ->leftJoin('user_bio AS ub', 'ub.user_id', '=', 'u.id')
+                ->select(
+                    'csm.sender AS sender',
+                    'csm.message AS message',
+                    'cs.session AS session',
+                    'c.name AS client',
+                    DB::raw("CONCAT(ub.first_name, ' ', ub.last_name) AS agent")
+                )
+                ->orderBy($columns[$column], $dir)
+                ->where(function ($query) use ($searchValue) {
+                    $query->where('message', 'like', '%' . $searchValue . '%');
+                })
+                ->where('csm.sender', '!=', 'session');
+
+            // using tap() to update the fields queried from paginate()
+            $tickets = tap($query->paginate($length), function ($init) {
+                return $init->getCollection()->transform(function ($item) {
+                    // do your customization here
+                    // $item->sla = 'Some value...';
+                    return $item;
+                });
+            });
+
+            return ['data' => $tickets, 'draw' => request()->draw];
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
     }
 }

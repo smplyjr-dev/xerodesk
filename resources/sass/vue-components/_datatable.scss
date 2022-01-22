@@ -13,7 +13,7 @@
       background: #fafafa;
 
       th {
-        color: #25282B;
+        color: #25282b;
         font-weight: $font-weight-semi;
         padding: 1.25rem;
         border-top: none;
@@ -64,6 +64,12 @@
           &:not(:first-child) {
             display: none;
           }
+
+          &.sk {
+            p {
+              margin: 0;
+            }
+          }
         }
 
         &.hoverable {
@@ -94,6 +100,12 @@
           padding: 0.25rem 0.75rem;
           display: inline-block;
         }
+      }
+
+      &.block-body {
+        display: block;
+        max-height: 300px;
+        overflow: auto;
       }
     }
   }
@@ -135,6 +147,18 @@
 
             &:not(:first-child) {
               display: table-cell;
+            }
+          }
+        }
+
+        &.block-body {
+          tr {
+            display: block;
+
+            td {
+              &:not(.dt-mobile) {
+                display: block;
+              }
             }
           }
         }

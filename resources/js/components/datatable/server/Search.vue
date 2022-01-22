@@ -7,10 +7,14 @@
 
 <script>
 export default {
+  props: ["tableData"],
   data() {
     return {
       search: ""
     };
+  },
+  mounted() {
+    this.search = this.tableData.search;
   }
 };
 </script>

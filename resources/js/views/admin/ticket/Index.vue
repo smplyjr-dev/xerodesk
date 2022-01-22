@@ -2,12 +2,21 @@
   <div class="container-fluid px-4 mt-4">
     <div class="pb-3" style="background-color: #fafafa; border-bottom: 1px solid #e6e7e9">
       <div class="flex-center-between">
-        <button class="btn rounded-pill btn-primary" @click="isRefineOpen = true">
-          <div class="d-flex align-items-center">
-            <span class="d-none d-md-block mr-1">Refine Search</span>
-            <i class="fa fa-fw fa-search"></i>
-          </div>
-        </button>
+        <div class="">
+          <button class="btn rounded-pill btn-primary" @click="isRefineOpen = true">
+            <div class="d-flex align-items-center">
+              <span class="d-none d-md-block mr-1">Refine Search</span>
+              <i class="fa fa-fw fa-filter"></i>
+            </div>
+          </button>
+
+          <button class="btn rounded-pill btn-primary" data-toggle="modal" data-target="#search">
+            <div class="d-flex align-items-center">
+              <span class="d-none d-md-block mr-1">Search a Keyword</span>
+              <i class="fa fa-fw fa-search"></i>
+            </div>
+          </button>
+        </div>
 
         <button class="btn rounded-pill btn-success" @click="isExportOpen = true">
           <div class="d-flex align-items-center">
@@ -29,6 +38,8 @@
     <div class="mt-4">
       <TableTickets :isReady="isReady" />
     </div>
+
+    <SearchKeywordModal />
   </div>
 </template>
 
@@ -37,11 +48,12 @@ import { mapState } from "vuex";
 import RefineTickets from "@Components/admin/ticket/RefineTickets.vue";
 import TableTickets from "@Components/admin/ticket/TableTickets.vue";
 import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
+import SearchKeywordModal from "@Components/admin/ticket/SearchKeywordModal.vue";
 
 export default {
   layout: "Admin",
   name: "Tickets",
-  components: { RefineTickets, TableTickets, ExportTickets },
+  components: { RefineTickets, TableTickets, ExportTickets, SearchKeywordModal },
   metaInfo: () => ({ title: "Tickets" }),
   middleware: ["auth", "permission:view_tickets"],
   data: () => ({

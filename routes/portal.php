@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Message Routes
     Route::post('/message/{hash}/attachment', [MessageController::class, 'attachment']);
+    Route::get('/message/search',             [MessageController::class, 'search']);
 
     // Role Routes
     Route::get('/role/datatable', [RoleController::class, 'datatable']);
