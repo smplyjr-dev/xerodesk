@@ -6,7 +6,7 @@
     </div>
 
     <div class="server-datatable">
-      <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
         <search @onSearch="searchDatatable" />
       </div>
@@ -69,7 +69,7 @@
         </tbody>
       </datatable>
 
-      <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="flex-center-between flex-wrap">
         <entries :pagination="pagination" />
         <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-9">
     <div class="server-datatable">
-      <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
         <button type="button" class="btn btn-primary" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add SLA</button>
       </div>
@@ -10,7 +10,7 @@
         <tbody class="text-sm">
           <tr class="text-center" v-if="isLoading">
             <td colspan="4">
-              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
             </td>
           </tr>
 
@@ -63,7 +63,7 @@
         </tbody>
       </datatable>
 
-      <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="flex-center-between flex-wrap">
         <entries :pagination="pagination" />
         <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
       </div>
@@ -164,7 +164,7 @@ export default {
       { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve" },
       { sortable: 0, hide: 0, type: types[0], width: "25%", name: "action", label: "Action" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -199,7 +199,7 @@ export default {
 
       axios
         .get(url, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           let data = response.data;
           if (this.tableData.draw == data.draw) {
             this.paginated = data.data.data;
@@ -207,7 +207,7 @@ export default {
             this.isLoading = false;
           }
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
@@ -310,7 +310,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.slaError.push(message);
             });
           }

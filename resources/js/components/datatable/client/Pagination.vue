@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center flex-wrap" v-if="!client">
+  <div class="flex-center-between flex-wrap" v-if="!client">
     <div class="dtc-entries">{{ pagination.from }} - {{ pagination.to }} of {{ pagination.total }}</div>
 
     <div class="dtc-pagination">
@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center flex-wrap" v-else>
+  <div class="flex-center-between flex-wrap" v-else>
     <div class="dtc-entries">
       Showing
       {{ pagination.from }} - {{ pagination.to }} of {{ filtered.length }}

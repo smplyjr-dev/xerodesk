@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <div class="client-datatable">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="flex-center-between flex-wrap">
               <div class="control d-flex align-items-center">
                 Show
                 <div class="select mx-2">
