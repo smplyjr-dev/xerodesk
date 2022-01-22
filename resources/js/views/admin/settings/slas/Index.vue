@@ -319,6 +319,9 @@ export default {
 
       this.isSlaLoading = false;
     }
+  },
+  created() {
+    this.getDatatable();
   }
 };
 </script>

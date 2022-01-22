@@ -64,8 +64,5 @@ export default {
       this.tableData.length = e;
       this.getDatatable();
     }
-  },
-  mounted() {
-    this.getDatatable();
   }
 };

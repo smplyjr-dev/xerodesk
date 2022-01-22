@@ -226,6 +226,9 @@ export default {
     getAttachment(message) {
       return message.attachments[0];
     }
+  },
+  created() {
+    this.getDatatable();
   }
 };
 </script>
