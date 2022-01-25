@@ -15,3 +15,9 @@ yarn-error.log
 /public/build
 /public/mix-manifest.json
 /nbproject/private/
+
+# for vagrant folder and files
+.vagrant
+/provision
+Vagrant.md
+Vagrantfile
