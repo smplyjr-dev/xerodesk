@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     // Session Routes
     Route::get('/session/datatable',            [SessionController::class, 'datatable']);
     Route::get('/session/export',               [SessionController::class, 'export']);
+    Route::get('/session/countByStatus',        [SessionController::class, 'countByStatus']);
     Route::get('/session/{session}/tag',        [SessionController::class, 'tags']);
     Route::post('/session/{session}/tag',       [SessionController::class, 'attach']);
     Route::delete('/session/{session}/tag',     [SessionController::class, 'detach']);

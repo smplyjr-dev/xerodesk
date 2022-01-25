@@ -5,11 +5,11 @@
     </div>
 
     <div class="row">
-      <TicketWidget title="Open" :loading="loading.sessions" :length="filterBy('status', 1)" />
-      <TicketWidget title="Pending" :loading="loading.sessions" :length="filterBy('status', 2)" />
-      <TicketWidget title="Resolved" :loading="loading.sessions" :length="filterBy('status', 3)" />
-      <TicketWidget title="Closed" :loading="loading.sessions" :length="filterBy('status', 4)" />
-      <TicketWidget title="Unassigned" :loading="loading.sessions" :length="filterBy('user_id', null)" />
+      <TicketWidget :title="1" :loading="loading.sessions" :length="sessions[1]" />
+      <TicketWidget :title="2" :loading="loading.sessions" :length="sessions[2]" />
+      <TicketWidget :title="3" :loading="loading.sessions" :length="sessions[3]" />
+      <TicketWidget :title="4" :loading="loading.sessions" :length="sessions[4]" />
+      <TicketWidget :title="0" :loading="loading.sessions" :length="sessions[0]" />
     </div>
 
     <div class="row">
@@ -65,8 +65,8 @@ export default {
     async fetchTickets() {
       this.loading.sessions = true;
 
-      let { data } = await axios.get(`/portal/session`).takeAtLeast(300);
-      this.sessions = data.data;
+      let { data } = await axios.get(`/portal/session/countByStatus?by=[1, 2, 3, 4, 0]`).takeAtLeast(300);
+      this.sessions = data;
 
       this.loading.sessions = false;
     },

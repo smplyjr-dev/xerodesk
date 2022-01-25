@@ -198,4 +198,15 @@ trait SessionTrait
 
         return $query;
     }
+
+    public function countByStatus()
+    {
+        $counts = [];
+
+        foreach (json_decode(request()->by) as $val) {
+            $counts[$val] = Session::whereStatus($val)->count();
+        }
+
+        return response()->json($counts, 200);
+    }
 }
