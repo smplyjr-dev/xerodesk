@@ -30,7 +30,7 @@ export default {
       default: "left"
     }
   },
-  name: "AppDropdown",
+  name: "Dropdown",
   mixins: [clickaway],
   provide() {
     return {

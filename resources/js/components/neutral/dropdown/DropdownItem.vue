@@ -7,7 +7,7 @@
 <script>
 export default {
   props: ["value"],
-  name: "AppDropdownItem",
+  name: "DropdownItem",
   inject: ["sharedState"],
   computed: {
     active: {
