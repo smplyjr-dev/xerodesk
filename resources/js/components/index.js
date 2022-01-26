@@ -1,9 +1,19 @@
 // Dropdown Components
-import AppDropdown from "./neutral/dropdown/AppDropdown.vue";
-import AppDropdownContent from "./neutral/dropdown/AppDropdownContent.vue";
-import AppDropdownItem from "./neutral/dropdown/AppDropdownItem.vue";
+import Dropdown from "./neutral/dropdown/Dropdown.vue";
+import DropdownContent from "./neutral/dropdown/DropdownContent.vue";
+import DropdownItem from "./neutral/dropdown/DropdownItem.vue";
 
-[AppDropdown, AppDropdownContent, AppDropdownItem].forEach(Component => {
+[Dropdown, DropdownContent, DropdownItem].forEach((Component) => {
+  Vue.component(Component.name, Component);
+});
+
+// Modal Components
+import Modal from "./neutral/modal/Modal.vue";
+import ModalBody from "./neutral/modal/ModalBody.vue";
+import ModalHeader from "./neutral/modal/ModalHeader.vue";
+import ModalFooter from "./neutral/modal/ModalFooter.vue";
+
+[Modal, ModalBody, ModalHeader, ModalFooter].forEach((Component) => {
   Vue.component(Component.name, Component);
 });
 
@@ -15,6 +25,6 @@ import FormAlert from "./neutral/FormAlert.vue";
 import InlineSvg from "./neutral/InlineSvg.vue";
 import Spinner from "./neutral/Spinner.vue";
 
-[Drawer, Skeleton, Popup, FormAlert, InlineSvg, Spinner].forEach(Component => {
+[Drawer, Skeleton, Popup, FormAlert, InlineSvg, Spinner].forEach((Component) => {
   Vue.component(Component.name, Component);
 });

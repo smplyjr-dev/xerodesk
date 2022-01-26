@@ -11,26 +11,26 @@
     <div class="ml-auto">
       <ul class="nav">
         <li class="nav-item">
-          <app-dropdown :carret="false" position="right">
+          <dropdown :carret="false" position="right">
             <template v-slot:value>
               <a href="javascript:void(0)" class="nav-link p-0">
                 <img class="rounded-circle object-cover" :src="profilePicture" @error="$onImgError($event, 1)" alt="Profile Picture" height="37px" width="37px" />
               </a>
             </template>
 
-            <app-dropdown-content>
+            <dropdown-content>
               <template v-slot:content>
                 <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
                 <p class="mx-2 mb-2 text-xs text-secondary">{{ user.role }}</p>
                 <hr class="my-1" />
-                <app-dropdown-item>
+                <dropdown-item>
                   <router-link class="link-unstyled d-block" to="/profile">Profile</router-link>
-                </app-dropdown-item>
+                </dropdown-item>
                 <hr class="my-1" />
-                <app-dropdown-item @select="logout()">Logout</app-dropdown-item>
+                <dropdown-item @select="logout()">Logout</dropdown-item>
               </template>
-            </app-dropdown-content>
-          </app-dropdown>
+            </dropdown-content>
+          </dropdown>
         </li>
       </ul>
     </div>

@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "AppDropdownContent",
+  name: "DropdownContent",
   inject: ["sharedState"],
   data: () => ({
     showFilter: false,
