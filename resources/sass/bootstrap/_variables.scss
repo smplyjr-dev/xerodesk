@@ -38,7 +38,7 @@ $text-6xl:  4rem;
 $font-family-base: "Roboto", "Poppins", "Open Sans", "Montserrat", "Rubik", "Raleway";
 
 // =================== Color Scheming =================== //
-$primary:   #4d83ff; // default is: #007bff
+$primary:   #2C85B9; // default is: #007bff
 $secondary: #686868; // default is: #1b75bc
 $success:   #71c016; // default is: #1abc9c
 $info:      #335cad; // default is: #335cad
@@ -69,7 +69,7 @@ $theme-colors: map-merge(
 $white:    #ffffff;
 $gray-300: #dee2e6;
 $gray-600: #6c757d;
-$gray-900: #212529;
+$gray-900: #181819;
 $black:    #464646;
 
 $custom-control-indicator-checked-color:        $white;
@@ -103,3 +103,5 @@ $input-btn-focus-box-shadow: none;
 $box-shadow-sm: 0 .125rem .25rem rgba($black, .075);
 $box-shadow:    0 .5rem 1rem rgba($black, .15);
 $box-shadow-lg: 0 1rem 3rem rgba($black, .175);
+
+$btn-border-radius: 4px;

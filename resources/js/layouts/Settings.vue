@@ -1,5 +1,5 @@
 <template>
-  <div class="layout layout-admin" :class="{ 'is-open': isOpen }">
+  <div class="layout-admin" :class="{ 'is-open': isOpen }">
     <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
 
     <div class="aside-backdrop" @click.self="isOpen = false"></div>
@@ -57,7 +57,7 @@ export default {
   components: { Notification, Navbar, Sidebar, SettingMeta },
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
-    titleTemplate: `XMCIT - %s`
+    titleTemplate: `Xerodesk - %s`
   }),
   data() {
     let now = new Date();

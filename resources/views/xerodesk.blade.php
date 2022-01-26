@@ -8,11 +8,16 @@
     <meta name="description" content="Welcome to FiliPay Support Portal" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>XMCIT</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/icon" />
+    <link rel="icon" href="{{ asset('favicon-1.png') }}" type="image/png" />
+    <title>Xerodesk</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Roboto:wght@400;500;700&display=swap" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}" />
-    <script defer src="{{ mix('dist/js/app.js') }}"></script>
+    <link rel="stylesheet" href="{{ config('app.env') == 'local' ? asset('/dist/css/app.css?time=' . time()) : mix('dist/css/app.css') }}" />
+    <script defer src="{{ config('app.env') == 'local' ? asset('/dist/js/app.js?time=' . time()) : mix('dist/js/app.js') }}"></script>
 
 </head>
 

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/iframe', function () {
-    $path = config('app.env') == 'local' ? 'http://xmcit-widget.test/dist/' : 'widget/';
+    $path = config('app.env') == 'local' ? 'http://xerodesk-widget.test/dist/' : 'widget/';
     return view('iframe', compact('path'));
 });
 

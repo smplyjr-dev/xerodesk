@@ -1,17 +1,15 @@
 <template>
-  <div class="layout layout-neutral">
-    <div class="container-fluid h-100">
-      <RouterView />
-    </div>
+  <div class="layout--guest-auth">
+    <RouterView />
   </div>
 </template>
 
 <script>
 export default {
-  name: "Neutral",
+  name: "GuestAuth",
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback
-    titleTemplate: `XMCIT - %s`
+    titleTemplate: `Xerodesk - %s`
   })
 };
 </script>

@@ -35,10 +35,7 @@
       </drawer>
     </div>
 
-    <div class="mt-4">
-      <TableTickets :isReady="isReady" />
-    </div>
-
+    <TableTickets :isReady="isReady" />
     <SearchKeywordModal />
   </div>
 </template>

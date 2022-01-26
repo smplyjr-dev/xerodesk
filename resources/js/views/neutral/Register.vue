@@ -1,14 +1,11 @@
 <template>
-  <div class="row h-100">
-    <div class="col-lg-6 page-wrapper">
-      <div class="page-form">
-        <div class="mb-4">
-          <!-- <img loading="lazy" :src="`${$APP_URL}/images/logo.png`" height="50px" alt="FiliPay Logo" /> -->
-          <h3>Xerodesk</h3>
+  <div class="page-wrapper">
+    <div class="row page-row">
+      <div class="col-md-6 page-form">
+        <div class="text-center mb-4">
+          <router-link to="/"><img class="mb-4" loading="lazy" :src="`${$APP_URL}/images/logo-large.png`" height="50px" alt="FiliPay Logo" /></router-link>
+          <h6 class="font-weight-normal mb-4">Ready to create your account?</h6>
         </div>
-
-        <h4>Hi there!</h4>
-        <h6 class="font-weight-light mb-4">Ready to create your account?</h6>
 
         <form @submit.prevent="submitRegistration()">
           <div class="form-group" v-show="!$isEmpty(registrationMessage)">
@@ -21,89 +18,47 @@
               <p v-for="error in registrationError" :key="error" v-html="error"></p>
             </form-alert>
           </div>
-
           <div class="form-group row">
             <div class="col">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <InlineSvg name="template/mdi-card-account-details-outline.svg" color="#c9c8c8" size="1rem" />
-                  </span>
-                </div>
-                <input type="text" class="form-control" placeholder="First Name" v-model="first_name" />
-              </div>
+              <input type="text" class="form-control form-control-lg text-sm" placeholder="First Name" v-model="first_name" />
             </div>
             <div class="col">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <InlineSvg name="template/mdi-card-account-details-outline.svg" color="#c9c8c8" size="1rem" />
-                  </span>
-                </div>
-                <input type="text" class="form-control" placeholder="Last Name" v-model="last_name" />
-              </div>
+              <input type="text" class="form-control form-control-lg text-sm" placeholder="Last Name" v-model="last_name" />
             </div>
           </div>
           <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <InlineSvg name="template/mdi-account-outline.svg" color="#c9c8c8" size="1rem" />
-                </span>
-              </div>
-              <input type="text" class="form-control" placeholder="Username" v-model="username" />
-            </div>
+            <input type="text" class="form-control form-control-lg text-sm" placeholder="Username" v-model="username" />
           </div>
           <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <InlineSvg name="template/mdi-at.svg" color="#c9c8c8" size="1rem" />
-                </span>
-              </div>
-              <input type="text" class="form-control" placeholder="Email" v-model="email" />
-            </div>
+            <input type="text" class="form-control form-control-lg text-sm" placeholder="Email" v-model="email" />
           </div>
           <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <InlineSvg name="template/mdi-lock-outline.svg" color="#c9c8c8" size="1rem" />
-                </span>
-              </div>
-              <input type="password" class="form-control" placeholder="Password" v-model="password" />
-            </div>
+            <input type="password" class="form-control form-control-lg text-sm" placeholder="Password" v-model="password" />
           </div>
           <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <InlineSvg name="template/mdi-lock-outline.svg" color="#c9c8c8" size="1rem" />
-                </span>
-              </div>
-              <input type="password" class="form-control" placeholder="Confirm Password" v-model="password_confirmation" />
-            </div>
+            <input type="password" class="form-control form-control-lg text-sm" placeholder="Confirm Password" v-model="password_confirmation" />
           </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block text-uppercase text-sm rounded-0 py-2" :disabled="isLoading">
+            <button type="submit" class="btn btn-primary btn-block btn-lg text-sm" :disabled="isLoading">
               <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status"></div>
-              <span v-else>Submit</span>
+              <span v-else>Sign up</span>
             </button>
           </div>
-          <div class="form-group text-center">
+          <div class="form-group text-center mb-0">
             <span>Already have an account? <router-link to="/">Sign in</router-link></span>
           </div>
         </form>
       </div>
+      <div class="col-md-6 d-none d-md-block">
+        <img loading="lazy" class="object-contain py-5 px-2 w-100 h-100" src="/images/template/bg-login.png" alt="Page Background" />
+      </div>
     </div>
-
-    <div class="col-lg-6 page-background" style="background-image: url('/images/template/bg-register.jpg')"></div>
   </div>
 </template>
 
 <script>
 export default {
-  layout: "Neutral",
+  layout: "GuestAuth",
   name: "Register",
   metaInfo: () => ({ title: "Register" }),
   middleware: "guest",
@@ -149,7 +104,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.registrationError.push(message);
             });
           }

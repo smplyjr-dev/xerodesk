@@ -3,16 +3,10 @@
 
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Welcome to FiliPay Support Portal" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>XMCIT - Iframe</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/icon" />
+    <title>Xerodesk - Widget Frame</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ url($path . 'main.css') }}" />
-    <script defer src="{{ url($path . 'main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url($path . 'main.css?time=' . time()) }}" />
+    <script defer src="{{ url($path . 'main.js?time=' . time()) }}"></script>
 
 </head>
 

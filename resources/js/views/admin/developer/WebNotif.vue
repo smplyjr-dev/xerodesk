@@ -49,7 +49,7 @@ export default {
         Notification.requestPermission((permission) => {
           let notification = new Notification(this.title, {
             body: this.body,
-            icon: "https://support.filipayroll.com/images/logo.png"
+            icon: "https://support.filipayroll.com/images/logo-large.png"
           });
 
           // link to page on clicking the notification

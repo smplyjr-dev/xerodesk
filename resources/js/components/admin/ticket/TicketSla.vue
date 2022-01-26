@@ -1,5 +1,5 @@
 <template>
-  <div class="badge" :class="{ 'text-white': getSla.sla.color != 'yellow' }" :style="{ background: getSla.sla.color }">
+  <div class="badge badge-pill" :class="{ 'text-white': getSla.sla.color != 'yellow' }" :style="{ background: getSla.sla.color }">
     <span>{{ getElapsed() }} hour(s)</span>
   </div>
 </template>

@@ -1,0 +1,46 @@
+.layout--guest-auth {
+  height: 100%;
+  width: 100%;
+  background: #2c85b9;
+  background: -webkit-linear-gradient(top left, #2c85b9, #5ba9d4);
+  background: -moz-linear-gradient(top left, #2c85b9, #5ba9d4);
+  background: linear-gradient(to bottom right, #2c85b9, #5ba9d4);
+
+  .page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 0 1rem;
+    max-width: 768px;
+    height: 100%;
+    width: 100%;
+
+    .page-row {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: $box-shadow;
+      width: 100%;
+    }
+    .page-form {
+      align-self: center;
+      padding: 2rem;
+      width: 100%;
+
+      .input-group {
+        border: 1px solid #686868;
+
+        input {
+          font-size: 0.95rem;
+          padding: 1.5rem 1rem;
+
+          &:focus {
+            border-color: transparent;
+            box-shadow: none;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}

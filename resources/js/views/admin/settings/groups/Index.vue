@@ -22,7 +22,7 @@
         <tbody class="text-sm">
           <tr class="text-center" v-if="isLoading">
             <td colspan="6">
-              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
             </td>
           </tr>
 
@@ -181,7 +181,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "users", label: "Agents" },
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -220,13 +220,9 @@ export default {
     filteredGroups() {
       let groups = this.groups;
       if (this.search) {
-        groups = groups.filter(row => {
-          return Object.keys(row).some(key => {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(this.search.toLowerCase()) > -1
-            );
+        groups = groups.filter((row) => {
+          return Object.keys(row).some((key) => {
+            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           });
         });
       }
@@ -330,7 +326,7 @@ export default {
       try {
         let response = "";
 
-        ["create_group", "edit_group", "delete_group"].forEach(allowed_permission => {
+        ["create_group", "edit_group", "delete_group"].forEach((allowed_permission) => {
           if (!this.permissions.includes(allowed_permission)) {
             // display a notification
             this.$store.dispatch("notifications/addNotification", {
@@ -397,7 +393,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.groupError.push(message);
             });
           }
@@ -407,7 +403,7 @@ export default {
       this.isGroupLoading = false;
     },
     selectUsers(group) {
-      ["select_group_users"].forEach(allowed_permission => {
+      ["select_group_users"].forEach((allowed_permission) => {
         if (!this.permissions.includes(allowed_permission)) {
           // display a notification
           this.$store.dispatch("notifications/addNotification", {
@@ -426,7 +422,7 @@ export default {
     },
     async handleRefresh() {
       await this.getGroups(false);
-      this.group = this.groups.find(g => g.id == this.group.id);
+      this.group = this.groups.find((g) => g.id == this.group.id);
     }
   },
   created() {

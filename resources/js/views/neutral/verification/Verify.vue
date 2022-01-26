@@ -1,6 +1,6 @@
 <script>
 export default {
-  layout: "Neutral",
+  layout: "GuestAuth",
   name: "Verify",
   metaInfo: () => ({ title: "Account Verification" }),
   async beforeRouteEnter(to, from, next) {

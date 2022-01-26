@@ -1,5 +1,5 @@
 <template>
-  <div class="server-datatable">
+  <div class="server-datatable mt-4">
     <div class="flex-center-between flex-wrap">
       <length @onSelect="handleOnSelect" />
     </div>
@@ -135,18 +135,14 @@
 
           <!-- Client -->
           <td>
-            <div class="d-flex align-items-center">
-              <div class="position-relative">
-                <img class="object-cover mr-2 rounded-circle" src="/images/generic-profile.png" @error="$onImgError($event, 1)" alt="Profile Picture" height="32px" width="32px" />
-                <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
-              </div>
-              <span>{{ p.client | capitalize }}</span>
-            </div>
+            {{ p.client | capitalize }}
           </td>
 
           <!-- Session -->
           <td>
-            <router-link :to="`/tickets/${p.session}`">{{ p.session }}</router-link>
+            <router-link class="position-relative" :to="`/tickets/${p.session}`">
+              {{ p.session }} <span class="ticket-counter" v-if="getUnreadCount(p) > 0" v-html="getUnreadCount(p)"></span>
+            </router-link>
           </td>
 
           <!-- Priority -->

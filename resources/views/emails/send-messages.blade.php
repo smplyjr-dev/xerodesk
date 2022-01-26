@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>XMCIT | Chat Log</title>
+  <title>Xerodesk | Chat Log</title>
 
   <style type="text/css">
     /**
@@ -135,7 +135,7 @@
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="#" target="_blank" style="display: inline-block;">
-                <img src="{{ url('images/logo.png') }}" alt="Logo" border="0" width="48" style="display: block; width: 150px; max-width: 150px; min-width: 48px;">
+                <img src="{{ url('images/logo-large.png') }}" alt="Logo" border="0" width="48" style="display: block; width: 150px; max-width: 150px; min-width: 48px;">
               </a>
             </td>
           </tr>

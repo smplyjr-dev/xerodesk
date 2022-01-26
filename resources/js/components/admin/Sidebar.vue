@@ -1,12 +1,15 @@
 <template>
   <aside>
+    <div class="sidebar-toggler" @click="$emit('toggle-sidebar', false)">
+      <InlineSvg name="template/mdi-close.svg" color="#4c5771" size="1.5rem" />
+    </div>
     <div class="sidebar-logo">
-      <div class="sidebar-logo--big">XeroDesk</div>
-      <div class="sidebar-logo--small">XD</div>
-
-      <div class="toggler" @click="$emit('toggle-sidebar', false)">
-        <InlineSvg name="template/mdi-close.svg" color="#4c5771" size="1.5rem" />
-      </div>
+      <router-link to="/" class="sidebar-logo--big">
+        <img loading="lazy" class="object-contain" src="/images/logo-large-white.png" alt="Page Background" width="100%" />
+      </router-link>
+      <router-link to="/" class="sidebar-logo--small">
+        <img loading="lazy" class="object-contain" src="/images/logo-small-white.png" alt="Page Background" width="100%" />
+      </router-link>
     </div>
     <div class="sidebar-navs">
       <ul class="nav flex-column">
@@ -50,7 +53,7 @@ export default {
         {
           name: "Dashboard",
           to: "/dashboard",
-          icon: "template/mdi-dashboard.svg",
+          icon: "template/mdi-home.svg",
           ready: isDevelopment
         },
         {
@@ -122,7 +125,7 @@ export default {
   },
   computed: {
     ready() {
-      return this.navs.filter(n => n.ready);
+      return this.navs.filter((n) => n.ready);
     }
   },
   methods: {

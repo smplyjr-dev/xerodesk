@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  layout: "Neutral",
+  layout: "GuestAuth",
   name: "NotFound",
   metaInfo: () => ({ title: "Page Not Found" })
 };

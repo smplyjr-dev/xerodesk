@@ -22,14 +22,14 @@
         <tbody class="text-sm">
           <tr class="text-center" v-if="isLoading">
             <td colspan="6">
-              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem;"></div>
+              <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
             </td>
           </tr>
 
           <tr class="text-sm" v-else v-for="(p, i) in paginated" :key="p.id">
             <td>
               <div class="my-2 text-center">
-                <router-link :to="`/settings/users/${p.id}/edit`" style="min-width: 150px;">
+                <router-link :to="`/settings/users/${p.id}/edit`" style="min-width: 150px">
                   <img loading="lazy" class="object-cover" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="75px" width="75px" />
                   <div class="d-flex flex-column mt-2">
                     <span>{{ `${p.name}` }}</span>
@@ -244,13 +244,9 @@ export default {
     filteredUsers() {
       let users = this.users;
       if (this.search) {
-        users = users.filter(row => {
-          return Object.keys(row).some(key => {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(this.search.toLowerCase()) > -1
-            );
+        users = users.filter((row) => {
+          return Object.keys(row).some((key) => {
+            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           });
         });
       }
@@ -291,7 +287,7 @@ export default {
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "verification", label: "Verification" },
       { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
     ];
-    columns.forEach(column => {
+    columns.forEach((column) => {
       sortOrders[column.name] = -1;
     });
     return {
@@ -335,12 +331,12 @@ export default {
 
       axios
         .get(url, { params: this.tableData })
-        .then(response => {
+        .then((response) => {
           this.users = response.data;
           this.pagination.total = this.users.length;
           this.isLoading = false;
         })
-        .catch(errors => {
+        .catch((errors) => {
           console.log(errors);
         });
     },
@@ -422,7 +418,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               resendVerificationError += `${message} <br />`;
             });
           }
@@ -436,7 +432,7 @@ export default {
         });
       }
 
-      this.resendingIndex = this.resendingIndex.filter(num => num != index);
+      this.resendingIndex = this.resendingIndex.filter((num) => num != index);
     },
     async createUser() {
       this.isUserLoading = true;
@@ -470,7 +466,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.userError.push(message);
             });
           }
