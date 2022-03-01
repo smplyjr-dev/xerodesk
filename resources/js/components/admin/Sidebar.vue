@@ -46,7 +46,7 @@ export default {
   props: ["isOpen"],
   name: "Sidebar",
   data() {
-    let isDevelopment = process.env.NODE_ENV == "development" ? 1 : 0;
+    let isDevelopment = this.$APP_ENV == "local" ? 1 : 0;
 
     return {
       navs: [

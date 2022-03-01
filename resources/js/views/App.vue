@@ -48,7 +48,7 @@ export default {
     },
     showUnauthModal() {
       let location = window.location.href;
-      let replaced = location.replace(process.env.MIX_APP_URL, "");
+      let replaced = location.replace(window.Laravel.BASE_URL, "");
 
       // update the url
       this.redirectToLoginUrl = replaced;

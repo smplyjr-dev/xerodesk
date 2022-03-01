@@ -73,7 +73,7 @@ export default {
     ...mapState("messages", ["messages"]),
 
     profilePicture() {
-      if (process.env.NODE_ENV == "development") {
+      if (this.$APP_ENV == "local") {
         return `${this.$APP_URL}/images/generic-profile.png`;
       } else {
         return `https://ui-avatars.com/api/?size=300&name=${this.client.name}`;

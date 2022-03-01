@@ -17,6 +17,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ config('app.env') == 'local' ? asset('/dist/css/app.css?time=' . time()) : mix('dist/css/app.css') }}" />
+    <script>
+        window.Laravel = {
+            APP_ENV: "{{ env('APP_ENV') }}",
+            BASE_URL: "{{ url('/') }}",
+            CSRF_TOKEN: "{{ csrf_token() }}",
+        }
+    </script>
     <script defer src="{{ config('app.env') == 'local' ? asset('/dist/js/app.js?time=' . time()) : mix('dist/js/app.js') }}"></script>
 
 </head>

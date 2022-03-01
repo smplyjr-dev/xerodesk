@@ -5,7 +5,7 @@
         <div class="card-picture-container">
           <input type="file" class="d-none" ref="file" @change="onFileChange" />
 
-          <img loading="lazy" class="object-cover" :src="profilePicture" alt="Profile Picture" />
+          <img loading="lazy" class="object-cover" :src="$profilePicture(user)" alt="Profile Picture" />
 
           <div class="loader" v-if="isPictureLoading">
             <div class="spinner-border text-light" style="height: 3rem; width: 3rem;" role="status"></div>
@@ -165,13 +165,6 @@ export default {
   computed: {
     ...mapState("roles", ["roles"]),
 
-    profilePicture() {
-      if (this.user.profile_picture == "generic-profile.png") {
-        return `${this.$APP_URL}/images/${this.user.profile_picture}`;
-      } else {
-        return `${this.$APP_URL}/storage/uploads/users/${this.user.id}/${this.user.profile_picture}`;
-      }
-    },
     name() {
       return `${this.user.bio.last_name}, ${this.user.bio.first_name}`;
     }

@@ -14,7 +14,7 @@
           <dropdown :carret="false" position="right">
             <template v-slot:value>
               <a href="javascript:void(0)" class="nav-link p-0">
-                <img class="rounded-circle object-cover" :src="profilePicture" @error="$onImgError($event, 1)" alt="Profile Picture" height="37px" width="37px" />
+                <img class="rounded-circle object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Picture" height="37px" width="37px" />
               </a>
             </template>
 
@@ -44,15 +44,7 @@ export default {
   props: ["isOpen"],
   name: "Navbar",
   computed: {
-    ...mapState("auth", ["user"]),
-
-    profilePicture() {
-      if (this.user.profile_picture == "generic-profile.png") {
-        return `https://ui-avatars.com/api/?font-size=0.35&name=${this.user.bio.first_name}`;
-      } else {
-        return `${this.$APP_URL}/storage/uploads/users/${this.user.id}/${this.user.profile_picture}`;
-      }
-    }
+    ...mapState("auth", ["user"])
   },
   methods: {
     async logout() {

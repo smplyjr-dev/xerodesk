@@ -3,7 +3,7 @@ let init = window.axios;
 import store from "@Scripts/store";
 import App from "@Scripts/views/App.vue";
 
-init.defaults.baseURL = process.env.MIX_APP_URL + "/api";
+init.defaults.baseURL = window.Laravel.BASE_URL + "/api";
 
 // Request interceptor for authorization token
 init.interceptors.request.use((request) => {

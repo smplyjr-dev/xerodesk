@@ -1,5 +1,6 @@
-// Define $APP_URL for Vue files
-Vue.prototype.$APP_URL = process.env.MIX_APP_URL;
+// Define $APP_ENV and $APP_URL for Vue files
+Vue.prototype.$APP_ENV = window.Laravel.APP_ENV;
+Vue.prototype.$APP_URL = window.Laravel.BASE_URL;
 
 // Async Delayer
 Vue.prototype.$delay = async function (ms) {
@@ -36,7 +37,16 @@ Vue.prototype.$rand = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+// Get Profile Picture
+Vue.prototype.$profilePicture = function (user) {
+  if (user.profile_picture == "generic-profile.png") {
+    return `https://ui-avatars.com/api/?font-size=0.35&name=${user.bio.first_name}`;
+  } else {
+    return `${this.$APP_URL}/storage/uploads/users/${user.id}/${user.profile_picture}`;
+  }
+};
+
 // Image On Error Fallback
 Vue.prototype.$onImgError = function (e, i) {
-  if (i == 1) e.target.src = `${process.env.MIX_APP_URL}/images/generic-profile.png`;
+  if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/generic-profile.png`;
 };
