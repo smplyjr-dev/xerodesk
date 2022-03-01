@@ -8,7 +8,7 @@
     <div class="server-datatable">
       <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
-        <search @onSearch="searchDatatable" />
+        <search @onSearch="searchDatatable" :tableData="tableData" />
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">

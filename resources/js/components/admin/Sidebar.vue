@@ -5,10 +5,10 @@
     </div>
     <div class="sidebar-logo">
       <router-link to="/" class="sidebar-logo--big">
-        <img loading="lazy" class="object-contain" src="/images/logo-large-white.png" alt="Page Background" width="100%" />
+        <img loading="lazy" class="object-contain" src="/images/logo-large-white.png" alt="Page Background" height="50px" />
       </router-link>
       <router-link to="/" class="sidebar-logo--small">
-        <img loading="lazy" class="object-contain" src="/images/logo-small-white.png" alt="Page Background" width="100%" />
+        <img loading="lazy" class="object-contain" src="/images/logo-small-white.png" alt="Page Background" height="35px" />
       </router-link>
     </div>
     <div class="sidebar-navs">

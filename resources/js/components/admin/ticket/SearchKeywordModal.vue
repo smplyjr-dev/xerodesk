@@ -35,7 +35,7 @@
 
             <tr v-if="!isLoading && !paginated.length">
               <td colspan="2">
-                <div class="w-100 my-3 flex-center flex-column">
+                <div class="w-100 my-3 text-center">
                   <template v-if="!tableData.search">No keyword found.</template>
                   <template v-else-if="tableData.search.length <= 2">Please input atleast 3 characters.</template>
                   <template v-else>No result found.</template>
@@ -56,12 +56,12 @@
 
 <script>
 import debounce from "debounce";
-import { Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
+import { Datatable, Entries, Pagination, Mixin } from "@SDT";
 
 export default {
   name: "SearchKeywordModal",
   mixins: [Mixin],
-  components: { Search, Datatable, Entries, Pagination },
+  components: { Datatable, Entries, Pagination },
   data() {
     return {
       // for datatable only

@@ -21,6 +21,7 @@ export default [
   { path: "/clients/:id", component: page("client/Show.vue") },
 
   // Setting Routes
+  { path: "/settings",                component: page("settings/Index.vue") },
   { path: "/settings/company",        component: page("settings/Company.vue") },
   { path: "/settings/groups",         component: page("settings/groups/Index.vue") },
   { path: "/settings/users",          component: page("settings/users/Index.vue") },
