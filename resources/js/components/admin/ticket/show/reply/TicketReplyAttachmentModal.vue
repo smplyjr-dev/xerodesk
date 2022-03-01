@@ -1,44 +1,36 @@
 <template>
-  <div class="modal fade" id="attm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Attachment</h5>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="$emit('emitAttachments', local_attachments)">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  <modal mId="attm-modal" mClass="modal-lg">
+    <modal-header @close="$emit('emitAttachments', local_attachments)">
+      <h5 class="modal-title">Attachment</h5>
+    </modal-header>
+    <modal-body>
+      <div class="upload-wrapper" @drop.prevent="addFile" @dragover.prevent>
+        <div v-if="$isEmpty(local_attachments)">
+          <h3>Drag &amp; drop your files here</h3>
         </div>
-        <div class="modal-body">
-          <div class="upload-wrapper" @drop.prevent="addFile" @dragover.prevent>
-            <div v-if="$isEmpty(local_attachments)">
-              <h3>Drag &amp; drop your files here</h3>
+
+        <div class="footer-att" v-else>
+          <div class="footer-att-item" v-for="(a, $a) in local_attachments" :key="$a" :class="{ invalid: !$isEmpty(checkValidity(a)) }">
+            <div class="footer-att-item-remove" @click="removeAttachment(a)">
+              <InlineSvg name="template/mdi-close-circle.svg" color="#000" size="10px" />
             </div>
+            <div class="footer-att-item-icon">
+              <InlineSvg :name="`heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
+            </div>
+            <div class="footer-att-item-name">
+              <template v-if="!$isEmpty(checkValidity(a))">
+                <span>Error.</span>
+                <span v-if="checkValidity(a) == 'size'">File too large.</span>
+                <span v-if="checkValidity(a) == 'type'">Invalid file type.</span>
+              </template>
 
-            <div class="footer-att" v-else>
-              <div class="footer-att-item" v-for="(a, $a) in local_attachments" :key="$a" :class="{ invalid: !$isEmpty(checkValidity(a)) }">
-                <div class="footer-att-item-remove" @click="removeAttachment(a)">
-                  <InlineSvg name="template/mdi-close-circle.svg" color="#000" size="10px" />
-                </div>
-                <div class="footer-att-item-icon">
-                  <InlineSvg :name="`heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
-                </div>
-                <div class="footer-att-item-name">
-                  <template v-if="!$isEmpty(checkValidity(a))">
-                    <span>Error.</span>
-                    <span v-if="checkValidity(a) == 'size'">File too large.</span>
-                    <span v-if="checkValidity(a) == 'type'">Invalid file type.</span>
-                  </template>
-
-                  <span v-else>{{ a.file.name }}</span>
-                </div>
-              </div>
+              <span v-else>{{ a.file.name }}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </modal-body>
+  </modal>
 </template>
 
 <script>
@@ -55,7 +47,7 @@ export default {
       if (!droppedFiles) return;
 
       // this tip, convert FileList to array, credit: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-      [...droppedFiles].forEach(f => {
+      [...droppedFiles].forEach((f) => {
         this.local_attachments.push({
           file: f,
           ext: f.name.split(".").pop()
@@ -89,7 +81,7 @@ export default {
       if (["mp4", "mov", "avi", "flv", "mkv", "wmv", "webm"].includes(ext)) return "video-camera";
     },
     removeAttachment(file) {
-      this.local_attachments = this.local_attachments.filter(f => f != file);
+      this.local_attachments = this.local_attachments.filter((f) => f != file);
     }
   },
   watch: {

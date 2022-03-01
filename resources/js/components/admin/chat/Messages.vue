@@ -31,6 +31,7 @@
 import Editor from "@Components/admin/chat/Editor.vue";
 
 export default {
+  name: "Messages",
   components: { Editor },
   data: () => ({
     overflowing: false

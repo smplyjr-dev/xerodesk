@@ -1,66 +1,59 @@
 <template>
-  <div class="modal fade" id="ticket-log-modal" tabindex="-1" aria-labelledby="ticket-log-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ticket-log-modal-label">Ticket Activity Log</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="client-datatable">
-            <div class="flex-center-between flex-wrap">
-              <div class="control d-flex align-items-center">
-                Show
-                <div class="select mx-2">
-                  <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
-                    <option>10</option>
-                    <option>20</option>
-                    <option>30</option>
-                  </select>
-                </div>
-                entries
-              </div>
+  <modal mId="ticket-log-modal" mClass="modal-xl">
+    <modal-header>
+      <h5 class="modal-title" id="ticket-log-modal-label">Ticket Activity Log</h5>
+    </modal-header>
+    <modal-body>
+      <div class="client-datatable">
+        <div class="flex-center-between flex-wrap">
+          <div class="control d-flex align-items-center">
+            Show
+            <div class="select mx-2">
+              <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
+                <option>10</option>
+                <option>20</option>
+                <option>30</option>
+              </select>
             </div>
-
-            <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-              <tbody class="text-sm">
-                <tr class="text-center" v-if="isLoading">
-                  <td colspan="6">
-                    <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
-                  </td>
-                </tr>
-
-                <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-                  <!-- Mobile View -->
-                  <td>Mobile View</td>
-
-                  <td>{{ p.description }}</td>
-                  <td v-html="getDescription(p)"></td>
-                  <td>{{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} {{ $dayjs("format", p.created_at, "hh:mm A") }}</td>
-                  <td>
-                    <popup :arrow="true" offset="50px,5px" placement="left" toggle="hide" trigger="click">
-                      <div class="text-left text-break p-2" style="max-width: 500px" slot="content" v-html="getDetails(p)"></div>
-                      <i class="fa fa-info-circle text-info cursor-pointer" slot="reference"></i>
-                    </popup>
-                  </td>
-                </tr>
-
-                <tr v-if="!isLoading && !paginated.length">
-                  <td colspan="6">
-                    <div class="w-100 my-3 flex-center flex-column">No result found.</div>
-                  </td>
-                </tr>
-              </tbody>
-            </datatable>
-
-            <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
+            entries
           </div>
         </div>
+
+        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+          <tbody class="text-sm">
+            <tr class="text-center" v-if="isLoading">
+              <td colspan="6">
+                <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
+              </td>
+            </tr>
+
+            <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+              <!-- Mobile View -->
+              <td>Mobile View</td>
+
+              <td>{{ p.description }}</td>
+              <td v-html="getDescription(p)"></td>
+              <td>{{ $dayjs("format", p.created_at, "MM/DD/YYYY") }} {{ $dayjs("format", p.created_at, "hh:mm A") }}</td>
+              <td>
+                <popup :arrow="true" offset="50px,5px" placement="left" toggle="hide" trigger="click">
+                  <div class="text-left text-break p-2" style="max-width: 500px" slot="content" v-html="getDetails(p)"></div>
+                  <i class="fa fa-info-circle text-info cursor-pointer" slot="reference"></i>
+                </popup>
+              </td>
+            </tr>
+
+            <tr v-if="!isLoading && !paginated.length">
+              <td colspan="6">
+                <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+              </td>
+            </tr>
+          </tbody>
+        </datatable>
+
+        <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
       </div>
-    </div>
-  </div>
+    </modal-body>
+  </modal>
 </template>
 
 <script>

@@ -1,64 +1,57 @@
 <template>
-  <div class="modal fade" id="search" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="search-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="search-label">Search a Keyword</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="server-datatable">
-            <div class="flex-center-between flex-wrap">
-              <div class="dts-search w-100">
-                <label class="mb-0 mr-2" for="search">Search:</label>
-                <input class="form-control" id="search" type="text" placeholder="E.g. removal" v-model="search" @input="handleSearch" />
-              </div>
-            </div>
-
-            <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
-              <tbody class="text-sm block-body">
-                <tr class="text-center" v-if="isLoading">
-                  <td colspan="2">
-                    <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
-                  </td>
-                </tr>
-
-                <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
-                  <!-- Mobile View -->
-                  <td class="sk dt-mobile">
-                    <p class="font-weight-semi">{{ getSender(p) }}</p>
-                    <router-link :to="`/tickets/${p.session}`" data-dismiss="modal" v-html="getMessage(p)"> </router-link>
-                  </td>
-
-                  <td class="sk">
-                    <p class="font-weight-semi">{{ getSender(p) }}</p>
-                    <router-link :to="`/tickets/${p.session}`" data-dismiss="modal" v-html="getMessage(p)"> </router-link>
-                  </td>
-                </tr>
-
-                <tr v-if="!isLoading && !paginated.length">
-                  <td colspan="2">
-                    <div class="w-100 my-3 flex-center flex-column">
-                      <template v-if="!tableData.search">No keyword found.</template>
-                      <template v-else-if="tableData.search.length <= 2">Please input atleast 3 characters.</template>
-                      <template v-else>No result found.</template>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </datatable>
-
-            <div class="flex-center-between flex-wrap">
-              <entries :pagination="pagination" />
-              <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
-            </div>
+  <modal mId="search" mClass="modal-xl" data-backdrop="static" data-keyboard="false">
+    <modal-header>
+      <h5 class="modal-title" id="search-label">Search a Keyword</h5>
+    </modal-header>
+    <modal-body>
+      <div class="server-datatable">
+        <div class="flex-center-between flex-wrap">
+          <div class="dts-search w-100">
+            <label class="mb-0 mr-2" for="search">Search:</label>
+            <input class="form-control" id="search" type="text" placeholder="E.g. removal" v-model="search" @input="handleSearch" />
           </div>
         </div>
+
+        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+          <tbody class="text-sm block-body">
+            <tr class="text-center" v-if="isLoading">
+              <td colspan="2">
+                <div class="spinner-border text-lg my-4" style="height: 5rem; width: 5rem"></div>
+              </td>
+            </tr>
+
+            <tr class="text-sm" v-else v-for="p in paginated" :key="p.id">
+              <!-- Mobile View -->
+              <td class="sk dt-mobile">
+                <p class="font-weight-semi">{{ getSender(p) }}</p>
+                <router-link :to="`/tickets/${p.session}`" data-dismiss="modal" v-html="getMessage(p)"> </router-link>
+              </td>
+
+              <td class="sk">
+                <p class="font-weight-semi">{{ getSender(p) }}</p>
+                <router-link :to="`/tickets/${p.session}`" data-dismiss="modal" v-html="getMessage(p)"> </router-link>
+              </td>
+            </tr>
+
+            <tr v-if="!isLoading && !paginated.length">
+              <td colspan="2">
+                <div class="w-100 my-3 flex-center flex-column">
+                  <template v-if="!tableData.search">No keyword found.</template>
+                  <template v-else-if="tableData.search.length <= 2">Please input atleast 3 characters.</template>
+                  <template v-else>No result found.</template>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </datatable>
+
+        <div class="flex-center-between flex-wrap">
+          <entries :pagination="pagination" />
+          <pagination :pagination="pagination" @prev="getDatatable(pagination.prevPageUrl)" @next="getDatatable(pagination.nextPageUrl)" />
+        </div>
       </div>
-    </div>
-  </div>
+    </modal-body>
+  </modal>
 </template>
 
 <script>

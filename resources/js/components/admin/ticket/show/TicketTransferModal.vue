@@ -1,40 +1,32 @@
 <template>
-  <div id="transfer-ticket-modal" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Transfer Session</h5>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  <modal mId="transfer-ticket-modal">
+    <modal-header>
+      <h5 class="modal-title">Transfer Session</h5>
+    </modal-header>
+    <form @submit.prevent="transferClient()">
+      <modal-body>
+        <div class="form-group">
+          <label for="xrf_from">Transfer from</label>
+          <input id="xrf_from" type="text" class="form-control" :placeholder="current" disabled />
         </div>
-        <form @submit.prevent="transferClient()">
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="xrf_from">Transfer from</label>
-              <input id="xrf_from" type="text" class="form-control" :placeholder="current" disabled />
-            </div>
-            <div class="flex-center">
-              <InlineSvg name="heroicons/switch-vertical.svg" size="1.5rem" color="#686868" />
-            </div>
-            <div class="form-group">
-              <label for="xrf_to">Transfer to</label>
-              <input id="xrf_to" type="text" class="form-control" autocomplete="off" v-model="agent" @focus="$store.dispatch('auth/fetchUsers')" @keyup="onKeyup" />
-            </div>
-            <ul class="datalist" v-if="list && filtered.length">
-              <li v-for="f in filtered" :key="f.id" @click="onSelect(f)">
-                {{ `${f.bio.first_name} ${f.bio.last_name}` }}
-              </li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Transfer</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        <div class="flex-center">
+          <InlineSvg name="heroicons/switch-vertical.svg" size="1.5rem" color="#686868" />
+        </div>
+        <div class="form-group">
+          <label for="xrf_to">Transfer to</label>
+          <input id="xrf_to" type="text" class="form-control" autocomplete="off" v-model="agent" @focus="$store.dispatch('auth/fetchUsers')" @keyup="onKeyup" />
+        </div>
+        <ul class="datalist" v-if="list && filtered.length">
+          <li v-for="f in filtered" :key="f.id" @click="onSelect(f)">
+            {{ `${f.bio.first_name} ${f.bio.last_name}` }}
+          </li>
+        </ul>
+      </modal-body>
+      <modal-footer>
+        <button type="submit" class="btn btn-primary">Transfer</button>
+      </modal-footer>
+    </form>
+  </modal>
 </template>
 
 <script>

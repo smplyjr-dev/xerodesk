@@ -6,21 +6,15 @@
       <component :is="layout" v-if="layout" />
     </transition>
 
-    <div id="unauth-modal" class="modal fade" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="text-lg mb-0 font-weight-semi">Session Expired</p>
-          </div>
-          <div class="modal-body">
-            Your session has expired. Please login again.
-          </div>
-          <div class="modal-footer">
-            <a :href="redirectToLoginUrl" class="btn btn-primary">Okay, login again</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <modal mId="unauth-modal" data-backdrop="static" data-keyboard="false">
+      <modal-header :close="false">
+        <p class="text-lg mb-0 font-weight-semi">Session Expired</p>
+      </modal-header>
+      <modal-body>Your session has expired. Please login again.</modal-body>
+      <modal-footer>
+        <a :href="redirectToLoginUrl" class="btn btn-primary">Okay, login again</a>
+      </modal-footer>
+    </modal>
   </div>
 </template>
 
@@ -31,7 +25,7 @@ import Loading from "../components/neutral/Loading.vue";
 const context = require.context("@Scripts/layouts", false, /.*\.vue$/);
 const layouts = context
   .keys()
-  .map(file => [file.replace(/(^.\/)|(\.vue$)/g, ""), context(file)])
+  .map((file) => [file.replace(/(^.\/)|(\.vue$)/g, ""), context(file)])
   .reduce((components, [name, component]) => {
     components[name] = component.default || component;
     return components;
@@ -80,7 +74,7 @@ export default {
       let jsonPayload = decodeURIComponent(
         atob(base64)
           .split("")
-          .map(function(c) {
+          .map(function (c) {
             return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
           })
           .join("")

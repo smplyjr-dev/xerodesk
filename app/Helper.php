@@ -1,5 +1,6 @@
 <?php
 
+use Hidehalo\Nanoid\Client as NanoidClient;
 use Illuminate\Validation\ValidationException;
 
 if (!function_exists('remember_for')) {
@@ -73,5 +74,17 @@ if (!function_exists('verify_permission')) {
         }
 
         return;
+    }
+}
+
+if (!function_exists('nanoid')) {
+    /**
+     * @param Number $size Specify how many character will generate
+     */
+    function nanoid($size = 21)
+    {
+        $nanoid = new NanoidClient();
+
+        return $nanoid->generateId($size);
     }
 }

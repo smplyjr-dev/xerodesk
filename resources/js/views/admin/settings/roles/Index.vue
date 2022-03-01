@@ -63,72 +63,67 @@
       <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
-    <div id="manage-role" class="modal fade">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" v-if="roleMethod == 'delete'">Are you sure?</h5>
-            <h5 class="modal-title" v-if="roleMethod != 'delete'">{{ roleMethod == "create" ? "Create" : "Update" }} Role</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          </div>
-          <form @submit.prevent="submitRole()">
-            <div class="modal-body">
-              <template v-if="roleMethod == 'delete'">
-                <p class="mb-0">
-                  You are about to delete the role <span class="font-weight-semi">{{ roleDetails.name }}</span
-                  >.
-                </p>
-              </template>
-              <template v-else>
-                <div class="form-group" v-show="!$isEmpty(roleError)">
-                  <form-alert variant="warning">
-                    <p v-for="error in roleError" :key="error" v-html="error"></p>
-                  </form-alert>
-                </div>
-                <div class="form-group">
-                  <label for="name">Name <span class="text-danger">*</span></label>
-                  <input id="name" type="text" class="form-control" v-model="roleDetails.name" />
-                </div>
-                <div class="form-group">
-                  <label>Permissions <span class="text-danger">*</span></label>
+    <modal mId="manage-role">
+      <modal-header>
+        <h5 class="modal-title" v-if="roleMethod == 'delete'">Are you sure?</h5>
+        <h5 class="modal-title" v-if="roleMethod != 'delete'">{{ roleMethod == "create" ? "Create" : "Update" }} Role</h5>
+      </modal-header>
+      <form @submit.prevent="submitRole()">
+        <modal-body>
+          <template v-if="roleMethod == 'delete'">
+            <p class="mb-0">
+              You are about to delete the role <span class="font-weight-semi">{{ roleDetails.name }}</span
+              >.
+            </p>
+          </template>
+          <template v-else>
+            <div class="form-group" v-show="!$isEmpty(roleError)">
+              <form-alert variant="warning">
+                <p v-for="error in roleError" :key="error" v-html="error"></p>
+              </form-alert>
+            </div>
+            <div class="form-group">
+              <label for="name">Name <span class="text-danger">*</span></label>
+              <input id="name" type="text" class="form-control" v-model="roleDetails.name" />
+            </div>
+            <div class="form-group">
+              <label>Permissions <span class="text-danger">*</span></label>
 
-                  <div class="row my-2" v-for="(p, pK) in permissions" :key="pK">
-                    <div class="col-12">
-                      <div class="permission-title">
-                        <span>{{ p.name }}</span>
-                      </div>
-                    </div>
-
-                    <div class="col-6" v-for="(c, cK) in p.childs" :key="cK">
-                      <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" :id="c.slug" :value="{ name: c.name, slug: c.slug }" v-model="roleDetails.permissions" />
-                        <label class="custom-control-label" :for="c.slug">{{ c.name }}</label>
-                      </div>
-                    </div>
+              <div class="row my-2" v-for="(p, pK) in permissions" :key="pK">
+                <div class="col-12">
+                  <div class="permission-title">
+                    <span>{{ p.name }}</span>
                   </div>
                 </div>
-              </template>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
-              <template v-if="roleMethod == 'delete'">
-                <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
-                  <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>Delete</span>
-                </button>
-              </template>
-              <template v-else>
-                <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
-                  <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>{{ roleMethod == "create" ? "Create" : "Update" }}</span>
-                </button>
-              </template>
+                <div class="col-6" v-for="(c, cK) in p.childs" :key="cK">
+                  <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" :id="c.slug" :value="{ name: c.name, slug: c.slug }" v-model="roleDetails.permissions" />
+                    <label class="custom-control-label" :for="c.slug">{{ c.name }}</label>
+                  </div>
+                </div>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          </template>
+        </modal-body>
+        <modal-footer>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+
+          <template v-if="roleMethod == 'delete'">
+            <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
+              <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>Delete</span>
+            </button>
+          </template>
+          <template v-else>
+            <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
+              <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>{{ roleMethod == "create" ? "Create" : "Update" }}</span>
+            </button>
+          </template>
+        </modal-footer>
+      </form>
+    </modal>
   </div>
 </template>
 

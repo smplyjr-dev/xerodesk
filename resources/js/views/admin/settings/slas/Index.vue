@@ -69,76 +69,71 @@
       </div>
     </div>
 
-    <div id="manage-sla" class="modal fade">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" v-if="slaMethod == 'delete'">Are you sure?</h5>
-            <h5 class="modal-title" v-if="slaMethod != 'delete'">{{ slaMethod == "create" ? "Create" : "Update" }} SLA</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          </div>
-          <form @submit.prevent="submitSla()">
-            <div class="modal-body">
-              <template v-if="slaMethod == 'delete'">
-                <p class="mb-0">
-                  You are about to delete the SLA named <span class="font-weight-semi">{{ slaDetails.name }}</span
-                  >.
-                </p>
-              </template>
-              <template v-else>
-                <div class="form-group" v-show="!$isEmpty(slaError)">
-                  <form-alert variant="warning">
-                    <p v-for="error in slaError" :key="error" v-html="error"></p>
-                  </form-alert>
-                </div>
-                <div class="form-group">
-                  <label for="name">Name <span class="text-danger">*</span></label>
-                  <input id="name" type="text" class="form-control" v-model="slaDetails.name" />
-                </div>
-                <div class="form-group">
-                  <label for="color">Color <span class="text-danger">*</span></label>
-                  <div class="sla-colors">
-                    <div class="color-item" @click="slaDetails.color = 'black'" :class="{ active: slaDetails.color == 'black' }">
-                      <div class="color-content" :style="{ background: 'black' }"></div>
-                    </div>
-                    <div class="color-item" @click="slaDetails.color = 'red'" :class="{ active: slaDetails.color == 'red' }">
-                      <div class="color-content" :style="{ background: 'red' }"></div>
-                    </div>
-                    <div class="color-item" @click="slaDetails.color = 'yellow'" :class="{ active: slaDetails.color == 'yellow' }">
-                      <div class="color-content" :style="{ background: 'yellow' }"></div>
-                    </div>
-                    <div class="color-item" @click="slaDetails.color = 'green'" :class="{ active: slaDetails.color == 'green' }">
-                      <div class="color-content" :style="{ background: 'green' }"></div>
-                    </div>
-                  </div>
-                  <!-- <input id="color" type="text" class="form-control" v-model="slaDetails.color" /> -->
-                </div>
-                <div class="form-group">
-                  <label for="range">Time to Resolve (hours) <span class="text-danger">*</span></label>
-                  <input id="range" type="text" class="form-control" v-model.number="slaDetails.range" />
-                </div>
-              </template>
+    <modal mId="manage-sla">
+      <modal-header>
+        <h5 class="modal-title" v-if="slaMethod == 'delete'">Are you sure?</h5>
+        <h5 class="modal-title" v-if="slaMethod != 'delete'">{{ slaMethod == "create" ? "Create" : "Update" }} SLA</h5>
+      </modal-header>
+      <form @submit.prevent="submitSla()">
+        <modal-body>
+          <template v-if="slaMethod == 'delete'">
+            <p class="mb-0">
+              You are about to delete the SLA named <span class="font-weight-semi">{{ slaDetails.name }}</span
+              >.
+            </p>
+          </template>
+          <template v-else>
+            <div class="form-group" v-show="!$isEmpty(slaError)">
+              <form-alert variant="warning">
+                <p v-for="error in slaError" :key="error" v-html="error"></p>
+              </form-alert>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <div class="form-group">
+              <label for="name">Name <span class="text-danger">*</span></label>
+              <input id="name" type="text" class="form-control" v-model="slaDetails.name" />
+            </div>
+            <div class="form-group">
+              <label for="color">Color <span class="text-danger">*</span></label>
+              <div class="sla-colors">
+                <div class="color-item" @click="slaDetails.color = 'black'" :class="{ active: slaDetails.color == 'black' }">
+                  <div class="color-content" :style="{ background: 'black' }"></div>
+                </div>
+                <div class="color-item" @click="slaDetails.color = 'red'" :class="{ active: slaDetails.color == 'red' }">
+                  <div class="color-content" :style="{ background: 'red' }"></div>
+                </div>
+                <div class="color-item" @click="slaDetails.color = 'yellow'" :class="{ active: slaDetails.color == 'yellow' }">
+                  <div class="color-content" :style="{ background: 'yellow' }"></div>
+                </div>
+                <div class="color-item" @click="slaDetails.color = 'green'" :class="{ active: slaDetails.color == 'green' }">
+                  <div class="color-content" :style="{ background: 'green' }"></div>
+                </div>
+              </div>
+              <!-- <input id="color" type="text" class="form-control" v-model="slaDetails.color" /> -->
+            </div>
+            <div class="form-group">
+              <label for="range">Time to Resolve (hours) <span class="text-danger">*</span></label>
+              <input id="range" type="text" class="form-control" v-model.number="slaDetails.range" />
+            </div>
+          </template>
+        </modal-body>
+        <modal-footer>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
-              <template v-if="slaMethod == 'delete'">
-                <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
-                  <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>Delete</span>
-                </button>
-              </template>
-              <template v-else>
-                <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
-                  <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>{{ slaMethod == "create" ? "Create" : "Update" }}</span>
-                </button>
-              </template>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          <template v-if="slaMethod == 'delete'">
+            <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
+              <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>Delete</span>
+            </button>
+          </template>
+          <template v-else>
+            <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
+              <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>{{ slaMethod == "create" ? "Create" : "Update" }}</span>
+            </button>
+          </template>
+        </modal-footer>
+      </form>
+    </modal>
   </div>
 </template>
 

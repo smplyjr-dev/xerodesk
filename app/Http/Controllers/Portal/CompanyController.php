@@ -24,7 +24,7 @@ class CompanyController extends Controller
     public function update($company)
     {
         $model = Company::findOrFail($company);
-        $model->update(request()->only(['name', 'address', 'url']));
+        $model->update(request()->only(['name', 'url']));
 
         return $model;
     }

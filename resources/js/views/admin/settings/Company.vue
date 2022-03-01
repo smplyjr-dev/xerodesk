@@ -8,10 +8,6 @@
             <input id="name" type="text" class="form-control" v-model="company.name" />
           </div>
           <div class="form-group">
-            <label for="address">Address:</label>
-            <input id="name" type="text" class="form-control" v-model="company.address" />
-          </div>
-          <div class="form-group">
             <label for="url">URL:</label>
             <input id="name" type="text" class="form-control" v-model="company.url" />
           </div>

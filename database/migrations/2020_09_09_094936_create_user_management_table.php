@@ -16,7 +16,6 @@ class CreateUserManagementTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('address');
             $table->string('url');
             $table->string('abbr', 5);
             $table->mediumText('allowed_users');
@@ -70,6 +69,7 @@ class CreateUserManagementTable extends Migration
     {
         Schema::dropIfExists('companies');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('user_bio');
         Schema::dropIfExists('password_resets');
     }
 }

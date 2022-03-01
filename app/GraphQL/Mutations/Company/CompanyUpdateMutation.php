@@ -25,7 +25,6 @@ class CompanyUpdateMutation extends Mutation
         return [
             'id' => ['type' => Type::nonNull(Type::int())],
             'name' => ['type' => Type::nonNull(Type::string())],
-            'address' => ['type' => Type::nonNull(Type::string())],
         ];
     }
 
@@ -35,7 +34,6 @@ class CompanyUpdateMutation extends Mutation
         if (!$company) return null;
 
         $company->name = $args['name'];
-        $company->address = $args['address'];
         $company->save();
 
         return $company;

@@ -1,75 +1,67 @@
 <template>
-  <div id="update-ticket-modal" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update Session</h5>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Title <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" v-model="session.title" />
-            <span class="text-danger text-xs" v-show="sessionError.includes('title')">The title field is required.</span>
-          </div>
-          <div class="form-group">
-            <label>Priority <span class="text-danger">*</span></label>
-            <select class="custom-select" v-model="session.priority">
-              <option :value="null">-- Select Priority --</option>
-              <option v-for="p in priority" :key="p.id" :value="p.id">{{ p.name }}</option>
-            </select>
-            <span class="text-danger text-xs" v-show="sessionError.includes('priority')">The priority field is required.</span>
-          </div>
-          <div class="form-group">
-            <label>Service Category <span class="text-danger">*</span></label>
-            <select class="custom-select" v-model="session.category">
-              <option :value="null">-- Select Category --</option>
-              <option v-for="c in category" :key="c.id">{{ c.name }}</option>
-            </select>
-            <span class="text-danger text-xs" v-show="sessionError.includes('category')">The category field is required.</span>
-          </div>
-          <div class="form-group">
-            <label>Resolution Code <span class="text-danger">*</span></label>
-            <select class="custom-select" v-model="session.resolution_code">
-              <option :value="null">-- Select Resolution Code --</option>
-              <option v-for="r in resolution" :key="r.id">{{ r.name }}</option>
-            </select>
-            <span class="text-danger text-xs" v-show="sessionError.includes('resolution_code')">The resolution code field is required.</span>
-          </div>
-          <div class="form-group">
-            <label>Solution <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" v-model="session.solution" />
-            <span class="text-danger text-xs" v-show="sessionError.includes('solution')">The solution field is required.</span>
-          </div>
-          <div class="form-group">
-            <label>Tags</label>
-            <TicketTag :session="session" />
-          </div>
-          <div class="form-group mb-0">
-            <label>Status <span class="text-danger">*</span></label>
-            <select class="custom-select" v-model="session.status" :disabled="isDisable">
-              <option :value="null">-- Select Status --</option>
-              <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
-            </select>
-            <span class="text-danger text-xs" v-show="sessionError.includes('status')">The status field is required.</span>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating">
-            <span v-if="isUpdating">
-              Please wait...
-              <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i>
-            </span>
-
-            <span v-else>Update</span>
-          </button>
-        </div>
+  <modal mId="update-ticket-modal">
+    <modal-header class="modal-header">
+      <h5 class="modal-title">Update Session</h5>
+    </modal-header>
+    <modal-body>
+      <div class="form-group">
+        <label>Title <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" v-model="session.title" />
+        <span class="text-danger text-xs" v-show="sessionError.includes('title')">The title field is required.</span>
       </div>
-    </div>
-  </div>
+      <div class="form-group">
+        <label>Priority <span class="text-danger">*</span></label>
+        <select class="custom-select" v-model="session.priority">
+          <option :value="null">-- Select Priority --</option>
+          <option v-for="p in priority" :key="p.id" :value="p.id">{{ p.name }}</option>
+        </select>
+        <span class="text-danger text-xs" v-show="sessionError.includes('priority')">The priority field is required.</span>
+      </div>
+      <div class="form-group">
+        <label>Service Category <span class="text-danger">*</span></label>
+        <select class="custom-select" v-model="session.category">
+          <option :value="null">-- Select Category --</option>
+          <option v-for="c in category" :key="c.id">{{ c.name }}</option>
+        </select>
+        <span class="text-danger text-xs" v-show="sessionError.includes('category')">The category field is required.</span>
+      </div>
+      <div class="form-group">
+        <label>Resolution Code <span class="text-danger">*</span></label>
+        <select class="custom-select" v-model="session.resolution_code">
+          <option :value="null">-- Select Resolution Code --</option>
+          <option v-for="r in resolution" :key="r.id">{{ r.name }}</option>
+        </select>
+        <span class="text-danger text-xs" v-show="sessionError.includes('resolution_code')">The resolution code field is required.</span>
+      </div>
+      <div class="form-group">
+        <label>Solution <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" v-model="session.solution" />
+        <span class="text-danger text-xs" v-show="sessionError.includes('solution')">The solution field is required.</span>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <TicketTag :session="session" />
+      </div>
+      <div class="form-group mb-0">
+        <label>Status <span class="text-danger">*</span></label>
+        <select class="custom-select" v-model="session.status" :disabled="isDisable">
+          <option :value="null">-- Select Status --</option>
+          <option v-for="s in status" :key="s.id" :value="s.id">{{ s.name }}</option>
+        </select>
+        <span class="text-danger text-xs" v-show="sessionError.includes('status')">The status field is required.</span>
+      </div>
+    </modal-body>
+    <modal-footer>
+      <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating">
+        <span v-if="isUpdating">
+          Please wait...
+          <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i>
+        </span>
+
+        <span v-else>Update</span>
+      </button>
+    </modal-footer>
+  </modal>
 </template>
 
 <script>

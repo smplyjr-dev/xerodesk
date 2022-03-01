@@ -3,7 +3,7 @@
     <div class="row page-row">
       <div class="col-md-6 page-form">
         <div class="text-center mb-4">
-          <router-link to="/"><img class="mb-4" loading="lazy" :src="`${$APP_URL}/images/logo-large.png`" height="50px" alt="FiliPay Logo" /></router-link>
+          <router-link to="/"><img class="mb-2" loading="lazy" :src="`${$APP_URL}/images/logo-large.png`" height="50px" alt="FiliPay Logo" /></router-link>
           <h6 class="font-weight-normal mb-4">Resend Verification Link</h6>
         </div>
 

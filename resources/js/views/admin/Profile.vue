@@ -8,7 +8,7 @@
           <img loading="lazy" class="object-cover" :src="profilePicture" @error="$onImgError($event, 1)" alt="Profile Picture" />
 
           <div class="loader" v-if="isPictureLoading">
-            <div class="spinner-border text-light" style="height: 3rem; width: 3rem;" role="status"></div>
+            <div class="spinner-border text-light" style="height: 3rem; width: 3rem" role="status"></div>
           </div>
 
           <button @click="$refs.file.click()" v-else>
@@ -22,11 +22,11 @@
           <div class="flex-center flex-wrap">
             <div class="flex-center mr-2">
               <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="20px" />
-              <span style="margin-top: 2.5px;">{{ user.role }}</span>
+              <span style="margin-top: 2.5px">{{ user.role }}</span>
             </div>
             <div class="flex-center mr-2">
               <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="20px" />
-              <span style="margin-top: 2.5px;">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
+              <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
             </div>
           </div>
         </div>
@@ -36,8 +36,8 @@
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="card card-1">
-          <div class="card-body">
-            <form @submit.prevent="updateProfile()">
+          <form @submit.prevent="updateProfile()">
+            <div class="card-body">
               <h5 class="mb-4">Update Profile</h5>
 
               <div class="row">
@@ -85,24 +85,23 @@
                     <input id="linkedin" type="text" class="form-control" v-model="user.bio.linkedin" />
                   </div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="text-right">
-                    <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
-                      <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                      <span v-else>Update Profile</span>
-                    </button>
-                  </div>
-                </div>
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="card-footer">
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
+                  <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
+                  <span v-else>Update Profile</span>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
       <div class="col-md-6 mb-4">
         <div class="card card-1">
-          <div class="card-body">
-            <form @submit.prevent="updatePassword()">
+          <form @submit.prevent="updatePassword()">
+            <div class="card-body">
               <h5 class="mb-4">Change Password</h5>
 
               <div class="row">
@@ -124,16 +123,18 @@
                     <label for="">Confirm Password <span class="text-danger">*</span></label>
                     <input type="password" class="form-control" v-model="new_password_confirmation" />
                   </div>
-                  <div class="text-right mt-4">
-                    <button type="submit" class="btn btn-primary" :disabled="isPasswordLoading">
-                      <div v-if="isPasswordLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                      <span v-else>Change Password</span>
-                    </button>
-                  </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="card-footer">
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary" :disabled="isPasswordLoading">
+                  <div v-if="isPasswordLoading" class="spinner-border spinner-border-sm" role="status"></div>
+                  <span v-else>Change Password</span>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -211,16 +212,13 @@ export default {
 
       reader.readAsDataURL(file);
 
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.userIcon.file = e.target.result;
       };
 
       this.userIcon.extension = file.name.split(".").pop();
       this.userIcon.size = file.size;
-      this.userIcon.name = file.name
-        .split(".")
-        .slice(0, -1)
-        .join(".");
+      this.userIcon.name = file.name.split(".").slice(0, -1).join(".");
 
       setTimeout(() => {
         this.uploadPicture();
@@ -263,7 +261,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               pictureError.push(message);
             });
           }
@@ -314,7 +312,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.profileError.push(message);
             });
           }
@@ -351,7 +349,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.passwordError.push(message);
             });
           }

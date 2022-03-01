@@ -13,7 +13,8 @@ export default [
   { path: "/tickets/:session", component: page("ticket/Show.vue") },
 
   // Live Chat Routes
-  { path: "/chats", component: page("chat/Index.vue") },
+  { path: "/chats",          component: page("chat/Index.vue") },
+  { path: "/chats/:session", component: page("chat/Show.vue") },
 
   // Client Routes
   { path: "/clients",     component: page("client/Index.vue") },

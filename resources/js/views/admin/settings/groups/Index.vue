@@ -87,75 +87,65 @@
       <pagination :pagination="pagination" :client="true" :filtered="filteredGroups" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
-    <div id="users-modal" class="modal fade">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          </div>
-          <div class="modal-body">
-            <TableGroupUsers :group="group" @refresh="handleRefresh" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <modal mId="users-modal" mClass="modal-lg">
+      <modal-header>
+        <h5 class="modal-title">Add User</h5>
+      </modal-header>
+      <modal-body>
+        <TableGroupUsers :group="group" @refresh="handleRefresh" />
+      </modal-body>
+      <modal-footer>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+      </modal-footer>
+    </modal>
 
-    <div id="manage-group" class="modal fade">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" v-if="groupMethod == 'delete'">Are you sure?</h5>
-            <h5 class="modal-title" v-if="groupMethod != 'delete'">{{ groupMethod == "create" ? "Create" : "Update" }} Group</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          </div>
-          <form @submit.prevent="submitGroup()">
-            <div class="modal-body">
-              <template v-if="groupMethod == 'delete'">
-                <p class="mb-0">
-                  You are about to delete the group named <span class="font-weight-semi">{{ groupDetails.name }}</span
-                  >.
-                </p>
-              </template>
-              <template v-else>
-                <div class="form-group" v-show="!$isEmpty(groupError)">
-                  <form-alert variant="warning">
-                    <p v-for="error in groupError" :key="error" v-html="error"></p>
-                  </form-alert>
-                </div>
-                <div class="form-group">
-                  <label for="name">Name <span class="text-danger">*</span></label>
-                  <input id="name" type="text" class="form-control" v-model="groupDetails.name" />
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea id="description" class="form-control" v-model="groupDetails.description"></textarea>
-                </div>
-              </template>
+    <modal mId="manage-group">
+      <modal-header>
+        <h5 class="modal-title" v-if="groupMethod == 'delete'">Are you sure?</h5>
+        <h5 class="modal-title" v-if="groupMethod != 'delete'">{{ groupMethod == "create" ? "Create" : "Update" }} Group</h5>
+      </modal-header>
+      <form @submit.prevent="submitGroup()">
+        <modal-body>
+          <template v-if="groupMethod == 'delete'">
+            <p class="mb-0">
+              You are about to delete the group named <span class="font-weight-semi">{{ groupDetails.name }}</span
+              >.
+            </p>
+          </template>
+          <template v-else>
+            <div class="form-group" v-show="!$isEmpty(groupError)">
+              <form-alert variant="warning">
+                <p v-for="error in groupError" :key="error" v-html="error"></p>
+              </form-alert>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <div class="form-group">
+              <label for="name">Name <span class="text-danger">*</span></label>
+              <input id="name" type="text" class="form-control" v-model="groupDetails.name" />
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" class="form-control" v-model="groupDetails.description"></textarea>
+            </div>
+          </template>
+        </modal-body>
+        <modal-footer>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
-              <template v-if="groupMethod == 'delete'">
-                <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
-                  <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>Delete</span>
-                </button>
-              </template>
-              <template v-else>
-                <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
-                  <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>{{ groupMethod == "create" ? "Create" : "Update" }}</span>
-                </button>
-              </template>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          <template v-if="groupMethod == 'delete'">
+            <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
+              <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>Delete</span>
+            </button>
+          </template>
+          <template v-else>
+            <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
+              <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
+              <span v-else>{{ groupMethod == "create" ? "Create" : "Update" }}</span>
+            </button>
+          </template>
+        </modal-footer>
+      </form>
+    </modal>
   </div>
 </template>
 

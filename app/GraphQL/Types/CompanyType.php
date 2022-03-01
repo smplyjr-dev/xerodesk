@@ -17,7 +17,6 @@ class CompanyType extends GraphQLType
         return [
             'id'         => ['type' => Type::nonNull(Type::int())],
             'name'       => ['type' => Type::nonNull(Type::string())],
-            'address'    => ['type' => Type::nonNull(Type::string())],
             'url'        => ['type' => Type::nonNull(Type::string())],
             'abbr'       => ['type' => Type::nonNull(Type::string())],
             'created_at' => ['type' => Type::nonNull(Type::string())],

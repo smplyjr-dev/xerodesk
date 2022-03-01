@@ -137,71 +137,66 @@
       <pagination :pagination="pagination" :client="true" :filtered="filteredUsers" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
-    <div id="add-user" class="modal fade">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Create User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <modal mId="add-user">
+      <modal-header>
+        <h5 class="modal-title">Create User</h5>
+      </modal-header>
+      <modal-body>
+        <div class="form-group" v-show="!$isEmpty(userError)">
+          <form-alert variant="warning">
+            <p v-for="error in userError" :key="error" v-html="error"></p>
+          </form-alert>
+        </div>
+        <div class="form-group">
+          <label for="role" class="text-sm">Role <span class="text-danger">*</span></label>
+          <select id="role" class="custom-select" v-model="user.role">
+            <option selected disabled value>-- Choose Role --</option>
+            <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
+          </select>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label for="first_name">First Name <span class="text-danger">*</span></label>
+            <input id="first_name" type="text" class="form-control" v-model="user.first_name" />
           </div>
-          <div class="modal-body">
-            <div class="form-group" v-show="!$isEmpty(userError)">
-              <form-alert variant="warning">
-                <p v-for="error in userError" :key="error" v-html="error"></p>
-              </form-alert>
-            </div>
-            <div class="form-group">
-              <label for="role" class="text-sm">Role <span class="text-danger">*</span></label>
-              <select id="role" class="custom-select" v-model="user.role">
-                <option selected disabled value>-- Choose Role --</option>
-                <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
-              </select>
-            </div>
-            <div class="form-group row">
-              <div class="col">
-                <label for="first_name">First Name <span class="text-danger">*</span></label>
-                <input id="first_name" type="text" class="form-control" v-model="user.first_name" />
-              </div>
-              <div class="col">
-                <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                <input id="last_name" type="text" class="form-control" v-model="user.last_name" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="username">Username <span class="text-danger">*</span></label>
-              <input id="username" type="text" class="form-control" v-model="user.username" />
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address <span class="text-danger">*</span></label>
-              <input id="email" type="email" class="form-control" v-model="user.email" />
-            </div>
-            <div class="form-group">
-              <label for="password">Password <span class="text-danger">*</span></label>
-              <input id="password" type="password" class="form-control" v-model="user.password" />
-            </div>
-            <div class="form-group">
-              <label for="password_confirmation">Confirm Password <span class="text-danger">*</span></label>
-              <input id="password_confirmation" type="password" class="form-control" v-model="user.password_confirmation" />
-            </div>
-            <div class="form-group">
-              <label>Email Verification</label>
-
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="skip_verification" v-model="user.skip_verification" />
-                <label class="form-check-label" for="skip_verification">Check this if you want to skip the email verification</label>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="createUser()" :disabled="isUserLoading">
-              <div v-if="isUserLoading" class="spinner-border spinner-border-sm" role="status"></div>
-              <span v-else>Create</span>
-            </button>
+          <div class="col">
+            <label for="last_name">Last Name <span class="text-danger">*</span></label>
+            <input id="last_name" type="text" class="form-control" v-model="user.last_name" />
           </div>
         </div>
-      </div>
-    </div>
+        <div class="form-group">
+          <label for="username">Username <span class="text-danger">*</span></label>
+          <input id="username" type="text" class="form-control" v-model="user.username" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address <span class="text-danger">*</span></label>
+          <input id="email" type="email" class="form-control" v-model="user.email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password <span class="text-danger">*</span></label>
+          <input id="password" type="password" class="form-control" v-model="user.password" />
+        </div>
+        <div class="form-group">
+          <label for="password_confirmation">Confirm Password <span class="text-danger">*</span></label>
+          <input id="password_confirmation" type="password" class="form-control" v-model="user.password_confirmation" />
+        </div>
+        <div class="form-group">
+          <label>Email Verification</label>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="skip_verification" v-model="user.skip_verification" />
+            <label class="form-check-label" for="skip_verification">Check this if you want to skip the email verification</label>
+          </div>
+        </div>
+      </modal-body>
+      <modal-footer>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" @click="createUser()" :disabled="isUserLoading">
+          <div v-if="isUserLoading" class="spinner-border spinner-border-sm" role="status"></div>
+          <span v-else>Create</span>
+        </button>
+      </modal-footer>
+    </modal>
 
     <div id="delete-user" class="modal fade">
       <div class="modal-dialog modal-dialog-centered">

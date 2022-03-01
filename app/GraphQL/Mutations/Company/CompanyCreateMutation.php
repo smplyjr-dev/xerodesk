@@ -24,7 +24,6 @@ class CompanyCreateMutation extends Mutation
     {
         return [
             'name' => ['type' => Type::nonNull(Type::string())],
-            'address' => ['type' => Type::nonNull(Type::string())],
         ];
     }
 
@@ -32,7 +31,6 @@ class CompanyCreateMutation extends Mutation
     {
         $company = new Company();
         $company->name = $args['name'];
-        $company->address = $args['address'];
         $company->save();
 
         return $company;
