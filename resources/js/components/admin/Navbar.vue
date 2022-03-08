@@ -26,7 +26,6 @@
                 <dropdown-item>
                   <router-link class="link-unstyled d-block" to="/profile">Profile</router-link>
                 </dropdown-item>
-                <hr class="my-1" />
                 <dropdown-item @select="logout()">Logout</dropdown-item>
               </template>
             </dropdown-content>

@@ -5,7 +5,7 @@
     </div>
     <div class="meta-content">
       <div style="display: grid; gap: 0.75rem; grid-template-columns: repeat(3, 1fr);">
-        <button class="btn rounded-pill btn-sm btn-primary" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Update Ticket">
+        <button class="btn rounded-pill btn-sm btn-brand-1" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Update Ticket">
           <i class="fa fa-fw fa-edit"></i>
         </button>
         <button class="btn rounded-pill btn-sm btn-danger" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Transfer Ticket">

@@ -3,59 +3,44 @@
 namespace App\Traits\Company;
 
 use App\Models\Company\Company;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
 
 trait CompanyTrait
 {
-    public function datatable()
+    public function picture()
     {
-        return Company::all();
-    }
+        request()->validate([
+            'image' => 'required|image64:jpeg,jpg,png',
+            'size'  => 'numeric|max:3000000', // 3mb in bytes
+        ], [
+            'size.max' => 'The file size should not be greater than 3MB.',
+        ]);
 
-    public function verify()
-    {
-        $cookie  = encrypter('decrypt', request()->cookie);
-        $company = Company::whereUrl($cookie['company_url'])->firstOrFail();
+        $id      = request()->id;
+        $company = Company::findOrFail($id);
+        $image   = request()->image;
+        $name    = request()->name;
+        $old     = request()->old;
 
-        if (in_array($cookie['employee_id'], $company->allowed_users)) {
-            return response()->json(true, 200);
-        }
+        $file = storage_path("app\\public\\uploads\\companies\\$id\\$old");
 
-        return response()->json(false, 200);
-    }
+        // remove the previous profile picture
+        if (file_exists($file)) unlink($file);
 
-    public function users()
-    {
-        $client   = new Client();
-        $company  = Company::findOrFail(request()->company_id);
-        $response = [];
-        $url      = $company->url . '/api/users?key=' . env('LCS_API_KEY');
+        $exploded  = explode(',', $image);
+        $extension = explode(';', explode('/', $exploded[0])[1])[0];
+        $filename  = $name . '-' . uniqid() . '.' . $extension;
+        $decoded   = base64_decode($exploded[1]);
+        $path      = "public\\uploads\\companies\\$id\\$filename";
 
-        $query    = $client->get($url);
-        $response = [
-            'status'  => 'success',
-            'message' => 'A list of all users.',
-            'users'   => json_decode($query->getBody(), true)
-        ];
+        // save to storage directory
+        Storage::put($path, $decoded);
 
-        // $curl_init = curl_init();
-        // curl_setopt($curl_init, CURLOPT_URL, $url);
-        // curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, 1);
-        // curl_setopt($curl_init, CURLOPT_HTTPGET, 1);
-        // curl_setopt($curl_init, CURLOPT_SSL_VERIFYHOST, false);
-        // curl_setopt($curl_init, CURLOPT_SSL_VERIFYPEER, false);
+        // save to user model
+        $company->update([
+            'company_picture' => $filename
+        ]);
 
-        // $query = curl_exec($curl_init);
-
-        // if (curl_error($curl_init)) {
-        //     $response = [
-        //         'status'  => 'error',
-        //         'message' => curl_error($curl_init)
-        //     ];
-        // } else {
-        //     $response = json_decode($query, true);
-        // }
-
-        return response()->json($response, 200);
+        return response()->json($company->company_picture, 200);
     }
 }

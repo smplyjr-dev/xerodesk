@@ -19,6 +19,7 @@ class CreateUserManagementTable extends Migration
             $table->string('url');
             $table->string('abbr', 5);
             $table->mediumText('allowed_users');
+            $table->string('company_picture')->default('generic-photograph.png');
             $table->timestamps();
         });
 

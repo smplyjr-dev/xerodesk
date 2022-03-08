@@ -1,9 +1,9 @@
 <template>
-  <div class="col-md-9">
+  <div class="container-fluid px-4">
     <div class="server-datatable">
       <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
-        <button type="button" class="btn btn-primary" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add SLA</button>
+        <button type="button" class="btn btn-brand-1" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add SLA</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -42,16 +42,26 @@
 
             <td>{{ p.name }}</td>
             <td>
-              <div class="sla-colors">
+              <!-- <div class="sla-colors">
                 <div class="color-item cursor-default active">
                   <div class="color-content" :style="{ background: p.color }"></div>
                 </div>
-              </div>
+              </div> -->
+
+              <div style="border-radius: 100%; height: 30px; width: 30px" :style="{ background: p.color }"></div>
             </td>
             <td>{{ p.range }} hours</td>
             <td>
-              <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
+              <dropdown :carret="false" :position="`right`">
+                <template v-slot:value><i class="fas fa-ellipsis-v"></i></template>
+
+                <dropdown-content minWidth="100px">
+                  <template v-slot:content>
+                    <dropdown-item @select="setMethod('update', p)">Edit</dropdown-item>
+                    <dropdown-item @select="setMethod('delete', p)">Delete</dropdown-item>
+                  </template>
+                </dropdown-content>
+              </dropdown>
             </td>
           </tr>
 
@@ -95,20 +105,19 @@
             <div class="form-group">
               <label for="color">Color <span class="text-danger">*</span></label>
               <div class="sla-colors">
-                <div class="color-item" @click="slaDetails.color = 'black'" :class="{ active: slaDetails.color == 'black' }">
-                  <div class="color-content" :style="{ background: 'black' }"></div>
+                <div class="color-item" @click="slaDetails.color = '#616161'" :class="{ active: slaDetails.color == '#616161' }">
+                  <div class="color-content" :style="{ background: '#616161' }"></div>
                 </div>
-                <div class="color-item" @click="slaDetails.color = 'red'" :class="{ active: slaDetails.color == 'red' }">
-                  <div class="color-content" :style="{ background: 'red' }"></div>
+                <div class="color-item" @click="slaDetails.color = '#fd6666'" :class="{ active: slaDetails.color == '#fd6666' }">
+                  <div class="color-content" :style="{ background: '#fd6666' }"></div>
                 </div>
-                <div class="color-item" @click="slaDetails.color = 'yellow'" :class="{ active: slaDetails.color == 'yellow' }">
-                  <div class="color-content" :style="{ background: 'yellow' }"></div>
+                <div class="color-item" @click="slaDetails.color = '#dcdf3d'" :class="{ active: slaDetails.color == '#dcdf3d' }">
+                  <div class="color-content" :style="{ background: '#dcdf3d' }"></div>
                 </div>
-                <div class="color-item" @click="slaDetails.color = 'green'" :class="{ active: slaDetails.color == 'green' }">
-                  <div class="color-content" :style="{ background: 'green' }"></div>
+                <div class="color-item" @click="slaDetails.color = '#71e476'" :class="{ active: slaDetails.color == '#71e476' }">
+                  <div class="color-content" :style="{ background: '#71e476' }"></div>
                 </div>
               </div>
-              <!-- <input id="color" type="text" class="form-control" v-model="slaDetails.color" /> -->
             </div>
             <div class="form-group">
               <label for="range">Time to Resolve (hours) <span class="text-danger">*</span></label>
@@ -120,13 +129,13 @@
           <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
           <template v-if="slaMethod == 'delete'">
-            <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isSlaLoading">
               <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>Delete</span>
             </button>
           </template>
           <template v-else>
-            <button type="submit" class="btn btn-primary" :disabled="isSlaLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isSlaLoading">
               <div v-if="isSlaLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>{{ slaMethod == "create" ? "Create" : "Update" }}</span>
             </button>
@@ -140,24 +149,23 @@
 <script>
 import { mapGetters } from "vuex";
 import { Length, Search, Datatable, Entries, Pagination, Mixin } from "@SDT";
-import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
   mixins: [Mixin],
-  layout: "Settings",
+  layout: "Admin",
   name: "SettingSlas",
   metaInfo: () => ({ title: "Setting / SLA's" }),
   middleware: ["auth", "permission:view_slas"],
-  components: { Length, Search, Datatable, Entries, Pagination, SettingMeta },
+  components: { Length, Search, Datatable, Entries, Pagination },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "SLA Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Name" },
+      { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
       { sortable: 1, hide: 0, type: types[0], width: "25%", name: "color", label: "Color" },
       { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "action", label: "Action" }
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -316,6 +324,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Service-level Agreement");
     this.getDatatable();
   }
 };

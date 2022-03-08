@@ -1,32 +1,31 @@
 <template>
-  <div class="col-md-9">
-    <div class="card card-picture card-1" style="background-image: url('/images/template/bg-profile.jpg')">
+  <div class="container-fluid px-4 mt-4">
+    <div class="card card-picture-1 card-1">
       <div class="card-body">
-        <div class="card-picture-container">
+        <div class="picture-container">
           <input type="file" class="d-none" ref="file" @change="onFileChange" />
 
-          <img loading="lazy" class="object-cover" :src="$profilePicture(user)" alt="Profile Picture" />
+          <img loading="lazy" class="object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Picture" />
 
           <div class="loader" v-if="isPictureLoading">
-            <div class="spinner-border text-light" style="height: 3rem; width: 3rem;" role="status"></div>
+            <div class="spinner-border text-light" style="height: 3rem; width: 3rem" role="status"></div>
           </div>
 
           <button @click="$refs.file.click()" v-else>
             <InlineSvg name="svg/camera.svg" size="2.5rem" />
           </button>
         </div>
+        <div class="picture-detail">
+          <h1 class="name">{{ `${user.bio.first_name.toTitle()} ${user.bio.last_name.toTitle()}` }}</h1>
 
-        <div class="text-white">
-          <p class="font-weight-bold mb-2 text-center text-lg">{{ `${user.bio.last_name.toTitle()}, ${user.bio.first_name.toTitle()}` }}</p>
-
-          <div class="flex-center flex-wrap">
-            <div class="flex-center mr-2">
-              <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="20px" />
-              <span style="margin-top: 2.5px;">{{ user.role }}</span>
+          <div class="info">
+            <div class="d-flex mb-2 mr-2">
+              <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="1.5rem" />
+              <span style="margin-top: 2.5px">{{ user.role }}</span>
             </div>
-            <div class="flex-center mr-2">
-              <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="20px" />
-              <span style="margin-top: 2.5px;">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
+            <div class="d-flex mb-2 mr-2">
+              <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="1.5rem" />
+              <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
             </div>
           </div>
         </div>
@@ -36,10 +35,9 @@
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="card card-1">
-          <div class="card-body">
-            <form @submit.prevent="updateProfile()">
+          <form @submit.prevent="updateProfile()">
+            <div class="card-body">
               <h5 class="mb-4">Update Profile</h5>
-
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group" v-show="!$isEmpty(profileError)">
@@ -59,25 +57,8 @@
                     <input id="lname" type="text" class="form-control" v-model="user.bio.last_name" />
                   </div>
                   <div class="form-group">
-                    <label for="email">Email <span class="text-danger">*</span></label>
-                    <input id="email" type="text" class="form-control" v-model="user.email" />
-                  </div>
-                  <div class="form-group">
-                    <label for="uname">Username <span class="text-danger">*</span></label>
-                    <input id="uname" type="text" class="form-control" v-model="user.username" />
-                  </div>
-                  <div class="form-group">
                     <label for="dob">Date of Birth</label>
                     <a-date-picker v-model="user.bio.dob" />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="role" class="text-sm">Role <span class="text-danger">*</span></label>
-                    <select id="role" class="custom-select" v-model="user.role">
-                      <option selected disabled value>-- Choose Role --</option>
-                      <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
-                    </select>
                   </div>
                   <div class="form-group">
                     <label for="status">Status <span class="text-danger">*</span></label>
@@ -87,6 +68,31 @@
                       <option :value="false">Inactive</option>
                     </select>
                   </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="email">Email <span class="text-danger">*</span></label>
+                    <input id="email" type="text" class="form-control" v-model="user.email" />
+                  </div>
+                  <div class="form-group">
+                    <label for="uname">Username <span class="text-danger">*</span></label>
+                    <input id="uname" type="text" class="form-control" v-model="user.username" />
+                  </div>
+                  <div class="form-group">
+                    <label for="role" class="text-sm">Role <span class="text-danger">*</span></label>
+                    <select id="role" class="custom-select" v-model="user.role">
+                      <option selected disabled value>-- Choose Role --</option>
+                      <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <h5 class="mb-4">Social Media</h5>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="facebook">Facebook</label>
                     <input id="facebook" type="text" class="form-control" v-model="user.bio.facebook" />
@@ -95,26 +101,28 @@
                     <label for="twitter">Twitter</label>
                     <input id="twitter" type="text" class="form-control" v-model="user.bio.twitter" />
                   </div>
+                </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="linkedin">LinkedIn</label>
                     <input id="linkedin" type="text" class="form-control" v-model="user.bio.linkedin" />
                   </div>
-                  <div class="text-right mt-4">
-                    <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
-                      <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                      <span v-else>Update Profile</span>
-                    </button>
-                  </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-brand-1" :disabled="isProfileLoading">
+                <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
+                <span v-else>Update Profile</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <div class="col-md-6 mb-4">
         <div class="card card-1">
-          <div class="card-body">
-            <form @submit.prevent="updatePassword()">
+          <form @submit.prevent="updatePassword()">
+            <div class="card-body">
               <h5 class="mb-4">Change Password</h5>
 
               <div class="row">
@@ -137,15 +145,15 @@
                     <input type="password" class="form-control" v-model="new_password_confirmation" />
                   </div>
                   <div class="text-right mt-4">
-                    <button type="submit" class="btn btn-primary" :disabled="isPasswordLoading">
+                    <button type="submit" class="btn btn-brand-1" :disabled="isPasswordLoading">
                       <div v-if="isPasswordLoading" class="spinner-border spinner-border-sm" role="status"></div>
                       <span v-else>Change Password</span>
                     </button>
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -157,7 +165,7 @@ import { mapState } from "vuex";
 import ADatePicker from "@Components/neutral/ADatePicker.vue";
 
 export default {
-  layout: "Settings",
+  layout: "Admin",
   name: "SettingEditUser",
   metaInfo: () => ({ title: "Setting / Edit User" }),
   middleware: ["auth"],
@@ -216,16 +224,13 @@ export default {
 
       reader.readAsDataURL(file);
 
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.userIcon.file = e.target.result;
       };
 
       this.userIcon.extension = file.name.split(".").pop();
       this.userIcon.size = file.size;
-      this.userIcon.name = file.name
-        .split(".")
-        .slice(0, -1)
-        .join(".");
+      this.userIcon.name = file.name.split(".").slice(0, -1).join(".");
 
       setTimeout(() => {
         this.uploadPicture();
@@ -265,7 +270,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               pictureError.push(message);
             });
           }
@@ -315,7 +320,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.profileError.push(message);
             });
           }
@@ -351,7 +356,7 @@ export default {
           if (errorObj.hasOwnProperty(key)) {
             const error = errorObj[key];
 
-            error.forEach(message => {
+            error.forEach((message) => {
               this.passwordError.push(message);
             });
           }
@@ -362,6 +367,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Edit User");
     this.$store.dispatch("roles/fetchRoles");
     this.fetchUser();
   }

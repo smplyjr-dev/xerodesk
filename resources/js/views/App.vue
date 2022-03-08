@@ -12,7 +12,7 @@
       </modal-header>
       <modal-body>Your session has expired. Please login again.</modal-body>
       <modal-footer>
-        <a :href="redirectToLoginUrl" class="btn btn-primary">Okay, login again</a>
+        <a :href="redirectToLoginUrl" class="btn btn-brand-1">Okay, login again</a>
       </modal-footer>
     </modal>
   </div>

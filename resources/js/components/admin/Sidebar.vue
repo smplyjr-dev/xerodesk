@@ -8,7 +8,7 @@
         <img loading="lazy" class="object-contain" src="/images/logo-large-white.png" alt="Page Background" height="50px" />
       </router-link>
       <router-link to="/" class="sidebar-logo--small">
-        <img loading="lazy" class="object-contain" src="/images/logo-small-white.png" alt="Page Background" height="35px" />
+        <img loading="lazy" class="object-contain" src="/images/logo-small-white.png" alt="Page Background" height="50px" />
       </router-link>
     </div>
     <div class="sidebar-navs">
@@ -84,41 +84,7 @@ export default {
           name: "Settings",
           to: "/settings",
           icon: "template/mdi-cog.svg",
-          ready: true,
-          child: [
-            {
-              name: "Company",
-              to: "/settings/company"
-            },
-            {
-              name: "Groups",
-              to: "/settings/groups"
-            },
-            {
-              name: "Roles",
-              to: "/settings/roles"
-            },
-            {
-              name: "SLA",
-              to: "/settings/slas"
-            },
-            {
-              name: "Users",
-              to: "/settings/users"
-            }
-          ]
-        },
-        {
-          name: "Developers",
-          to: "/developers",
-          icon: "template/mdi-code.svg",
-          ready: isDevelopment,
-          child: [
-            {
-              name: "Web Notification",
-              to: "/developers/webnotif"
-            }
-          ]
+          ready: true
         }
       ]
     };

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-9">
+  <div class="px-4">
     <div class="client-datatable">
       <div class="flex-center-between flex-wrap">
         <div class="control d-flex align-items-center">
@@ -15,7 +15,7 @@
           </div>
           entries
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user"><i class="fa fa-plus mr-1"></i> Add User</button>
+        <button type="button" class="btn btn-brand-1" data-toggle="modal" data-target="#add-user"><i class="fa fa-plus mr-1"></i> Add User</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -37,7 +37,7 @@
                   </div>
                 </router-link>
               </div>
-              <!-- <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <span class="w-100 text-center">
                   <div class="social-media justify-content-center">
                     <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
@@ -51,11 +51,9 @@
                     </a>
                   </div>
 
-                  <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
-                    No Social Media
-                  </template>
+                  <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin"> No Social Media </template>
                 </span>
-              </div> -->
+              </div>
               <div class="text-center">
                 <p class="font-weight-bold my-2">
                   {{ p.role }} /
@@ -64,11 +62,8 @@
                 </p>
               </div>
               <div class="text-center">
-                <div class="flex-center text-success font-weight-bold my-2" v-if="!$isNull(p.email_verified_at)">
-                  <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
-                  Account Verified
-                </div>
-                <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
+                <div class="text-success my-2" v-if="!$isNull(p.email_verified_at)">Account Verified</div>
+                <button type="button" class="btn btn-brand-1 btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
                   <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
                   <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
                 </button>
@@ -81,16 +76,13 @@
             <td>
               <router-link :to="`/settings/users/${p.id}/edit`" class="d-flex align-items-center">
                 <img loading="lazy" class="object-cover rounded-circle" :src="profilePicture(p)" @error="$onImgError($event, 1)" :alt="`${p.name}`" height="32px" width="32px" />
-                <div class="d-flex flex-column ml-2">
-                  <span>{{ `${p.name}` }}</span>
-                  <span class="text-muted text-xs">{{ p.meta.email }}</span>
-                </div>
+                <span class="ml-2">{{ p.name }}</span>
               </router-link>
             </td>
-            <!-- <td>
+            <td>
               <div class="social-media">
                 <a :href="p.meta.bio.facebook" target="_blank" v-if="p.meta.bio.facebook">
-                  <i class="fab fa-facebook" v-if="p.meta.bio.facebook"></i>
+                  <i class="fab fa-facebook-f" v-if="p.meta.bio.facebook"></i>
                 </a>
                 <a :href="p.meta.bio.twitter" target="_blank" v-if="p.meta.bio.twitter">
                   <i class="fab fa-twitter" v-if="p.meta.bio.twitter"></i>
@@ -100,29 +92,32 @@
                 </a>
               </div>
 
-              <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin">
-                No Social Media
-              </template>
-            </td> -->
+              <template v-if="!p.meta.bio.facebook && !p.meta.bio.twitter && !p.meta.bio.linkedin"> No Social Media </template>
+            </td>
             <td>{{ p.role }}</td>
             <td>
               <span class="badge badge-pill badge-primary" v-if="p.status == 'Activated'">{{ p.status }}</span>
               <span class="badge badge-pill badge-secondary" v-if="p.status == 'Deactivated'">{{ p.status }}</span>
             </td>
             <td>
-              <div class="d-flex align-items-center text-success font-weight-bold" v-if="!$isNull(p.email_verified_at)">
-                <InlineSvg class="mr-1" name="template/mdi-check-decagram.svg" size="1.25rem" />
-                Account Verified
-              </div>
+              <div class="text-success" v-if="!$isNull(p.email_verified_at)">Account Verified</div>
 
-              <button type="button" class="btn btn-primary btn-sm my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
+              <a href="javascript:void(0)" class="my-1" @click="resendVerification(i, p)" :disabled="p.status == 1" v-else>
                 <span v-if="!resendingIndex.includes(i)">Resend Email Verification</span>
                 <span v-if="resendingIndex.includes(i)" class="spinner-border spinner-border-sm"></span>
-              </button>
+              </a>
             </td>
             <td>
-              <router-link class="btn btn-secondary btn-sm my-1" :to="`/settings/users/${p.id}/edit`">Edit</router-link>
-              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#delete-user" @click="toDelete = p">Delete</button>
+              <dropdown :carret="false" :position="`right`">
+                <template v-slot:value><i class="fas fa-ellipsis-v"></i></template>
+
+                <dropdown-content minWidth="100px">
+                  <template v-slot:content>
+                    <dropdown-item @select="$router.push(`/settings/users/${p.id}/edit`)">Edit</dropdown-item>
+                    <dropdown-item @select="toDelete = p" data-toggle="modal" data-target="#delete-user">Delete</dropdown-item>
+                  </template>
+                </dropdown-content>
+              </dropdown>
             </td>
           </tr>
 
@@ -191,7 +186,7 @@
       </modal-body>
       <modal-footer>
         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" @click="createUser()" :disabled="isUserLoading">
+        <button type="button" class="btn btn-brand-1" @click="createUser()" :disabled="isUserLoading">
           <div v-if="isUserLoading" class="spinner-border spinner-border-sm" role="status"></div>
           <span v-else>Create</span>
         </button>
@@ -213,7 +208,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="confirmDelete()">Delete</button>
+            <button type="button" class="btn btn-brand-1" @click="confirmDelete()">Delete</button>
           </div>
         </div>
       </div>
@@ -225,14 +220,13 @@
 import { mapState } from "vuex";
 import Datatable from "@Components/datatable/client/Datatable.vue";
 import Pagination from "@Components/datatable/client/Pagination.vue";
-import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
-  layout: "Settings",
+  layout: "Admin",
   name: "SettingUsers",
   metaInfo: () => ({ title: "Setting / Users" }),
   middleware: ["auth", "permission:view_users"],
-  components: { Datatable, Pagination, SettingMeta },
+  components: { Datatable, Pagination },
   computed: {
     ...mapState("roles", ["roles"]),
 
@@ -275,12 +269,12 @@ export default {
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "User Details" },
       { sortable: 0, hide: 1, type: types[1], width: "0%", name: "id", label: "Id" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "name", label: "Name" },
-      // { sortable: 0, hide: 0, type: types[0], width: "0%", name: "social", label: "Social Media" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "role", label: "Role" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "status", label: "Status" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "verification", label: "Verification" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
+      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Name" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "social", label: "Social Media" },
+      { sortable: 1, hide: 0, type: types[0], width: "15%", name: "role", label: "Role" },
+      { sortable: 1, hide: 0, type: types[0], width: "10%", name: "status", label: "Status" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "verification", label: "Verification" },
+      { sortable: 0, hide: 0, type: types[0], width: "10%", name: "action", label: "Action" }
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -472,6 +466,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Users");
     this.getUsers();
     this.$store.dispatch("roles/fetchRoles");
   }
@@ -499,7 +494,7 @@ export default {
       align-items: center;
       justify-content: center;
 
-      &.fa-facebook {
+      &.fa-facebook-f {
         background: #4267b2;
       }
       &.fa-twitter {

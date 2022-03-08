@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-9">
+  <div class="container-fluid px-4">
     <div class="client-datatable">
       <div class="flex-center-between flex-wrap">
         <div class="control d-flex align-items-center">
@@ -15,7 +15,7 @@
           </div>
           entries
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-role" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Role</button>
+        <button type="button" class="btn btn-brand-1" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Role</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -34,21 +34,29 @@
               </div>
               <div class="text-center">
                 <p class="font-weight-bold mb-0">Permissions:</p>
-                <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.name }}</span>
+                <span class="badge badge-pill badge-danger mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.name }}</span>
               </div>
               <div class="text-center">
-                <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
-                <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
+                <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
               </div>
             </td>
 
             <td>{{ p.name }}</td>
             <td>
-              <span class="badge badge-info mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.slug }}</span>
+              <span class="badge badge-pill badge-danger mb-1 mr-1" v-for="p in p.permissions" :key="p.slug">{{ p.slug }}</span>
             </td>
             <td>
-              <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('update', p)">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-role" @click="setMethod('delete', p)">Delete</button>
+              <dropdown :carret="false" :position="`right`">
+                <template v-slot:value><i class="fas fa-ellipsis-v"></i></template>
+
+                <dropdown-content minWidth="100px">
+                  <template v-slot:content>
+                    <dropdown-item @select="setMethod('update', p)">Edit</dropdown-item>
+                    <dropdown-item @select="setMethod('delete', p)">Delete</dropdown-item>
+                  </template>
+                </dropdown-content>
+              </dropdown>
             </td>
           </tr>
 
@@ -87,7 +95,7 @@
               <input id="name" type="text" class="form-control" v-model="roleDetails.name" />
             </div>
             <div class="form-group">
-              <label>Permissions <span class="text-danger">*</span></label>
+              <label>Select permissions down below</label>
 
               <div class="row my-2" v-for="(p, pK) in permissions" :key="pK">
                 <div class="col-12">
@@ -110,13 +118,13 @@
           <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
           <template v-if="roleMethod == 'delete'">
-            <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isRoleLoading">
               <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>Delete</span>
             </button>
           </template>
           <template v-else>
-            <button type="submit" class="btn btn-primary" :disabled="isRoleLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isRoleLoading">
               <div v-if="isRoleLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>{{ roleMethod == "create" ? "Create" : "Update" }}</span>
             </button>
@@ -131,14 +139,13 @@
 import Datatable from "@Components/datatable/client/Datatable.vue";
 import Pagination from "@Components/datatable/client/Pagination.vue";
 import Permissions from "@Public/docs/permissions.json";
-import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 
 export default {
-  layout: "Settings",
+  layout: "Admin",
   name: "SettingRoles",
   metaInfo: () => ({ title: "Setting / Roles" }),
   middleware: ["auth", "permission:view_roles"],
-  components: { Datatable, Pagination, SettingMeta },
+  components: { Datatable, Pagination },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
@@ -280,6 +287,8 @@ export default {
         this.roleDetails.id = role.id;
         this.roleDetails.name = role.name;
       }
+
+      $("#manage-role").modal("show");
     },
     async submitRole() {
       this.isRoleLoading = true;
@@ -351,6 +360,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Roles");
     this.getRoles();
   }
 };

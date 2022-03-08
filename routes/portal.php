@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Portal\ClientController;
+use App\Http\Controllers\Portal\CompanyController;
 use App\Http\Controllers\Portal\GroupController;
 use App\Http\Controllers\Portal\MessageController;
 use App\Http\Controllers\Portal\RoleController;
@@ -25,6 +26,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/client/datatable',        [ClientController::class, 'datatable']);
     Route::get('/client/recent',           [ClientController::class, 'recent']);
     Route::get('/client/{token}/sessions', [ClientController::class, 'sessions']);
+
+    // Company Routes
+    Route::post('/company/picture', [CompanyController::class, 'picture']);
 
     // Group Routes
     Route::get('/group/datatable', [GroupController::class, 'datatable']);

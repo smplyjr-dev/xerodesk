@@ -5,7 +5,7 @@
       <div class="form-group row align-items-center">
         <label class="col-md-3 mb-0">Export As</label>
         <div class="col-md-9">
-          <div class="form-control border-0 px-0">
+          <div class="py-2 border-0 px-0">
             <div class="d-flex align-items-center">
               <div class="custom-control custom-radio mr-4">
                 <input type="radio" class="custom-control-input" id="xlsx" value="xlsx" v-model="refine.type" />
@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="form-group d-flex flex-row-reverse">
-        <button class="btn btn-primary pull-right" type="submit">Export</button>
+        <button class="btn btn-brand-1 pull-right" type="submit">Export</button>
         <button class="btn btn-light pull-right" type="button" @click="resetExport()">Reset</button>
         <div class="clearfix"></div>
       </div>

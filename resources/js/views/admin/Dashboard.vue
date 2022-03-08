@@ -1,9 +1,5 @@
 <template>
-  <div class="container-fluid px-4 mt-4">
-    <div class="page-title">
-      <h4 class="mb-2">Dashboard</h4>
-    </div>
-
+  <div class="container-fluid px-4">
     <div class="row">
       <TicketWidget :title="1" :loading="loading.sessions" :length="sessions[1]" />
       <TicketWidget :title="2" :loading="loading.sessions" :length="sessions[2]" />
@@ -80,6 +76,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Dashboard");
     this.fetchTickets();
     this.fetchRecentClients();
   }

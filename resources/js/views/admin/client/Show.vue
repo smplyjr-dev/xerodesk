@@ -1,8 +1,7 @@
 <template>
   <div class="container-fluid px-4 mt-4">
     <div class="page-title">
-      <h4 class="mb-2">Client</h4>
-      &nbsp;
+      <h4>Client</h4>
     </div>
 
     <div class="card card-1">

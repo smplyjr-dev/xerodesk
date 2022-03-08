@@ -1,10 +1,5 @@
 <template>
-  <div class="container-fluid px-4 mt-4">
-    <div class="page-title">
-      <h4 class="mb-2">Clients</h4>
-      &nbsp;
-    </div>
-
+  <div class="container-fluid px-4">
     <div class="server-datatable">
       <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
@@ -228,6 +223,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Clients");
     this.getDatatable();
   }
 };

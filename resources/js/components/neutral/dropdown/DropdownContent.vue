@@ -1,6 +1,6 @@
 <template>
   <transition name="cdc">
-    <div v-if="active" class="cdc" :class="position">
+    <div v-if="active" class="cdc" :class="position" :style="`min-width: ${minWidth}`">
       <div class="filter" v-show="showFilter"><slot name="filter" /></div>
       <div class="content" v-show="showContent"><slot name="content" /></div>
     </div>
@@ -9,6 +9,13 @@
 
 <script>
 export default {
+  props: {
+    minWidth: {
+      type: String,
+      required: false,
+      default: "200px"
+    }
+  },
   name: "DropdownContent",
   inject: ["sharedState"],
   data: () => ({

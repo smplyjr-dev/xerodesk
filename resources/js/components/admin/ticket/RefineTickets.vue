@@ -43,7 +43,7 @@
         <input type="text" class="form-control" v-model="refine.session" />
       </div>
       <div class="form-group d-flex flex-row-reverse">
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-brand-1" type="submit">Search</button>
         <button class="btn btn-light" @click="resetSearch(), $emit('onSearch', refine)">Reset</button>
       </div>
     </form>

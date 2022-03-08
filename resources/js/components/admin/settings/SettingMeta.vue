@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-3">
     <div class="setting-meta">
-      <!-- <h4 class="mb-2">Settings</h4> -->
+      <!-- <h4>Settings</h4> -->
 
       <div class="card card-body p-0">
         <ul>

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company\Company;
+use App\Traits\Company\CompanyTrait;
 
 class CompanyController extends Controller
 {
+    use CompanyTrait;
+
     public function index()
     {
         $model = Company::all();

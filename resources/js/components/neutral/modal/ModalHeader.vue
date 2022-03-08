@@ -3,7 +3,7 @@
     <slot />
 
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="$emit('close')" v-if="close">
-      <span aria-hidden="true">&times;</span>
+      <InlineSvg name="template/mdi-close.svg" color="#fff" size="1rem" />
     </button>
   </div>
 </template>

@@ -9,7 +9,7 @@
         <!-- if empty, create and attach -->
         <template v-if="$isEmpty(filteredTags)">
           <li>
-            <button class="btn btn-primary btn-sm btn-block" @click="createTag()" :disabled="isCreatingAttaching">
+            <button class="btn btn-brand-1 btn-sm btn-block" @click="createTag()" :disabled="isCreatingAttaching">
               <div v-if="isCreatingAttaching" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>Create and Attach</span>
             </button>

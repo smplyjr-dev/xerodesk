@@ -23,7 +23,7 @@
         </ul>
       </modal-body>
       <modal-footer>
-        <button type="submit" class="btn btn-primary">Transfer</button>
+        <button type="submit" class="btn btn-brand-1">Transfer</button>
       </modal-footer>
     </form>
   </modal>

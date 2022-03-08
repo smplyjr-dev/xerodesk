@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid px-4 mt-4">
-    <div class="card card-picture card-1" style="background-image: url('/images/template/bg-profile.jpg')">
+    <div class="card card-picture-1 card-1">
       <div class="card-body">
-        <div class="card-picture-container">
+        <div class="picture-container">
           <input type="file" class="d-none" ref="file" @change="onFileChange" />
 
           <img loading="lazy" class="object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Picture" />
@@ -15,17 +15,16 @@
             <InlineSvg name="svg/camera.svg" size="2.5rem" />
           </button>
         </div>
+        <div class="picture-detail">
+          <h1 class="name">{{ `${user.bio.first_name.toTitle()} ${user.bio.last_name.toTitle()}` }}</h1>
 
-        <div class="text-white">
-          <p class="font-weight-bold mb-2 text-center text-lg">{{ `${user.bio.last_name.toTitle()}, ${user.bio.first_name.toTitle()}` }}</p>
-
-          <div class="flex-center flex-wrap">
-            <div class="flex-center mr-2">
-              <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="20px" />
+          <div class="info">
+            <div class="d-flex mb-2 mr-2">
+              <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="1.5rem" />
               <span style="margin-top: 2.5px">{{ user.role }}</span>
             </div>
-            <div class="flex-center mr-2">
-              <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="20px" />
+            <div class="d-flex mb-2 mr-2">
+              <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="1.5rem" />
               <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
             </div>
           </div>
@@ -39,7 +38,6 @@
           <form @submit.prevent="updateProfile()">
             <div class="card-body">
               <h5 class="mb-4">Update Profile</h5>
-
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group" v-show="!$isEmpty(profileError)">
@@ -59,6 +57,12 @@
                     <input id="lname" type="text" class="form-control" v-model="user.bio.last_name" />
                   </div>
                   <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <a-date-picker v-model="user.bio.dob" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
                     <label for="email">Email <span class="text-danger">*</span></label>
                     <input id="email" type="text" class="form-control" v-model="user.email" />
                   </div>
@@ -67,11 +71,13 @@
                     <input id="uname" type="text" class="form-control" v-model="user.username" />
                   </div>
                 </div>
+              </div>
+
+              <hr />
+
+              <h5 class="mb-4">Social Media</h5>
+              <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="dob">Date of Birth</label>
-                    <a-date-picker v-model="user.bio.dob" />
-                  </div>
                   <div class="form-group">
                     <label for="facebook">Facebook</label>
                     <input id="facebook" type="text" class="form-control" v-model="user.bio.facebook" />
@@ -80,6 +86,8 @@
                     <label for="twitter">Twitter</label>
                     <input id="twitter" type="text" class="form-control" v-model="user.bio.twitter" />
                   </div>
+                </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="linkedin">LinkedIn</label>
                     <input id="linkedin" type="text" class="form-control" v-model="user.bio.linkedin" />
@@ -87,13 +95,11 @@
                 </div>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="text-right">
-                <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
-                  <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
-                  <span v-else>Update Profile</span>
-                </button>
-              </div>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-brand-1" :disabled="isProfileLoading">
+                <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
+                <span v-else>Update Profile</span>
+              </button>
             </div>
           </form>
         </div>
@@ -128,7 +134,7 @@
             </div>
             <div class="card-footer">
               <div class="text-right">
-                <button type="submit" class="btn btn-primary" :disabled="isPasswordLoading">
+                <button type="submit" class="btn btn-brand-1" :disabled="isPasswordLoading">
                   <div v-if="isPasswordLoading" class="spinner-border spinner-border-sm" role="status"></div>
                   <span v-else>Change Password</span>
                 </button>
@@ -174,8 +180,8 @@ export default {
       profile_picture: "generic-profile.png",
       role: "Role",
       bio: {
-        first_name: "First",
-        last_name: "Last",
+        first_name: "",
+        last_name: "",
         facebook: "",
         twiiter: "",
         linkedin: ""
@@ -220,7 +226,7 @@ export default {
 
     async fetchUser() {
       let id = this.$store.state.auth.user.id;
-      let { data } = await axios.get(`/portal/user/${id}`);
+      let { data } = await axios.get(`/portal/user/${id}`).takeAtLeast(1000);
 
       this.user = data;
     },
@@ -353,6 +359,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Edit Profile");
     this.fetchUser();
   }
 };

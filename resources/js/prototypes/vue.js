@@ -49,4 +49,5 @@ Vue.prototype.$profilePicture = function (user) {
 // Image On Error Fallback
 Vue.prototype.$onImgError = function (e, i) {
   if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/generic-profile.png`;
+  if (i == 2) e.target.src = `${window.Laravel.BASE_URL}/images/generic-photograph.png`;
 };

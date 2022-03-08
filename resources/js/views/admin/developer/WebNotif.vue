@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid px-4 mt-4">
+  <div class="container-fluid px-4">
     <div class="row">
       <div class="col-md-6">
         <div class="card">
@@ -15,7 +15,7 @@
                 <textarea id="body" cols="30" rows="3" class="form-control" v-model="body"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary">Notify</button>
+              <button type="submit" class="btn btn-brand-1">Notify</button>
             </form>
           </div>
         </div>
@@ -62,6 +62,9 @@ export default {
         });
       }
     }
+  },
+  created() {
+    this.$emit("setTitle", "Developer / OS Notification");
   }
 };
 </script>

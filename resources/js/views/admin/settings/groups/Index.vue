@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-9">
+  <div class="container-fluid px-4">
     <div class="client-datatable">
       <div class="flex-center-between flex-wrap">
         <div class="control d-flex align-items-center">
@@ -15,7 +15,7 @@
           </div>
           entries
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage-group" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Group</button>
+        <button type="button" class="btn btn-brand-1" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Group</button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
@@ -50,8 +50,8 @@
                 </span>
               </div>
               <div class="text-center">
-                <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
-                <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
+                <button type="button" class="btn btn-secondary btn-sm my-1" @click="setMethod('update', p)">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" @click="setMethod('delete', p)">Delete</button>
               </div>
             </td>
 
@@ -71,8 +71,16 @@
               </div>
             </td>
             <td>
-              <button type="button" class="btn btn-secondary btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('update', p)">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm my-1" data-toggle="modal" data-target="#manage-group" @click="setMethod('delete', p)">Delete</button>
+              <dropdown :carret="false" :position="`right`">
+                <template v-slot:value><i class="fas fa-ellipsis-v"></i></template>
+
+                <dropdown-content minWidth="100px">
+                  <template v-slot:content>
+                    <dropdown-item @select="setMethod('update', p)">Edit</dropdown-item>
+                    <dropdown-item @select="setMethod('delete', p)">Delete</dropdown-item>
+                  </template>
+                </dropdown-content>
+              </dropdown>
             </td>
           </tr>
 
@@ -132,13 +140,13 @@
           <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 
           <template v-if="groupMethod == 'delete'">
-            <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isGroupLoading">
               <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>Delete</span>
             </button>
           </template>
           <template v-else>
-            <button type="submit" class="btn btn-primary" :disabled="isGroupLoading">
+            <button type="submit" class="btn btn-brand-1" :disabled="isGroupLoading">
               <div v-if="isGroupLoading" class="spinner-border spinner-border-sm" role="status"></div>
               <span v-else>{{ groupMethod == "create" ? "Create" : "Update" }}</span>
             </button>
@@ -153,23 +161,22 @@
 import { mapGetters } from "vuex";
 import Datatable from "@Components/datatable/client/Datatable.vue";
 import Pagination from "@Components/datatable/client/Pagination.vue";
-import SettingMeta from "@Components/admin/settings/SettingMeta.vue";
 import TableGroupUsers from "@Components/admin/settings/TableGroupUsers.vue";
 
 export default {
-  layout: "Settings",
+  layout: "Admin",
   name: "SettingGroups",
   metaInfo: () => ({ title: "Setting / Groups" }),
   middleware: ["auth", "permission:view_groups"],
-  components: { Datatable, Pagination, SettingMeta, TableGroupUsers },
+  components: { Datatable, Pagination, TableGroupUsers },
   data() {
     let sortOrders = {};
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Group Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "0%", name: "name", label: "Name" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "users", label: "Agents" },
-      { sortable: 0, hide: 0, type: types[0], width: "0%", name: "action", label: "Action" }
+      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "name", label: "Name" },
+      { sortable: 0, hide: 0, type: types[0], width: "60%", name: "users", label: "Agents" },
+      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -308,6 +315,8 @@ export default {
         this.groupDetails.name = group.name;
         this.groupDetails.description = group.description;
       }
+
+      $("#manage-group").modal("show");
     },
     async submitGroup() {
       this.isGroupLoading = true;
@@ -416,6 +425,7 @@ export default {
     }
   },
   created() {
+    this.$emit("setTitle", "Groups");
     this.getGroups();
   }
 };
@@ -433,7 +443,7 @@ export default {
 
     .fa,
     img {
-      background: $secondary;
+      background: #c4c4c4;
       border: 3px solid $white;
       border-radius: 100%;
       color: $white;

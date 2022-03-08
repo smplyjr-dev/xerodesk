@@ -101,7 +101,7 @@
                     <input id="linkedin" type="text" class="form-control" v-model="user.bio.linkedin" />
                   </div>
                   <div class="text-right mt-4">
-                    <button type="submit" class="btn btn-primary" :disabled="isProfileLoading">
+                    <button type="submit" class="btn btn-brand-1" :disabled="isProfileLoading">
                       <div v-if="isProfileLoading" class="spinner-border spinner-border-sm" role="status"></div>
                       <span v-else>Create User</span>
                     </button>
@@ -138,7 +138,7 @@
                     <input type="password" class="form-control" v-model="new_password_confirmation" />
                   </div>
                   <div class="text-right mt-4">
-                    <button type="submit" class="btn btn-primary" :disabled="isPasswordLoading">
+                    <button type="submit" class="btn btn-brand-1" :disabled="isPasswordLoading">
                       <div v-if="isPasswordLoading" class="spinner-border spinner-border-sm" role="status"></div>
                       <span v-else>Change Password</span>
                     </button>

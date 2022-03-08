@@ -1,9 +1,5 @@
 <template>
-  <div class="container-fluid px-4 mt-4">
-    <div class="page-title">
-      <h4 class="mb-2">Reports</h4>
-    </div>
-
+  <div class="container-fluid px-4">
     <p>This module is still in progress. Please, come back later.</p>
   </div>
 </template>
@@ -13,6 +9,9 @@ export default {
   layout: "Admin",
   name: "Dashboard",
   metaInfo: () => ({ title: "Admin Dashboard" }),
-  middleware: "auth"
+  middleware: "auth",
+  created() {
+    this.$emit("setTitle", "Reports");
+  }
 };
 </script>

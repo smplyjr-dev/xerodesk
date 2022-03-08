@@ -7,7 +7,12 @@
     <main>
       <section class="d-flex flex-column h-100 overflow-scroll">
         <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
-        <RouterView @toggle-sidebar="isOpen = $event" />
+
+        <div class="page-title" v-if="pageTitle">
+          <h4 v-html="pageTitle"></h4>
+        </div>
+
+        <RouterView @toggle-sidebar="isOpen = $event" @setTitle="pageTitle = $event" />
 
         <footer class="footer mt-auto py-3 px-4">
           <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
@@ -37,7 +42,8 @@ export default {
 
     return {
       isOpen: false,
-      currentYear: now.getFullYear()
+      currentYear: now.getFullYear(),
+      pageTitle: ""
     };
   },
   computed: {

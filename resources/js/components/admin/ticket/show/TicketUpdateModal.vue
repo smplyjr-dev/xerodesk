@@ -52,7 +52,7 @@
       </div>
     </modal-body>
     <modal-footer>
-      <button type="button" class="btn btn-primary" @click="updateSession" :disabled="isUpdating">
+      <button type="button" class="btn btn-brand-1" @click="updateSession" :disabled="isUpdating">
         <span v-if="isUpdating">
           Please wait...
           <i class="fa fa-spin fa-circle-notch" aria-hidden="true"></i>
