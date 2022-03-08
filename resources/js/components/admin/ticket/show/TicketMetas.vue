@@ -10,9 +10,9 @@
     </div>
 
     <div class="ticket-actions">
-      <div class="btn btn-brand-1" @click="updateSession" data-toggle="popover" data-placement="top" data-content="Update Ticket" data-trigger="hover"><InlineSvg name="template/mdi-sync.svg" size="1.25rem" /></div>
-      <div class="btn btn-danger" @click="transferSession" data-toggle="popover" data-placement="top" data-content="Transfer Ticket" data-trigger="hover"><InlineSvg name="template/mdi-swap-vertical.svg" size="1.25rem" /></div>
-      <div class="btn btn-info" @click="transcriptSession" data-toggle="popover" data-placement="top" data-content="Send Transcript" data-trigger="hover" :class="{ disabled: isSending }"><InlineSvg name="template/mdi-email-fast-outline.svg" size="1.25rem" /></div>
+      <div class="btn btn-brand-1" @click="updateSession" data-toggle="popover" data-placement="top" data-content="Update Ticket" data-trigger="hover"><InlineSvg name="svg/mdi/sync.svg" size="1.25rem" /></div>
+      <div class="btn btn-danger" @click="transferSession" data-toggle="popover" data-placement="top" data-content="Transfer Ticket" data-trigger="hover"><InlineSvg name="svg/mdi/swap-vertical.svg" size="1.25rem" /></div>
+      <div class="btn btn-info" @click="transcriptSession" data-toggle="popover" data-placement="top" data-content="Send Transcript" data-trigger="hover" :class="{ disabled: isSending }"><InlineSvg name="svg/mdi/email-fast-outline.svg" size="1.25rem" /></div>
     </div>
 
     <ul class="list-style-a mb-0">

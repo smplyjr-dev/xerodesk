@@ -4,7 +4,7 @@
       <p class="replying-to">Replying to:</p>
 
       <div class="close" @click="removeReply()">
-        <InlineSvg name="template/mdi-close.svg" color="#000" size="10px" />
+        <InlineSvg name="svg/mdi/close.svg" color="#000" size="10px" />
       </div>
     </div>
 

@@ -30,7 +30,7 @@
         <div class="d-flex align-items-center px-3 py-2">
           <emoji-picker @onSelect="emoji = $event">
             <button type="button" class="btn btn-default px-0">
-              <InlineSvg name="template/mdi-emoticon-happy-outline.svg" color="#d0d0d0" size="23px" />
+              <InlineSvg name="svg/mdi/emoticon-happy-outline.svg" color="#d0d0d0" size="23px" />
             </button>
           </emoji-picker>
 
@@ -38,11 +38,11 @@
           <TicketReplyEditor v-model="message" :emoji="emoji" @onEnter="submitChat()" />
 
           <button type="button" class="btn btn-default px-0" data-toggle="modal" data-target="#attm-modal">
-            <InlineSvg name="template/mdi-paperclip.svg" color="#d0d0d0" size="23px" />
+            <InlineSvg name="svg/mdi/paperclip.svg" color="#d0d0d0" size="23px" />
           </button>
 
           <button type="button" class="btn btn-default px-0" @click="submitChat()">
-            <InlineSvg name="template/mdi-send.svg" color="#f15e4a" size="23px" />
+            <InlineSvg name="svg/mdi/send.svg" color="#f15e4a" size="23px" />
           </button>
         </div>
       </div>

@@ -12,7 +12,7 @@
           </div>
 
           <button @click="$refs.file.click()" v-else>
-            <InlineSvg name="svg/camera.svg" size="2.5rem" />
+            <InlineSvg name="svg/mdi/camera.svg" size="2.5rem" />
           </button>
         </div>
         <div class="picture-detail">
@@ -20,11 +20,11 @@
 
           <div class="info">
             <div class="d-flex mb-2 mr-2">
-              <InlineSvg name="template/mdi-shield-account.svg" class="mr-1" size="1.5rem" />
+              <InlineSvg name="svg/mdi/shield-account.svg" class="mr-1" size="1.5rem" />
               <span style="margin-top: 2.5px">{{ user.role }}</span>
             </div>
             <div class="d-flex mb-2 mr-2">
-              <InlineSvg name="template/mdi-calendar.svg" class="mr-1" size="1.5rem" />
+              <InlineSvg name="svg/mdi/calendar.svg" class="mr-1" size="1.5rem" />
               <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
             </div>
           </div>

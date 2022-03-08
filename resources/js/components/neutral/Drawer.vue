@@ -4,7 +4,7 @@
       <transition :name="position">
         <div class="drawer-container" :class="`drawer-container--${position}`" v-show="toggle">
           <div class="drawer-close" @click="$emit('toggleDrawer', false)">
-            <InlineSvg name="template/mdi-close.svg" color="#c6c6c6" size="100%" />
+            <InlineSvg name="svg/mdi/close.svg" color="#c6c6c6" size="100%" />
           </div>
 
           <slot />

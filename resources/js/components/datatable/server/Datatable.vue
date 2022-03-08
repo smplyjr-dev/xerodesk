@@ -9,11 +9,11 @@
 
               <div class="sorting-icon" v-if="column.sortable">
                 <div v-show="sortKey === column.name">
-                  <InlineSvg name="template/mdi-menu-up.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] < 0" />
-                  <InlineSvg name="template/mdi-menu-down.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] > 0" />
+                  <InlineSvg name="svg/mdi/menu-up.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] < 0" />
+                  <InlineSvg name="svg/mdi/menu-down.svg" color="#464646" size="1.25rem" v-show="sortOrders[column.name] > 0" />
                 </div>
                 <div v-show="sortKey !== column.name">
-                  <InlineSvg name="template/mdi-menu-swap.svg" color="#464646" size="1.25rem" />
+                  <InlineSvg name="svg/mdi/menu-swap.svg" color="#464646" size="1.25rem" />
                 </div>
               </div>
             </div>

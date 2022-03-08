@@ -2,10 +2,10 @@
   <div class="footer-att">
     <div class="footer-att-item" v-for="(a, $a) in attachments" :key="$a" :class="{ invalid: !$isEmpty(checkValidity(a)) }">
       <div class="footer-att-item-remove" @click="removeAttachment($a)">
-        <InlineSvg name="template/mdi-close-circle.svg" color="#000" size="10px" />
+        <InlineSvg name="svg/mdi/close-circle.svg" color="#000" size="10px" />
       </div>
       <div class="footer-att-item-icon">
-        <InlineSvg :name="`heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
+        <InlineSvg :name="`svg/heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
       </div>
       <div class="footer-att-item-name">
         <template v-if="!$isEmpty(checkValidity(a))">

@@ -7,7 +7,7 @@
           <div class="message-dtls" v-if="message.message">
             <div class="message-dtls--reply" v-if="message.sender != 'session'">
               <button type="button" class="action" @click="onReply(message)">
-                <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
+                <InlineSvg name="svg/mdi/arrow-left-top.svg" color="#000" size="1rem" />
               </button>
             </div>
             <div class="message-dtls--content" v-html="message.message"></div>
@@ -15,10 +15,10 @@
           <div class="message-attm" v-if="!$isEmpty(message.attachments)">
             <div class="message-attm--reply" v-if="message.sender != 'session'">
               <button type="button" class="action" @click="onReply(message)">
-                <InlineSvg name="template/mdi-arrow-left-top.svg" color="#000" size="1rem" />
+                <InlineSvg name="svg/mdi/arrow-left-top.svg" color="#000" size="1rem" />
               </button>
               <button type="button" class="action" @click="onDownload(message)" v-show="!$isEmpty(message.attachments)">
-                <InlineSvg name="template/mdi-download.svg" color="#000" size="1rem" />
+                <InlineSvg name="svg/mdi/download.svg" color="#000" size="1rem" />
               </button>
             </div>
             <div class="message-attm--item" v-for="attachment in message.attachments" :key="attachment.id">
@@ -27,7 +27,7 @@
               </div>
               <div class="message-attm--item-file" v-else>
                 <div class="message-attm--item-icon" @click="downloadAtt(attachment)">
-                  <InlineSvg :name="`heroicons/${getIcon(attachment.extension.toLowerCase())}.svg`" color="#000" size="25px" />
+                  <InlineSvg :name="`svg/heroicons/${getIcon(attachment.extension.toLowerCase())}.svg`" color="#000" size="25px" />
                 </div>
                 <div class="message-attm--item-name" @click="downloadAtt(attachment)">
                   <span>{{ `${attachment.name}.${attachment.extension}` }}</span>
@@ -52,7 +52,7 @@
       <div class="la-wrapper" v-if="enlargeToggle">
         <div class="la-content">
           <div class="la-close" @click="enlargeToggle = false">
-            <InlineSvg name="template/mdi-close.svg" color="#fff" />
+            <InlineSvg name="svg/mdi/close.svg" color="#fff" />
           </div>
           <img class="la-image" :src="enlargeUrl" />
         </div>

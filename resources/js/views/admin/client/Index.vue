@@ -114,7 +114,7 @@
       <div class="la-wrapper" v-if="enlargeToggle">
         <div class="la-content">
           <div class="la-close" @click="enlargeToggle = false">
-            <InlineSvg name="template/mdi-close.svg" color="#fff" />
+            <InlineSvg name="svg/mdi/close.svg" color="#fff" />
           </div>
           <img class="la-image" :src="enlargeUrl" />
         </div>

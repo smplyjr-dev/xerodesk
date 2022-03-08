@@ -10,7 +10,7 @@
           <input id="xrf_from" type="text" class="form-control" :placeholder="current" disabled />
         </div>
         <div class="flex-center">
-          <InlineSvg name="heroicons/switch-vertical.svg" size="1.5rem" color="#686868" />
+          <InlineSvg name="svg/heroicons/switch-vertical.svg" size="1.5rem" color="#686868" />
         </div>
         <div class="form-group">
           <label for="xrf_to">Transfer to</label>

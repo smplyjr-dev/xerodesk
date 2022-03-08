@@ -33,7 +33,7 @@
         {{ sTag.name }}
         <div v-if="isAttaching.includes(sTag.id)" class="spinner-border spinner-border-sm ml-1" role="status"></div>
         <div v-else class="ml-1 cursor-pointer" @click="detachTag(sTag)">
-          <InlineSvg name="template/mdi-close-circle.svg" size="1rem" />
+          <InlineSvg name="svg/mdi/close-circle.svg" size="1rem" />
         </div>
       </span>
     </div>

@@ -2,7 +2,7 @@
   <div class="cd" :class="{ disabled: disabled }" v-on-clickaway="away">
     <div class="d-flex align-items-center" @click="toggle">
       <slot name="value">--</slot>
-      <InlineSvg v-show="carret" name="template/mdi-chevron-down.svg" size="1rem" class="ml-1" :style="`transform: rotate(${sharedState.active ? 180 : 0}deg)`" />
+      <InlineSvg v-show="carret" name="svg/mdi/chevron-down.svg" size="1rem" class="ml-1" :style="`transform: rotate(${sharedState.active ? 180 : 0}deg)`" />
     </div>
 
     <slot />

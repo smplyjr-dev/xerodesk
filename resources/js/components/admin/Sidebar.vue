@@ -1,7 +1,7 @@
 <template>
   <aside>
     <div class="sidebar-toggler" @click="$emit('toggle-sidebar', false)">
-      <InlineSvg name="template/mdi-close.svg" color="#4c5771" size="1.5rem" />
+      <InlineSvg name="svg/mdi/close.svg" color="#4c5771" size="1.5rem" />
     </div>
     <div class="sidebar-logo">
       <router-link to="/" class="sidebar-logo--big">
@@ -53,37 +53,37 @@ export default {
         {
           name: "Dashboard",
           to: "/dashboard",
-          icon: "template/mdi-home.svg",
+          icon: "svg/mdi/home.svg",
           ready: isDevelopment
         },
         {
           name: "Ticket",
           to: "/tickets",
-          icon: "template/mdi-ticket-confirmation.svg",
+          icon: "svg/mdi/ticket-confirmation.svg",
           ready: true
         },
         {
           name: "Live Chat",
           to: "/chats",
-          icon: "template/mdi-forum.svg",
+          icon: "svg/mdi/forum.svg",
           ready: isDevelopment
         },
         {
           name: "Client",
           to: "/clients",
-          icon: "template/mdi-account-group.svg",
+          icon: "svg/mdi/account-group.svg",
           ready: true
         },
         {
           name: "Report",
           to: "/reports",
-          icon: "template/mdi-file-chart.svg",
+          icon: "svg/mdi/file-chart.svg",
           ready: isDevelopment
         },
         {
           name: "Settings",
           to: "/settings",
-          icon: "template/mdi-cog.svg",
+          icon: "svg/mdi/cog.svg",
           ready: true
         }
       ]
