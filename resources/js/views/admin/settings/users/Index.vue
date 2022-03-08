@@ -359,7 +359,7 @@ export default {
     },
 
     profilePicture(user) {
-      if (user.meta.profile_picture == "generic-profile.png") {
+      if (user.meta.profile_picture == "profile.png") {
         return `${this.$APP_URL}/images/${user.meta.profile_picture}`;
       } else {
         return `${this.$APP_URL}/storage/uploads/users/${user.id}/${user.meta.profile_picture}`;

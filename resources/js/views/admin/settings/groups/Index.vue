@@ -174,8 +174,8 @@ export default {
     let types = ["string", "number", "date"];
     let columns = [
       { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Group Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "20%", name: "name", label: "Name" },
-      { sortable: 0, hide: 0, type: types[0], width: "60%", name: "users", label: "Agents" },
+      { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
+      { sortable: 0, hide: 0, type: types[0], width: "50%", name: "users", label: "Agents" },
       { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
     ];
     columns.forEach((column) => {
@@ -287,7 +287,7 @@ export default {
     },
 
     profilePicture(user) {
-      if (user.profile_picture == "generic-profile.png") {
+      if (user.profile_picture == "profile.png") {
         return `${this.$APP_URL}/images/${user.profile_picture}`;
       } else {
         return `${this.$APP_URL}/storage/uploads/users/${user.pivot.user_id}/${user.profile_picture}`;

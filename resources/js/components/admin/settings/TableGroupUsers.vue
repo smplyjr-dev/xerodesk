@@ -244,13 +244,6 @@ export default {
       return index;
     },
 
-    profilePicture(user) {
-      if (user.meta.profile_picture == "generic-profile.png") {
-        return `${this.$APP_URL}/images/${user.meta.profile_picture}`;
-      } else {
-        return `${this.$APP_URL}/storage/uploads/users/${user.id}/${user.meta.profile_picture}`;
-      }
-    },
     async setUser(id) {
       this.isProcessing.push(id);
 

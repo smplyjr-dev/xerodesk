@@ -19,7 +19,7 @@ class CreateUserManagementTable extends Migration
             $table->string('url');
             $table->string('abbr', 5);
             $table->mediumText('allowed_users');
-            $table->string('company_picture')->default('generic-photograph.png');
+            $table->string('company_picture')->default('photograph.png');
             $table->timestamps();
         });
 
@@ -28,7 +28,7 @@ class CreateUserManagementTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->string('username')->nullable()->unique();
             $table->string('email')->unique();
-            $table->string('profile_picture')->default('generic-profile.png');
+            $table->string('profile_picture')->default('profile.png');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('status')->default('1')->comment('1 Active | 2 Inactive');

@@ -39,7 +39,7 @@ Vue.prototype.$rand = function (min, max) {
 
 // Get Profile Picture
 Vue.prototype.$profilePicture = function (user) {
-  if (user.profile_picture == "generic-profile.png") {
+  if (user.profile_picture == "profile.png") {
     return `https://ui-avatars.com/api/?font-size=0.35&name=${user.bio.first_name}`;
   } else {
     return `${this.$APP_URL}/storage/uploads/users/${user.id}/${user.profile_picture}`;
@@ -48,6 +48,6 @@ Vue.prototype.$profilePicture = function (user) {
 
 // Image On Error Fallback
 Vue.prototype.$onImgError = function (e, i) {
-  if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/generic-profile.png`;
-  if (i == 2) e.target.src = `${window.Laravel.BASE_URL}/images/generic-photograph.png`;
+  if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/profile.png`;
+  if (i == 2) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/photograph.png`;
 };

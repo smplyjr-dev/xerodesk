@@ -190,7 +190,7 @@ export default {
       old_password: "",
       new_password: "",
       new_password_confirmation: "",
-      profile_picture: "generic-profile.png",
+      profile_picture: "profile.png",
       status: "",
       role: "Role",
       bio: {

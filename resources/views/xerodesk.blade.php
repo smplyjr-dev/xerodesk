@@ -8,7 +8,7 @@
     <meta name="description" content="Welcome to FiliPay Support Portal" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="icon" href="favicon.ico" type="image/icon" />
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/icon" />
     <title>Xerodesk</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -18,7 +18,7 @@ trait UserTrait
         $users = [];
 
         foreach ($query->get() as $key => $record) {
-            $name  = $record->bio->last_name . ', ' . $record->bio->first_name;
+            $name  = $record->bio->first_name . ' ' . $record->bio->last_name;
 
             $users[$key] = [
                 'id'                => $record->id,
