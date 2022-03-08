@@ -48,14 +48,13 @@
       </div>
     </template>
 
-    <TicketReplyAttachmentModal :attachments="attachments" @emitAttachments="attachments = $event" />
+    <TicketReplyAttachmentModal @emitAttachments="attachments.push(...$event)" />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex";
 import { nanoid } from "nanoid";
-import { tickets } from "@Scripts/observable";
 import TicketReplyAttachment from "../reply/TicketReplyAttachment.vue";
 import TicketReplyAttachmentModal from "../reply/TicketReplyAttachmentModal.vue";
 import TicketReplyTo from "./TicketReplyTo.vue";

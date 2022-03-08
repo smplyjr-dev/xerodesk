@@ -1,21 +1,22 @@
 <template>
   <modal mId="attm-modal" mClass="modal-lg">
-    <modal-header @close="$emit('emitAttachments', local_attachments)">
+    <modal-header>
       <h5 class="modal-title">Attachment</h5>
     </modal-header>
     <modal-body>
-      <div class="upload-wrapper" @drop.prevent="addFile" @dragover.prevent>
+      <div class="upload-wrapper" @drop.prevent="addFile('drop', $event)" @dragover.prevent>
         <div v-if="$isEmpty(local_attachments)">
-          <h3>Drag &amp; drop your files here</h3>
+          <input type="file" class="d-none" ref="file" @change="addFile('file', $event)" multiple />
+          <h3>Drag &amp; drop your files here or <span class="text-primary cursor-pointer" @click="$refs.file.click()">click here</span></h3>
         </div>
 
         <div class="footer-att" v-else>
           <div class="footer-att-item" v-for="(a, $a) in local_attachments" :key="$a" :class="{ invalid: !$isEmpty(checkValidity(a)) }">
             <div class="footer-att-item-remove" @click="removeAttachment(a)">
-              <InlineSvg name="template/mdi-close-circle.svg" color="#000" size="10px" />
+              <InlineSvg name="svg/mdi/close-circle.svg" color="#000" size="10px" />
             </div>
             <div class="footer-att-item-icon">
-              <InlineSvg :name="`heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
+              <InlineSvg :name="`svg/heroicons/${getIcon(a.ext.toLowerCase())}.svg`" color="#000" size="15px" />
             </div>
             <div class="footer-att-item-name">
               <template v-if="!$isEmpty(checkValidity(a))">
@@ -30,20 +31,27 @@
         </div>
       </div>
     </modal-body>
+    <modal-footer class="text-right">
+      <button class="btn btn-light" @click="onClose">Cancel</button>
+      <button class="btn btn-primary" @click="onAttach">Attach</button>
+    </modal-footer>
   </modal>
 </template>
 
 <script>
 export default {
-  props: ["attachments"],
   name: "TicketReplyAttachment",
   data: () => ({
     extensions: ["csv", "doc", "docx", "gif", "htm", "html", "ico", "jpeg", "jpg", "png", "pdf", "pptx", "rar", "txt", "xls", "xlsx", "zip", "7z"],
     local_attachments: []
   }),
   methods: {
-    addFile(e) {
-      let droppedFiles = e.dataTransfer.files;
+    addFile(from, e) {
+      let droppedFiles;
+
+      if (from == "drop") droppedFiles = e.dataTransfer.files;
+      if (from == "file") droppedFiles = e.target.files;
+
       if (!droppedFiles) return;
 
       // this tip, convert FileList to array, credit: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
@@ -82,11 +90,15 @@ export default {
     },
     removeAttachment(file) {
       this.local_attachments = this.local_attachments.filter((f) => f != file);
-    }
-  },
-  watch: {
-    attachments(newValue) {
-      this.local_attachments = newValue;
+    },
+    onClose() {
+      this.local_attachments = [];
+      $("#attm-modal").modal("hide");
+    },
+    onAttach() {
+      this.$emit("emitAttachments", this.local_attachments);
+      this.local_attachments = [];
+      $("#attm-modal").modal("hide");
     }
   }
 };

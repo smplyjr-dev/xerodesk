@@ -25,7 +25,6 @@ export default [
   { path: "/settings/company",        component: page("settings/Company.vue") },
   { path: "/settings/groups",         component: page("settings/groups/Index.vue") },
   { path: "/settings/users",          component: page("settings/users/Index.vue") },
-  { path: "/settings/users/create",   component: page("settings/users/Create.vue") },
   { path: "/settings/users/:id/edit", component: page("settings/users/Edit.vue") },
   { path: "/settings/roles",          component: page("settings/roles/Index.vue") },
   { path: "/settings/slas",           component: page("settings/slas/Index.vue") },
