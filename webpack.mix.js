@@ -32,6 +32,7 @@ mix.webpackConfig({
       "@Node": path.join(__dirname, "./node_modules"),
       "@Public": path.join(__dirname, "./public"),
       "@Scripts": path.join(__dirname, "./resources/js"),
+      "@CDT": path.join(__dirname, "./resources/js/components/datatable/client/index.js"),
       "@SDT": path.join(__dirname, "./resources/js/components/datatable/server/index.js"),
       "@Styles": path.join(__dirname, "./resources/sass")
     }

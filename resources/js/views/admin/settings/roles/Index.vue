@@ -68,7 +68,7 @@
         </tbody>
       </datatable>
 
-      <pagination :pagination="pagination" :client="true" :filtered="filteredRoles" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
+      <pagination :pagination="pagination" :client="true" :filtered="filteredDatas" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
     <modal mId="manage-role">
@@ -136,44 +136,26 @@
 </template>
 
 <script>
-import Datatable from "@Components/datatable/client/Datatable.vue";
-import Pagination from "@Components/datatable/client/Pagination.vue";
 import Permissions from "@Public/docs/permissions.json";
+import { Datatable, Pagination, Mixin } from "@CDT";
 
 export default {
   layout: "Admin",
+  mixins: [Mixin],
   name: "SettingRoles",
   metaInfo: () => ({ title: "Setting / Roles" }),
   middleware: ["auth", "permission:view_roles"],
   components: { Datatable, Pagination },
   data() {
-    let sortOrders = {};
     let types = ["string", "number", "date"];
-    let columns = [
-      { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Role Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "15%", name: "name", label: "Name" },
-      { sortable: 0, hide: 0, type: types[0], width: "70%", name: "permissions", label: "Permissions" },
-      { sortable: 0, hide: 0, type: types[0], width: "15%", name: "action", label: "Action" }
-    ];
-    columns.forEach((column) => {
-      sortOrders[column.name] = -1;
-    });
+
     return {
-      roles: [],
-      columns: columns,
-      sortKey: "",
-      sortOrders: sortOrders,
-      length: 10,
-      search: "",
-      tableData: {},
-      pagination: {
-        currentPage: 1,
-        total: "",
-        nextPage: "",
-        prevPage: "",
-        from: "",
-        to: ""
-      },
+      columns: [
+        { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Role Details" },
+        { sortable: 1, hide: 0, type: types[0], width: "15%", name: "name", label: "Name" },
+        { sortable: 0, hide: 0, type: types[0], width: "70%", name: "permissions", label: "Permissions" },
+        { sortable: 0, hide: 0, type: types[0], width: "15%", name: "action", label: "Action" }
+      ],
 
       // custom data
       isLoading: false,
@@ -188,82 +170,20 @@ export default {
       permissions: Permissions
     };
   },
-  computed: {
-    filteredRoles() {
-      let roles = this.roles;
-      if (this.search) {
-        roles = roles.filter((row) => {
-          return Object.keys(row).some((key) => {
-            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-          });
-        });
-      }
-
-      let sortKey = this.sortKey;
-      let order = this.sortOrders[sortKey] || 1;
-      if (sortKey) {
-        roles = roles.slice().sort((a, b) => {
-          let index = this.getIndex(this.columns, "name", sortKey);
-          a = String(a[sortKey]).toLowerCase();
-          b = String(b[sortKey]).toLowerCase();
-
-          if (this.columns[index].type && this.columns[index].type === "date") {
-            return (a === b ? 0 : new Date(a).getTime() > new Date(b).getTime() ? 1 : -1) * order;
-          } else if (this.columns[index].type && this.columns[index].type === "number") {
-            return (+a === +b ? 0 : +a > +b ? 1 : -1) * order; // 1 = asc, -1 = desc
-          } else {
-            return (a === b ? 0 : a > b ? 1 : -1) * order;
-          }
-        });
-      }
-      return roles;
-    },
-    paginated() {
-      return this.paginate(this.filteredRoles, this.length, this.pagination.currentPage);
-    }
-  },
   methods: {
-    getRoles(shouldRefresh = true, url = `/portal/role/datatable`) {
+    getDatatable(shouldRefresh = true, url = `/portal/role/datatable`) {
       this.isLoading = shouldRefresh;
 
       axios
         .get(url, { params: this.tableData })
         .then((response) => {
-          this.roles = response.data;
-          this.pagination.total = this.roles.length;
+          this.datatableDatas = response.data;
+          this.pagination.total = this.datatableDatas.length;
           this.isLoading = false;
         })
         .catch((errors) => {
           console.log(errors);
         });
-    },
-    paginate(array, length, pageNumber) {
-      this.pagination.from = array.length ? (pageNumber - 1) * length + 1 : " ";
-      this.pagination.to = pageNumber * length > array.length ? array.length : pageNumber * length;
-      this.pagination.prevPage = pageNumber > 1 ? pageNumber : "";
-      this.pagination.nextPage = array.length > this.pagination.to ? pageNumber + 1 : "";
-      return array.slice((pageNumber - 1) * length, pageNumber * length);
-    },
-    resetPagination() {
-      this.pagination.currentPage = 1;
-      this.pagination.prevPage = "";
-      this.pagination.nextPage = "";
-    },
-    sortBy(key) {
-      this.resetPagination();
-      this.sortKey = key;
-      this.sortOrders[key] = this.sortOrders[key] * -1;
-    },
-    getIndex(array, key, value) {
-      // return array.findIndex(i => i[key] == value);
-
-      let index = null;
-      array.forEach((el, i) => {
-        if (el[key] == value) {
-          index = i;
-        }
-      });
-      return index;
     },
 
     setMethod(method, role) {
@@ -325,7 +245,7 @@ export default {
         $("#manage-role").modal("hide");
 
         // refresh datatable
-        this.getRoles(false);
+        this.getDatatable(false);
 
         // refresh roles from store
         this.$store.dispatch("roles/fetchRoles");
@@ -361,7 +281,6 @@ export default {
   },
   created() {
     this.$emit("setTitle", "Roles");
-    this.getRoles();
   }
 };
 </script>

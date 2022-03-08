@@ -6,6 +6,7 @@
       "@Node/*": ["node_modules/*"],
       "@Public/*": ["public/*"],
       "@Scripts/*": ["resources/js/*"],
+      "@CDT/*": ["/resources/js/components/datatable/client/index.js"],
       "@SDT/*": ["/resources/js/components/datatable/server/index.js"],
       "@Styles/*": ["resources/sass/*"],
     }

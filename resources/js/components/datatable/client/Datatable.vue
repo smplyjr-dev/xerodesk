@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table m-0">
+    <table class="table table-hover m-0">
       <thead>
         <tr>
           <th v-for="column in filteredColumns" :key="column.name" @click="handleSorting(column)" :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" :style="handleStyle(column)">
@@ -31,7 +31,7 @@ export default {
   props: ["columns", "sortKey", "sortOrders"],
   computed: {
     filteredColumns() {
-      let columns = this.columns.filter(c => {
+      let columns = this.columns.filter((c) => {
         if (typeof c.hide == "undefined" || !c.hide) return true;
       });
 

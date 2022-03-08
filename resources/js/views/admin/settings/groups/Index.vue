@@ -66,7 +66,7 @@
                 </router-link>
 
                 <a href="javascript:void(0)" @click="selectUsers(p)">
-                  <i class="fa fa-fw fa-plus"></i>
+                  <i class="fas fa-fw fa-plus"></i>
                 </a>
               </div>
             </td>
@@ -92,7 +92,7 @@
         </tbody>
       </datatable>
 
-      <pagination :pagination="pagination" :client="true" :filtered="filteredGroups" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
+      <pagination :pagination="pagination" :client="true" :filtered="filteredDatas" @prev="--pagination.currentPage" @next="++pagination.currentPage"></pagination>
     </div>
 
     <modal mId="users-modal" mClass="modal-lg">
@@ -159,45 +159,28 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Datatable from "@Components/datatable/client/Datatable.vue";
-import Pagination from "@Components/datatable/client/Pagination.vue";
+import { Datatable, Pagination, Mixin } from "@CDT";
 import TableGroupUsers from "@Components/admin/settings/TableGroupUsers.vue";
 
 export default {
   layout: "Admin",
+  mixins: [Mixin],
   name: "SettingGroups",
   metaInfo: () => ({ title: "Setting / Groups" }),
   middleware: ["auth", "permission:view_groups"],
   components: { Datatable, Pagination, TableGroupUsers },
   data() {
-    let sortOrders = {};
     let types = ["string", "number", "date"];
-    let columns = [
-      { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Group Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
-      { sortable: 0, hide: 0, type: types[0], width: "50%", name: "users", label: "Agents" },
-      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
-    ];
-    columns.forEach((column) => {
-      sortOrders[column.name] = -1;
-    });
+
     return {
       group: null,
       groups: [],
-      columns: columns,
-      sortKey: "",
-      sortOrders: sortOrders,
-      length: 10,
-      search: "",
-      tableData: {},
-      pagination: {
-        currentPage: 1,
-        total: "",
-        nextPage: "",
-        prevPage: "",
-        from: "",
-        to: ""
-      },
+      columns: [
+        { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Group Details" },
+        { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
+        { sortable: 0, hide: 0, type: types[0], width: "50%", name: "users", label: "Agents" },
+        { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
+      ],
 
       // custom data
       isLoading: false,
@@ -212,48 +195,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["permissions"]),
-
-    filteredGroups() {
-      let groups = this.groups;
-      if (this.search) {
-        groups = groups.filter((row) => {
-          return Object.keys(row).some((key) => {
-            return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-          });
-        });
-      }
-
-      let sortKey = this.sortKey;
-      let order = this.sortOrders[sortKey] || 1;
-      if (sortKey) {
-        groups = groups.slice().sort((a, b) => {
-          let index = this.getIndex(this.columns, "name", sortKey);
-          a = String(a[sortKey]).toLowerCase();
-          b = String(b[sortKey]).toLowerCase();
-
-          if (this.columns[index].type && this.columns[index].type === "date") {
-            return (a === b ? 0 : new Date(a).getTime() > new Date(b).getTime() ? 1 : -1) * order;
-          } else if (this.columns[index].type && this.columns[index].type === "number") {
-            return (+a === +b ? 0 : +a > +b ? 1 : -1) * order; // 1 = asc, -1 = desc
-          } else {
-            return (a === b ? 0 : a > b ? 1 : -1) * order;
-          }
-        });
-      }
-      return groups;
-    },
-    paginated() {
-      return this.paginate(this.filteredGroups, this.length, this.pagination.currentPage);
-    }
+    ...mapGetters("auth", ["permissions"])
   },
   methods: {
-    async getGroups(shouldRefresh = true, url = `/portal/group/datatable`) {
+    async getDatatable(shouldRefresh = true, url = `/portal/group/datatable`) {
       this.isLoading = shouldRefresh;
 
       let { data } = await axios.get(url, { params: this.tableData });
-      this.groups = data;
-      this.pagination.total = this.groups.length;
+      this.datatableDatas = data;
+      this.pagination.total = this.datatableDatas.length;
 
       this.isLoading = false;
     },
@@ -369,7 +319,7 @@ export default {
         $("#manage-group").modal("hide");
 
         // refresh datatable
-        this.getGroups(false);
+        this.getDatatable(false);
 
         // refresh groups from store
         this.$store.dispatch("groups/fetchGroups");
@@ -420,43 +370,31 @@ export default {
       $("#users-modal").modal("show");
     },
     async handleRefresh() {
-      await this.getGroups(false);
-      this.group = this.groups.find((g) => g.id == this.group.id);
+      await this.getDatatable(false);
+      this.group = this.datatableDatas.find((g) => g.id == this.group.id);
     }
   },
   created() {
     this.$emit("setTitle", "Groups");
-    this.getGroups();
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@Styles/bootstrap/_variables.scss";
-
 .social-media {
-  display: flex;
-  align-items: center;
-
   a {
-    text-decoration: none;
-
-    .fa,
+    .fas,
     img {
       background: #c4c4c4;
-      border: 3px solid $white;
+      border: 3px solid #ffffff;
       border-radius: 100%;
-      color: $white;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 40px;
       width: 40px;
       object-fit: cover;
-    }
-
-    &:not(:first-child) {
-      margin-left: -15px;
     }
   }
 }
