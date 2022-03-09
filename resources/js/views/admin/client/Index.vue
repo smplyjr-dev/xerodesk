@@ -41,7 +41,7 @@
 
             <td>
               <div class="d-flex w-100" style="position: relative">
-                <img class="object-cover mr-2 rounded-circle" src="/images/profile.png" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
+                <img class="object-cover mr-2 rounded-circle" src="/images/placeholder/profile.png" @error="$onImgError($event, 1)" alt="Profile Picture" height="40px" width="40px" />
                 <div class="d-flex flex-column">
                   <span>{{ p.name }}</span>
                   <span class="text-muted text-xs">{{ p.email }}</span>
@@ -58,7 +58,7 @@
 
           <tr v-if="!isLoading && !paginated.length">
             <td colspan="8">
-              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+              <div class="w-100 my-3 flex-center-center flex-column">No result found.</div>
             </td>
           </tr>
         </tbody>

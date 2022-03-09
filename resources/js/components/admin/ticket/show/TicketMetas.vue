@@ -74,7 +74,7 @@ export default {
 
     profilePicture() {
       if (this.$APP_ENV == "local") {
-        return `${this.$APP_URL}/images/profile.png`;
+        return `${this.$APP_URL}/images/placeholder/profile.png`;
       } else {
         return `https://ui-avatars.com/api/?size=300&name=${this.client.name}`;
       }

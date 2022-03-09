@@ -3,7 +3,7 @@
     <TicketHeader @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">
-      <div class="h-100 w-100 flex-center" v-if="!isComponentReady">
+      <div class="h-100 w-100 flex-center-center" v-if="!isComponentReady">
         <Spinner height="5rem" width="5rem" />
       </div>
 

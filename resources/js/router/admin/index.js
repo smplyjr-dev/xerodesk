@@ -21,13 +21,16 @@ export default [
   { path: "/clients/:id", component: page("client/Show.vue") },
 
   // Setting Routes
-  { path: "/settings",                component: page("settings/Index.vue") },
-  { path: "/settings/company",        component: page("settings/Company.vue") },
-  { path: "/settings/groups",         component: page("settings/groups/Index.vue") },
-  { path: "/settings/users",          component: page("settings/users/Index.vue") },
-  { path: "/settings/users/:id/edit", component: page("settings/users/Edit.vue") },
-  { path: "/settings/roles",          component: page("settings/roles/Index.vue") },
-  { path: "/settings/slas",           component: page("settings/slas/Index.vue") },
+  { path: "/settings",                  component: page("settings/Index.vue") },
+  { path: "/settings/account/picture",  component: page("settings/account/Picture.vue") },
+  { path: "/settings/account/profile",  component: page("settings/account/Profile.vue") },
+  { path: "/settings/account/password", component: page("settings/account/Password.vue") },
+  { path: "/settings/company",          component: page("settings/Company.vue") },
+  { path: "/settings/groups",           component: page("settings/groups/Index.vue") },
+  { path: "/settings/users",            component: page("settings/users/Index.vue") },
+  { path: "/settings/users/:id/edit",   component: page("settings/users/Edit.vue") },
+  { path: "/settings/roles",            component: page("settings/roles/Index.vue") },
+  { path: "/settings/slas",             component: page("settings/slas/Index.vue") },
 
   // Developer Routes (for testing purposes only)
   { path: "/developers/webnotif", component: page("developer/WebNotif.vue") },

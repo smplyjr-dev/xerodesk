@@ -1,6 +1,6 @@
 <template>
   <div class="card-header">
-    <div class="flex-center">
+    <div class="flex-center-center">
       <router-link to="/tickets" class="btn btn-default p-0 mr-2">
         <InlineSvg name="svg/mdi/chevron-left.svg" color="#464646" size="1.25rem" />
       </router-link>

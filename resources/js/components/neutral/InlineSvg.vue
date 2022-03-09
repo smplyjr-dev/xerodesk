@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-center inline-svg h-auto" v-html="svg" :style="{ color: color }"></div>
+  <div class="flex-center-center inline-svg h-auto" v-html="svg" :style="{ color: color }"></div>
 </template>
 
 <script>

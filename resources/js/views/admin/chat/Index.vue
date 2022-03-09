@@ -48,7 +48,7 @@ import ExportTickets from "@Components/admin/ticket/ExportTickets.vue";
 import SearchKeywordModal from "@Components/admin/ticket/SearchKeywordModal.vue";
 
 export default {
-  layout: "Ticket",
+  layout: "Admin",
   name: "Chats",
   components: { RefineTickets, TableTickets, ExportTickets, SearchKeywordModal },
   metaInfo: () => ({ title: "Live Chat" }),

@@ -123,7 +123,7 @@
 
           <tr v-if="!isLoading && !paginated.length">
             <td colspan="6">
-              <div class="w-100 my-3 flex-center flex-column">No result found.</div>
+              <div class="w-100 my-3 flex-center-center flex-column">No result found.</div>
             </td>
           </tr>
         </tbody>

@@ -1,7 +1,7 @@
 <template>
-  <a href="javascript:void(0)" class="cdci" @click="handleClick">
+  <div class="cdci" @click="handleClick">
     <slot />
-  </a>
+  </div>
 </template>
 
 <script>

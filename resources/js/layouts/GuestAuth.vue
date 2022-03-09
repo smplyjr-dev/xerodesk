@@ -1,5 +1,5 @@
 <template>
-  <div class="layout--guest-auth">
+  <div class="layout-guest layout-guest--auth">
     <RouterView />
   </div>
 </template>

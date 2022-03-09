@@ -1,5 +1,5 @@
 <template>
-  <div class="layout--guest-default">
+  <div class="layout-guest layout-guest--default">
     <div class="container-fluid h-100">
       <RouterView />
     </div>

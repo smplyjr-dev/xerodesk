@@ -20,11 +20,15 @@
 
             <dropdown-content>
               <template v-slot:content>
-                <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
-                <p class="mx-2 mb-2 text-xs text-secondary">{{ user.role }}</p>
+                <dropdown-item class="cdci--unstyled">
+                  <router-link class="link-unstyled d-block" to="/profile">
+                    <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
+                    <p class="mx-2 mb-2 text-xs text-secondary">{{ user.role }}</p>
+                  </router-link>
+                </dropdown-item>
                 <hr class="my-1" />
                 <dropdown-item>
-                  <router-link class="link-unstyled d-block" to="/profile">Profile</router-link>
+                  <router-link class="link-unstyled d-block" to="/settings/account/picture">Account Settings</router-link>
                 </dropdown-item>
                 <dropdown-item @select="logout()">Logout</dropdown-item>
               </template>

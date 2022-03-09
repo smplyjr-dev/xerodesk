@@ -8,11 +8,18 @@
       <section class="d-flex flex-column h-100 overflow-scroll">
         <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
 
-        <div class="page-title" v-if="pageTitle">
-          <h4 v-html="pageTitle"></h4>
-        </div>
+        <div class="d-flex">
+          <div class="aside">
+            <h1>Aside</h1>
+          </div>
+          <div class="main">
+            <div class="page-title" v-if="pageTitle">
+              <h4 v-html="pageTitle"></h4>
+            </div>
 
-        <RouterView @toggle-sidebar="isOpen = $event" @setTitle="pageTitle = $event" />
+            <RouterView @toggle-sidebar="isOpen = $event" @setTitle="pageTitle = $event" />
+          </div>
+        </div>
 
         <footer class="footer mt-auto py-3 px-4">
           <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
@@ -31,7 +38,7 @@ import Navbar from "@Components/admin/Navbar.vue";
 import Sidebar from "@Components/admin/Sidebar.vue";
 
 export default {
-  name: "Admin",
+  name: "Settings",
   components: { Notification, Navbar, Sidebar },
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback

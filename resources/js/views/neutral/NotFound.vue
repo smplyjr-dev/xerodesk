@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100 flex-center">
+  <div class="h-100 flex-center-center">
     <div class="text-center">
       <img loading="lazy" :src="`${$APP_URL}/images/404.svg`" alt="404" width="250px" />
       <h3 class="font-weight-normal my-4">Sorry! Page not found.</h3>

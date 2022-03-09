@@ -11,37 +11,21 @@
 html,
 body,
 #xerodesk-portal {
-  background: #f9fbfd;
-  height: 100vh;
+  background: #f5f5f5;
+  scroll-behavior: smooth;
 }
 
-// remove dotted border when anchor link is in :active pseudo
-a {
-  outline: none;
-}
+@import "./components/datatable";
+@import "./components/form-alert";
+@import "./components/transition";
 
-@import "./tw-utilities/cursor";
-@import "./tw-utilities/font-size";
-@import "./tw-utilities/object-fit";
-
-@import "./vue-components/datatable";
-@import "./vue-components/form-alert";
-@import "./vue-components/transition";
+@import "./utilities/cursor";
+@import "./utilities/flex";
+@import "./utilities/font-size";
+@import "./utilities/object-fit";
 
 @import "./layouts/guest-auth";
 // @import "./layouts/guest-default";
-
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-center-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 @media (min-height: 600px) {
   html,

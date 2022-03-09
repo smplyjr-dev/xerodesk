@@ -20,8 +20,12 @@
   max-height: 265px;
   z-index: 3;
 
-  &.left { left: 0; }
-  &.right { right: 0; }
+  &.left {
+    left: 0;
+  }
+  &.right {
+    right: 0;
+  }
 
   .filter {
     padding: 0.25rem 0.4rem;
@@ -39,7 +43,7 @@
 }
 
 .cdci {
-  display: block;
+  cursor: pointer;
   border-radius: 0.25rem;
   font-size: $text-sm;
   padding: 0.25rem 0.5rem;
@@ -49,6 +53,14 @@
   &:hover {
     background: #dddddd;
     color: $gray-900;
+  }
+
+  &--unstyled {
+    padding: 0;
+
+    &:hover {
+      background: transparent;
+    }
   }
 }
 

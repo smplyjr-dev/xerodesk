@@ -1,0 +1,83 @@
+.notif-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 85px;
+  height: 100%;
+  width: 100%;
+  z-index: 1030;
+  pointer-events: none;
+
+  display: flex;
+  // align-items: flex-end;
+  justify-content: flex-end;
+
+  padding: 1rem 1rem;
+
+  .notif-group {
+    max-width: 450px;
+    width: 100%;
+
+    .notif {
+      pointer-events: all;
+      color: #fff;
+      border-radius: 0.25rem;
+
+      &:not(:first-of-type) {
+        margin-top: 1rem;
+      }
+    }
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba($color: #fff, $alpha: 0.5);
+
+      .notif-title {
+        display: flex;
+        align-items: center;
+      }
+
+      .close {
+        color: rgba($color: #fff, $alpha: 0.5);
+      }
+    }
+    .notif-body {
+      padding: 0.5rem 0.75rem;
+    }
+  }
+
+  .staggered-enter-active {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+  }
+  .staggered-enter {
+    transform: translateX(2rem);
+    opacity: 0;
+  }
+  .staggered-enter-to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .staggered-leave-active {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in;
+  }
+  .staggered-leave {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  .staggered-leave-to {
+    transform: translateX(2rem);
+    opacity: 0;
+  }
+
+  .staggered-move {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in;
+  }
+}
