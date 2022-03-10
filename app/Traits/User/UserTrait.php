@@ -3,6 +3,7 @@
 namespace App\Traits\User;
 
 use App\Models\User\User;
+use App\Models\User\UserReply;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -102,5 +103,12 @@ trait UserTrait
         ]);
 
         return response()->json($user->profile_picture, 200);
+    }
+
+    public function replies($user)
+    {
+        $query = UserReply::whereUserId($user)->get();
+
+        return $query;
     }
 }

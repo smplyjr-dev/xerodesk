@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-1 card-ticket m-4">
+  <div class="card card-ticket m-4">
     <TicketHeader @toggle="isMetaOpen = !isMetaOpen" />
 
     <div class="card-body" :class="{ isMetaOpen }">

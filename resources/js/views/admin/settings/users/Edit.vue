@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4 mt-4">
-    <div class="card card-picture-1 card-1">
+    <div class="card card-picture-1">
       <div class="card-body">
         <div class="picture-container">
           <input type="file" class="d-none" ref="file" @change="onFileChange" />
@@ -34,7 +34,7 @@
 
     <div class="row">
       <div class="col-md-6 mb-4">
-        <div class="card card-1">
+        <div class="card">
           <form @submit.prevent="updateProfile()">
             <div class="card-body">
               <h5 class="mb-4">Update Profile</h5>
@@ -58,7 +58,7 @@
                   </div>
                   <div class="form-group">
                     <label for="dob">Date of Birth</label>
-                    <a-date-picker v-model="user.bio.dob" />
+                    <ADatePicker v-model="user.bio.dob" />
                   </div>
                   <div class="form-group">
                     <label for="status">Status <span class="text-danger">*</span></label>
@@ -120,7 +120,7 @@
         </div>
       </div>
       <div class="col-md-6 mb-4">
-        <div class="card card-1">
+        <div class="card">
           <form @submit.prevent="updatePassword()">
             <div class="card-body">
               <h5 class="mb-4">Change Password</h5>

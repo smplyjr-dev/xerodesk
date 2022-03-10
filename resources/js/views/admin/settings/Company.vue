@@ -2,7 +2,7 @@
   <div class="container-fluid px-4">
     <div class="row">
       <div class="col-sm-8">
-        <div class="card card-1">
+        <div class="card">
           <form @submit.prevent="updateCompany()">
             <div class="card-body">
               <div class="form-group">
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="card card-1">
+        <div class="card">
           <div class="card-body">
             <p class="text-xl mb-4">Logo Upload</p>
             <!-- <p>Upload a PNG version of your company logo. Learn more about chosing the right logo image.</p> -->

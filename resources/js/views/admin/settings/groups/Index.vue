@@ -3,8 +3,7 @@
     <div class="client-datatable">
       <div class="flex-center-between flex-wrap">
         <div class="control d-flex align-items-center">
-          Show
-          <div class="select mx-2">
+          <div class="select">
             <select class="custom-select custom-select-sm" v-model="length" @change="resetPagination()">
               <option>10</option>
               <option>20</option>
@@ -13,9 +12,13 @@
               <option>100</option>
             </select>
           </div>
-          entries
         </div>
-        <button type="button" class="btn btn-brand-1" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add Group</button>
+        <button type="button" class="btn btn-brand-1" @click="setMethod('create')">
+          <div class="flex-center-between">
+            <div class="font-weight-semi">Add Group</div>
+            <InlineSvg class="ml-2" name="svg/mdi/plus-circle-outline.svg" size="1.35rem" />
+          </div>
+        </button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">

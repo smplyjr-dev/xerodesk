@@ -1,7 +1,6 @@
 <template>
   <div class="layout-admin" :class="{ 'is-open': isOpen }">
     <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
-
     <div class="aside-backdrop" @click.self="isOpen = false"></div>
 
     <main>

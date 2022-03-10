@@ -10,12 +10,12 @@
 
     <div class="row">
       <div class="col-md-8 mb-4">
-        <div class="card card-1 card-body">
+        <div class="card card-body">
           <skeleton :show="loading.clients" w="100%">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, nam.</skeleton>
         </div>
       </div>
       <div class="col-md-4 mb-4">
-        <div class="card card-1 card-body">
+        <div class="card card-body">
           <p class="text-secondary font-weight-bold">
             <skeleton :show="loading.clients" w="75%">Recently Added Clients</skeleton>
           </p>

@@ -22,9 +22,10 @@ export default [
 
   // Setting Routes
   { path: "/settings",                  component: page("settings/Index.vue") },
-  { path: "/settings/account/picture",  component: page("settings/account/Picture.vue") },
+  { path: "/settings/account/photo",    component: page("settings/account/Photo.vue") },
   { path: "/settings/account/profile",  component: page("settings/account/Profile.vue") },
   { path: "/settings/account/password", component: page("settings/account/Password.vue") },
+  { path: "/settings/account/replies",  component: page("settings/account/Replies.vue") },
   { path: "/settings/company",          component: page("settings/Company.vue") },
   { path: "/settings/groups",           component: page("settings/groups/Index.vue") },
   { path: "/settings/users",            component: page("settings/users/Index.vue") },

@@ -16,7 +16,7 @@ import DatePicker from "vue2-datepicker";
 // please see my submitted issue here
 // https://github.com/mengxiong10/vue2-datepicker/issues/649
 const { updateCalendars } = DatePicker.CalendarRange.methods;
-DatePicker.CalendarRange.methods.updateCalendars = function(calendars, adjustIndex = 0) {
+DatePicker.CalendarRange.methods.updateCalendars = function (calendars, adjustIndex = 0) {
   updateCalendars.call(this, calendars, adjustIndex);
 };
 
@@ -50,6 +50,9 @@ export default {
     initial: null
   }),
   components: { DatePicker },
+  mounted() {
+    this.initial = this.value;
+  },
   watch: {
     value(newValue) {
       this.initial = newValue;

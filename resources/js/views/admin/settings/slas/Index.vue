@@ -3,7 +3,12 @@
     <div class="server-datatable">
       <div class="flex-center-between flex-wrap">
         <length @onSelect="handleOnSelect" />
-        <button type="button" class="btn btn-brand-1" @click="setMethod('create')"><i class="fa fa-plus mr-1"></i> Add SLA</button>
+        <button type="button" class="btn btn-brand-1" @click="setMethod('create')">
+          <div class="flex-center-between">
+            <div class="font-weight-semi">Add SLA</div>
+            <InlineSvg class="ml-2" name="svg/mdi/plus-circle-outline.svg" size="1.35rem" />
+          </div>
+        </button>
       </div>
 
       <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">

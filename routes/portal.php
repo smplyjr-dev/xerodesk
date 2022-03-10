@@ -58,9 +58,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/sla/datatable', [SLAController::class, 'datatable']);
 
     // User Routes
-    Route::get('/user/datatable', [UserController::class, 'datatable']);
-    Route::get('/user/me',        [UserController::class, 'me']);
-    Route::post('/user/picture',  [UserController::class, 'picture']);
+    Route::get('/user/datatable',      [UserController::class, 'datatable']);
+    Route::get('/user/me',             [UserController::class, 'me']);
+    Route::post('/user/picture',       [UserController::class, 'picture']);
+    Route::get('/user/{user}/replies', [UserController::class, 'replies']);
 
     // All Resources Routes
     Route::namespace('Portal')->group(function () {
@@ -74,5 +75,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::resource('sla',        'SLAController');
         Route::resource('tag',        'TaggableController');
         Route::resource('user',       'UserController');
+        Route::resource('user-reply', 'UserReplyController');
     });
 });

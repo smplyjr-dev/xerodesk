@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <label>Timestamp</label>
-        <a-date-picker v-model="refine.created_at" />
+        <ADatePicker v-model="refine.created_at" />
       </div>
       <div class="form-group">
         <label>Session</label>

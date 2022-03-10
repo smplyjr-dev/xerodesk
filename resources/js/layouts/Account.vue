@@ -1,16 +1,41 @@
 <template>
   <div class="layout-admin" :class="{ 'is-open': isOpen }">
     <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
-
     <div class="aside-backdrop" @click.self="isOpen = false"></div>
 
     <main>
       <section class="d-flex flex-column h-100 overflow-scroll">
         <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
 
-        <div class="d-flex">
+        <div class="account-page">
           <div class="aside">
-            <h1>Aside</h1>
+            <h4 class="font-weigt-semi">Account</h4>
+            <p class="text-muted">You can manage your personal details in this section.</p>
+
+            <div class="nav">
+              <router-link class="nav-link flex-center-between" to="/settings/account/photo">
+                <span>Profile Photo</span>
+                <i class="fas fa-chevron-right"></i>
+              </router-link>
+              <router-link class="nav-link flex-center-between" to="/settings/account/profile">
+                <span>Profile Information</span>
+                <i class="fas fa-chevron-right"></i>
+              </router-link>
+              <router-link class="nav-link flex-center-between" to="/settings/account/password">
+                <span>Password Update</span>
+                <i class="fas fa-chevron-right"></i>
+              </router-link>
+            </div>
+
+            <h4 class="font-weigt-semi">Live Chat</h4>
+            <p class="text-muted">This settings is intended to help you boost your productivity.</p>
+
+            <div class="nav">
+              <router-link class="nav-link flex-center-between" to="/settings/account/replies">
+                <span>Saved Replies</span>
+                <i class="fas fa-chevron-right"></i>
+              </router-link>
+            </div>
           </div>
           <div class="main">
             <div class="page-title" v-if="pageTitle">
@@ -18,12 +43,12 @@
             </div>
 
             <RouterView @toggle-sidebar="isOpen = $event" @setTitle="pageTitle = $event" />
+
+            <footer class="footer mt-auto py-3 px-4">
+              <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
+            </footer>
           </div>
         </div>
-
-        <footer class="footer mt-auto py-3 px-4">
-          <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>
-        </footer>
       </section>
     </main>
 
@@ -38,7 +63,7 @@ import Navbar from "@Components/admin/Navbar.vue";
 import Sidebar from "@Components/admin/Sidebar.vue";
 
 export default {
-  name: "Settings",
+  name: "Account",
   components: { Notification, Navbar, Sidebar },
   metaInfo: () => ({
     title: "Live Support", // set the title on each page, this is just a fallback

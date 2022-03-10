@@ -11,14 +11,9 @@
   word-wrap: break-word;
   background-color: $card-bg;
   background-clip: border-box;
-  border: $card-border-width solid $card-border-color;
+  // border: $card-border-width solid $card-border-color;
   @include border-radius($card-border-radius);
-
-  &.card-1 {
-    border: 0px !important;
-    border-radius: 0.25rem !important;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-  }
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); // added
 
   > hr {
     margin-right: 0;

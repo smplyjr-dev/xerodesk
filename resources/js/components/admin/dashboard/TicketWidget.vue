@@ -1,6 +1,6 @@
 <template>
   <div class="col-sm mb-4">
-    <div class="card card-1 card-body h-100 d-flex flex-column justify-content-between">
+    <div class="card card-body h-100 d-flex flex-column justify-content-between">
       <p class="text-secondary font-weight-bold">
         <skeleton :show="loading" w="75%">{{ name }} Tickets</skeleton>
       </p>

@@ -1,12 +1,12 @@
 <template>
   <div class="dts-length">
-    Show
-    <div class="select mx-2">
+    <!-- Show -->
+    <div class="select">
       <select class="custom-select custom-select-sm" v-model="length" @change="$emit('onSelect', length)">
         <option v-for="(records, index) in perPage" :key="index" :value="records">{{ records }}</option>
       </select>
     </div>
-    entries
+    <!-- entries -->
   </div>
 </template>
 

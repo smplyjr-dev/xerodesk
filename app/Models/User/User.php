@@ -106,4 +106,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
     }
+
+    public function replies()
+    {
+        return $this->hasMany(UserReply::class);
+    }
 }

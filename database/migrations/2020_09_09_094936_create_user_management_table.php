@@ -54,6 +54,16 @@ class CreateUserManagementTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
 
+        Schema::create('user_replies', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('name');
+            $table->text('body');
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+        });
+
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token');
@@ -71,6 +81,7 @@ class CreateUserManagementTable extends Migration
         Schema::dropIfExists('companies');
         Schema::dropIfExists('users');
         Schema::dropIfExists('user_bio');
+        Schema::dropIfExists('user_replies');
         Schema::dropIfExists('password_resets');
     }
 }

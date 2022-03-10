@@ -16,7 +16,7 @@ $font-weight-semi:    500;
 $font-weight-bold:    700;
 $font-weight-bolder:  bolder;
 
-$text-muted: #9eabc0; // default is: #6c757d
+$text-muted: #b9b7b7;
 
 // =================== Fonts Sizes =================== //
 $font-size-base: 0.85rem;
@@ -113,6 +113,8 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .175);
 $btn-border-radius:    10rem;
 $btn-border-radius-lg: 10rem;
 $btn-border-radius-sm: 10rem;
+
+$card-border-radius: 0.25rem;
 
 $modal-content-border-radius: 1rem;
 $modal-header-padding: 1rem;
