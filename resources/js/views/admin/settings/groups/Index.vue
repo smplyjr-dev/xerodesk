@@ -169,7 +169,7 @@ export default {
   layout: "Admin",
   mixins: [Mixin],
   name: "SettingGroups",
-  metaInfo: () => ({ title: "Setting / Groups" }),
+  metaInfo: () => ({ title: "Groups" }),
   middleware: ["auth", "permission:view_groups"],
   components: { Datatable, Pagination, TableGroupUsers },
   data() {

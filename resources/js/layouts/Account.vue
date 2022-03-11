@@ -1,11 +1,11 @@
 <template>
   <div class="layout-admin" :class="{ 'is-open': isOpen }">
-    <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+    <Sidebar :isOpen="isOpen" @toggleSidebar="isOpen = $event" />
     <div class="aside-backdrop" @click.self="isOpen = false"></div>
 
     <main>
       <section class="d-flex flex-column h-100 overflow-scroll">
-        <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+        <Navbar :isOpen="isOpen" @toggleSidebar="isOpen = $event" />
 
         <div class="account-page">
           <div class="aside">
@@ -42,7 +42,7 @@
               <h4 v-html="pageTitle"></h4>
             </div>
 
-            <RouterView @toggle-sidebar="isOpen = $event" @setTitle="pageTitle = $event" />
+            <RouterView @toggleSidebar="isOpen = $event" @setTitle="pageTitle = $event" />
 
             <footer class="footer mt-auto py-3 px-4">
               <p class="text-muted text-sm mb-0">Copyright &copy; {{ currentYear }} Xerodesk. All rights reserved.</p>

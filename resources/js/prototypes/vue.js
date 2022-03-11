@@ -50,4 +50,5 @@ Vue.prototype.$profilePicture = function (user) {
 Vue.prototype.$onImgError = function (e, i) {
   if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/profile.png`;
   if (i == 2) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/photograph.png`;
+  if (i == 3) e.target.src = `${window.Laravel.BASE_URL}/images/logo-small-white.png`;
 };

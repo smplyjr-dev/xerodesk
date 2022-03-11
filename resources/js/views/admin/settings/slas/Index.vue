@@ -159,7 +159,7 @@ export default {
   mixins: [Mixin],
   layout: "Admin",
   name: "SettingSlas",
-  metaInfo: () => ({ title: "Setting / SLA's" }),
+  metaInfo: () => ({ title: "SLA's" }),
   middleware: ["auth", "permission:view_slas"],
   components: { Length, Search, Datatable, Entries, Pagination },
   data() {

@@ -146,7 +146,7 @@ export default {
   layout: "Admin",
   mixins: [Mixin],
   name: "SettingRoles",
-  metaInfo: () => ({ title: "Setting / Roles" }),
+  metaInfo: () => ({ title: "Roles" }),
   middleware: ["auth", "permission:view_roles"],
   components: { Datatable, Pagination },
   data() {

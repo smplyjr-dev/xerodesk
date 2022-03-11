@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <div class="sidebar-toggler" @click="$emit('toggle-sidebar', false)">
+    <div class="sidebar-toggler" @click="$emit('toggleSidebar', false)">
       <InlineSvg name="svg/mdi/close.svg" color="#4c5771" size="1.5rem" />
     </div>
     <div class="sidebar-logo">
@@ -23,14 +23,14 @@
             <div :id="`${nav.name.toLowerCase()}`" class="collapse m-0 p-0" :class="{ show: $route.fullPath.includes(nav.to) }">
               <ul class="nav-child">
                 <li class="nav-child-item" v-for="(child, childKey) in nav.child" :key="childKey">
-                  <router-link class="nav-child-item-link" :to="child.to" @click.native="$emit('toggle-sidebar', false)">{{ child.name }}</router-link>
+                  <router-link class="nav-child-item-link" :to="child.to" @click.native="$emit('toggleSidebar', false)">{{ child.name }}</router-link>
                 </li>
               </ul>
             </div>
           </template>
 
           <template v-else>
-            <router-link @click.native="$emit('toggle-sidebar', false)" :to="nav.to">
+            <router-link @click.native="$emit('toggleSidebar', false)" :to="nav.to">
               <div class="nav-icon"><InlineSvg :name="nav.icon" size="1.5rem" /></div>
               <div class="nav-text">{{ nav.name }}</div>
             </router-link>

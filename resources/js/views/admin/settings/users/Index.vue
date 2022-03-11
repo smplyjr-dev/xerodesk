@@ -227,7 +227,7 @@ export default {
   layout: "Admin",
   mixins: [Mixin],
   name: "SettingUsers",
-  metaInfo: () => ({ title: "Setting / Users" }),
+  metaInfo: () => ({ title: "Users" }),
   middleware: ["auth", "permission:view_users"],
   components: { Datatable, Pagination },
   computed: {

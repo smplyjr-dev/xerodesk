@@ -41,16 +41,17 @@ export default {
       // prettier-ignore
       settings: {
         team: [
-          { link: "users", icon: "account-multiple", title: "Users", sub_title: "Create, update or delete a user from your app." },
           { link: "groups", icon: "account-group", title: "Groups", sub_title: "Organize your users by setting them to a group." },
           { link: "roles", icon: "shield-account", title: "Roles", sub_title: "Provide and restrict levels of access to your users." },
-        ],
-        account: [
-          { link: "company", icon: "office-building-cog", title: "Company", sub_title: "Configure your app to add finish it's identity." },
+          { link: "users", icon: "account-multiple", title: "Users", sub_title: "Create, update or delete a user from your app." },
         ],
         live_chat: [
           { link: "script", icon: "code-tags", title: "Script", sub_title: "Copy and paste the script from here to your web app." },
           { link: "slas", icon: "calendar-clock", title: "SLA Policies", sub_title: "Setup targets to guarantee timely responses and solutions to customers." },
+          { link: "widget", icon: "widget", title: "Widget", sub_title: "Configure the looks and feel of your chat widget here." },
+        ],
+        account: [
+          { link: "company", icon: "office-building-cog", title: "Company", sub_title: "Configure your app to add finish it's identity." },
         ]
       }
     };

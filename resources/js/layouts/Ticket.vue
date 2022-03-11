@@ -1,12 +1,12 @@
 <template>
   <div class="layout-admin" :class="{ 'is-open': isOpen }">
-    <Sidebar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
+    <Sidebar :isOpen="isOpen" @toggleSidebar="isOpen = $event" />
     <div class="aside-backdrop" @click.self="isOpen = false"></div>
 
     <main>
       <section class="d-flex flex-column h-100 overflow-scroll">
-        <Navbar :isOpen="isOpen" @toggle-sidebar="isOpen = $event" />
-        <RouterView @toggle-sidebar="isOpen = $event" />
+        <Navbar :isOpen="isOpen" @toggleSidebar="isOpen = $event" />
+        <RouterView @toggleSidebar="isOpen = $event" />
       </section>
     </main>
 

@@ -1,0 +1,46 @@
+.color-picker {
+  position: relative;
+  margin-left: 1rem;
+  border: 1px solid #ccc;
+
+  .trigger {
+    cursor: pointer;
+    height: 100%;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn {
+      background-color: #ededed;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 0;
+      color: #a8afb8;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-left: 1px solid #ccc;
+    }
+  }
+
+  .vc-chrome {
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    z-index: 1;
+  }
+
+  /* .vc-twitter {
+    position: absolute;
+    top: 50px;
+    right: -22px;
+    z-index: 1;
+
+    .vc-twitter-triangle-shadow,
+    .vc-twitter-triangle {
+      left: initial;
+      right: 37px;
+    }
+  } */
+}

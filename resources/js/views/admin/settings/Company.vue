@@ -56,7 +56,7 @@ import { mapState } from "vuex";
 export default {
   layout: "Admin",
   name: "SettingCompany",
-  metaInfo: () => ({ title: "Setting / Company" }),
+  metaInfo: () => ({ title: "Company" }),
   middleware: ["auth", "permission:view_company"],
   data: () => ({
     company: {},

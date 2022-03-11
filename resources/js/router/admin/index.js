@@ -32,6 +32,7 @@ export default [
   { path: "/settings/users/:id/edit",   component: page("settings/users/Edit.vue") },
   { path: "/settings/roles",            component: page("settings/roles/Index.vue") },
   { path: "/settings/slas",             component: page("settings/slas/Index.vue") },
+  { path: "/settings/widget",           component: page("settings/Widget.vue") },
 
   // Developer Routes (for testing purposes only)
   { path: "/developers/webnotif", component: page("developer/WebNotif.vue") },
