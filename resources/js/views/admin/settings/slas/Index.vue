@@ -28,7 +28,7 @@
               <div class="d-flex align-items-center">
                 <div class="w-50 font-weight-bold text-right">Color:</div>
                 <div class="w-50 ml-1 align-self-end">
-                  <div class="sla-colors">
+                  <div class="sla">
                     <div class="color-item cursor-default active">
                       <div class="color-content" :style="{ background: p.color }"></div>
                     </div>
@@ -47,7 +47,7 @@
 
             <td>{{ p.name }}</td>
             <td>
-              <!-- <div class="sla-colors">
+              <!-- <div class="sla">
                 <div class="color-item cursor-default active">
                   <div class="color-content" :style="{ background: p.color }"></div>
                 </div>
@@ -109,7 +109,7 @@
             </div>
             <div class="form-group">
               <label for="color">Color <span class="text-danger">*</span></label>
-              <div class="sla-colors">
+              <div class="sla">
                 <div class="color-item" @click="slaDetails.color = '#616161'" :class="{ active: slaDetails.color == '#616161' }">
                   <div class="color-content" :style="{ background: '#616161' }"></div>
                 </div>
@@ -234,7 +234,7 @@ export default {
           // display a notification
           this.$store.dispatch("notifications/addNotification", {
             variant: "bg-danger",
-            icon: "fa-times",
+            icon: "fa-exclamation-triangle",
             title: "Invalid.",
             body: "You are only allowed to enter up to 4 SLA."
           });

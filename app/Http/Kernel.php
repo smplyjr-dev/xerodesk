@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
 
         // Manually Added Middleware
         \Fruitcake\Cors\HandleCors::class,
-        \App\Http\Middleware\HttpsProtocol::class,
+        // \App\Http\Middleware\HttpsProtocol::class,
     ];
 
     /**

@@ -199,7 +199,7 @@ export default {
           // display a notification
           this.$store.dispatch("notifications/addNotification", {
             variant: "bg-danger",
-            icon: "fa-times",
+            icon: "fa-exclamation-triangle",
             title: "Invalid.",
             body: "Sorry! But you don't have the permission to reply to a conversation."
           });

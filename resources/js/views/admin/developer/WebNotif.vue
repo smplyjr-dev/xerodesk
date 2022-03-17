@@ -41,7 +41,7 @@ export default {
         // display a notification
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
+          icon: "fa-exclamation-triangle",
           title: "Invalid.",
           body: `Unfortunately, web notification is not supported by your device or browser.`
         });

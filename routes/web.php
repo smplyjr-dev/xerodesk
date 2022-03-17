@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Widget\Widget;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/iframe', function () {
-    $path = config('app.env') == 'local' ? 'http://xerodesk-widget.test/dist/' : 'widget/';
-    return view('iframe', compact('path'));
+    $key  = request()->key;
+    $path = config('app.env') == 'local'
+        ? 'http://xerodesk-widget.test/dist/'
+        : 'widget/';
+
+    return view('iframe', compact('key', 'path'));
 });
 
 Route::get('/{any}', function () {

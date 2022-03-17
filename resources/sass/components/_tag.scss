@@ -1,0 +1,36 @@
+.tag {
+  .tag-lookup {
+    font-size: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 0.25rem;
+    margin-top: 2.5px;
+    padding: 0.25rem 0;
+
+    .list-unstyled {
+      margin: 0;
+
+      li {
+        padding: 0.25rem 1.25rem;
+
+        &.list-item:hover {
+          background: #cccccc;
+        }
+      }
+    }
+  }
+
+  .tag-badges {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+
+    .badge {
+      margin-right: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

@@ -15,7 +15,7 @@ const state = {
     // {
     //   id: nanoid(),
     //   variant: "bg-success",
-    //   icon: "fa-check",
+    //   icon: "fa-check-circle",
     //   title: "Success!",
     //   duration: "5000",
     //   body: "This is a success notification."

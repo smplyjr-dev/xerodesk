@@ -302,7 +302,7 @@ export default {
       // show notification
       this.$store.dispatch("notifications/addNotification", {
         variant: "bg-success",
-        icon: "fa-check",
+        icon: "fa-check-circle",
         title: "Success!",
         body: `<span class="font-weight-semi">${name}</span> has been successfully deleted.`
       });
@@ -319,7 +319,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: data.status.join(" ")
         });
@@ -339,7 +339,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
+          icon: "fa-exclamation-triangle",
           title: "Invalid.",
           body: resendVerificationError
         });
@@ -356,7 +356,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `<span class="font-weight-semi">${this.user.last_name}, ${this.user.first_name}</span> has been successfully created.`
         });

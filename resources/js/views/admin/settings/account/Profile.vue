@@ -40,7 +40,7 @@
     </div>
   </div> -->
 
-  <div class="container-fluid my-4 px-4">
+  <div class="container-fluid px-4">
     <div class="card">
       <form @submit.prevent="updateProfile()">
         <div class="card-body">
@@ -176,7 +176,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `<span class="font-weight-semi">${this.name}</span> profile has been successfully updated.`
         });

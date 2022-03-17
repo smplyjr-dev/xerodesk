@@ -26,8 +26,8 @@ init.interceptors.response.use(
       // display a notification
       store.dispatch("notifications/addNotification", {
         variant: "bg-danger",
-        icon: "fa-times",
-        title: "Invalid!",
+        icon: "fa-exclamation-triangle",
+        title: "Heads up!",
         body: "Something from the background went wrong! Please contact the system administrator immediately."
       });
     }

@@ -5,14 +5,14 @@
         <div class="">
           <button class="btn rounded-pill btn-brand-1" @click="isRefineOpen = true">
             <div class="d-flex align-items-center">
-              <span class="d-none d-md-block mr-1">Refine Search</span>
+              <span class="d-none d-md-block mr-2">Refine Search</span>
               <i class="fa fa-fw fa-filter"></i>
             </div>
           </button>
 
           <button class="btn rounded-pill btn-brand-1" data-toggle="modal" data-target="#search">
             <div class="d-flex align-items-center">
-              <span class="d-none d-md-block mr-1">Search a Keyword</span>
+              <span class="d-none d-md-block mr-2">Search a Keyword</span>
               <i class="fa fa-fw fa-search"></i>
             </div>
           </button>
@@ -20,7 +20,7 @@
 
         <button class="btn rounded-pill btn-success" @click="isExportOpen = true">
           <div class="d-flex align-items-center">
-            <span class="d-none d-md-block mr-1">Export</span>
+            <span class="d-none d-md-block mr-2">Export</span>
             <i class="fa fa-fw fa-cloud-download-alt"></i>
           </div>
         </button>
@@ -90,6 +90,7 @@ export default {
     }
   },
   async created() {
+    this.$emit("setTitle", "");
     await this.$store.dispatch("auth/fetchUsers");
     await this.$store.dispatch("groups/fetchGroups");
     await this.$store.dispatch("slas/fetchSlas");

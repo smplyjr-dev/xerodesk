@@ -73,7 +73,7 @@ export default {
     ...mapState("messages", ["messages"]),
 
     profilePicture() {
-      if (this.$APP_ENV == "local") {
+      if (window.Laravel.APP_ENV == "local") {
         return `${this.$APP_URL}/images/placeholder/profile.png`;
       } else {
         return `https://ui-avatars.com/api/?size=300&name=${this.client.name}`;
@@ -101,7 +101,7 @@ export default {
     forbiddenNotif(message = "This ticket is not currently assigned to you.") {
       this.$store.dispatch("notifications/addNotification", {
         variant: "bg-danger",
-        icon: "fa-times",
+        icon: "fa-exclamation-triangle",
         title: "Forbidden!",
         body: message
       });
@@ -128,8 +128,8 @@ export default {
       if (![3, 4].includes(this.session.status)) {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
-          title: "Invalid!",
+          icon: "fa-exclamation-triangle",
+          title: "Heads up!",
           body: "Please make sure the ticket is either resolved or closed before sending a copy of transcript to the client.",
           duration: 5000
         });
@@ -141,7 +141,7 @@ export default {
 
           this.$store.dispatch("notifications/addNotification", {
             variant: "bg-success",
-            icon: "fa-check",
+            icon: "fa-check-circle",
             title: "Success!",
             body: data.message
           });

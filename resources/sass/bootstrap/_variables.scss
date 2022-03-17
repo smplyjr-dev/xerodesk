@@ -16,7 +16,7 @@ $font-weight-semi:    500;
 $font-weight-bold:    700;
 $font-weight-bolder:  bolder;
 
-$text-muted: #b9b7b7;
+$text-muted: #919191;
 
 // =================== Fonts Sizes =================== //
 $font-size-base: 0.85rem;
@@ -35,7 +35,7 @@ $text-5xl:  3rem;
 $text-6xl:  4rem;
 
 // =================== Fonts Family =================== //
-$font-family-base: "Roboto", "Poppins", "Open Sans", "Montserrat", "Rubik", "Raleway";
+$font-family-base: "Poppins", "Rubik", "Roboto";
 
 // =================== Color Scheming =================== //
 $primary:   #2C85B9; // default is: #007bff
@@ -119,3 +119,7 @@ $card-border-radius: 0.25rem;
 $modal-content-border-radius: 1rem;
 $modal-header-padding: 1rem;
 $modal-inner-padding: 1rem;
+
+$nav-tabs-border-width: 2px;
+$nav-tabs-link-active-color: $primary;
+$nav-tabs-link-active-border-color: $nav-tabs-link-active-color;

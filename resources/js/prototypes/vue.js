@@ -1,5 +1,4 @@
-// Define $APP_ENV and $APP_URL for Vue files
-Vue.prototype.$APP_ENV = window.Laravel.APP_ENV;
+// Define $APP_URL for Vue files
 Vue.prototype.$APP_URL = window.Laravel.BASE_URL;
 
 // Async Delayer
@@ -51,4 +50,21 @@ Vue.prototype.$onImgError = function (e, i) {
   if (i == 1) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/profile.png`;
   if (i == 2) e.target.src = `${window.Laravel.BASE_URL}/images/placeholder/photograph.png`;
   if (i == 3) e.target.src = `${window.Laravel.BASE_URL}/images/logo-small-white.png`;
+};
+
+// Chevron Toggler
+Vue.prototype.$setTogglerEvent = function () {
+  const comm = document.querySelectorAll(".btn-toggler");
+
+  for (let i = 0; i < comm.length; i++) {
+    comm[i].addEventListener("click", function () {
+      let id = $(this).attr("data-target");
+
+      if ($(id).hasClass("show")) {
+        $(this).find(".fas").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+      } else {
+        $(this).find(".fas").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+      }
+    });
+  }
 };

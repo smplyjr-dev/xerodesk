@@ -1,44 +1,42 @@
 <template>
-  <div class="container-fluid my-4 px-4">
+  <div class="container-fluid px-4">
     <div class="card">
-      <form @submit.prevent="updateProfile()">
-        <div class="card-body">
-          <h5 class="font-weight-bold mb-2">Profile Photo</h5>
-          <p class="mb-4">You can change your avatar anytime.</p>
+      <div class="card-body">
+        <h5 class="font-weight-bold mb-2">Profile Photo</h5>
+        <p class="mb-4">You can change your avatar anytime.</p>
 
-          <div class="card-picture-1">
-            <div class="card-body">
-              <div class="picture-container">
-                <input type="file" class="d-none" ref="file" @change="onFileChange" />
+        <div class="card-picture-1">
+          <div class="card-body">
+            <div class="picture-container">
+              <input type="file" class="d-none" ref="file" @change="onFileChange" />
 
-                <img loading="lazy" class="object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Photo" />
+              <img loading="lazy" class="object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Photo" />
 
-                <div class="loader" v-if="isPictureLoading">
-                  <div class="spinner-border text-light" style="height: 3rem; width: 3rem" role="status"></div>
-                </div>
-
-                <button type="button" @click="$refs.file.click()" v-else>
-                  <InlineSvg name="svg/mdi/camera.svg" size="2.5rem" />
-                </button>
+              <div class="loader" v-if="isPictureLoading">
+                <div class="spinner-border text-light" style="height: 3rem; width: 3rem" role="status"></div>
               </div>
-              <div class="picture-detail">
-                <h1 class="name">{{ `${name}` }}</h1>
 
-                <div class="info">
-                  <div class="d-flex mb-2 mr-2">
-                    <InlineSvg name="svg/mdi/shield-account.svg" class="mr-1" size="1.5rem" />
-                    <span style="margin-top: 2.5px">{{ user.role }}</span>
-                  </div>
-                  <div class="d-flex mb-2 mr-2">
-                    <InlineSvg name="svg/mdi/calendar.svg" class="mr-1" size="1.5rem" />
-                    <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
-                  </div>
+              <button type="button" @click="$refs.file.click()" v-else>
+                <InlineSvg name="svg/mdi/camera.svg" size="2.5rem" />
+              </button>
+            </div>
+            <div class="picture-detail">
+              <h1 class="name">{{ `${name}` }}</h1>
+
+              <div class="info">
+                <div class="d-flex mb-2 mr-2">
+                  <InlineSvg name="svg/mdi/shield-account.svg" class="mr-1" size="1.5rem" />
+                  <span style="margin-top: 2.5px">{{ user.role }}</span>
+                </div>
+                <div class="d-flex mb-2 mr-2">
+                  <InlineSvg name="svg/mdi/calendar.svg" class="mr-1" size="1.5rem" />
+                  <span style="margin-top: 2.5px">Joined {{ $dayjs("format", user.created_at, "MMMM YYYY") }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -107,11 +105,12 @@ export default {
       };
 
       try {
-        let { data } = await axios.post(`/portal/user/picture`, params);
+        await axios.post(`/portal/user/picture`, params);
+        await this.$store.dispatch("auth/fetchUser");
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `<span class="font-weight-semi">${this.name}</span> profile photo has been successfully updated.`
         });
@@ -131,8 +130,8 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
-          title: "Alert!",
+          icon: "fa-exclamation-triangle",
+          title: "Heads up!",
           body: pictureError.join("<br />")
         });
       }

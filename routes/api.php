@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shared\WidgetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::namespace('Auth')->group(function () {
     Route::post('email/resend',        'VerificationController@resend');
 });
 
-Route::post('/rest', function () {
-    return App\Models\User\User::with(['company'])->get();
+Route::namespace('Shared')->group(function () {
+    Route::post('/widget/picture', [WidgetController::class, 'picture']);
+    Route::resource('widget', 'WidgetController');
 });

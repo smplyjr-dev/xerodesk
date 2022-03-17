@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mt-4 px-4">
+  <div class="container-fluid px-4">
     <div class="row">
       <div class="col">
         <h4>Saved Replies</h4>
@@ -248,7 +248,7 @@ export default {
         // show notification
         this.$store.dispatch("notifications/addNotification", {
           variant: `bg-${response.status}`,
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: response.status == "success" ? "Success." : "Invalid.",
           body: response.message
         });

@@ -256,7 +256,7 @@ export default {
         // show notification
         this.$store.dispatch("notifications/addNotification", {
           variant: `bg-${response.status}`,
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: response.status == "success" ? "Success." : "Invalid.",
           body: response.message
         });

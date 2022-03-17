@@ -1,0 +1,21 @@
+.sla {
+  display: flex;
+
+  .color-item {
+    border-radius: 100%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #fff;
+    cursor: pointer;
+
+    .color-content {
+      border-radius: 100%;
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    &.active {
+      border-color: $gray-600;
+    }
+  }
+}

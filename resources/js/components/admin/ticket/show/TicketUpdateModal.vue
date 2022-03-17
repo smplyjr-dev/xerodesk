@@ -126,7 +126,7 @@ export default {
         // show notification
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `The session has been successfully updated.`
         });

@@ -16,7 +16,7 @@ export default (to, from, next, attrs) => {
 
     store.dispatch("notifications/addNotification", {
       variant: "bg-danger",
-      icon: "fa-times",
+      icon: "fa-exclamation-triangle",
       title: "Invalid.",
       body: "Sorry! You do not have a right permission to access the resource. Please ask the administrator. Thank you!"
     });

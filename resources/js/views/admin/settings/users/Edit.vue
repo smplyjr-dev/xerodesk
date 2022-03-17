@@ -258,7 +258,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `<span class="font-weight-semi">${this.name}</span> profile picture has been successfully updated.`
         });
@@ -278,7 +278,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
+          icon: "fa-exclamation-triangle",
           title: "Invalid.",
           body: pictureError.join("<br />")
         });
@@ -307,7 +307,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: `<span class="font-weight-semi">${this.name}</span> profile has been successfully updated.`
         });
@@ -343,7 +343,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: "Your password has been successfully changed."
         });

@@ -7,7 +7,7 @@
     <div class="color-picker">
       <div class="trigger" @click="isVisible = !isVisible" :style="{ background: value }">
         &nbsp;
-        <button class="btn btn-toggler">
+        <button type="button" class="btn btn-toggler">
           <i class="fas fa-caret-down"></i>
         </button>
       </div>

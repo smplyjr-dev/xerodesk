@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mt-4 px-4">
+  <div class="container-fluid px-4">
     <div class="card">
       <form @submit.prevent="updatePassword()">
         <div class="card-body">
@@ -74,7 +74,7 @@ export default {
 
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: "Your password has been successfully changed."
         });

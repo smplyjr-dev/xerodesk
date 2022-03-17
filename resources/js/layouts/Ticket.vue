@@ -59,7 +59,7 @@ export default {
       CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async (data) => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: "You have successfully transferred this ticket."
         });

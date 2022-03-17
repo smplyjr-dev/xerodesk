@@ -8,6 +8,7 @@ use App\Http\Controllers\Portal\RoleController;
 use App\Http\Controllers\Portal\SessionController;
 use App\Http\Controllers\Portal\SLAController;
 use App\Http\Controllers\Portal\UserController;
+use App\Http\Controllers\Shared\WidgetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,7 +66,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // All Resources Routes
     Route::namespace('Portal')->group(function () {
-        Route::resource('client' ,    'ClientController');
+        Route::resource('client',    'ClientController');
         Route::resource('company',    'CompanyController');
         Route::resource('group',      'GroupController');
         Route::resource('group-user', 'GroupUserController');

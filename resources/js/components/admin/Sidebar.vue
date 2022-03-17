@@ -16,7 +16,7 @@
         <li v-for="(nav, navKey) in ready" :key="navKey">
           <template v-if="nav.child">
             <router-link :to="nav.to" data-toggle="collapse" :data-target="`#${nav.name.toLowerCase()}`" :aria-expanded="$route.fullPath.includes(nav.to)" :event="''">
-              <div class="nav-icon"><InlineSvg :name="nav.icon" size="1.5rem" /></div>
+              <div class="nav-icon"><InlineSvg :name="`svg/custom/${nav.icon}.svg`" color="#fff" size="1.5rem" /></div>
               <div class="nav-text">{{ nav.name }}</div>
             </router-link>
 
@@ -31,7 +31,7 @@
 
           <template v-else>
             <router-link @click.native="$emit('toggleSidebar', false)" :to="nav.to">
-              <div class="nav-icon"><InlineSvg :name="nav.icon" size="1.5rem" /></div>
+              <div class="nav-icon"><InlineSvg :name="`svg/custom/${nav.icon}.svg`" color="#fff" size="1.5rem" /></div>
               <div class="nav-text">{{ nav.name }}</div>
             </router-link>
           </template>
@@ -46,47 +46,57 @@ export default {
   props: ["isOpen"],
   name: "Sidebar",
   data() {
-    let isDevelopment = this.$APP_ENV == "local" ? 1 : 0;
+    let isDevelopment = window.Laravel.APP_ENV == "local" ? 1 : 0;
 
     return {
+      // prettier-ignore
       navs: [
+        { name: "Dashboard", to: "/dashboard", icon: "home",                    ready: isDevelopment },
+        { name: "Tickets",   to: "/tickets",   icon: "mdi/ticket-confirmation", ready: true },
+        { name: "Live Chat", to: "/chats",     icon: "mdi/forum",               ready: isDevelopment },
+        { name: "Clients",   to: "/clients",   icon: "clients",                 ready: true },
+        { name: "Report",    to: "/reports",   icon: "report",                  ready: isDevelopment },
+        { name: "Settings",  to: "/settings",  icon: "settings",                ready: true }
+      ]
+
+      /* navs: [
         {
           name: "Dashboard",
           to: "/dashboard",
-          icon: "svg/mdi/home.svg",
+          icon: "home",
           ready: isDevelopment
         },
         {
           name: "Ticket",
           to: "/tickets",
-          icon: "svg/mdi/ticket-confirmation.svg",
+          icon: "ticket-confirmation",
           ready: true
         },
         {
           name: "Live Chat",
           to: "/chats",
-          icon: "svg/mdi/forum.svg",
+          icon: "forum",
           ready: isDevelopment
         },
         {
           name: "Client",
           to: "/clients",
-          icon: "svg/mdi/account-group.svg",
+          icon: "account-group",
           ready: true
         },
         {
           name: "Report",
           to: "/reports",
-          icon: "svg/mdi/file-chart.svg",
+          icon: "file-chart",
           ready: isDevelopment
         },
         {
           name: "Settings",
           to: "/settings",
-          icon: "svg/mdi/cog.svg",
+          icon: "cog",
           ready: true
         }
-      ]
+      ] */
     };
   },
   computed: {

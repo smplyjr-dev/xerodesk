@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Widget\Widget;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(GroupSeeder::class);
         $this->call(SLASeeder::class);
+
+        Widget::create([
+            'nanoid' => nanoid()
+        ]);
     }
 }

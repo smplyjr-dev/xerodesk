@@ -105,7 +105,7 @@ export default {
         // display a notification
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-danger",
-          icon: "fa-times",
+          icon: "fa-exclamation-triangle",
           title: "Invalid.",
           body: "Something went wrong. Please contact your system administrator."
         });

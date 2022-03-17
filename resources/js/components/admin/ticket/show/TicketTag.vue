@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-container">
+  <div class="tag">
     <div class="tag-input">
       <input type="text" class="form-control" v-model="newTag" :disabled="isCreatingAttaching || disabled" @focus="fetchTags" />
     </div>

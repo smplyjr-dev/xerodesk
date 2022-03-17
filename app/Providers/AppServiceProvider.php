@@ -9,6 +9,7 @@ use App\Observers\Client\AttachmentObserver;
 use App\Observers\Client\MessageObserver;
 use App\Observers\Client\SessionObserver;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // force https when not in development
+        if (config('app.env') != 'local') URL::forceScheme('https');
+
         // observer
         Session::observe(SessionObserver::class);
         Message::observe(MessageObserver::class);

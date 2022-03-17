@@ -16,6 +16,7 @@ return [
     // custom validation messages
     'alpha_underscore' => 'The :attribute may only contain letters and underscores.',
     'alpha_space' => 'The :attribute may only contain letters and spaces.',
+    'image64' => 'The image must be a file type of jpeg or png.',
 
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',

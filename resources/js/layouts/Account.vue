@@ -9,32 +9,47 @@
 
         <div class="account-page">
           <div class="aside">
-            <h4 class="font-weigt-semi">Account</h4>
-            <p class="text-muted">You can manage your personal details in this section.</p>
+            <div class="card">
+              <div class="card-header bg-primary text-white">
+                <div class="flex-center-between">
+                  <span>Menu</span>
 
-            <div class="nav">
-              <router-link class="nav-link flex-center-between" to="/settings/account/photo">
-                <span>Profile Photo</span>
-                <i class="fas fa-chevron-right"></i>
-              </router-link>
-              <router-link class="nav-link flex-center-between" to="/settings/account/profile">
-                <span>Profile Information</span>
-                <i class="fas fa-chevron-right"></i>
-              </router-link>
-              <router-link class="nav-link flex-center-between" to="/settings/account/password">
-                <span>Password Update</span>
-                <i class="fas fa-chevron-right"></i>
-              </router-link>
-            </div>
+                  <a class="link-unstyled text-white btn-toggler" ref="btn-toggler" href="javascript:void(0)" data-toggle="collapse" data-target="#account-navs" aria-expanded="false" aria-controls="account-navs">
+                    <i class="fas fa-chevron-up"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="collapse show" id="account-navs">
+                <div class="card-body">
+                  <h5 class="font-weight-semi">Account</h5>
+                  <p class="text-muted">You can manage your personal details in this section.</p>
 
-            <h4 class="font-weigt-semi">Live Chat</h4>
-            <p class="text-muted">This settings is intended to help you boost your productivity.</p>
+                  <div class="nav">
+                    <router-link class="nav-link flex-center-between" to="/settings/account/photo">
+                      <span>Profile Photo</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </router-link>
+                    <router-link class="nav-link flex-center-between" to="/settings/account/profile">
+                      <span>Profile Information</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </router-link>
+                    <router-link class="nav-link flex-center-between" to="/settings/account/password">
+                      <span>Password Update</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </router-link>
+                  </div>
 
-            <div class="nav">
-              <router-link class="nav-link flex-center-between" to="/settings/account/replies">
-                <span>Saved Replies</span>
-                <i class="fas fa-chevron-right"></i>
-              </router-link>
+                  <h5 class="font-weight-semi">Live Chat</h5>
+                  <p class="text-muted">This settings is intended to help you boost your productivity.</p>
+
+                  <div class="nav">
+                    <router-link class="nav-link flex-center-between" to="/settings/account/replies">
+                      <span>Saved Replies</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="main">
@@ -75,7 +90,8 @@ export default {
     return {
       isOpen: false,
       currentYear: now.getFullYear(),
-      pageTitle: ""
+      pageTitle: "",
+      parent: null
     };
   },
   computed: {
@@ -91,7 +107,7 @@ export default {
       CH_SESSION.bind(`session.transferred.from.${this.user.id}`, async (data) => {
         this.$store.dispatch("notifications/addNotification", {
           variant: "bg-success",
-          icon: "fa-check",
+          icon: "fa-check-circle",
           title: "Success!",
           body: "You have successfully transferred this ticket."
         });
@@ -133,10 +149,22 @@ export default {
           attachment
         });
       });
+    },
+    setParent(newValue) {
+      const parent = newValue.path.split("/")[3];
+
+      this.parent = parent;
     }
   },
   mounted() {
+    this.$setTogglerEvent();
     this.setupListeners();
+    this.setParent(this.$route);
+  },
+  watch: {
+    $route(newValue) {
+      this.setParent(newValue);
+    }
   },
   destroyed() {
     window.pusher.unsubscribe("session");

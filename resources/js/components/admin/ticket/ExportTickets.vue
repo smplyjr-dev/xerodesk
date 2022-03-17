@@ -24,17 +24,17 @@
         <div class="col-md-9">
           <!-- prettier-ignore -->
           <date-picker
-                    v-model="refine.range"
-                    :clearable="false"
-                    :disabled-date="disabledAfterToday"
-                    :editable="false"
-                    :shortcuts="range.shortcuts"
-                    input-class="form-control"
-                    range-separator=" to "
-                    range
-                    format="MM/DD/YYYY"
-                    valueType="YYYY-MM-DD"
-                  />
+            v-model="refine.range"
+            :clearable="false"
+            :disabled-date="disabledAfterToday"
+            :editable="false"
+            :shortcuts="range.shortcuts"
+            input-class="form-control"
+            range-separator=" to "
+            range
+            format="MM/DD/YYYY"
+            valueType="YYYY-MM-DD"
+          />
         </div>
       </div>
       <div class="form-group">
