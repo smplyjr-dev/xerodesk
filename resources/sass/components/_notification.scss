@@ -9,10 +9,10 @@
   pointer-events: none;
 
   display: flex;
-  // align-items: flex-end;
+  align-items: flex-end;
   justify-content: flex-end;
 
-  padding: 1rem 1rem;
+  padding: 2rem;
 
   .notif-group {
     max-width: 450px;

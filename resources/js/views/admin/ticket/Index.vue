@@ -96,6 +96,10 @@ export default {
     await this.$store.dispatch("slas/fetchSlas");
 
     this.isReady = true;
+  },
+  mounted() {
+    let audio = new Audio("audios/notif8.mp3");
+    audio.play();
   }
 };
 </script>

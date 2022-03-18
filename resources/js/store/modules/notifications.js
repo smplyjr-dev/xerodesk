@@ -17,8 +17,16 @@ const state = {
     //   variant: "bg-success",
     //   icon: "fa-check-circle",
     //   title: "Success!",
-    //   duration: "5000",
+    //   duration: 999999999,
     //   body: "This is a success notification."
+    // },
+    // {
+    //   id: nanoid(),
+    //   variant: "bg-danger",
+    //   icon: "fa-times-circle",
+    //   title: "Uh-oh!",
+    //   duration: 999999999,
+    //   body: "This is a error notification."
     // }
   ]
 };

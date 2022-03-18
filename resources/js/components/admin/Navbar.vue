@@ -14,20 +14,21 @@
           <dropdown :carret="false" position="right">
             <template v-slot:value>
               <a href="javascript:void(0)" class="nav-link p-0">
-                <img class="rounded-circle object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Picture" height="37px" width="37px" />
+                <div class="flex-center-center bg-primary rounded-circle" style="height: 30px; width: 30px">
+                  <i class="fas fa-caret-down text-white text-lg"></i>
+                </div>
               </a>
             </template>
 
             <dropdown-content>
               <template v-slot:content>
-                <!-- <dropdown-item class="cdci--unstyled">
-                  <router-link class="link-unstyled d-block" to="/profile">
+                <div class="flex-center-center mb-3">
+                  <img class="rounded-circle object-cover" :src="$profilePicture(user)" @error="$onImgError($event, 1)" alt="Profile Picture" height="45px" width="45px" />
+                  <div style="line-height: 1rem">
                     <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
-                    <p class="mx-2 mb-2 text-xs text-secondary">{{ user.email }}</p>
-                  </router-link>
-                </dropdown-item> -->
-                <p class="mx-2 mb-0 font-weight-bold">{{ `${user.bio.first_name} ${user.bio.last_name}` }}</p>
-                <p class="mx-2 mb-2 text-xs text-secondary">{{ user.email }}</p>
+                    <p class="mx-2 mb-0 text-xs text-secondary">{{ user.email }}</p>
+                  </div>
+                </div>
                 <hr class="my-1" />
                 <dropdown-item>
                   <router-link class="link-unstyled d-block" to="/settings/account/profile">Profile Settings</router-link>
