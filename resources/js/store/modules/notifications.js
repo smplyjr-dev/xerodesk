@@ -24,7 +24,7 @@ const state = {
 };
 
 const getters = {
-  sortedNotifications: state => {
+  sortedNotifications: (state) => {
     return [...state.notifications].reverse().slice(0, 5);
   }
 };
@@ -35,7 +35,7 @@ const mutations = {
   },
 
   REMOVE_NOTIFICATION: (state, id) => {
-    let remainingNotifications = state.notifications.filter(n => n.id != id);
+    let remainingNotifications = state.notifications.filter((n) => n.id != id);
     state.notifications = remainingNotifications;
   }
 };
@@ -60,6 +60,20 @@ const actions = {
     setTimeout(() => {
       commit("REMOVE_NOTIFICATION", id);
     }, notification.duration);
+  },
+  failedNotification({ dispatch }, notification) {
+    dispatch("addNotification", {
+      variant: "bg-danger",
+      icon: "fa-exclamation-triangle",
+      ...notification
+    });
+  },
+  successNotification({ dispatch }, notification) {
+    dispatch("addNotification", {
+      variant: "bg-success",
+      icon: "fa-check-circle",
+      ...notification
+    });
   }
 };
 

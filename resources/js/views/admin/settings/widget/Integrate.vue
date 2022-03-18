@@ -86,7 +86,10 @@ export default {
   methods: {
     copy() {
       navigator.clipboard.writeText(this.script).then((r) => {
-        alert();
+        this.$store.dispatch("notifications/successNotification", {
+          title: "Success!",
+          body: "The script has been copied to your clipboard."
+        });
       });
     },
     async fetchWidget() {
