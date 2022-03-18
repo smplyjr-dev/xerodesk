@@ -21,21 +21,25 @@
                   </div>
                   <div class="ml-2">
                     <input type="file" class="d-none" ref="file" @change="onFileChange" />
-                    <button type="button" @click="handleLogo('change')" class="border-0 badge badge-pill" style="background: #dee2e6">Choose a logo</button>
-                    <button type="button" @click="handleLogo('remove')" class="border-0 badge badge-pill" style="background: #dee2e6">Remove</button>
+                    <button type="button" @click="handleLogo('change')" class="border-0 badge badge-pill text-secondary px-3 mb-2" style="background: #dee2e6">Choose a logo</button>
+                    <button type="button" @click="handleLogo('remove')" class="border-0 badge badge-pill text-secondary px-3 mb-2" style="background: #dee2e6">Remove</button>
+                    <div class="text-xxs text-muted font-weight-light" style="line-height: 12px">
+                      <p class="mb-0">Recommended size: 80x80</p>
+                      <p class="mb-0">Only: jpeg, png</p>
+                    </div>
                   </div>
                 </div>
               </div>
               <!-- prettier-ignore -->
               <ColorPicker
-              :title="c.title"
-              :sub_title="c.sub_title"
-              @input="c.value = $event"
-              :value="c.value"
-              v-for="(c, cIdx) in colors"
-              :key="cIdx"
-              :class="{ 'mb-0': cIdx == colors - 1 }"
-            />
+                :title="c.title"
+                :sub_title="c.sub_title"
+                @input="c.value = $event"
+                :value="c.value"
+                v-for="(c, cIdx) in colors"
+                :key="cIdx"
+                :class="{ 'mb-0': cIdx == colors - 1 }"
+              />
             </form>
           </div>
           <div class="col-sm-5 align-self-center">
@@ -108,7 +112,9 @@ export default {
       extension: null,
       size: null,
       name: null,
-      file: ""
+      file: "",
+      height: null,
+      width: null
     },
     colors: {
       theme_bg: {
@@ -157,15 +163,23 @@ export default {
       this.createImage(files[0]);
     },
     createImage(file) {
+      let image = new Image();
       let reader = new FileReader();
 
       reader.readAsDataURL(file);
 
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
+        image.src = e.target.result;
+
+        // adding this because the width and height cannot be fetch properly
+        await this.$delay(100);
+
         this.icon.extension = file.name.split(".").pop();
         this.icon.file = e.target.result;
         this.icon.name = file.name.split(".").slice(0, -1).join(".");
         this.icon.size = file.size;
+        this.icon.height = image.height;
+        this.icon.width = image.width;
         this.updatePicture();
       };
     },
@@ -192,7 +206,9 @@ export default {
         extension: this.icon.extension,
         name: this.icon.name,
         old: this.picture,
-        size: this.icon.size
+        size: this.icon.size,
+        height: this.icon.height,
+        width: this.icon.width
       };
 
       try {

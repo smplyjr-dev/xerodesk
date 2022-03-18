@@ -42,8 +42,10 @@ class WidgetController extends Controller
     {
         if (request()->method == 'update') {
             request()->validate([
-                'image' => 'required|image64:jpeg,jpg,png',
-                'size'  => 'numeric|max:3000000', // 3mb in bytes
+                'image'  => 'required|image64:jpeg,jpg,png',
+                'size'   => 'required|numeric|max:3000000', // 3mb in bytes
+                'height' => 'required|numeric|max:80',
+                'width'  => 'required|numeric|max:80'
             ], [
                 'size.max' => 'The file size should not be greater than 3MB.',
             ]);
