@@ -14,8 +14,8 @@
           <dropdown :carret="false" position="right">
             <template v-slot:value>
               <a href="javascript:void(0)" class="nav-link p-0">
-                <div class="flex-center-center bg-primary rounded-circle" style="height: 30px; width: 30px">
-                  <i class="fas fa-caret-down text-white text-lg"></i>
+                <div class="nav-dropdown">
+                  <i class="fas fa-caret-down"></i>
                 </div>
               </a>
             </template>

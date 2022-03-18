@@ -8,7 +8,7 @@
 
   .burger--item {
     height: 2px;
-    background: $gray-900;
+    background: $white;
 
     &:nth-child(1) {
       width: 100%;
@@ -52,5 +52,13 @@
   // from { }
   to {
     width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .burger {
+    .burger--item {
+      background: $gray-900;
+    }
   }
 }
