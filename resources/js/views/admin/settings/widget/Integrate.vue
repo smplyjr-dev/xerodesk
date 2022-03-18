@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import "highlight.js/styles/atom-one-dark.css";
 import hljs from "highlight.js/lib/core";
 import xml from "highlight.js/lib/languages/xml";
 hljs.registerLanguage("xml", xml);
@@ -98,3 +97,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+@import "@Styles/components/_highlightjs.scss";
+</style>
