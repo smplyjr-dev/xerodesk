@@ -163,21 +163,17 @@ export default {
   middleware: ["auth", "permission:view_slas"],
   components: { Length, Search, Datatable, Entries, Pagination },
   data() {
-    let sortOrders = {};
     let types = ["string", "number", "date"];
-    let columns = [
-      { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "SLA Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "color", label: "Color" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve" },
-      { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
-    ];
-    columns.forEach((column) => {
-      sortOrders[column.name] = -1;
-    });
+
     return {
-      columns: columns,
       sortKey: "id",
+      columns: [
+        { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "SLA Details" },
+        { sortable: 1, hide: 0, type: types[0], width: "30%", name: "name", label: "Name" },
+        { sortable: 1, hide: 0, type: types[0], width: "25%", name: "color", label: "Color" },
+        { sortable: 1, hide: 0, type: types[0], width: "25%", name: "range", label: "Time to Resolve" },
+        { sortable: 0, hide: 0, type: types[0], width: "20%", name: "action", label: "Action" }
+      ],
 
       // over tableData defaults from the mixin
       tableData: {

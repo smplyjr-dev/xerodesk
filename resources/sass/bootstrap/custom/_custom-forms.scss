@@ -30,8 +30,10 @@
 
   &:checked ~ .custom-control-label::before {
     color: $custom-control-indicator-checked-color;
-    border-color: $custom-control-indicator-checked-border-color;
-    @include gradient-bg($custom-control-indicator-checked-bg);
+    border-color: $primary;
+    background-color: $primary;
+    // border-color: $custom-control-indicator-checked-border-color;
+    // @include gradient-bg($custom-control-indicator-checked-bg);
     @include box-shadow($custom-control-indicator-checked-box-shadow);
   }
 

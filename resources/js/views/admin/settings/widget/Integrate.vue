@@ -10,7 +10,7 @@
         </li>
       </ul>
       <hr />
-      <div class="tab-content" id="myTabContent">
+      <div class="tab-content">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
           <ul class="timeline mb-0">
             <li>

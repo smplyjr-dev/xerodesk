@@ -83,7 +83,8 @@
           <a class="nav-link" data-toggle="tab" href="#attachments">Attachments</a>
         </li>
       </ul>
-      <div class="tab-content p-4 border" style="margin-top: -1px">
+      <hr />
+      <div class="tab-content">
         <div class="tab-pane fade show active" id="sessions">
           <ul class="list-unstyled mb-0">
             <li v-for="s in sessions" :key="s.id">
@@ -134,21 +135,17 @@ export default {
   metaInfo: () => ({ title: "Clients" }),
   middleware: ["auth", "permission:view_clients"],
   data() {
-    let sortOrders = {};
     let types = ["string", "number", "date"];
-    let columns = [
-      { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
-      { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" },
-      { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
-      { sortable: 1, hide: 0, type: types[2], width: "25%", name: "created_at", label: "Timestamp" }
-    ];
-    columns.forEach((column) => {
-      sortOrders[column.name] = -1;
-    });
+
     return {
-      columns: columns,
       sortKey: "id",
+      columns: [
+        { sortable: 0, hide: 0, type: types[0], width: "100%", name: "info", label: "Client Details" },
+        { sortable: 1, hide: 0, type: types[0], width: "25%", name: "name", label: "Client" },
+        { sortable: 0, hide: 0, type: types[0], width: "25%", name: "token", label: "Token" },
+        { sortable: 0, hide: 0, type: types[0], width: "25%", name: "phone", label: "Phone" },
+        { sortable: 1, hide: 0, type: types[2], width: "25%", name: "created_at", label: "Timestamp" }
+      ],
 
       // custom data
       isLoading: false,

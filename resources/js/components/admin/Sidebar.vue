@@ -51,52 +51,14 @@ export default {
     return {
       // prettier-ignore
       navs: [
-        { name: "Dashboard", to: "/dashboard", icon: "home",                    ready: isDevelopment },
-        { name: "Tickets",   to: "/tickets",   icon: "mdi/ticket-confirmation", ready: true },
-        { name: "Live Chat", to: "/chats",     icon: "mdi/forum",               ready: isDevelopment },
-        { name: "Clients",   to: "/clients",   icon: "clients",                 ready: true },
-        { name: "Report",    to: "/reports",   icon: "report",                  ready: isDevelopment },
-        { name: "Settings",  to: "/settings",  icon: "settings",                ready: true }
+        { name: "Dashboard", to: "/dashboard", ready: isDevelopment, icon: "home",                    },
+        { name: "Mail",      to: "/mail",      ready: isDevelopment, icon: "envelope",                },
+        { name: "Tickets",   to: "/tickets",   ready: isDevelopment, icon: "mdi/ticket-confirmation", },
+        { name: "Live Chat", to: "/chats",     ready: true,          icon: "forum",                   },
+        { name: "Clients",   to: "/clients",   ready: true,          icon: "clients",                 },
+        { name: "Report",    to: "/reports",   ready: isDevelopment, icon: "report",                  },
+        { name: "Settings",  to: "/settings",  ready: true,          icon: "settings",                },
       ]
-
-      /* navs: [
-        {
-          name: "Dashboard",
-          to: "/dashboard",
-          icon: "home",
-          ready: isDevelopment
-        },
-        {
-          name: "Ticket",
-          to: "/tickets",
-          icon: "ticket-confirmation",
-          ready: true
-        },
-        {
-          name: "Live Chat",
-          to: "/chats",
-          icon: "forum",
-          ready: isDevelopment
-        },
-        {
-          name: "Client",
-          to: "/clients",
-          icon: "account-group",
-          ready: true
-        },
-        {
-          name: "Report",
-          to: "/reports",
-          icon: "file-chart",
-          ready: isDevelopment
-        },
-        {
-          name: "Settings",
-          to: "/settings",
-          icon: "cog",
-          ready: true
-        }
-      ] */
     };
   },
   computed: {

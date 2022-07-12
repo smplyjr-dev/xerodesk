@@ -1,12 +1,8 @@
-// import VueMeta from "vue-meta";
 import store from "@Scripts/store";
 import { sync } from "vuex-router-sync";
 
 import adminRoutes from "./admin";
 import neutralRoutes from "./neutral";
-
-Vue.use(VueMeta);
-Vue.use(VueRouter);
 
 // The middleware for every page of the application.
 const globalMiddleware = ["check"];

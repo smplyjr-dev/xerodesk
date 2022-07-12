@@ -7,6 +7,11 @@ export default [
   { path: "/dashboard", component: page("Dashboard.vue") },
   { path: "/profile",   component: page("Profile.vue") },
   { path: "/reports",   component: page("reports/Index.vue") },
+  
+  // Email Routes
+  { path: "/mail",       component: page("mail/Index.vue") },
+  { path: "/mail/sent",  component: page("mail/Sent.vue") },
+  { path: "/mail/draft", component: page("mail/Draft.vue") },
 
   // Ticket Routes
   { path: "/tickets",          component: page("ticket/Index.vue") },

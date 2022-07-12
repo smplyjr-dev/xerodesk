@@ -2,83 +2,80 @@
   <div class="drawer-content">
     <form @submit.prevent="submitExport">
       <h4 class="mb-4">Export Tickets</h4>
-      <div class="form-group row align-items-center">
-        <label class="col-md-3 mb-0">Export As</label>
-        <div class="col-md-9">
-          <div class="py-2 border-0 px-0">
-            <div class="d-flex align-items-center">
-              <div class="custom-control custom-radio mr-4">
-                <input type="radio" class="custom-control-input" id="xlsx" value="xlsx" v-model="refine.type" />
-                <label class="custom-control-label" for="xlsx">Excel</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="csv" value="csv" v-model="refine.type" />
-                <label class="custom-control-label" for="csv">CSV</label>
-              </div>
+      <div class="form-group">
+        <label class="">Export As</label>
+        <div class="py-2 border-0 px-0">
+          <div class="d-flex align-items-center">
+            <div class="custom-control custom-radio mr-4">
+              <input type="radio" class="custom-control-input" id="xlsx" value="xlsx" v-model="refine.type" />
+              <label class="custom-control-label" for="xlsx">Excel</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="csv" value="csv" v-model="refine.type" />
+              <label class="custom-control-label" for="csv">CSV</label>
             </div>
           </div>
         </div>
       </div>
-      <div class="form-group row align-items-center">
-        <label class="col-md-3 mb-0">Filter By</label>
-        <div class="col-md-9">
-          <!-- prettier-ignore -->
-          <date-picker
-            v-model="refine.range"
-            :clearable="false"
-            :disabled-date="disabledAfterToday"
-            :editable="false"
-            :shortcuts="range.shortcuts"
-            input-class="form-control"
-            range-separator=" to "
-            range
-            format="MM/DD/YYYY"
-            valueType="YYYY-MM-DD"
-          />
-        </div>
+      <div class="form-group">
+        <label class="">Filter By</label>
+
+        <!-- prettier-ignore -->
+        <date-picker
+          v-model="refine.range"
+          :clearable="false"
+          :disabled-date="disabledAfterToday"
+          :editable="false"
+          :shortcuts="range.shortcuts"
+          input-class="form-control"
+          range-separator=" to "
+          range
+          format="MM/DD/YYYY"
+          valueType="YYYY-MM-DD"
+        />
       </div>
       <div class="form-group">
         <label class="mb-2">Column Fields</label>
         <div class="row">
           <div class="col-md-6">
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="client" v-model="refine.fields.client" />
               <label class="custom-control-label" for="client">Client</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="title" v-model="refine.fields.title" />
               <label class="custom-control-label" for="title">Title</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="session" v-model="refine.fields.session" />
               <label class="custom-control-label" for="session">Session</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="priority" v-model="refine.fields.priority" />
               <label class="custom-control-label" for="priority">Priority</label>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="group" v-model="refine.fields.group" />
               <label class="custom-control-label" for="group">Group</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="agent" v-model="refine.fields.agent" />
               <label class="custom-control-label" for="agent">Agent</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="status" v-model="refine.fields.status" />
               <label class="custom-control-label" for="status">Status</label>
             </div>
-            <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="custom-control custom-checkbox mt-2 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="timestamp" v-model="refine.fields.timestamp" />
               <label class="custom-control-label" for="timestamp">Timestamp</label>
             </div>
           </div>
         </div>
       </div>
-      <div class="form-group d-flex flex-row-reverse">
+      <div class="form-group d-flex flex-row-reverse mt-5">
         <button class="btn btn-brand-1 pull-right" type="submit">Export</button>
         <button class="btn btn-light pull-right" type="button" @click="resetExport()">Reset</button>
         <div class="clearfix"></div>
